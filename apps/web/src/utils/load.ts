@@ -4,23 +4,29 @@ import {
     SpeculatorPipeline,
     corePlugins,
     NodeFileProvider,
+    sortEntriesByDeps,
     type Document,
+    type SortResult
 } from "@openuji/speculator";
 
 const specRoot = path.resolve(process.cwd(), "../../specs/ed");
 
-export const listSpecs = () => {
+export const listSortedSpecs = async (): Promise<SortResult> => {
 
     if (!fs.existsSync(specRoot)) {
-        return [];
+        throw new Error("Specs directory not found");
     }
+
+    const fileProvider = new NodeFileProvider();
 
     const specs = fs
         .readdirSync(specRoot, { withFileTypes: true })
         .filter((dirent) => dirent.isDirectory())
         .map((dirent) => dirent.name);
 
-    return specs;
+    const sortedEntries = await sortEntriesByDeps(specs.map((spec) => ({ entry: path.join(specRoot, `${spec}/index.md`) })), fileProvider);
+
+    return sortedEntries;
 };
 
 
@@ -28,18 +34,19 @@ export const loadDocuments = async () => {
     const fileProvider = new NodeFileProvider();
 
     const pipeline = new SpeculatorPipeline(corePlugins);
-    const specs = listSpecs();
+    const sortedEntries = await listSortedSpecs();
+
     const result = await pipeline.runWorkspace({
-        entries: specs.map((spec) => ({ entry: path.join(specRoot, `${spec}/index.md`) })),
+        entries: sortedEntries.entries,
         fileProvider,
     });
 
     const docs: Record<string, Document> = {};
-    specs.forEach((spec, index) => {
+    sortedEntries.entries.forEach((spec, index) => {
         if (!result.workspace?.documents[index]) {
-            throw new Error(`Document ${spec} not found`);
+            throw new Error(`Document ${spec.entry} not found`);
         }
-        docs[spec] = result.workspace?.documents[index];
+        docs[spec.config.id] = result.workspace?.documents[index];
     });
 
     return docs;

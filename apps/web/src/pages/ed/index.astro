@@ -1,7 +1,20 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import { listSortedSpecs } from "@/utils/load";
+import { type EntryWithConfig } from "@openuji/speculator";
+
+const specs = await listSortedSpecs();
 ---
 
 <Layout>
     <h1>ED</h1>
+    <ul>
+        {
+            specs.entries.map((spec: EntryWithConfig) => (
+                <li>
+                    <a href={`/ed/${spec.config.id}`}>{spec.config.id}</a>
+                </li>
+            ))
+        }
+    </ul>
 </Layout>

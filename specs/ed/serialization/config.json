@@ -1,0 +1,8 @@
+{
+    "id": "serialization",
+    "deps": [
+        "core",
+        "runtime",
+        "conformance"
+    ]
+}

@@ -1,0 +1,7 @@
+{
+    "id": "conformance",
+    "deps": [
+        "core",
+        "runtime"
+    ]
+}
