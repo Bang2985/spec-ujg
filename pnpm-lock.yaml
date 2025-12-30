@@ -4,9 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-overrides:
-  '@openuji/speculator': link:../../speculator/packages/speculator
-
 importers:
 
   .: {}
@@ -14,8 +11,8 @@ importers:
   apps/web:
     dependencies:
       '@openuji/speculator':
-        specifier: link:../../../../speculator/packages/speculator
-        version: link:../../../../speculator/packages/speculator
+        specifier: ^0.4.0
+        version: 0.4.0
       astro:
         specifier: ^5.16.6
         version: 5.16.6(@types/node@25.0.3)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.54.0)(typescript@5.9.3)
@@ -378,6 +375,9 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
+
+  '@openuji/speculator@0.4.0':
+    resolution: {integrity: sha512-+0anjazqnO9i9OKPgP3yedawlRrUWYrYaqJJon1n0AycPsB1eLq4MBCKM5KAq+O+Sr2M2dxBmEZQoYOfs2j7QA==}
 
   '@oslojs/encoding@1.1.0':
     resolution: {integrity: sha512-70wQhgYmndg4GCPxPPxPGevRKqTIJ2Nh4OkiMWmDAVYsTQ+Ta7Sq+rPevXyXGdzr30/qZBnyOalCszoMxlyldQ==}
@@ -1973,6 +1973,16 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
+
+  '@openuji/speculator@0.4.0':
+    dependencies:
+      rehype-parse: 9.0.1
+      remark-gfm: 4.0.1
+      remark-parse: 11.0.0
+      unified: 11.0.5
+      unist-util-visit: 5.0.0
+    transitivePeerDependencies:
+      - supports-color
 
   '@oslojs/encoding@1.1.0': {}
 
