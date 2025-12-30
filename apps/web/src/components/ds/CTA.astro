@@ -5,6 +5,7 @@ interface CTALink {
     label: string;
     href: string;
     primary?: boolean;
+    target?: string;
 }
 
 interface Props {
@@ -28,6 +29,7 @@ const { title, description, links = [] } = Astro.props;
                     <Button
                         href={link.href}
                         variant={link.primary ? "primary" : "dark"}
+                        target={link.target}
                     >
                         {link.label}
                     </Button>
