@@ -1,8 +1,7 @@
 {
     "id": "serialization",
+    "track": "draft",
     "deps": [
-        "core",
-        "runtime",
-        "conformance"
+        "overview"
     ]
 }

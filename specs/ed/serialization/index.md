@@ -1,246 +1,118 @@
-# Module: Serialization & Data Format (`/ed/serialization/`)
-
 ## Abstract
 
-This module defines the JSON representation for User Journey Graph (UJG) data. It specifies shared conventions (identifiers, timestamps, referencing rules, extensibility, and forward compatibility) used by all other modules, including Core Journey Graph (design-time) and Runtime Execution (runtime traces).
+This module defines the JSON and optional JSON-LD conventions for User Journey Graph (UJG) data: identifiers, timestamps, reference shapes, extensibility containers, and forward compatibility rules.
 
-This module is written so producers can emit UJG data and consumers can reliably validate, store, and exchange it across tools.
-
-## What this module covers
-
-This module defines:
-
-- the required JSON shape conventions used across UJG objects,
-- rules for identifiers and references,
-- timestamp formats,
-- how to add extensions without breaking interoperability,
-- an optional JSON-LD mode for linked-data environments.
-
-This module does **not** define conformance classification logic (see Conformance & Validation).
+It is intentionally minimal: **object models** live in their modules (Core, Runtime, Observed, etc.). This module defines the **wire format rules** shared across all modules.
 
 ## Serialization format (normative)
 
 ### JSON
 
-- UJG data MUST be serialized as JSON values as defined by RFC 8259.
-- Text MUST be encoded as UTF-8.
-- Objects MUST use string keys.
-- Arrays MUST preserve element order.
-- A UJG document MAY contain a single top-level object (common), or a bundle of objects (see "Bundling" below).
+* UJG data MUST be serialized as JSON values as defined by RFC 8259.
+* Text MUST be encoded as UTF-8.
+* Objects MUST use string keys.
+* Arrays MUST preserve element order.
 
-## Common fields and conventions (normative)
+### Bundling
 
-### type
-
-- Every UJG object MUST include a `type` property whose value is a string.
-- Examples:
-  - `Journey`
-  - `State`
-  - `Transition`
-  - `JourneyExecution`
-  - `Event`
-- Consumers MUST use `type` to determine how to interpret an object.
-
-### id
-
-- Objects that are intended to be referenced MUST have an `id` property.
-- `id` MUST be a string.
-- `id` SHOULD be globally unique in the publisher's context.
-- `id` SHOULD be stable across time.
-- **Recommended forms:**
-  - absolute URLs/URIs (best for sharing across systems),
-  - URNs,
-  - or namespaced strings when operating within a single system.
-
-### version
-
-- Objects that define a stable contract over time MUST include a `version`.
-- `Journey` MUST include `version`.
-- `JourneyExecution` SHOULD include a reference to the definition version (via `JourneyRef`, see below).
-
-### Reserved keys
-
-The following keys are reserved across UJG objects:
-
-`type`, `id`, `version`, `name`, `description`, `createdAt`, `updatedAt`, `extensions`, `@context`
-
-- Producers MUST NOT change the meaning of reserved keys.
-- Consumers MUST ignore unknown non-reserved keys (see Forward compatibility), but MUST treat reserved-key misuse as an error.
-
-## Timestamps (normative)
-
-Whenever timestamps are used (e.g., `startedAt`, `endedAt`, `at`):
-
-- They MUST be strings in RFC 3339 / ISO 8601 format (e.g., `2025-12-29T10:12:00Z`).
-- They SHOULD include a timezone offset or `Z` (UTC).
-
-If a Consumer requires ordering:
-
-- it MUST order by timestamp value,
-- and MUST document how ties are handled (e.g., stable ordering by array position).
-
-## References (normative)
-
-### Referencing by identifier
-
-When one object references another, it MUST do so using the target object's identifier (a string), unless explicitly stated otherwise.
-
-**Example:**
-
-A Transition references `from` and `to` states by state ID string.
-
-### JourneyRef
-
-Runtime objects SHOULD reference the design-time definition they relate to.
-
-`JourneyRef` MUST be an object with:
-
-- `id` (Journey id)
-- `version` (Journey version)
-
-**Example:**
-
-```json
-"JourneyRef": {
-  "id": "https://ujg.example/TR/2026.01/journeys/checkout",
-  "version": "2026.01"
-}
-```
-
-If `JourneyRef` is present:
-
-- any `stateRef` / `transitionRef` values MUST resolve against that definition version.
-
-## Extensibility (normative + readable)
-
-UJG is designed to be extended without breaking interoperability.
-
-### The extensions container (recommended)
-
-Any UJG object MAY include an `extensions` object to hold additional properties.
-
-**Rules:**
-
-- `extensions` MUST be a JSON object.
-- Keys inside `extensions` SHOULD be namespaced to avoid collisions.
-- **Recommended key styles:**
-  - URI-like: `"https://vendor.example/metrics#rageClicks": 3`
-  - compact namespace: `"vendor:rageClicks": 3`
-
-**Consumers:**
-
-- MUST ignore unknown extension keys they do not understand,
-- MUST preserve extension content when round-tripping (if acting as a proxy or store), when practical.
-
-### Top-level extra keys (allowed, with caution)
-
-Producers MAY include additional top-level keys outside `extensions` as long as:
-
-- they do not collide with reserved keys,
-- and they do not change the meaning of normative fields.
-
-(For interoperability, `extensions` is preferred.)
-
-## Forward compatibility (normative)
-
-Consumers MUST be forward compatible by default:
-
-- Consumers MUST ignore unknown keys that are not reserved.
-- Consumers MUST ignore unknown values in extensible enums when those values appear only in non-normative fields (e.g., `tags`, `metadata`).
-- Consumers MUST fail validation if required fields are missing or invalid.
-
-Producers SHOULD:
-
-- avoid breaking changes within the same TR snapshot,
-- bump `Journey.version` when identifiers or normative meanings change.
-
-## Bundling multiple objects (informative, common in practice)
-
-Some systems want to ship a definition plus related runtime data together.
-
-A bundling format MAY be used like:
+A UJG document MAY contain a single top-level object, or a bundle:
 
 ```json
 {
   "type": "UJGDocument",
   "items": [
     { "type": "Journey", "...": "..." },
-    { "type": "JourneyExecution", "...": "..." }
+    { "type": "TransitionSet", "...": "..." }
   ]
 }
 ```
 
 If bundling is used:
 
-- `items` SHOULD be an array of UJG objects,
-- each object MUST still follow its own serialization rules.
+* `items` MUST be an array of UJG objects.
 
-Bundling is optional; consumers MAY accept single-object payloads.
+## Common fields and conventions (normative)
 
-## Required JSON shapes (normative cross-check)
+### `type`
 
-This module does not re-define the full models, but it pins down serialization expectations that apply across modules:
+* Every **top-level** UJG object MUST include a `type` property whose value is a string.
+* Embedded objects MAY omit `type` only when the parent property defines an unambiguous object kind.
+  * Example: `Journey.states[]` contains State/CompositeState objects; `type` is still REQUIRED by Core for those objects, so Core takes precedence for Journeys.
 
-### Journey (design-time)
+### `id`
 
-A `Journey` JSON object MUST include:
+* Referencable objects MUST have an `id` string.
+* `id` SHOULD be globally unique within the publisher's context.
+* Recommended forms: URI/URL, URN, or namespaced strings.
 
-- `type: "Journey"`
-- `id`
-- `version`
-- `startState` (string)
-- `states` (array of State objects)
-- `transitions` (array of Transition objects)
+### `version`
 
-### State
+* Contract-defining objects MUST include `version`.
+* Per Core: `Journey` MUST include `version`.
 
-A `State` JSON object MUST include:
+## Timestamps (normative)
 
-- `type: "State"` (recommended) OR be a state object within `states` (allowed to omit type if the parent context is explicit)
-- `id`
-- `label`
+Whenever timestamps are used (e.g., runtime modules):
 
-### Transition
+* They MUST be RFC 3339 / ISO 8601 strings (e.g., `2025-12-29T10:12:00Z`).
+* They SHOULD include a timezone offset or `Z`.
 
-A `Transition` JSON object MUST include:
+## References (normative)
 
-- `id`
-- `from` (state id string)
-- `to` (state id string)
-- `on` (array of event type strings)
+### `journeyRef`
 
-### JourneyExecution (runtime)
+When runtime/derived objects reference a Journey version, they MUST use:
 
-A `JourneyExecution` JSON object MUST include:
+```json
+"journeyRef": { "id": "<journeyId>", "version": "<journeyVersion>" }
+```
 
-- `type: "JourneyExecution"`
-- `id`
-- `startedAt`
-- `events` (array of Event objects)
+### Other references
 
-### Event
+Unless a module defines otherwise:
 
-An `Event` JSON object MUST include:
+* references are by identifier string (e.g., Transition `from`/`to` reference State ids).
 
-- `id` (unique within the execution)
-- `type` (event type string)
-- `at` (timestamp)
+## Reserved keys (normative)
 
-Event MAY include:
+The following keys are reserved across UJG objects:
 
-- `stateRef` (string)
-- `transitionRef` (string)
-- `properties` (object)
-- `extensions` (object)
+`type`, `id`, `version`, `name`, `description`, `createdAt`, `updatedAt`, `extensions`, `@context`
 
-## Optional JSON-LD mode (informative, for linked-data users)
+* Producers MUST NOT change the meaning of reserved keys.
+* Consumers MUST treat reserved-key misuse as an error.
 
-UJG can be used as plain JSON. If a publisher wants JSON-LD:
+## Extensibility container (normative mechanics)
 
-- The document MAY include `@context`.
-- When `@context` is present, the document SHOULD remain valid, readable JSON even for consumers that ignore JSON-LD.
+Any UJG object MAY include an `extensions` object.
 
-**Example (minimal pattern):**
+Rules:
+
+* `extensions` MUST be a JSON object.
+* Keys inside `extensions` SHOULD be namespaced to avoid collisions.
+
+Consumers:
+
+* MUST ignore unknown `extensions` keys by default.
+* SHOULD preserve `extensions` when round-tripping, when practical.
+
+> Note: rules for *profiles* and *interoperability expectations* for extensions live in the "Profiles & Extensibility" module.
+
+## Forward compatibility (normative)
+
+Consumers MUST be forward compatible by default:
+
+* MUST ignore unknown keys that are not reserved.
+* MUST fail validation if required fields are missing or invalid (per module rules).
+
+## Optional JSON-LD mode (informative)
+
+If a publisher wants JSON-LD:
+
+* The document MAY include `@context`.
+* Consumers that do not support JSON-LD MUST treat `@context` as ignorable when used correctly.
+
+Minimal pattern:
 
 ```json
 {
@@ -249,46 +121,5 @@ UJG can be used as plain JSON. If a publisher wants JSON-LD:
   "id": "https://ujg.example/TR/2026.01/journeys/checkout",
   "version": "2026.01",
   "...": "..."
-}
-```
-
-Consumers that do not support JSON-LD MUST treat `@context` as an ignorable unknown key (it is reserved but ignorable by non-LD consumers when used correctly).
-
-## Examples
-
-### Example: compact Journey (JSON)
-
-```json
-{
-  "type": "Journey",
-  "id": "https://ujg.example/TR/2026.01/journeys/checkout",
-  "version": "2026.01",
-  "name": "Checkout Journey",
-  "startState": "browse",
-  "states": [
-    { "id": "browse", "label": "Browse" },
-    { "id": "cart", "label": "Cart" },
-    { "id": "complete", "label": "Complete", "kind": "end" }
-  ],
-  "transitions": [
-    { "id": "t1", "from": "browse", "to": "cart", "on": ["add_to_cart"] },
-    { "id": "t2", "from": "cart", "to": "complete", "on": ["pay_success"] }
-  ],
-  "extensions": {
-    "vendor:domain": "ecommerce"
-  }
-}
-```
-
-### Example: runtime Event with extension metrics
-
-```json
-{
-  "id": "e17",
-  "type": "pay_fail",
-  "at": "2025-12-29T10:15:02Z",
-  "stateRef": "payment",
-  "properties": { "reason": "insufficient_funds" },
-  "extensions": { "vendor:retryCount": 2 }
 }
 ```

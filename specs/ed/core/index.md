@@ -1,5 +1,3 @@
-# Module: Core Journey Graph
-
 ## Abstract
 
 This module defines the design-time model for journeys as a graph (similar to a state machine): states connected by transitions triggered by events. It also defines two features needed for real websites and apps:
@@ -14,25 +12,26 @@ This module is written to be readable for Product/UX teams and implementable for
 
 This module defines:
 
-- Journey (design-time journey model)
-- State and CompositeState
-- Transition
-- TransitionSet (shareable transitions)
-- inclusion ("injection") rules and validity rules
+* Journey (design-time journey model)
+* State and CompositeState
+* Transition
+* TransitionSet (shareable transitions)
+* inclusion ("injection") rules and validity rules
 
 This module does **not** define runtime tracking (see Runtime Execution).
 
 ## Terminology (plain English)
 
-- **Journey**: the designed model of an experience.
-- **State**: a meaningful moment (page, step, mode).
-- **Composite State**: a state that points to a "nested" journey that happens inside it.
-- **Transition**: a move from one state to another.
-- **Event Type**: what triggers a transition (nav.blog, submit, selectPost).
-- **Start State**: where the journey begins.
-- **End States**: states where the journey can end (within this journey layer).
-- **Transition Set**: reusable transitions that can be included in a journey (e.g., global navigation).
-- **Owner** (of a Transition Set): the UI surface/component that provides the interaction that triggers those events (e.g., the header navigation).
+* **Journey**: the designed model of an experience.
+* **State**: a meaningful moment (page, step, mode).
+* **Composite State**: a state that points to a "nested" journey that happens inside it.
+* **Transition**: a move from one state to another.
+* **Event Type**: what triggers a transition (e.g., `nav.blog`, `submit`, `selectPost`).
+* **Start State**: where the journey begins.
+* **End States**: states where the journey can end (within this journey layer).
+* **Transition Set**: reusable transitions that can be included in a journey (e.g., global navigation).
+* **Owner** (of a Transition Set): the UI surface/component that provides the interaction that triggers those events (e.g., the header navigation).
+* **JourneyRef**: a versioned reference to a Journey: `{ id, version }`.
 
 ## Data model (required fields only)
 
@@ -40,31 +39,31 @@ This module does **not** define runtime tracking (see Runtime Execution).
 
 A Journey MUST have:
 
-- `type = "Journey"`
-- `id` (stable identifier)
-- `version` (version identifier)
-- `startState` (a state id)
-- `endStates` (array of state ids; use `[]` if none)
-- `states` (array of State or CompositeState)
-- `transitions` (array of Transition; use `[]` if none)
-- `includes` (array of TransitionSet ids; use `[]` if none)
+* `type = "Journey"`
+* `id` (stable identifier)
+* `version` (version identifier)
+* `startState` (a state id)
+* `endStates` (array of state ids; use `[]` if none)
+* `states` (array of State or CompositeState)
+* `transitions` (array of Transition; use `[]` if none)
+* `includes` (array of TransitionSet ids; use `[]` if none)
 
 ### State
 
 A State MUST have:
 
-- `type = "State"`
-- `id` (unique within the Journey)
-- `label` (human-readable)
+* `type = "State"`
+* `id` (unique within the Journey)
+* `label` (human-readable)
 
 ### CompositeState
 
 A CompositeState MUST have:
 
-- `type = "CompositeState"`
-- `id` (unique within the Journey)
-- `label`
-- `subjourney` (reference to another Journey id)
+* `type = "CompositeState"`
+* `id` (unique within the Journey)
+* `label`
+* `subjourneyRef` (JourneyRef: `{ id, version }`)
 
 > **Product/UX reading:** "This state is a page (or major step) with its own internal journey."
 
@@ -72,10 +71,17 @@ A CompositeState MUST have:
 
 A Transition MUST have:
 
-- `id` (unique within the Journey)
-- `from` (state id)
-- `to` (state id)
-- `on` (array of event type strings)
+* `id` (unique within the Journey)
+* `from` (state id)
+* `to` (state id)
+* `on` (array of event type strings)
+
+### JourneyRef
+
+A JourneyRef MUST have:
+
+* `id` (Journey id string)
+* `version` (Journey version string)
 
 ## Transition Sets (shareable transitions)
 
@@ -83,10 +89,10 @@ A Transition MUST have:
 
 A TransitionSet MUST have:
 
-- `type = "TransitionSet"`
-- `id` (stable identifier)
-- `owner` (a Journey id, typically a component journey such as a header)
-- `transitions` (array of TransitionSetTransition)
+* `type = "TransitionSet"`
+* `id` (stable identifier)
+* `owner` (JourneyRef)
+* `transitions` (array of TransitionSetTransition)
 
 **Meaning:** A TransitionSet defines reusable transitions (often navigation). The `owner` says where the interaction comes from (e.g., "Header navigation owns global nav"), without forcing you to duplicate transitions inside the header journey.
 
@@ -94,9 +100,9 @@ A TransitionSet MUST have:
 
 A TransitionSetTransition MUST have:
 
-- `id` (unique within the TransitionSet)
-- `on` (array of event type strings)
-- `to` (a state id in the host Journey)
+* `id` (unique within the TransitionSet)
+* `on` (array of event type strings)
+* `to` (a state id in the host Journey)
 
 A TransitionSetTransition intentionally does **not** include `from`. It is meant to be injected broadly into the host Journey.
 
@@ -110,16 +116,19 @@ A `Journey.includes` value MUST be the `id` of a TransitionSet available in the 
 
 For each TransitionSet included by a Journey:
 
-- For every state S in the host Journey such that `S.id` is not in `endStates`:
-  - for every TransitionSetTransition T:
-    - inject an equivalent Transition with:
-      - `from = S.id`
-      - `on = T.on`
-      - `to = T.to`
+* For every state `S` in the host Journey such that `S.id` is not in `endStates`:
+  * for every TransitionSetTransition `T`:
+    * inject an equivalent Transition with:
+      * `id = "<transitionSetId>::<S.id>::<T.id>"`
+      * `from = S.id`
+      * `on = T.on`
+      * `to = T.to`
 
 ### Conflicts
 
 If an injected transition conflicts with an explicit transition in the Journey (same `from` and overlapping `on` values), the explicit transition wins.
+
+If an injected transition's derived `id` would collide with an explicit Transition `id`, the injected transition MUST NOT be materialized.
 
 ## Validity rules (well-formed journeys)
 
@@ -139,8 +148,8 @@ A Journey MUST be well-formed:
 
 A Journey MAY have `transitions: []`. This commonly means:
 
-- the journey layer is used for composition (pages contain components), or
-- there are no meaningful state changes worth modeling at that layer.
+* the journey layer is used for composition (pages contain components), or
+* there are no meaningful state changes worth modeling at that layer.
 
 ### Make "no outgoing transitions" explicit
 
@@ -152,20 +161,13 @@ If a State has no outgoing transitions in this Journey layer, authors SHOULD lis
 
 Put transitions in the journey layer where the state actually changes:
 
-- Page navigation belongs in the website journey (pages change).
-- Header/footer journeys only model their own internal state (e.g., menu open/close), not every click as a self-loop.
-- Use TransitionSets for cross-cutting navigation so you don't repeat edges.
+* Page navigation belongs in the website journey (pages change).
+* Header/footer journeys only model their own internal state (e.g., menu open/close), not every click as a self-loop.
+* Use TransitionSets for cross-cutting navigation so you don't repeat edges.
 
 ## Example: Classical website (pages + components + global nav)
 
-This example shows:
-
-- a website journey with pages as composite states
-- global navigation defined once and included via `includes`
-- a header component journey that "owns" global nav (via `TransitionSet.owner`) without adding noise
-- page journeys that are mostly compositional (and therefore mark their leaf states as `endStates`)
-
-### 1) Component journey: Header (only meaningful header state)
+### 1) Component journey: Header
 
 ```json
 {
@@ -192,7 +194,7 @@ This example shows:
 {
   "type": "TransitionSet",
   "id": "ts:globalNav",
-  "owner": "journey:cmp:header",
+  "owner": { "id": "journey:cmp:header", "version": "ed" },
   "transitions": [
     { "id": "toHome", "on": ["nav.home"], "to": "page:home" },
     { "id": "toBlog", "on": ["nav.blog"], "to": "page:blogIndex" },
@@ -212,10 +214,30 @@ This example shows:
   "endStates": ["site:exit"],
   "includes": ["ts:globalNav"],
   "states": [
-    { "type": "CompositeState", "id": "page:home", "label": "Home", "subjourney": "journey:page:home" },
-    { "type": "CompositeState", "id": "page:blogIndex", "label": "Blog Index", "subjourney": "journey:page:blogIndex" },
-    { "type": "CompositeState", "id": "page:post", "label": "Post", "subjourney": "journey:page:post" },
-    { "type": "CompositeState", "id": "page:contact", "label": "Contact", "subjourney": "journey:page:contact" },
+    {
+      "type": "CompositeState",
+      "id": "page:home",
+      "label": "Home",
+      "subjourneyRef": { "id": "journey:page:home", "version": "ed" }
+    },
+    {
+      "type": "CompositeState",
+      "id": "page:blogIndex",
+      "label": "Blog Index",
+      "subjourneyRef": { "id": "journey:page:blogIndex", "version": "ed" }
+    },
+    {
+      "type": "CompositeState",
+      "id": "page:post",
+      "label": "Post",
+      "subjourneyRef": { "id": "journey:page:post", "version": "ed" }
+    },
+    {
+      "type": "CompositeState",
+      "id": "page:contact",
+      "label": "Contact",
+      "subjourneyRef": { "id": "journey:page:contact", "version": "ed" }
+    },
     { "type": "State", "id": "site:exit", "label": "Exit" }
   ],
   "transitions": [
@@ -238,14 +260,19 @@ This example shows:
   "endStates": ["home:hero"],
   "includes": [],
   "states": [
-    { "type": "CompositeState", "id": "home:header", "label": "Header", "subjourney": "journey:cmp:header" },
+    {
+      "type": "CompositeState",
+      "id": "home:header",
+      "label": "Header",
+      "subjourneyRef": { "id": "journey:cmp:header", "version": "ed" }
+    },
     { "type": "State", "id": "home:hero", "label": "Hero" }
   ],
   "transitions": []
 }
 ```
 
-#### Blog index page journey (composition-only; list selection drives website-level transition)
+#### Blog index page journey (composition-only)
 
 ```json
 {
@@ -256,7 +283,12 @@ This example shows:
   "endStates": ["blog:list"],
   "includes": [],
   "states": [
-    { "type": "CompositeState", "id": "blog:header", "label": "Header", "subjourney": "journey:cmp:header" },
+    {
+      "type": "CompositeState",
+      "id": "blog:header",
+      "label": "Header",
+      "subjourneyRef": { "id": "journey:cmp:header", "version": "ed" }
+    },
     { "type": "State", "id": "blog:list", "label": "Posts list" }
   ],
   "transitions": []
@@ -274,14 +306,19 @@ This example shows:
   "endStates": ["post:content"],
   "includes": [],
   "states": [
-    { "type": "CompositeState", "id": "post:header", "label": "Header", "subjourney": "journey:cmp:header" },
+    {
+      "type": "CompositeState",
+      "id": "post:header",
+      "label": "Header",
+      "subjourneyRef": { "id": "journey:cmp:header", "version": "ed" }
+    },
     { "type": "State", "id": "post:content", "label": "Post content" }
   ],
   "transitions": []
 }
 ```
 
-#### Contact page journey (has an internal success end state)
+#### Contact page journey (internal success end state)
 
 ```json
 {
@@ -292,7 +329,12 @@ This example shows:
   "endStates": ["contact:success"],
   "includes": [],
   "states": [
-    { "type": "CompositeState", "id": "contact:header", "label": "Header", "subjourney": "journey:cmp:header" },
+    {
+      "type": "CompositeState",
+      "id": "contact:header",
+      "label": "Header",
+      "subjourneyRef": { "id": "journey:cmp:header", "version": "ed" }
+    },
     { "type": "State", "id": "contact:form", "label": "Form" },
     { "type": "State", "id": "contact:success", "label": "Message sent" }
   ],
@@ -306,6 +348,7 @@ This example shows:
 
 To align other modules with this Core module:
 
-- Replace "Journey Definition" with **Journey**
-- Replace `definitionRef` with `journeyRef {id, version}`
-- Keep `stateRef` values consistent with Core `State.id` strings
+* Use **Journey** as the design-time object name
+* Use `journeyRef: { id, version }` when runtime/derived data needs to reference a Journey version
+* Keep `stateRef` values consistent with Core `State.id` / `CompositeState.id` strings
+* Do not reintroduce `kind: "end"`; use `endStates`

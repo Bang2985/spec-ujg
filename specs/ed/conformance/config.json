@@ -1,7 +1,8 @@
 {
     "id": "conformance",
+    "track": "incubating",
     "deps": [
-        "core",
+        "profiles",
         "runtime"
     ]
 }

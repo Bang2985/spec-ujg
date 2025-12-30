@@ -1,7 +1,7 @@
 {
-    "id": "structure",
+    "id": "profiles",
     "track": "incubating",
     "deps": [
-        "core"
+        "serialization"
     ]
 }
