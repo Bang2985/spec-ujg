@@ -10,12 +10,9 @@ import Grid from "../components/ds/Grid.astro";
 <HomeLayout title="User Journey Graph Specifications">
 	<Hero
 		title="User Journey Graph (UJG)"
-		description="A family of open specifications that model user journeys as graphs of states and transitions, separating design intent from runtime execution to enable validation, measurement, and iteration."
-		pills={[
-			"UJG • Open Specification",
-			"Design-time ↔ Runtime",
-			"Graph-based journeys",
-		]}
+		description="UJG cleanly separates design-time intent from runtime execution so teams can design, validate, measure, and iterate on journeys with confidence"
+		,
+		pills={["UJG • Open Specification"]}
 		actions={[
 			// {
 			// 	label: "Latest Technical Report",
@@ -24,29 +21,9 @@ import Grid from "../components/ds/Grid.astro";
 			// },
 			{ label: "Editor's Draft Workspace", href: "/ed/" },
 		]}
-		stats={[
-			{ value: "6", label: "Core documents" },
-			{ value: "2", label: "Journey layers" },
-			{ value: "1", label: "Spec family" },
-		]}
 	/>
 
 	<section class="grid">
-		<Panel variant="intro">
-			<h2>Start here</h2>
-			<p>
-				UJM is composed of living drafts and stable snapshots. Navigate
-				by what you need right now.
-			</p>
-			<ul class="links">
-				<!-- <li><a href="/tr/latest/">Latest Technical Report</a></li> -->
-				<li><a href="/ed/">Editor's Draft workspace</a></li>
-				<li><a href="/governance/">Governance</a></li>
-				<li><a href="/contributing/">Contributing</a></li>
-				<li><a href="https://github.com/">Repository</a></li>
-			</ul>
-		</Panel>
-
 		<Panel
 			variant="contrast"
 			title="Editor's Draft (ED)"
@@ -62,27 +39,11 @@ import Grid from "../components/ds/Grid.astro";
 				<li>Prototype the newest journey patterns.</li>
 			</ul>
 		</Panel>
-
-		<Panel
-			variant="contrast"
-			title="Technical Reports (TR)"
-			tag="Stable snapshot"
-		>
-			<p>
-				TRs are versioned releases of stable UJM work, covering the spec
-				family as a whole.
-			</p>
-			<ul>
-				<li>Stable references for citations.</li>
-				<li>Consensus-based requirements.</li>
-				<li>Reliable baseline for interoperability.</li>
-			</ul>
-		</Panel>
 	</section>
 
 	<section class="flow">
 		<div class="flow__header">
-			<h2>What's inside the UJM family</h2>
+			<h2>What's inside the UJG family</h2>
 			<p>
 				Each document focuses on a specific aspect of journey modeling.
 				Together, they connect intent, execution, and measurement.
@@ -97,22 +58,7 @@ import Grid from "../components/ds/Grid.astro";
 			<Card
 				title="Core Model"
 				description="Journeys, states, transitions, start/end, identity, and versioning."
-				href="/ed/core-model/"
-			/>
-			<Card
-				title="Design-Time Definitions"
-				description="Prescriptive graphs: allowed paths, optional paths, and guards."
-				href="/ed/design-time/"
-			/>
-			<Card
-				title="Runtime Executions"
-				description="Trace events, sessions, timing, and references to design intent."
-				href="/ed/runtime/"
-			/>
-			<Card
-				title="Metrics & Conformance"
-				description="Conformance scoring, violations, drop-offs, and core metrics."
-				href="/ed/metrics/"
+				href="/ed/core/"
 			/>
 			<Card
 				title="Serialization"
@@ -157,7 +103,7 @@ import Grid from "../components/ds/Grid.astro";
 		<Panel variant="glow">
 			<h2>Publishing model</h2>
 			<p>
-				UJM evolves in the Editor's Draft workspace. When parts become
+				UJG evolves in the Editor's Draft workspace. When parts become
 				stable they are snapshotted into a new Technical Report version.
 			</p>
 			<ul>
@@ -170,7 +116,7 @@ import Grid from "../components/ds/Grid.astro";
 
 	<CTA
 		title="Participate"
-		description="UJM is developed openly. Feedback, issues, and implementation reports are welcome."
+		description="UJG is developed openly. Feedback, issues, and implementation reports are welcome."
 		links={[
 			{ label: "Governance", href: "/governance/" },
 			{ label: "Contributing", href: "/contributing/" },
