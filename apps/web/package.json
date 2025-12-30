@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "astro": "^5.16.6",
-    "tailwindcss": "^4.1.18"
+    "tailwindcss": "^4.1.18",
+    "@openuji/speculator": "^0.4.0"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.18"

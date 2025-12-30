@@ -5,8 +5,5 @@
     "scripts": {
         "dev": "pnpm -r dev",
         "build": "pnpm -r build"
-    },
-    "dependencies": {
-        "@openuji/speculator": "link:../../speculator/packages/speculator"
     }
 }
