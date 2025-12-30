@@ -42,7 +42,7 @@ An `ObservedJourneyGraph` MUST include:
 
 It SHOULD include:
 
-- `definitionRef` when the observed graph is aligned to a JourneyDefinition version
+- `JourneyRef` when the observed graph is aligned to a Journey version
 - `cohort` when it represents a specific segment
 
 ### source
@@ -88,7 +88,7 @@ Observed graphs can be built in two modes:
 
 ### Mode A: aligned (recommended)
 
-If the input executions have `definitionRef`, the observed graph SHOULD include the same `definitionRef`.
+If the input executions have `JourneyRef`, the observed graph SHOULD include the same `JourneyRef`.
 
 In aligned mode:
 
@@ -102,7 +102,7 @@ If no definition is available, the observed graph MAY still be computed. In this
 - states MAY be derived from emitter-provided state names, URLs, or other grouping keys,
 - transitions are derived from observed sequences.
 
-Consumers MUST clearly indicate unaligned mode (e.g., omit `definitionRef`).
+Consumers MUST clearly indicate unaligned mode (e.g., omit `JourneyRef`).
 
 ## Core metrics (normative minimal set)
 
@@ -191,7 +191,7 @@ Observed graphs become especially useful when computed per cohort:
 - geography
 - traffic source
 - experiment variant
-- version of the JourneyDefinition
+- version of the Journey
 
 You can compare observed graphs as graph deltas:
 
@@ -207,7 +207,7 @@ This can be more informative than a single KPI delta.
 {
   "type": "ObservedJourneyGraph",
   "id": "obs_checkout_2025w52_web",
-  "definitionRef": {
+  "JourneyRef": {
     "id": "https://ujg.example/TR/2026.01/journeys/checkout",
     "version": "2026.01"
   },

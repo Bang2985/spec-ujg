@@ -44,7 +44,7 @@ A Runtime Emitter MUST:
 
 A Runtime Emitter SHOULD:
 
-- reference the Journey Definition (`definitionRef`) when one is known,
+- reference the Journey Definition (`JourneyRef`) when one is known,
 - emit stable `type` values for events.
 
 ### UJG Consumer
@@ -54,7 +54,7 @@ A Consumer validates and/or analyzes Journey Definitions and Journey Executions.
 A Consumer MUST:
 
 - be able to validate well-formedness of the data it consumes,
-- apply classification rules consistently when a `definitionRef` is present.
+- apply classification rules consistently when a `JourneyRef` is present.
 
 A Consumer MAY:
 
@@ -75,9 +75,9 @@ A Consumer MUST treat a Journey Execution as invalid if:
 - event timestamps are missing,
 - event IDs are not unique within the execution.
 
-If `definitionRef` is present, then:
+If `JourneyRef` is present, then:
 
-- `stateRef` and `transitionRef` values (when provided) MUST resolve to existing identifiers in that referenced Journey Definition version.
+- `stateRef` and `transitionRef` values (when provided) MUST resolve to existing identifiers in that referenced Journey version.
 - If they do not resolve, the Consumer MUST flag a `referenceError`.
 
 ## Conformance classification (normative)
@@ -90,11 +90,11 @@ If `definitionRef` is present, then:
 
 ### Classification results
 
-A Consumer MUST classify runtime behavior into these categories when `definitionRef` is present:
+A Consumer MUST classify runtime behavior into these categories when `JourneyRef` is present:
 
-- **Conformant**: The observed transition exists in the Journey Definition.
-- **Optional**: The observed transition exists in the Journey Definition and is marked optional, or belongs to a non-primary path (see "Optionality" below).
-- **Violation**: The observed transition does not exist in the Journey Definition.
+- **Conformant**: The observed transition exists in the Journey.
+- **Optional**: The observed transition exists in the Journey and is marked optional, or belongs to a non-primary path (see "Optionality" below).
+- **Violation**: The observed transition does not exist in the Journey.
 - **Drop-off**: The execution ends (or becomes inactive beyond a threshold) in a non-end state where an expected next step exists.
 
 > **Note:** "Drop-off" is about missing continuation, not about an invalid transition.

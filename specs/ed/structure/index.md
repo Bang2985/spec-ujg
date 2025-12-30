@@ -174,7 +174,7 @@ Views can be defined in approachable ways:
 
 ```json
 {
-  "type": "JourneyDefinition",
+  "type": "Journey",
   "id": "https://ujg.example/TR/2026.01/journeys/checkout",
   "version": "2026.01",
   "startState": "browse",

@@ -2,7 +2,7 @@
 
 ## Abstract
 
-This module defines the runtime representation of journeys: executions (instances of a journey), composed of events and/or state transitions over time. Runtime data can reference a JourneyDefinition version to enable conformance checking and comparable metrics.
+This module defines the runtime representation of journeys: executions (instances of a journey), composed of events and/or state transitions over time. Runtime data can reference a Journey version to enable conformance checking and comparable metrics.
 
 ## What runtime data is for
 
@@ -32,7 +32,7 @@ A `JourneyExecution` MUST include:
 
 A `JourneyExecution` SHOULD include:
 
-- `definitionRef` (reference to JourneyDefinition `id` + `version`)
+- `JourneyRef` (reference to Journey `id` + `version`)
 - `endedAt` (timestamp) when known
 - `subject` (an anonymized/session identifier; avoid PII)
 
@@ -59,8 +59,8 @@ An `Event` MAY include:
 
 ## Linking to design-time (normative recommendation)
 
-- A `JourneyExecution` SHOULD reference a JourneyDefinition (`definitionRef`) to enable conformance checks.
-- If `definitionRef` is present, `stateRef` and `transitionRef` (when used) MUST resolve to IDs defined by that referenced JourneyDefinition version.
+- A `JourneyExecution` SHOULD reference a Journey (`JourneyRef`) to enable conformance checks.
+- If `JourneyRef` is present, `stateRef` and `transitionRef` (when used) MUST resolve to IDs defined by that referenced Journey version.
 
 ## Runtime example (informative)
 
@@ -68,7 +68,7 @@ An `Event` MAY include:
 {
   "type": "JourneyExecution",
   "id": "exec_9f2a",
-  "definitionRef": {
+  "JourneyRef": {
     "id": "https://ujg.example/TR/2026.01/journeys/checkout",
     "version": "2026.01"
   },

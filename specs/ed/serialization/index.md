@@ -34,7 +34,7 @@ This module does **not** define conformance classification logic (see Conformanc
 
 - Every UJG object MUST include a `type` property whose value is a string.
 - Examples:
-  - `JourneyDefinition`
+  - `Journey`
   - `State`
   - `Transition`
   - `JourneyExecution`
@@ -55,8 +55,8 @@ This module does **not** define conformance classification logic (see Conformanc
 ### version
 
 - Objects that define a stable contract over time MUST include a `version`.
-- `JourneyDefinition` MUST include `version`.
-- `JourneyExecution` SHOULD include a reference to the definition version (via `definitionRef`, see below).
+- `Journey` MUST include `version`.
+- `JourneyExecution` SHOULD include a reference to the definition version (via `JourneyRef`, see below).
 
 ### Reserved keys
 
@@ -89,25 +89,25 @@ When one object references another, it MUST do so using the target object's iden
 
 A Transition references `from` and `to` states by state ID string.
 
-### definitionRef
+### JourneyRef
 
 Runtime objects SHOULD reference the design-time definition they relate to.
 
-`definitionRef` MUST be an object with:
+`JourneyRef` MUST be an object with:
 
-- `id` (JourneyDefinition id)
-- `version` (JourneyDefinition version)
+- `id` (Journey id)
+- `version` (Journey version)
 
 **Example:**
 
 ```json
-"definitionRef": {
+"JourneyRef": {
   "id": "https://ujg.example/TR/2026.01/journeys/checkout",
   "version": "2026.01"
 }
 ```
 
-If `definitionRef` is present:
+If `JourneyRef` is present:
 
 - any `stateRef` / `transitionRef` values MUST resolve against that definition version.
 
@@ -152,7 +152,7 @@ Consumers MUST be forward compatible by default:
 Producers SHOULD:
 
 - avoid breaking changes within the same TR snapshot,
-- bump `JourneyDefinition.version` when identifiers or normative meanings change.
+- bump `Journey.version` when identifiers or normative meanings change.
 
 ## Bundling multiple objects (informative, common in practice)
 
@@ -164,7 +164,7 @@ A bundling format MAY be used like:
 {
   "type": "UJGDocument",
   "items": [
-    { "type": "JourneyDefinition", "...": "..." },
+    { "type": "Journey", "...": "..." },
     { "type": "JourneyExecution", "...": "..." }
   ]
 }
@@ -181,11 +181,11 @@ Bundling is optional; consumers MAY accept single-object payloads.
 
 This module does not re-define the full models, but it pins down serialization expectations that apply across modules:
 
-### JourneyDefinition (design-time)
+### Journey (design-time)
 
-A `JourneyDefinition` JSON object MUST include:
+A `Journey` JSON object MUST include:
 
-- `type: "JourneyDefinition"`
+- `type: "Journey"`
 - `id`
 - `version`
 - `startState` (string)
@@ -245,7 +245,7 @@ UJG can be used as plain JSON. If a publisher wants JSON-LD:
 ```json
 {
   "@context": "https://ujg.example/ns/context.jsonld",
-  "type": "JourneyDefinition",
+  "type": "Journey",
   "id": "https://ujg.example/TR/2026.01/journeys/checkout",
   "version": "2026.01",
   "...": "..."
@@ -256,11 +256,11 @@ Consumers that do not support JSON-LD MUST treat `@context` as an ignorable unkn
 
 ## Examples
 
-### Example: compact JourneyDefinition (JSON)
+### Example: compact Journey (JSON)
 
 ```json
 {
-  "type": "JourneyDefinition",
+  "type": "Journey",
   "id": "https://ujg.example/TR/2026.01/journeys/checkout",
   "version": "2026.01",
   "name": "Checkout Journey",
