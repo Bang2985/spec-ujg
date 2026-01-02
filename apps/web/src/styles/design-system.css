@@ -48,6 +48,9 @@
     --spacing-xl: 32px;
     --spacing-2xl: 40px;
     --spacing-3xl: 48px;
+
+
+    --header-height: 64px;
 }
 
 /* === BASE STYLES === */
@@ -633,3 +636,7 @@ body {
 .ed-module-card a:hover {
     text-decoration: underline;
 }
+
+  .spec-section {
+    scroll-margin-top: calc(var(--header-height) + var(--spacing-xl));
+  }
