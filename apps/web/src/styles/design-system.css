@@ -107,6 +107,10 @@
     --font-mono: "Space Grotesk", system-ui, sans-serif;
     --font-sans: "Inter", system-ui, sans-serif;
 
+    --text-2xs: 0.6rem;
+    --text-xs: 0.8125rem;
+    
+    
 
 
 }
@@ -170,6 +174,7 @@
     
   --padding-base: 1rem;
   --padding-md: 1.5rem;
+
   --padding-lg: 2rem;
 
 
@@ -595,75 +600,6 @@
 
 /* === ED OVERVIEW STYLES === */
 
-.ed-overview {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: var(--spacing-3xl) var(--spacing-lg);
-}
-
-.ed-overview h1 {
-    font-size: 2.5rem;
-    margin-bottom: var(--spacing-lg);
-}
-
-.ed-overview__intro {
-    color: var(--secondary-foreground);
-    font-size: 1.1rem;
-    max-width: 680px;
-    margin-bottom: var(--spacing-2xl);
-}
-
-.ed-modules {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--spacing-lg);
-}
-
-.ed-module-card {
-    background: white;
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-lg);
-    border: 1px solid var(--color-border);
-    box-shadow: var(--shadow-panel);
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-sm);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.ed-module-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 24px 48px rgba(23, 26, 43, 0.12);
-}
-
-.ed-module-card h3 {
-    margin: 0;
-    font-size: 1.2rem;
-}
-
-.ed-module-card p {
-    margin: 0;
-    color: var(--secondary-foreground);
-    font-size: 0.9rem;
-    line-height: 1.5;
-    flex-grow: 1;
-}
-
-.ed-module-card a {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--spacing-xs);
-    color: var(--color-accent);
-    text-decoration: none;
-    font-weight: 600;
-}
-
-.ed-module-card a:hover {
-    text-decoration: underline;
-}
-
-
-
 @layer base {
   /* Page-ish defaults (optional) */
   body {
@@ -838,7 +774,14 @@
     @apply my-6 rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-zinc-700;
   }
 
-  /* Optional: spacing polish — avoid extra margin at the edges */
   .spec > :first-child{ @apply mt-0; }
   .spec > :last-child{ @apply mb-0; }
+
+  
+}
+
+@layer utilities {
+  .active {
+    @apply text-accent;
+  }
 }
