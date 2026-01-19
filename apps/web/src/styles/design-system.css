@@ -47,7 +47,6 @@
   --shadow-panel: 0 20px 40px rgba(23, 26, 43, 0.08);
   --shadow-button-primary: 0 12px 24px rgba(108, 92, 255, 0.3);
 
-  --font-display: "Space Grotesk", system-ui, sans-serif;
 }
 
 /* Optional: real dark mode (if/when you want it) */
@@ -102,8 +101,8 @@
     --radius-sm: 14px;
 
     /* Typography */
-    --font-display: "Space Grotesk", system-ui, sans-serif;
-
+    --font-mono: "Space Grotesk", system-ui, sans-serif;
+    --font-sans: "Inter", system-ui, sans-serif;
 
 
 
@@ -140,8 +139,6 @@
   --color-panel: var(--panel);
   --color-panel-solid: var(--panel-solid);
 
-  /* fonts + radius */
-  --font-sans: var(--font-display);
   --radius-lg: var(--radius);
 
   /* custom shadows as shadow-* utilities */
@@ -176,6 +173,10 @@
 body {
     @apply font-sans text-foreground;
     background: var(--app-bg);
+}
+
+h1 {
+    @apply font-mono;
 }
 
 }

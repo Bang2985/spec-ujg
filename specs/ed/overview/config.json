@@ -1,5 +1,9 @@
 {
     "id": "overview",
+    "title": "Overview",
     "track": "draft",
-    "deps": []
+    "deps": [],
+    "custom": {
+        "boom": true
+    }
 }

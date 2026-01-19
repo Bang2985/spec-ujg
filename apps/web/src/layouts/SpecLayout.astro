@@ -6,13 +6,14 @@ import type { TocEntry } from "../components/ui/Toc";
 
 interface Props {
   title?: string;
+  parent: { href: string; title: string };
   toc?: TocEntry[];
 }
-const { title = "Specification - UJG", toc = [] } = Astro.props;
+const { toc = [], title = "", parent } = Astro.props;
 ---
 
 <BaseLayout title={title}>
-  <Header toc={toc} title={title} />
+  <Header toc={toc} breadcrumb={[parent, { title }]} />
 
   <div
     class="max-w-content mx-auto grid grid-cols-[1fr] md:grid-cols-[var(--width-sidebar)_1fr]"

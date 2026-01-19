@@ -14,8 +14,8 @@ importers:
         specifier: ^4.4.2
         version: 4.4.2(@types/node@25.0.3)(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(jiti@2.6.1)(lightningcss@1.30.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@openuji/speculator':
-        specifier: ^0.5.3
-        version: 0.5.3
+        specifier: file:/Users/zavalit/Projects/openuji/speculator/packages/speculator
+        version: file:../../speculator/packages/speculator
       '@radix-ui/react-dialog':
         specifier: ^1.1.15
         version: 1.1.15(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
@@ -520,8 +520,8 @@ packages:
   '@mermaid-js/parser@0.6.3':
     resolution: {integrity: sha512-lnjOhe7zyHjc+If7yT4zoedx2vo4sHaTmtkl1+or8BRTnCtDmcTpAjpzDSfCZrshM5bCoz0GyidzadJAH1xobA==}
 
-  '@openuji/speculator@0.5.3':
-    resolution: {integrity: sha512-bwAlE2KJnqtU9wpW0l5iN6Eet6xB5RQQ79RMoIHUtIj7OKxlqxo4VUnrcrlHXPa9u/CK5/ZBR441AvgrmbEJXg==}
+  '@openuji/speculator@file:../../speculator/packages/speculator':
+    resolution: {directory: ../../speculator/packages/speculator, type: directory}
 
   '@oslojs/encoding@1.1.0':
     resolution: {integrity: sha512-70wQhgYmndg4GCPxPPxPGevRKqTIJ2Nh4OkiMWmDAVYsTQ+Ta7Sq+rPevXyXGdzr30/qZBnyOalCszoMxlyldQ==}
@@ -3061,7 +3061,7 @@ snapshots:
     dependencies:
       langium: 3.3.1
 
-  '@openuji/speculator@0.5.3':
+  '@openuji/speculator@file:../../speculator/packages/speculator':
     dependencies:
       rehype-parse: 9.0.1
       remark-gfm: 4.0.1

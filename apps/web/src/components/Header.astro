@@ -3,11 +3,11 @@ import { MobileToc } from "./ui/MobileToc";
 import type { TocEntry } from "./ui/Toc";
 
 interface Props {
-  toc: TocEntry[];
-  title?: string;
+  toc?: TocEntry[];
+  breadcrumb?: { title: string; href?: string }[];
 }
 
-const { toc, title = "UJG Specification" } = Astro.props;
+const { toc = [], breadcrumb = [] } = Astro.props;
 ---
 
 <header
@@ -17,15 +17,27 @@ const { toc, title = "UJG Specification" } = Astro.props;
     class="max-w-content mx-auto h-header px-6 flex items-center justify-between"
   >
     <div class="flex items-center justify-between">
-      <MobileToc toc={toc} client:load />
+      {toc.length > 0 && <MobileToc toc={toc} client:load />}
       <a href="/" class="hidden sm:flex">
         <span class="text-primary font-bold">UJG</span>
-        <span class="text-border">/</span>
-        <span
-          class="text-secondary-foreground hover:text-accent transition-colors duration-200"
-          >{title}</span
-        >
       </a>
+      {
+        breadcrumb.map((item) => (
+          <>
+            <span class="text-border">/</span>
+            {item.href ? (
+              <a
+                href={item.href}
+                class="text-secondary-foreground hover:text-accent transition-colors duration-200"
+              >
+                {item.title}
+              </a>
+            ) : (
+              <span class="text-secondary-foreground">{item.title}</span>
+            )}
+          </>
+        ))
+      }
     </div>
     <nav class="hidden sm:flex">
       <a

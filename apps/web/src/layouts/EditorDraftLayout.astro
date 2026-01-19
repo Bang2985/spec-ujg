@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
+import Header from "@/components/Header.astro";
 
 interface Props {
   title?: string;
@@ -8,6 +9,7 @@ const { title = "Editor's Draft - UJG Specs" } = Astro.props;
 ---
 
 <BaseLayout title={title}>
+  <Header breadcrumb={[{ title: "ED" }]} />
   <div class="ed-overview page">
     <slot />
   </div>
