@@ -14,7 +14,9 @@ const { title = "Specification - UJG", toc = [] } = Astro.props;
 <BaseLayout title={title}>
   <Header toc={toc} title={title} />
 
-  <div class="layout-wrapper">
+  <div
+    class="max-w-content mx-auto grid grid-cols-[1fr] md:grid-cols-[var(--width-sidebar)_1fr]"
+  >
     <aside class="sidebar">
       <div class="sidebar-content">
         <div class="sidebar-title">Table of Contents</div>

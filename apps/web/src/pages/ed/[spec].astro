@@ -6,7 +6,6 @@ import SpecLayout from "@/layouts/SpecLayout.astro";
 
 export async function getStaticPaths() {
   const specs = await listSortedSpecs();
-  console.log("specs.entries", specs.entries);
   return specs.entries.map((spec: EntryWithConfig) => ({
     params: {
       spec: spec.config.id,
@@ -17,7 +16,6 @@ export async function getStaticPaths() {
 const { spec } = Astro.params;
 
 const document: Document = await loadDocument(spec);
-console.log("document", document);
 ---
 
 <SpecLayout title={`${spec} - UJG Spec`} toc={document.computed?.toc || []}>

@@ -39,8 +39,8 @@ const TocItem: React.FC<{ entry: TocEntry; onItemClick?: () => void }> = ({
           href={`#${entry.id || ""}`}
           onClick={onItemClick}
           className={cn(
-            "flex-1 py-1 px-2 text-sm transition-colors rounded-md hover:bg-accent-soft hover:text-accent",
-            entry.depth === 1 ? "font-semibold" : "text-muted"
+            "flex-1 py-1 px-2 text-sm transition-colors rounded-md hover:bg-muted hover:text-accent",
+            entry.depth === 1 ? "font-semibold" : "text-secondary-foreground"
           )}
           style={{ paddingLeft: `${entry.depth * 0.75}rem` }}
         >
