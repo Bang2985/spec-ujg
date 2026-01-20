@@ -1,17 +1,18 @@
 ---
 import HomeLayout from "@/layouts/HomeLayout.astro";
+import PageLayout from "@/layouts/PageLayout.astro";
 
 export async function getStaticPaths() {
   const pages = [
     {
       slug: "governance",
       fileName: "governance.md",
-      title: "Governance - UJG Spec",
+      title: "Governance",
     },
     {
       slug: "contributing",
       fileName: "contribution.md",
-      title: "Contributing - UJG Spec",
+      title: "Contributing",
     },
   ];
 
@@ -36,8 +37,8 @@ const post = (await allSpecs[specPath]()) as any;
 const { Content } = post;
 ---
 
-<HomeLayout title={title}>
-  <article class="prose max-w-spec min-w-0 mx-auto">
+<PageLayout title={title}>
+  <article class="prose max-w-spec min-w-0 mx-auto p-md">
     <Content />
   </article>
-</HomeLayout>
+</PageLayout>
