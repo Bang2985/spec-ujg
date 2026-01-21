@@ -1,33 +1,43 @@
 ---
 import { type Document, type EntryWithConfig } from "@openuji/speculator";
-import { loadDocument, listSortedSpecs } from "@/utils/load";
-import BlockRenderer from "@/components/BlockRenderer.astro";
+import { loadDocument, listSortedSpecs } from "@/lib/load";
+import BlockRenderer from "@/components/astro/BlockRenderer.astro";
 import SpecLayout from "@/layouts/SpecLayout.astro";
 
 export async function getStaticPaths() {
   const specs = await listSortedSpecs();
-  console.log("specs.entries", specs.entries);
+
   return specs.entries.map((spec: EntryWithConfig) => ({
     params: {
       spec: spec.config.id,
     },
+    props: {
+      id: spec.config.id,
+      title: spec.config.title,
+    },
   }));
 }
 
-const { spec } = Astro.params;
+const { id, title } = Astro.props;
 
-const document: Document = await loadDocument(spec);
-console.log("document", document);
+const document: Document = await loadDocument(id);
 ---
 
-<SpecLayout title={`${spec} - UJG Spec`} toc={document.computed?.toc || []}>
-  {
-    document.children.map((child) => (
-      <BlockRenderer
-        node={child}
-        documentPath={document.sourcePos?.file}
-        headingNumbers={document.computed?.headingNumbers}
-      />
-    ))
-  }
-</SpecLayout>
+<SpecLayout
+  title={title}
+  parent={{ href: "/ed", title: "Editor's Draft" }}
+  toc={document.computed?.toc || []}
+>
+  <article class="spec">
+    <h1>{title}</h1>
+    {
+      document.children.map((child) => (
+        <BlockRenderer
+          node={child}
+          documentPath={document.sourcePos?.file}
+          headingNumbers={document.computed?.headingNumbers}
+        />
+      ))
+    }
+  </article></SpecLayout
+>

@@ -53,7 +53,7 @@ These are recommendations for tools, docs, and workshops (the data model does no
 
 ### Diagram: a simple journey (informative)
 
-```mermaid
+```ujg
 flowchart LR
   A[Start: Home] --> B[Product]
   B --> C[Cart]

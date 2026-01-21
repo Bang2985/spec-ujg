@@ -1,5 +1,9 @@
 {
     "id": "overview",
-    "track": "draft",
-    "deps": []
+    "title": "Overview",
+    "maturityLevel": "draft",
+    "deps": [],
+    "custom": {
+        "boom": true
+    }
 }
