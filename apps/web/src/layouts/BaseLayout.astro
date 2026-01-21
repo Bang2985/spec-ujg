@@ -7,6 +7,7 @@ const { title = "User Journey Mapping Specifications", bodyClass = "" } =
   Astro.props;
 import "@/styles/design-system.css";
 import { ClientRouter } from "astro:transitions";
+import Banner from "@/components/astro/Banner.astro";
 ---
 
 <!doctype html>
@@ -33,6 +34,7 @@ import { ClientRouter } from "astro:transitions";
     <ClientRouter />
   </head>
   <body class={bodyClass}>
+    <Banner />
     <slot />
   </body>
 </html>
