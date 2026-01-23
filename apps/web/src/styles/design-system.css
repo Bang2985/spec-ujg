@@ -281,14 +281,23 @@ main {
     margin-left: -300px; /* Fixed width for slide */
     opacity: 0;
     pointer-events: none;
+    position: fixed;
+    top: var(--height-header);
+    left: 0;
+    height: calc(100vh - var(--height-header));
+    height: calc(100dvh - var(--height-header)); /* Use dynamic viewport height for mobile */
+    z-index: 40;
+    background: var(--spec-bg);
+    overflow-y: auto;
   }
   .sidebar-content {
     visibility: hidden;
+    position: static; /* Override sticky on mobile */
   }
 
   /* Show when toggled (mobile) */
   [data-toc-toggled="true"] .sidebar {
-    margin-left: -12px; /* Offset for internal padding/sticky spacing */
+    margin-left: 0;
     opacity: 1;
     pointer-events: auto;
   }
