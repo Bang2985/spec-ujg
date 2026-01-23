@@ -1,9 +1,8 @@
 {
     "id": "runtime",
     "title": "Runtime",
-    "maturityLevel": "incubating",
+    "maturityLevel": "draft",
     "deps": [
-        "designed",
-        "structure"
+        "designed"
     ]
 }

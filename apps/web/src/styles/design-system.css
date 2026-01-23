@@ -284,11 +284,15 @@ main {
     position: fixed;
     top: var(--height-header);
     left: 0;
+
     height: calc(100vh - var(--height-header));
     height: calc(100dvh - var(--height-header)); /* Use dynamic viewport height for mobile */
     z-index: 40;
     background: var(--spec-bg);
     overflow-y: auto;
+
+    @apply pl-lg;
+
   }
   .sidebar-content {
     visibility: hidden;

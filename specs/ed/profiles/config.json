@@ -3,6 +3,8 @@
     "title": "Profiles",
     "maturityLevel": "incubating",
     "deps": [
-        "serialization"
+        "serialization",
+        "runtime",
+        "designed"
     ]
 }

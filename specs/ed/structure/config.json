@@ -1,8 +1,0 @@
-{
-    "id": "structure",
-    "title": "Structure",
-    "maturityLevel": "incubating",
-    "deps": [
-        "designed"
-    ]
-}
