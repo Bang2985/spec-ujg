@@ -1,0 +1,103 @@
+name: "Use case"
+description: "Propose a real-world use case UJG should cover"
+title: "[Use case] <short name>"
+labels:
+  - "use-case"
+  - "needs-triage"
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping UJG!
+
+        **How to write a good use case (keep it simple):**
+        - Describe the **user-visible journey** (what the user does + what outcome they see).
+        - Avoid internal implementation steps like “system validates/renders”.
+        - It helps to name outcomes like: **Success**, **Needs-fix**, **Pending**, **Blocked**.
+
+        If you want to follow discussions and calls, join the W3C UJG Community Group (link in the sidebar / README).
+
+  - type: input
+    id: summary
+    attributes:
+      label: "Summary"
+      description: "One sentence — what is the user trying to do?"
+      placeholder: "A visitor reads a landing page and subscribes to a newsletter."
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: "Context"
+      description: "Where does this happen and why does it matter?"
+      placeholder: "Marketing site; newsletter signup is the primary conversion journey."
+    validations:
+      required: true
+
+  - type: textarea
+    id: actors
+    attributes:
+      label: "Personas (human roles only)"
+      description: "Examples: visitor, returning visitor, admin, support agent."
+      placeholder: "Visitor (new); Visitor (returning)"
+    validations:
+      required: false
+
+  - type: textarea
+    id: journey
+    attributes:
+      label: "Journey narrative (user-visible steps & outcomes)"
+      description: "List the journey as user actions and user-visible outcomes (success / needs-fix / pending / blocked). Avoid UI layout details and internal system actions."
+      placeholder: |
+        1) User arrives.
+        2) User chooses to start (or leaves).
+        3) User provides required info.
+        4) User sees an outcome: Success / Needs-fix / Pending / Blocked.
+        5) If Pending or Needs-fix, user can recover and reach Success.
+    validations:
+      required: true
+
+  - type: textarea
+    id: success
+    attributes:
+      label: "Success criteria (optional)"
+      description: "What must be true when the journey works?"
+      placeholder: "Clear success outcome; no dead-ends; recovery path exists from Needs-fix/Pending."
+    validations:
+      required: false
+
+  - type: textarea
+    id: failure
+    attributes:
+      label: "Failure modes / edge cases (optional)"
+      description: "Journey-level failures: dead-ends, loops, state loss, missing recovery paths, ambiguous outcomes."
+      placeholder: |
+        - User gets stuck in Needs-fix (no clear way to retry)
+        - User cannot complete from Pending (no next step / no resend)
+        - User loops between steps without progress
+        - User can’t tell if Success happened
+    validations:
+      required: false
+
+  - type: textarea
+    id: signals
+    attributes:
+      label: "Measurement signals (optional)"
+      description: "If you have them: conversion/completion, drop-off per outcome, time-to-complete, recovery rate, loop frequency."
+      placeholder: "Completion rate; drop-off points; time-to-complete; recovery rate from Needs-fix/Pending."
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: "Contribution checklist"
+      options:
+        - label: "I checked for duplicates"
+          required: true
+        - label: "I can clarify details if maintainers ask follow-ups"
+          required: true
+        - label: "I want updates via the W3C CG (mailing list / calls)"
+          required: false
