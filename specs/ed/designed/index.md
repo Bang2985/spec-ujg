@@ -150,13 +150,14 @@ The "Checkout" is a single box in the main journey. But if you look inside, it h
 
 ```mermaid
 graph LR
-    H[Home] --> C[Composite State: Checkout]
-    C --> E[Exit]
+    H[Home] --> C
 
-    state C {
+    subgraph C [Composite State: Checkout]
       direction LR
       s1[Shipping] --> s2[Payment]
-    }
+    end
+
+    C --> E[Exit]
 
 ```
 
