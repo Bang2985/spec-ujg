@@ -1,14 +1,8 @@
-## Status of This Document {.unnumbered}
-
-This document defines the **shared wire format** for User Journey Graph (UJG) data. It specifies cross-module serialization rules that apply to all UJG modules (e.g., Designed, Runtime, Observed), including document forms, common fields, identifiers, timestamps, references, extensibility, and forward compatibility.
-
-This document does **not** define module object models (e.g., Journey, State, Transition). Those are defined in their respective module specifications.
-
 ## Abstract {.unnumbered}
 
-This module defines the JSON and optional JSON-LD conventions for UJG data: ids, timestamps, reference shapes, extensions containers, and forward compatibility rules.
+This document defines the **shared wire format** for User Journey Graph (UJG) data. It specifies cross-module serialization rules—including JSON/JSON-LD conventions, identifier uniqueness, timestamp formats, and extensibility—that apply to all UJG modules.
 
-It is intentionally minimal: object models live in their modules (Designed, Runtime, Observed, etc.). This module defines the wire format rules shared across all modules.
+This module is intentionally minimal: it defines _how_ data is structured on the wire, while the specific object models (e.g., Journey, State, Transition) are defined in their respective modules (Designed, Runtime, Observed).
 
 ## Scope
 

@@ -1,0 +1,18 @@
+---
+import type { DocumentMetadata } from "@openuji/speculator";
+
+interface Props {
+    metadata: DocumentMetadata;
+}
+
+const { metadata } = Astro.props;
+const maturityLevel = metadata.maturityLevel as string | undefined;
+
+const variant = maturityLevel || "default";
+---
+
+{
+    metadata.maturityLevel && (
+        <span class:list={["pill",  variant, "uppercase",  "text-xs", "w-fit", "font-mono"]}>{metadata.maturityLevel}</span>
+    )
+}

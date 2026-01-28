@@ -5,16 +5,17 @@ import {
 
 import { buildWorkspaces } from "@openuji/speculator";
 
-const workspaceContent = readFileSync('ujg.workspace.json', 'utf-8');
-const workspaceConfig = JSON.parse(workspaceContent);
-
-const result = await buildWorkspaces(workspaceConfig);
 
 export const getDocuments = async (): Promise<Document[]> => {
+    const workspaceContent = readFileSync('ujg.workspace.json', 'utf-8');
+    const workspaceConfig = JSON.parse(workspaceContent);
+
+    const result = await buildWorkspaces(workspaceConfig);
+
     return result.workspaces.ed.documents;
 }
 
 export const loadDocument = async (spec: string) => {
-    const docs = await result.workspaces.ed.documents;
+    const docs = await getDocuments();
     return docs.find((doc: Document) => doc.id === spec);
 }

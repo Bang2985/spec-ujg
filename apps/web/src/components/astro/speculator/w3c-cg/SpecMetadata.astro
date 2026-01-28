@@ -1,0 +1,122 @@
+---
+import type { DocumentMetadata } from "@openuji/speculator";
+
+interface Props {
+  metadata: DocumentMetadata;
+}
+
+const { metadata } = Astro.props;
+
+function formatRepoLabel(repo: NonNullable<DocumentMetadata["repository"]>) {
+  if (typeof repo === "string") return "View Source";
+  if (repo.repoType === "github") return "GitHub";
+  if (repo.repoType === "gitlab") return "GitLab";
+  return "Repository";
+}
+
+function getRepoUrl(repo: NonNullable<DocumentMetadata["repository"]>) {
+  return typeof repo === "string" ? repo : repo.url;
+}
+---
+
+<div class="metadata-grid border border-border rounded-xl p-8 bg-card shadow-sm">
+  <dl class="grid grid-cols-[120px_1fr] gap-x-8 gap-y-6">
+    {metadata.status && (
+      <div class="contents">
+        <dt class="text-xs font-bold uppercase tracking-wider text-muted-foreground self-baseline pt-0.5">Status</dt>
+        <dd class="text-base text-foreground self-baseline">{metadata.status}</dd>
+      </div>
+    )}
+    
+    {metadata.version && (
+      <div class="contents">
+        <dt class="text-xs font-bold uppercase tracking-wider text-muted-foreground self-baseline pt-0.5">Version</dt>
+        <dd class="text-base text-foreground self-baseline font-mono">{metadata.version}</dd>
+      </div>
+    )}
+
+    {metadata.publishDate && (
+      <div class="contents">
+        <dt class="text-xs font-bold uppercase tracking-wider text-muted-foreground self-baseline pt-0.5">Published</dt>
+        <dd class="text-base text-foreground self-baseline">{metadata.publishDate}</dd>
+      </div>
+    )}
+
+    {metadata.lastUpdateDate && (
+      <div class="contents">
+        <dt class="text-xs font-bold uppercase tracking-wider text-muted-foreground self-baseline pt-0.5">Last Update</dt>
+        <dd class="text-base text-foreground self-baseline">{metadata.lastUpdateDate}</dd>
+      </div>
+    )}
+
+    {metadata.editors && metadata.editors.length > 0 && (
+      <div class="contents">
+        <dt class="text-xs font-bold uppercase tracking-wider text-muted-foreground self-baseline pt-0.5">Editors</dt>
+        <dd class="text-base text-foreground self-baseline">
+          <ul class="list-none p-0 m-0 space-y-2">
+            {metadata.editors.map((e) => (
+              <li class="p-0 m-0">
+                {e.url ? <a href={e.url} class="text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent transition-colors">{e.name}</a> : e.name}
+                {e.company && <span class="text-secondary-foreground text-sm ml-2">({e.company})</span>}
+                {e.note && <span class="text-muted-foreground text-sm"> — {e.note}</span>}
+              </li>
+            ))}
+          </ul>
+        </dd>
+      </div>
+    )}
+
+    {metadata.authors && metadata.authors.length > 0 && (
+      <div class="contents">
+        <dt class="text-xs font-bold uppercase tracking-wider text-muted-foreground self-baseline pt-0.5">Authors</dt>
+        <dd class="text-base text-foreground self-baseline">
+          <ul class="list-none p-0 m-0 space-y-2">
+            {metadata.authors.map((a) => (
+              <li class="p-0 m-0">
+                {a.url ? <a href={a.url} class="text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent transition-colors">{a.name}</a> : a.name}
+                {a.company && <span class="text-secondary-foreground text-sm ml-2">({a.company})</span>}
+                {a.note && <span class="text-muted-foreground text-sm"> — {a.note}</span>}
+              </li>
+            ))}
+          </ul>
+        </dd>
+      </div>
+    )}
+
+    {metadata.group && (
+      <div class="contents">
+        <dt class="text-xs font-bold uppercase tracking-wider text-muted-foreground self-baseline pt-0.5">Group</dt>
+        <dd class="text-base text-foreground self-baseline">
+          {typeof metadata.group === "string" ? (
+            metadata.group
+          ) : metadata.group.url ? (
+            <a href={metadata.group.url} class="text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent transition-colors">{metadata.group.name}</a>
+          ) : (
+            metadata.group.name
+          )}
+        </dd>
+      </div>
+    )}
+
+    {metadata.repository && (
+      <div class="contents">
+        <dt class="text-xs font-bold uppercase tracking-wider text-muted-foreground self-baseline pt-0.5">Repository</dt>
+        <dd class="text-base self-baseline">
+          <a href={getRepoUrl(metadata.repository)} class="inline-flex items-center gap-2 text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent transition-colors">
+            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+            </svg>
+            <span>{formatRepoLabel(metadata.repository)}</span>
+          </a>
+        </dd>
+      </div>
+    )}
+
+    {metadata.license && (
+      <div class="contents">
+        <dt class="text-xs font-bold uppercase tracking-wider text-muted-foreground self-baseline pt-0.5">License</dt>
+        <dd class="text-base text-foreground self-baseline">{metadata.license}</dd>
+      </div>
+    )}
+  </dl>
+</div>

@@ -1,0 +1,139 @@
+---
+import type { DocumentMetadata } from "@openuji/speculator";
+import CGLogo from "./CGLogo.astro";
+import StatusBoilerplate from "./StatusBoilerplate.astro";
+import SpecMetadata from "./SpecMetadata.astro";
+
+interface Props {
+  metadata: DocumentMetadata;
+}
+
+const { metadata } = Astro.props;
+
+const isCG =
+  metadata.status?.startsWith("CG-") ||
+  metadata.custom?.specType === "cg-report";
+
+---
+
+<header class={`spec-header ${isCG ? "pro-theme-cg" : ""}`}>
+
+  <StatusBoilerplate metadata={metadata} />
+
+  <SpecMetadata metadata={metadata} />
+
+  
+
+  {
+    metadata.abstract && (
+      <section class="abstract">
+        <h2>Abstract</h2>
+        <p>{metadata.abstract}</p>
+      </section>
+    )
+  }
+</header>
+
+<style>
+  .spec-header {
+    margin-bottom: 3rem;
+  }
+
+  .nav.breadcrumb {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+  }
+  .nav.breadcrumb a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .nav.breadcrumb a:hover {
+    text-decoration: underline;
+  }
+  .sep {
+    color: var(--text-secondary);
+  }
+  .current {
+    font-weight: bold;
+    color: var(--text-primary);
+  }
+
+  .title-area {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.5rem;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    line-height: 1.2;
+    color: var(--text-primary);
+  }
+
+  .subtitle {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    margin: 0 0 2rem 0;
+    font-weight: 400;
+  }
+
+
+
+  .abstract {
+    border-top: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+    padding-top: 2rem;
+    margin-top: 2rem;
+  }
+
+  .abstract h2 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+  }
+
+  .abstract p {
+    line-height: 1.7;
+    color: var(--text-primary);
+    max-width: 800px;
+    margin: 0;
+  }
+
+  /* W3C CG Theme */
+  .pro-theme-cg {
+    position: relative;
+    padding-top: 1rem;
+  }
+
+
+
+  .cg-copyright {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .cg-copyright a {
+    color: var(--text-primary);
+    text-decoration: none;
+    border-bottom: 1px solid
+      color-mix(in srgb, var(--text-primary) 30%, transparent);
+  }
+
+  .cg-copyright a:hover {
+    border-bottom-color: var(--accent);
+    color: var(--accent);
+  }
+
+
+</style>

@@ -39,6 +39,13 @@
   --warning-soft: oklch(0.96 0.04 95); /* Soft Amber */
   --ring: oklch(0.705 0.015 286.067);
 
+  /* Maturity Levels */
+  --maturity-incubating: #94a3b8;
+  --maturity-draft: #9018f8;
+  --maturity-prerelease: #3b82f6;
+  --maturity-stable: #10b981;
+
+
   /* --- your extra tokens (keep them, just don’t pretend they’re shadcn base tokens) --- */
   --app-bg: radial-gradient(circle at top, #d9e4ff 0%, #f4f5fb 40%), #f4f5fb;
   --spec-bg: #ffffff;
@@ -140,8 +147,8 @@
     --font-mono: "Space Grotesk", system-ui, sans-serif;
     --font-sans: "Inter", system-ui, sans-serif;
 
-    --text-2xs: 0.6rem;
-    --text-xs: 0.8125rem;
+    --font-size-2xs: 0.6rem;
+    --font-size-xs: 0.8125rem;
 
 }
 /* Expose tokens to Tailwind utilities (shadcn convention) */
@@ -255,7 +262,13 @@
   --radius-3xl: calc(var(--radius) + 12px);
 
   --radius-4xl: calc(var(--radius) + 16px);
+
+  --color-maturity-incubating: var(--maturity-incubating);
+  --color-maturity-draft: var(--maturity-draft);
+  --color-maturity-prerelease: var(--maturity-prerelease);
+  --color-maturity-stable: var(--maturity-stable);
 }
+
 
 /* Sidebar Toggle Styles */
 .sidebar, 
@@ -437,9 +450,38 @@ main {
     @apply bg-accent-soft text-accent font-semibold text-sm flex items-center px-3 py-2 rounded-pill;
 }
 
+.pill.text-xs {
+    @apply text-xs;
+    
+}
+
 .pill.accent {
     background: var(--color-accent);
     color: var(--color-primary-foreground);
+}
+
+.pill.incubating {
+    background: color-mix(in srgb, var(--color-maturity-incubating) 10%, transparent);
+    color: var(--color-maturity-incubating);
+    border: 1px solid color-mix(in srgb, var(--color-maturity-incubating) 20%, transparent);
+}
+
+.pill.draft {
+    background: color-mix(in srgb, var(--color-maturity-draft) 10%, transparent);
+    color: var(--color-maturity-draft);
+    border: 1px solid color-mix(in srgb, var(--color-maturity-draft) 20%, transparent);
+}
+
+.pill.prerelease {
+    background: color-mix(in srgb, var(--color-maturity-prerelease) 10%, transparent);
+    color: var(--color-maturity-prerelease);
+    border: 1px solid color-mix(in srgb, var(--color-maturity-prerelease) 20%, transparent);
+}
+
+.pill.stable {
+    background: color-mix(in srgb, var(--color-maturity-stable) 10%, transparent);
+    color: var(--color-maturity-stable);
+    border: 1px solid color-mix(in srgb, var(--color-maturity-stable) 20%, transparent);
 }
 
 @layer components {
@@ -787,15 +829,7 @@ main {
   .spec th, .spec td{ @apply border border-zinc-200 px-3; }
   */
 
-  /* Figures / images */
-  figure{ @apply my-8; }
-  img{
-    @apply my-6 max-w-full rounded-xl border border-zinc-200 bg-white;
-  }
-  figcaption{
-    @apply mt-3 text-sm text-zinc-600;
-  }
-
+  
   /* Details/summary (nice for collapsible sections) */
   details{
     @apply my-6 rounded-xl border border-zinc-200 bg-white px-4 py-3;

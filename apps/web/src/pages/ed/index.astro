@@ -4,6 +4,7 @@ import EditorDraftLayout from '@/layouts/EditorDraftLayout.astro';
 import { getDocuments } from '@/lib/load';
 import { type Document } from '@openuji/speculator';
 import { cn } from '@/lib/utils';
+import MaturityPill from '@/components/astro/speculator/w3c-cg/MaturityPill.astro';
 
 const documents = await getDocuments();
 
@@ -37,9 +38,7 @@ const maturityStyles: Record<string, string> = {
           class="card min-h-auto hover:bg-accent-soft/1 hover:translate-y-[1px] transition-transform"
         >
           <h3>{doc.metadata?.title}</h3>
-          <span class={cn('tag', maturityStyles[doc.metadata?.maturityLevel || 'draft'])}>
-            {doc.metadata?.maturityLevel || 'draft'}
-          </span>
+          <MaturityPill metadata={doc.metadata} />
           View Spec →
         </a>
       ))

@@ -21,6 +21,16 @@ importers:
         specifier: ^0.14.1
         version: 0.14.1
 
+  ../../speculator/packages/render-respec: {}
+
+  ../../speculator/packages/speculator: {}
+
+  ../../speculator/packages/speculator-lint: {}
+
+  ../../speculator/packages/speculator-search: {}
+
+  ../../speculator/packages/vocab-build: {}
+
   apps/web:
     dependencies:
       '@astrojs/react':
@@ -30,11 +40,11 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0(nanostores@1.1.0)(react@19.2.3)
       '@openuji/speculator':
-        specifier: ^0.6.0
-        version: 0.6.0
+        specifier: file:/Users/zavalit/Projects/openuji/speculator/packages/speculator
+        version: file:../../speculator/packages/speculator
       '@openuji/speculator-lint':
-        specifier: ^0.2.0
-        version: 0.2.0
+        specifier: file:/Users/zavalit/Projects/openuji/speculator/packages/speculator-lint
+        version: file:../../speculator/packages/speculator-lint
       '@radix-ui/react-dialog':
         specifier: ^1.1.15
         version: 1.1.15(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
@@ -570,12 +580,12 @@ packages:
       nanostores: ^0.9.0 || ^0.10.0 || ^0.11.0 || ^1.0.0
       react: '>=18.0.0'
 
-  '@openuji/speculator-lint@0.2.0':
-    resolution: {integrity: sha512-1ss+5UkjU65SK3O4OjrMEScC7qea47mbp8hfO4JyW9Oe5K0HyA4KE5TrgoD8EhlIoSBnPxvXLC9x1YHNaKhkSA==}
+  '@openuji/speculator-lint@file:../../speculator/packages/speculator-lint':
+    resolution: {directory: ../../speculator/packages/speculator-lint, type: directory}
     hasBin: true
 
-  '@openuji/speculator@0.6.0':
-    resolution: {integrity: sha512-ElBXnxo6mFcneC83vL6y5A8v5Kat9VuLOIlYMqFesQVSZfheXCEDUd74/FE6MytBl65cm+FE504vIyvo6WSaIA==}
+  '@openuji/speculator@file:../../speculator/packages/speculator':
+    resolution: {directory: ../../speculator/packages/speculator, type: directory}
 
   '@oslojs/encoding@1.1.0':
     resolution: {integrity: sha512-70wQhgYmndg4GCPxPPxPGevRKqTIJ2Nh4OkiMWmDAVYsTQ+Ta7Sq+rPevXyXGdzr30/qZBnyOalCszoMxlyldQ==}
@@ -3379,13 +3389,11 @@ snapshots:
       nanostores: 1.1.0
       react: 19.2.3
 
-  '@openuji/speculator-lint@0.2.0':
+  '@openuji/speculator-lint@file:../../speculator/packages/speculator-lint':
     dependencies:
-      '@openuji/speculator': 0.6.0
-    transitivePeerDependencies:
-      - supports-color
+      '@openuji/speculator': link:../../speculator/packages/speculator
 
-  '@openuji/speculator@0.6.0':
+  '@openuji/speculator@file:../../speculator/packages/speculator':
     dependencies:
       rehype-parse: 9.0.1
       remark-gfm: 4.0.1

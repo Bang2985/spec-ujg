@@ -1,12 +1,8 @@
-## Status of This Document {.unnumbered}
+## Abstract {.unnumbered}
 
 This document is the **Runtime** module of the User Journey Graph (UJG) specification. It defines the data model for describing _actual_ user behavior—traces, sessions, and events—and how those behaviors reference the **Designed** journey model.
 
-## Abstract {.unnumbered}
-
-The UJG Runtime module defines a standard vocabulary for **Journey Executions**: the sequence of events that actually occurred during a user session.
-
-Because distributed systems and client-side clocks are often unreliable, this module introduces **Event Chaining**: a structural mechanism where events explicitly reference their predecessors. This allows consumers to reconstruct the exact causal order of a journey without relying solely on timestamps, enabling high-fidelity path analysis and optional integrity verification.
+To handle unreliable distributed clocks, this module introduces **Event Chaining**: a mechanism where events explicitly reference their predecessors. This enables high-fidelity path analysis and casual reconstruction of the exact session order, independent of timestamp accuracy.
 
 ## Scope
 

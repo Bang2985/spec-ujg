@@ -1,0 +1,62 @@
+---
+import type { DocumentMetadata } from "@openuji/speculator";
+
+interface Props {
+  metadata: DocumentMetadata;
+  pkgName: string;
+}
+
+const { metadata, pkgName } = Astro.props;
+
+
+// W3C CG Specifics
+const isFinal =
+  metadata.status === "CG-FINAL" || metadata.maturityLevel === "stable";
+
+const group =
+  typeof metadata.group === "object"
+    ? metadata.group
+    : { name: metadata.group || "Unknown Group", url: undefined };
+const publishYear = metadata.publishDate
+  ? metadata.publishDate.split("-")[0]
+  : new Date().getFullYear();
+
+---
+<footer class="text-sm mt-xl">    
+{
+    (
+      <div class="cg-copyright">
+        <p>
+          Copyright © {publishYear} the Contributors to the{" "}
+          {pkgName}{metadata.version ? `/${metadata.version}` : ""}, published by the{" "}
+          {group.url ? <a href={group.url}>{group.name}</a> : group.name} under
+          the{" "}
+          <a
+            href={
+              isFinal
+                ? "https://www.w3.org/community/about/process/final/"
+                : "https://www.w3.org/community/about/process/cla/"
+            }
+          >
+            {isFinal
+              ? "W3C Community Final Specification Agreement (FSA)"
+              : "W3C Community Contributor License Agreement (CLA)"}
+          </a>
+          . A human-readable{" "}
+          <a
+            href={
+              isFinal
+                ? "https://www.w3.org/community/about/process/fsa-deed/"
+                : "https://www.w3.org/community/about/process/cla-deed/"
+            }
+          >
+            summary
+          </a>{" "}
+          is available.
+        </p>
+      </div>
+    )
+  }
+
+</footer>
+

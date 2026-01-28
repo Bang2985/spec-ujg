@@ -1,10 +1,6 @@
-## Status of This Document {.unnumbered}
-
-This document is the **Designed** module of the User Journey Graph (UJG) specification. It defines the vocabulary for describing _intended_ user experiences.
-
 ## Abstract {.unnumbered}
 
-The Designed module provides the "Map" against which runtime traces are measured. It enables teams to define user journeys not just as simple lists of steps, but as structured, interactive graphs that support nesting and reusable navigation patterns.
+This document is the **Designed** module of the User Journey Graph (UJG) specification. It defines the vocabulary for describing **intended** user experiences—enabling teams to model journeys as structured, interactive graphs that support nesting and reusable navigation patterns.
 
 ## Scope
 
