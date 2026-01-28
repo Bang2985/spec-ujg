@@ -371,7 +371,6 @@ main {
   }
 
     html {
-        @apply scroll-smooth;
     }
     @media (prefers-reduced-motion: reduce) {
         html {

@@ -32,6 +32,39 @@ import Banner from "@/components/astro/Banner.astro";
       rel="stylesheet"
     />
     <ClientRouter />
+    <script is:inline>
+      (function () {
+        if (window._smoothScrollSetup) return;
+        window._smoothScrollSetup = true;
+
+        const shouldReduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+        function handleLinkClick(e) {
+          const link = e.target.closest("a");
+          if (!link?.hash || link.origin !== location.origin) return;
+
+          const urlPath = link.pathname.replace(/\/$/, "");
+          const locPath = location.pathname.replace(/\/$/, "");
+          if (urlPath !== locPath) return;
+
+          const target = document.getElementById(decodeURIComponent(link.hash.slice(1)));
+          if (!target) return;
+
+          e.preventDefault();
+          target.scrollIntoView({
+            behavior: shouldReduceMotion.matches ? "auto" : "smooth",
+          });
+          history.pushState(null, "", link.hash);
+        }
+
+        function init() {
+          document.addEventListener("click", handleLinkClick, { capture: true });
+        }
+
+        document.addEventListener("astro:page-load", init);
+        init();
+      })();
+    </script>
   </head>
   <body class={bodyClass}>
     <Banner />
