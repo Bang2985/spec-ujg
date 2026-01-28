@@ -10,7 +10,7 @@ This module covers:
 
 - The structure of **Runtime Events** and **Journey Executions**.
 - The **Event Chaining** mechanism for causal ordering.
-- **Alignment**: How runtime data references [=Designed=] objects ([=State=], [=Journey=]).
+- **Alignment**: How runtime data references **Designed** objects ([=State=], [=Journey=]).
 - Conformance classes for different levels of tracking fidelity.
 
 This module does **not** cover:
@@ -24,11 +24,11 @@ This module does **not** cover:
 - <dfn>JourneyExecution</dfn>: A bounded sequence of events representing a single logical session or user trace.
 - <dfn>RuntimeEvent</dfn>: An atomic record of a user moment (e.g., entering a state) or action.
 - <dfn>Event Chaining</dfn>: The practice of including the predecessor's identifier in the current event to establish an unbroken causal link.
-- <dfn>Alignment</dfn>: The degree to which a [=RuntimeEvent=] explicitly maps to a [=Designed=] [=State=].
+- <dfn>Alignment</dfn>: The degree to which a [=RuntimeEvent=] explicitly maps to a **Designed** [=State=].
 
 ## Data Model (Normative)
 
-All objects defined here are [=UJG Object=]s and **MUST** conform to the **Serialization** module rules (JSON format, reserved keys, timestamps).
+All objects defined here are [=UJG Object|UJG Objects=] and **MUST** conform to the **Serialization** module rules (JSON format, reserved keys, timestamps).
 
 ### 1. RuntimeEvent (The Atom)
 
@@ -50,7 +50,7 @@ It supports two methods of ordering:
 - `timestamp`: An RFC 3339 timestamp string.
 - `payload`: A JSON object containing domain-specific data (e.g., URL, button ID, metadata).
 - `stateRef`: (Optional) The `id` string of the Designed [=State=] this event represents.
-- `journeyRef`: (Optional) A [=Journey Reference=] object (`{id, version}`) identifying the context.
+- `journeyRef`: (Optional) A [=Journey=] Reference object (`{id, version}`) identifying the context.
 
 #### Example: A Chained Event
 
@@ -79,7 +79,7 @@ A `JourneyExecution` represents a collected trace of events (a session). It serv
 - `events`: An array of `RuntimeEvent` objects.
 - **Ordering:** The array **MAY** be unordered if `previousId` linkage is used. If `previousId` is absent, the array **MUST** be time-ordered.
 
-- `journeyRef`: (Optional) A [=Journey Reference=] object indicating the primary [=Designed Journey=] this execution attempted to follow.
+- `journeyRef`: (Optional) A [=Journey=] Reference object indicating the primary **Designed** Journey this execution attempted to follow.
 - `attributes`: (Optional) A JSON object for session-level metadata (e.g., user agent, region).
 
 ```json
@@ -126,13 +126,13 @@ While this specification treats `id` as an opaque string, implementers **MAY** u
 
 ## Alignment to Design (Normative)
 
-Runtime data becomes most valuable when mapped to the [=Designed=] model.
+Runtime data becomes most valuable when mapped to the **Designed** model.
 
 ### 1. State Reference (`stateRef`)
 
 An event **MAY** include a `stateRef`.
 
-- **Value:** Must match a [=State=] `id` or [=CompositeState=] `id` defined in the associated [=Designed Journey=].
+- **Value:** Must match a [=State=] `id` or [=CompositeState=] `id` defined in the associated **Designed** Journey.
 - **Validation:** Consumers **MAY** validate that the transition from `Event A (stateRef: X)` to `Event B (stateRef: Y)` corresponds to a valid [=Transition=] in the Design.
 
 ### 2. Divergence (Violations)
@@ -152,7 +152,7 @@ If a runtime execution moves between two states that are _not_ connected by a [=
 
 ### Level 2: Aligned Trace
 
-- Events contain `stateRef` matching a [=Designed Journey=].
+- Events contain `stateRef` matching a **Designed** Journey.
 - Allows direct comparison of "Design vs. Reality".
 
 ### Level 3: Verified Chain

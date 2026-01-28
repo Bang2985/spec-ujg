@@ -8,8 +8,8 @@ This module defines:
 
 1. **Core Graph:** The fundamental units of [=State=] and [=Transition=].
 2. **Organization:** Using `tags` to group states into logical phases.
-3. **Composition:** How to model complex flows using nested [=CompositeState=]s.
-4. **Reusability:** How to apply global navigation using [=TransitionSet=]s.
+3. **Composition:** How to model complex flows using nested [=CompositeState|Composite States=].
+4. **Reusability:** How to apply global navigation using [=TransitionSet|Transition Sets=].
 5. **Validation:** Rules for graph integrity.
 
 ## Terminology

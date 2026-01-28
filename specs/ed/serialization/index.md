@@ -10,7 +10,7 @@ This module defines:
 
 - JSON serialization constraints
 - [=UJG Document=] forms (single object or bundle)
-- Common fields and <xref data-lt="reserved key">Reserved keys</xref>
+- Common fields and [=Reserved key|Reserved keys=]
 - Timestamp representation
 - Reference conventions (including journeyRef)
 - Extensibility container (extensions)
@@ -52,7 +52,7 @@ A system MAY conform to more than one class.
 
 - <dfn>JSON value</dfn>: As defined by RFC 8259.
 - <dfn>UJG Object</dfn>: A JSON object that contains a `type` member whose value is a string.
-- <dfn>UJG Document</dfn>: Either (a) a single [=UJG Object=], or (b) a UJG Document Wrapper Object containing an `items` array of <xref data-lt="ujg object">UJG Objects</xref>.
+- <dfn>UJG Document</dfn>: Either (a) a single [=UJG Object=], or (b) a UJG Document Wrapper Object containing an `items` array of [=UJG Object|UJG Objects=].
 - <dfn>Reserved key</dfn>: A member name listed in §<a href="#reserved-key">Reserved key</a> whose meaning is defined by this specification.
 - <dfn>Referencable object</dfn>: A [=UJG Object=] that contains an `id` member. (An object without `id` is not referencable by this specification.)
 
@@ -78,7 +78,7 @@ A [=UJG Document=] MAY be a single [=UJG Object=].
 A [=UJG Document=] MAY be a JSON object with:
 
 - `type`: the string `"UJGDocument"`, and
-- `items`: an array of <xref data-lt="ujg object">UJG Objects</xref>.
+- `items`: an array of [=UJG Object|UJG Objects=].
 
 If a bundle document is used:
 
@@ -135,7 +135,7 @@ Unless a module specifies otherwise, Consumers **MUST** treat `version` as an op
 
 ### Reserved key
 
-The following member names are <xref data-lt="reserved key">Reserved keys</xref> across <xref data-lt="ujg object">UJG Objects</xref>:
+The following member names are [=Reserved key|Reserved keys=] across [=UJG Object|UJG Objects=]:
 
 `type`, `id`, `version`, `name`, `description`, `createdAt`, `updatedAt`, `extensions`, `@context`
 
