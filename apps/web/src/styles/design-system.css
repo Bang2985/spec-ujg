@@ -143,6 +143,16 @@
     --text-2xs: 0.6rem;
     --text-xs: 0.8125rem;
 
+    @keyframes target-highlight {
+        0% {
+            background-color: var(--color-accent-soft);
+        }
+        100% {
+            background-color: transparent;
+        }
+    }
+
+    --animate-target-highlight: target-highlight 2s ease-out;
 }
 /* Expose tokens to Tailwind utilities (shadcn convention) */
 @theme inline {
@@ -391,11 +401,20 @@ main {
         @apply border-border;
     }
 
+    /* Fallback/Persistent style for :target */
+    
+
 }
-@layer utilities {
-    .bg-spec {
-       background: var(--spec-bg);
-    }
+
+
+@utility bg-spec {
+    background: var(--spec-bg);
+}
+
+@utility target-highlight {
+    animation: var(--animate-target-highlight);
+    border-radius: var(--radius-sm);
+    @apply -mx-2 px-2;
 }
 
 /* === LAYOUT UTILITIES === */
@@ -705,7 +724,7 @@ main {
    sup{ @apply align-super text-[0.75em]; }
    sub{ @apply align-sub text-[0.75em]; }
    dfn {
-    @apply font-semibold text-zinc-900 scroll-mt-header;
+    @apply font-semibold text-zinc-900 scroll-mt-[calc(var(--spacing-header)+(--spacing(4)))]
    }
 
   /* Links */
@@ -841,23 +860,3 @@ main {
 
 }
 
-/* === TARGET HIGHLIGHTING === */
-
-@keyframes target-highlight {
-  0% {
-    background-color: var(--color-accent-soft);
-  }
-  100% {
-    background-color: transparent;
-  }
-}
-
-.target-highlight {
-  animation: target-highlight 2s ease-out;
-  border-radius: var(--radius-sm);
-}
-
-/* Fallback/Persistent style for :target */
-:target {
-  scroll-margin-top: calc(var(--height-header) + var(--spacing-md));
-}
