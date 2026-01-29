@@ -62,7 +62,7 @@ const useActiveId = (ids: string[]) => {
         if (top <= HEADER_HEIGHT + THRESHOLD) {
           currentId = id;
         }
-        // Last section: just needs to be visible below header
+        // // Last section: just needs to be visible below header
         else if (i === ids.length - 1 && prevId === currentId) {
           const prevEl = document.getElementById(prevId);
           if (!prevEl) continue;

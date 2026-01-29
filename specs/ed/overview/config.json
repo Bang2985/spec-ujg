@@ -6,6 +6,7 @@
     "custom": {
         "boom": true
     },
+    "noConformance": true,
     "respec": {
         "modificationDate": "2026-01-28",
         "group": {

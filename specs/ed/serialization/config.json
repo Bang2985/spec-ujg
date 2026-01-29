@@ -18,6 +18,34 @@
             "w3cid": "169225"
         }
         ],
-        "license": "W3C-Software-and-Document"
+        "license": "W3C-Software-and-Document",
+        "localBiblio": {
+            "RFC2119": {
+                "title": "Key words for use in RFCs to Indicate Requirement Levels",
+                "url": "https://datatracker.ietf.org/doc/html/rfc2119",
+                "authors": ["S. Bradner"],
+                "date": "March 1997",
+                "publisher": "IETF",
+                "status": "Best Current Practice"
+            },
+            "RFC8174": {
+                "title": "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words",
+                "url": "https://datatracker.ietf.org/doc/html/rfc8174",
+                "authors": ["B. Leiba"],
+                "date": "May 2017",
+                "publisher": "IETF",
+                "status": "Best Current Practice"
+            },
+            "HTML": {
+                "title": "HTML Standard",
+                "url": "https://html.spec.whatwg.org/multipage/",
+                "publisher": "WHATWG",
+                "status": "Living Standard"
+            },
+            "DOM": { 
+                "title": "DOM Standard", 
+                "url": "https://dom.spec.whatwg.org/" 
+            }
+        }
     }
 }

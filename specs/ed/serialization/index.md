@@ -53,7 +53,7 @@ A system MAY conform to more than one class.
 - <dfn>JSON value</dfn>: As defined by RFC 8259.
 - <dfn>UJG Object</dfn>: A JSON object that contains a `type` member whose value is a string.
 - <dfn>UJG Document</dfn>: Either (a) a single [=UJG Object=], or (b) a UJG Document Wrapper Object containing an `items` array of [=UJG Object|UJG Objects=].
-- <dfn>Reserved key</dfn>: A member name listed in §<a href="#reserved-key">Reserved key</a> whose meaning is defined by this specification.
+- <dfn>Reserved key</dfn>: A member name listed in [§#reserved-key|Reserved keys] whose meaning is defined by this specification.
 - <dfn>Referencable object</dfn>: A [=UJG Object=] that contains an `id` member. (An object without `id` is not referencable by this specification.)
 
 ## Serialization format (normative)
@@ -165,7 +165,7 @@ Any [=UJG Object=] **MAY** include an `extensions` member.
 
 - `extensions` **MUST** be a JSON object.
 - Member names inside `extensions` **SHOULD** be collision-resistant (e.g., reverse-DNS like `com.example.foo` or an IRI-like namespace).
-- `extensions` member names **MUST NOT** use [=Reserved key=] names listed in <a href="#reserved-key">Reserved keys</a>.
+- `extensions` member names **MUST NOT** use [=Reserved key=] names listed in [§#reserved-key|Reserved keys].
 
 ### Consumer behavior
 
@@ -245,7 +245,6 @@ A conforming Consumer **MUST**:
 - **Embedded objects**: Designed may define embedded shapes that can omit `type`. That is module-defined and intentionally not enforced by this shared serialization schema.
 - **References in Designed**:
   - Designed structural references like `from`, `to`, `stateId`, `transitionId`, etc. should be string `id` references unless Designed explicitly defines a richer ref object.
-  - Runtime/Observed references to a specific [=Journey=] version use journeyRef = {id, version}.
 
 ## Examples (non-normative)
 
