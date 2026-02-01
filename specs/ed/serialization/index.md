@@ -25,22 +25,6 @@ This module does not define:
 - Runtime tracking or event semantics
 - Module-specific required fields beyond what is stated here
 
-## Conformance
-
-### Normative language
-
-The key words **MUST**, **MUST NOT**, **REQUIRED**, **SHOULD**, **SHOULD NOT**, **RECOMMENDED**, **MAY**, and **OPTIONAL** are to be interpreted as described in RFC 2119 and RFC 8174.
-
-### Conformance classes
-
-This specification defines requirements for:
-
-- **UJG Producer**: software that emits (serializes) UJG JSON.
-- **UJG Consumer**: software that ingests (parses/validates/processes) UJG JSON.
-- **UJG Round-tripper** (optional): a Consumer that re-emits the ingested data while preserving unrecognized extension content (§Extensibility).
-
-A system MAY conform to more than one class.
-
 ## Terminology
 
 This module covers:
