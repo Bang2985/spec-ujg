@@ -2,6 +2,10 @@
 
 The User Journey Graph (UJG) specification family defines a vocabulary and data model for describing user journeys as automata-like graphs. It separates design-time journey definitions from runtime journey executions and observations to support both experience design and measurement.
 
+## Community Group
+
+The [UJG Community Group](https://www.w3.org/community/ujg/) is a forum for discussing the User Journey Graph specification and related topics. It is open to all interested parties and is a place for discussion and collaboration on the specification and related topics. Join the Community Group to get involved in the specification development process.
+
 **This is the monorepo for the UJG specification and its associated documentation tools.**
 
 ## 📚 Documentation
@@ -22,6 +26,7 @@ The User Journey Graph (UJG) specification family defines a vocabulary and data 
 To run the documentation site locally:
 
 1.  **Install dependencies**:
+
     ```bash
     pnpm install
     ```
@@ -41,13 +46,10 @@ Overview
   (no normative deps)
 
 Serialization
-├─ Core
-│  ├─ Structure            (adds organization metadata over Core ids)
-│  └─ Runtime              (uses Core ids; follows Serialization timestamps/refs)
-│     ├─ Conformance        (compares Runtime ↔ Core; uses Runtime rules)
-│     └─ Observed           (aggregates Runtime; optionally aligns to Core)
+├─ Designed
+│  ├─ Structure            (adds organization metadata over Designed ids)
+│  └─ Runtime              (uses Designed ids; follows Serialization timestamps/refs)
+│     └─ Observed           (aggregates Runtime; optionally aligns to Designed)
 │        └─ Metrics         (metric keys/units used in Observed artifacts)
 └─ Profiles & Extensibility (uses Serialization extension mechanics; defines interoperability profiles)
 ```
-
-
