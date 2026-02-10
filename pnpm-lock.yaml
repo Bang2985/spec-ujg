@@ -215,11 +215,11 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0(nanostores@1.1.0)(react@19.2.4)
       '@openuji/speculator':
-        specifier: ^0.7.0
-        version: 0.7.0
+        specifier: ^0.7.1
+        version: 0.7.1
       '@openuji/speculator-lint':
-        specifier: ^0.3.0
-        version: 0.3.0
+        specifier: ^0.3.1
+        version: 0.3.1
       '@radix-ui/react-dialog':
         specifier: ^1.1.15
         version: 1.1.15(@types/react-dom@19.2.3(@types/react@19.2.13))(@types/react@19.2.13)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -965,12 +965,12 @@ packages:
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
 
-  '@openuji/speculator-lint@0.3.0':
-    resolution: {integrity: sha512-K2MqMSmY92894bCq/ecDO4pzrsXH2/N8igq+YW1I/I1FO6u8AYoHItgyd4VsqMyYplVUrVb5nJsTqhhV8+KITA==}
+  '@openuji/speculator-lint@0.3.1':
+    resolution: {integrity: sha512-TbrnOxHpnYCMIjJynKkJV1Sm7pJ1EIHycFJ3cW2z7XVzz5IzdH8nGzXazYjTWvE34eXUS2NPP+55A/3kCJ18Yw==}
     hasBin: true
 
-  '@openuji/speculator@0.7.0':
-    resolution: {integrity: sha512-XBANFkqNElXBcdT7oOzr0YdSJRqzsEFEB4Zwj4fcs9kb4oOXBhIBQjwrokXY2RuCIOjEdXvI+K74lgN+BfJKrA==}
+  '@openuji/speculator@0.7.1':
+    resolution: {integrity: sha512-Ynl6AevzzzBawKif4QmXM59r9R1j7uGGOdEcR3up7S9b3q6cmZIh2AEbNzvSoRdxg+SXN8YzoM7Q/6uq85Ql2A==}
 
   '@oslojs/encoding@1.1.0':
     resolution: {integrity: sha512-70wQhgYmndg4GCPxPPxPGevRKqTIJ2Nh4OkiMWmDAVYsTQ+Ta7Sq+rPevXyXGdzr30/qZBnyOalCszoMxlyldQ==}
@@ -4951,13 +4951,13 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.20.1
 
-  '@openuji/speculator-lint@0.3.0':
+  '@openuji/speculator-lint@0.3.1':
     dependencies:
-      '@openuji/speculator': 0.7.0
+      '@openuji/speculator': 0.7.1
     transitivePeerDependencies:
       - supports-color
 
-  '@openuji/speculator@0.7.0':
+  '@openuji/speculator@0.7.1':
     dependencies:
       rehype-parse: 9.0.1
       remark-gfm: 4.0.1

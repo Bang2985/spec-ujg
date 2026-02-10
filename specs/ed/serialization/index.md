@@ -37,7 +37,7 @@ This module covers:
 
 ## Serialization format
 
-### JSON {data-cop=serialization-json #serialization-json}
+### JSON {data-cop-concept=serialization-json #serialization-json}
 
 <spec-statement>UJG data **MUST** be serialized as [=JSON value=]s as defined by RFC 8259.</spec-statement>
 
