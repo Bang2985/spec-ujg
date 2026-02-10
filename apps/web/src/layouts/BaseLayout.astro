@@ -118,16 +118,18 @@ import Banner from '@/components/astro/Banner.astro';
   <body class={bodyClass}>
     <Banner />
     <slot />
-    <footer class="border-t border-border bg-panel backdrop-blur-md mt-auto">
+    <footer class="site-footer border-t border-border bg-panel backdrop-blur-md mt-auto">
       <div
-        class="max-w-content mx-auto px-4 md:px-12 py-4 flex items-center justify-between gap-md"
+        class="max-w-content mx-auto px-4 md:px-12 py-4 grid grid-cols-[1fr_auto_1fr] items-center"
       >
-        <div class="text-xs text-secondary-foreground">
-          <slot name="footer-meta"> User Journey Graph specifications </slot>
+        <div
+          class="footer-meta text-xs text-secondary-foreground col-start-2 justify-self-center text-center"
+        >
+          <slot name="footer-meta"> Open User Journey Initiative</slot>
         </div>
         <button
           type="button"
-          class="theme-switcher js-theme-switcher"
+          class="theme-switcher js-theme-switcher col-start-3 justify-self-end"
           aria-label="Toggle color theme"></button>
       </div>
     </footer>
@@ -135,7 +137,11 @@ import Banner from '@/components/astro/Banner.astro';
     <script>
       import { themeMode, syncThemeMode, toggleThemeMode, watchSystemTheme } from '@/stores/theme';
 
-      const g = globalThis as any;
+      const g = globalThis as typeof globalThis & {
+        __ujgThemeUiInit?: boolean;
+        __ujgThemeUnsub?: () => void;
+        __ujgThemeWatchCleanup?: () => void;
+      };
 
       const updateButtonLabel = () => {
         const button = document.querySelector('.js-theme-switcher');

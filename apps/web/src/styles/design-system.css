@@ -783,6 +783,10 @@
   .site-footer a {
     @apply text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent;
   }
+
+  .footer-meta p {
+    margin: 0;
+  }
 }
 
 .links {
@@ -1000,18 +1004,19 @@
   /* Tables */
   .spec .spec-table-wrap {
     @apply mt-0 mb-spec-l overflow-x-auto rounded-xl border border-border;
+    overflow-y: hidden;
     background: color-mix(in oklab, var(--card) 84%, var(--background));
   }
 
   .spec table {
     @apply w-full border-separate border-spacing-0;
-    table-layout: fixed;
+    table-layout: auto;
     overflow-wrap: normal;
     word-break: normal;
   }
 
   .spec .spec-table-wrap > table {
-    /* min-width: 42rem; */
+    min-width: 0;
   }
 
   .spec table th,
@@ -1029,18 +1034,6 @@
     border-top: 1px solid color-mix(in oklab, var(--border) 88%, transparent);
   }
 
-  .spec .spec-table :is(th, td):first-child {
-    width: 8rem;
-    min-width: 8rem;
-    max-width: 8rem;
-  }
-
-  .spec .spec-table.cols-3 :is(th, td):nth-child(2) {
-    width: 14rem;
-    min-width: 14rem;
-    max-width: 14rem;
-  }
-
   .spec table td {
     overflow-wrap: break-word;
   }
@@ -1054,6 +1047,32 @@
 
   .spec table :is(td, th) > :last-child {
     @apply mb-0;
+  }
+
+  @variant md {
+    .spec .spec-table-wrap {
+      overflow-x: hidden;
+    }
+
+    .spec table {
+      table-layout: fixed;
+    }
+
+    .spec .spec-table-wrap > table {
+      min-width: 100%;
+    }
+
+    .spec .spec-table :is(th, td):first-child {
+      width: 8rem;
+      min-width: 8rem;
+      max-width: 8rem;
+    }
+
+    .spec .spec-table.cols-3 :is(th, td):nth-child(2) {
+      width: 14rem;
+      min-width: 14rem;
+      max-width: 14rem;
+    }
   }
 
   /* Custom code block */
