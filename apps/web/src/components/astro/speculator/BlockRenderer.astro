@@ -1,9 +1,10 @@
 ---
-import type { Block, Section, BlockHeading } from '@openuji/speculator';
+import type { Block, Section, BlockHeading, Inline } from '@openuji/speculator';
 import InlineRenderer from './InlineRenderer.astro';
 import RecursiveBlockRenderer from './BlockRenderer.astro';
 import Mermaid from './Mermaid.astro';
 import CodeCustom from './CodeCustom.astro';
+import type { CodeLanguage } from 'astro';
 
 interface Props {
   node: Block | Section;
@@ -39,14 +40,13 @@ const getSectionNumber = (sectionId?: string): string | undefined => {
 {
   (() => {
     switch (node.type) {
-      case 'section':
+      case 'section': {
         // Section logic
         const HeadingTag = node.heading ? getHeadingTag(node.heading) : 'h2'; // fallback
         const sectionNumber = getSectionNumber(node.id);
         return (
           <section id={node.id} class="spec-section">
             {node.heading && (
-              // @ts-ignore - Dynamic tag
               <HeadingTag id={node.heading.id} class="section-heading">
                 {sectionNumber && <span class="section-number">{sectionNumber}. </span>}
                 <InlineRenderer nodes={node.heading.children} {...inlineProps} />
@@ -57,6 +57,7 @@ const getSectionNumber = (sectionId?: string): string | undefined => {
             ))}
           </section>
         );
+      }
 
       case 'paragraph':
         return (
@@ -65,24 +66,30 @@ const getSectionNumber = (sectionId?: string): string | undefined => {
           </p>
         );
 
-      case 'heading':
+      case 'heading': {
         const H = getHeadingTag(node);
         return (
           <H id={node.id}>
             <InlineRenderer nodes={node.children} {...inlineProps} />
           </H>
         );
+      }
 
-      case 'codeBlock':
+      case 'codeBlock': {
         // Handle Mermaid diagrams
         if (node.lang === 'mermaid') {
           return <Mermaid code={node.value} id={node.id} />;
         }
         // Regular code block
         const codeBlock = (
-          <CodeCustom id={node.id || undefined} code={node.value} lang={node.lang || undefined} />
+          <CodeCustom
+            id={node.id || undefined}
+            code={node.value}
+            lang={node.lang as CodeLanguage}
+          />
         );
         return codeBlock;
+      }
 
       case 'blockquote':
         return (
@@ -93,21 +100,26 @@ const getSectionNumber = (sectionId?: string): string | undefined => {
           </blockquote>
         );
 
-      case 'list':
-        const ListTag = node.ordered ? 'ol' : 'ul';
-        return (
-          // @ts-ignore
-          <ListTag id={node.id} start={node.start}>
-            {node.children.map((item) => (
-              <li>
-                {/* ListItem children are Blocks */}
-                {item.children.map((child) => (
-                  <RecursiveBlockRenderer node={child} {...blockProps} />
-                ))}
-              </li>
+      case 'list': {
+        const items = node.children.map((item) => (
+          <li>
+            {/* ListItem children are Blocks */}
+            {item.children.map((child) => (
+              <RecursiveBlockRenderer node={child} {...blockProps} />
             ))}
-          </ListTag>
-        );
+          </li>
+        ));
+
+        if (node.ordered) {
+          return (
+            <ol id={node.id} start={node.start}>
+              {items}
+            </ol>
+          );
+        }
+
+        return <ul id={node.id}>{items}</ul>;
+      }
 
       case 'table':
         return (
@@ -116,17 +128,13 @@ const getSectionNumber = (sectionId?: string): string | undefined => {
               {node.children.map((row) => (
                 <tr>
                   {row.children.map((cell) => {
-                    const CellTag = cell.header ? 'th' : 'td';
-                    return (
-                      // @ts-ignore
-                      <CellTag
-                        style={{
-                          textAlign: cell.align || 'left',
-                        }}
-                      >
-                        <InlineRenderer nodes={cell.children} {...inlineProps} />
-                      </CellTag>
-                    );
+                    const style = { textAlign: cell.align || 'left' };
+                    const content = <InlineRenderer nodes={cell.children} {...inlineProps} />;
+
+                    if (cell.header) {
+                      return <th style={style}>{content}</th>;
+                    }
+                    return <td style={style}>{content}</td>;
                   })}
                 </tr>
               ))}
@@ -152,9 +160,10 @@ const getSectionNumber = (sectionId?: string): string | undefined => {
           </div>
         );
 
-      case 'note':
+      case 'note': {
         // BlockNote - informative note/warning/example containers
-        const noteType = (node as any).noteType || 'note';
+        const noteNode = node as { noteType?: string; children: Block[] } & Block;
+        const noteType = noteNode.noteType || 'note';
         const noteClass = `note note-${noteType}`;
         return (
           <aside class={noteClass} id={node.id} role="note">
@@ -166,18 +175,22 @@ const getSectionNumber = (sectionId?: string): string | undefined => {
             </div>
           </aside>
         );
+      }
 
-      case 'specStatement':
-        const stmt = node as any;
+      case 'specStatement': {
+        const stmt = node as { level?: string; id?: string; children: Inline[] } & Block;
         const stmtClass = `spec-statement ${stmt.level ? `level-${stmt.level.toLowerCase()}` : ''}`;
         return (
           <p class={stmtClass} id={stmt.id}>
             <InlineRenderer nodes={stmt.children} {...inlineProps} />
           </p>
         );
+      }
 
       default:
-        return <div style="border:1px solid red">Unknown block: {(node as any).type}</div>;
+        return (
+          <div style="border:1px solid red">Unknown block: {(node as { type: string }).type}</div>
+        );
     }
   })()
 }

@@ -15,6 +15,7 @@
   },
   "lint-staged": {
     "apps/web/src/**/*.{js,jsx,ts,tsx,astro,css,md}": [
+      "pnpm --filter @openuji/web exec eslint --fix",
       "prettier --write"
     ],
     "specs/**/*.md": [
