@@ -97,25 +97,11 @@ Note (normative): Objects defined by modules (e.g., top-level items in _Designed
 
 ## Common fields and conventions (normative)
 
-### type
-
-Every [=UJG Object=] **MUST** include a `type` member whose value is a non-empty string.
-
-Whether a nested object is a [=UJG Object=] is defined by the module that defines the containing property. This specification does not require `type` on non-UJG nested objects unless they are intended to be [=UJG Object=]s.
-
-### id
-
-A [=Referencable object=] **MUST** include an `id` member whose value is a non-empty string.
-
-- `id` values **MUST** be globally unique within the publisher’s publication context.
-- `id` values **MUST** be unique within a single [=UJG Document=] (see §In-document uniqueness rule).
-- Consumers **MUST** treat `id` as an opaque string (no required parsing or dereferencing).
-
-### version
-
-If a [=UJG Object=] includes `version`, its value **MUST** be a non-empty string.
-
-Unless a module specifies otherwise, Consumers **MUST** treat `version` as an opaque string and **MUST NOT** infer ordering semantics from it.
+| Field     | Status                                 | Requirement                                                                                                                                                                           |
+| :-------- | :------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `type`    | **Required** ([=UJG Object=])          | Value **MUST** be a non-empty string.                                                                                                                                                 |
+| `id`      | **Required** ([=Referencable object=]) | Value **MUST** be a non-empty string.<br>It **MUST** be globally unique within the publication context and unique within the [=UJG Document=].<br>Consumers **MUST** treat as opaque. |
+| `version` | **Optional**                           | If present, value **MUST** be a non-empty string.<br>Consumers **MUST** treat as opaque and **MUST NOT** infer ordering.                                                              |
 
 ### Reserved key
 
@@ -132,14 +118,16 @@ The following member names are [=Reserved key|Reserved keys=] across [=UJG Objec
 
 [=Reserved key=]-misuse occurs when:
 
-- `type` exists and is not a string.
-- `id` exists and is not a non-empty string.
-- `version` exists and is not a non-empty string.
-- `name` exists and is not a string.
-- `description` exists and is not a string.
-- `createdAt` or `updatedAt` exists and is not a timestamp string conforming to §Timestamps.
-- `extensions` exists and is not a JSON object (§Extensibility container).
-- `@context` exists and is neither a string nor a JSON object nor an array.
+| Reserved Key              | Misuse Condition (Error)                                                         |
+| :------------------------ | :------------------------------------------------------------------------------- |
+| `type`                    | Exists and is **not** a string.                                                  |
+| `id`                      | Exists and is **not** a non-empty string.                                        |
+| `version`                 | Exists and is **not** a non-empty string.                                        |
+| `name`                    | Exists and is **not** a string.                                                  |
+| `description`             | Exists and is **not** a string.                                                  |
+| `createdAt` / `updatedAt` | Exists and is **not** a timestamp string conforming to [§#timestamps-normative]. |
+| `extensions`              | Exists and is **not** a JSON object.                                             |
+| `@context`                | Exists and is neither a string nor a JSON object nor an array.                   |
 
 ## Extensibility container
 

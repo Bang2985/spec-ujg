@@ -134,8 +134,6 @@ graph LR
 }
 ```
 
----
-
 ## Managing Complexity with Composition (Normative)
 
 Real journeys are too large to see on one screen. **Composition** allows a [=State=] to contain an entire sub-journey. This allows designers to "Zoom In" and "Zoom Out."

@@ -121,26 +121,52 @@ const getSectionNumber = (sectionId?: string): string | undefined => {
         return <ul id={node.id}>{items}</ul>;
       }
 
-      case 'table':
-        return (
-          <table id={node.id}>
-            <tbody>
-              {node.children.map((row) => (
-                <tr>
-                  {row.children.map((cell) => {
-                    const style = { textAlign: cell.align || 'left' };
-                    const content = <InlineRenderer nodes={cell.children} {...inlineProps} />;
+      case 'table': {
+        const rows = node.children;
+        const columnCount = rows[0]?.children.length || 0;
+        const hasHeaderRow =
+          rows.length > 0 &&
+          rows[0].children.length > 0 &&
+          rows[0].children.every((cell) => cell.header);
+        const headerCells = hasHeaderRow ? rows[0].children : [];
+        const bodyRows = hasHeaderRow ? rows.slice(1) : rows;
 
-                    if (cell.header) {
-                      return <th style={style}>{content}</th>;
-                    }
-                    return <td style={style}>{content}</td>;
-                  })}
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        return (
+          <div class="spec-table-wrap" id={node.id}>
+            <table class={`spec-table cols-${columnCount}`}>
+              {hasHeaderRow && (
+                <thead>
+                  <tr>
+                    {headerCells.map((cell) => {
+                      const style = { textAlign: cell.align || 'left' };
+                      return (
+                        <th style={style}>
+                          <InlineRenderer nodes={cell.children} {...inlineProps} />
+                        </th>
+                      );
+                    })}
+                  </tr>
+                </thead>
+              )}
+              <tbody>
+                {bodyRows.map((row) => (
+                  <tr>
+                    {row.children.map((cell) => {
+                      const style = { textAlign: cell.align || 'left' };
+                      const content = <InlineRenderer nodes={cell.children} {...inlineProps} />;
+
+                      if (cell.header) {
+                        return <th style={style}>{content}</th>;
+                      }
+                      return <td style={style}>{content}</td>;
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         );
+      }
 
       case 'thematicBreak':
         return <hr id={node.id} />;

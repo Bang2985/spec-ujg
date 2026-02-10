@@ -14,10 +14,11 @@ const { code, id } = Astro.props;
 <script>
   import mermaid from 'mermaid';
 
-  const MERMAID_SELECTOR = '.mermaid';
+  const MERMAID_SELECTOR = 'pre.mermaid';
   const COLOR_SCHEME_QUERY = '(prefers-color-scheme: dark)';
   let isRendering = false;
   let rerenderQueued = false;
+  let renderSequence = 0;
 
   function isDarkTheme() {
     const forcedTheme = document.documentElement.getAttribute('data-theme');
@@ -61,7 +62,7 @@ const { code, id } = Astro.props;
 
   function collectMermaidNodes() {
     const nodes = document.querySelectorAll(MERMAID_SELECTOR);
-    const readyNodes: HTMLElement[] = [];
+    const readyNodes: Array<{ node: HTMLElement; source: string }> = [];
 
     for (const node of nodes) {
       let source = node.getAttribute('data-mermaid-source');
@@ -76,9 +77,7 @@ const { code, id } = Astro.props;
       }
 
       node.setAttribute('data-mermaid-source', source);
-      node.textContent = source;
-      node.removeAttribute('data-processed');
-      readyNodes.push(node as HTMLElement);
+      readyNodes.push({ node: node as HTMLElement, source });
     }
 
     return readyNodes;
@@ -94,7 +93,22 @@ const { code, id } = Astro.props;
       startOnLoad: false,
       ...theme,
     });
-    await mermaid.run({ nodes, suppressErrors: true });
+
+    for (const entry of nodes) {
+      const { node, source } = entry;
+
+      try {
+        const renderId = `ujg-mermaid-${Date.now()}-${++renderSequence}`;
+        const { svg, bindFunctions } = await mermaid.render(renderId, source);
+        node.innerHTML = svg;
+        node.setAttribute('data-processed', 'true');
+        if (bindFunctions) bindFunctions(node);
+      } catch (error) {
+        node.textContent = source;
+        node.removeAttribute('data-processed');
+        console.warn('Mermaid render failed', error);
+      }
+    }
   }
 
   async function renderMermaidQueued() {
@@ -124,6 +138,7 @@ const { code, id } = Astro.props;
   if (!window.__ujgMermaidInit) {
     window.__ujgMermaidInit = true;
     document.addEventListener('astro:page-load', queueMermaidRender);
+    document.addEventListener('astro:after-swap', queueMermaidRender);
     window.matchMedia(COLOR_SCHEME_QUERY).addEventListener('change', queueMermaidRender);
     window.addEventListener('ujg:theme-change', queueMermaidRender);
   }
