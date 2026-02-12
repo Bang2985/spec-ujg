@@ -12,7 +12,7 @@
   "dependencies": {
     "@astrojs/react": "^4.4.2",
     "@nanostores/react": "^1.0.0",
-    "@openuji/speculator": "file:/Users/zavalit/Projects/openuji/speculator/packages/speculator",
+    "@openuji/speculator": "0.7.1",
     "@openuji/speculator-lint": "file:/Users/zavalit/Projects/openuji/speculator/packages/speculator-lint",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-select": "^2.2.6",

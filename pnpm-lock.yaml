@@ -218,8 +218,8 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0(nanostores@1.1.0)(react@19.2.4)
       '@openuji/speculator':
-        specifier: file:/Users/zavalit/Projects/openuji/speculator/packages/speculator
-        version: file:../../speculator/packages/speculator
+        specifier: 0.7.1
+        version: 0.7.1
       '@openuji/speculator-lint':
         specifier: file:/Users/zavalit/Projects/openuji/speculator/packages/speculator-lint
         version: file:../../speculator/packages/speculator-lint
@@ -1033,8 +1033,8 @@ packages:
     resolution: {directory: ../../speculator/packages/speculator-lint, type: directory}
     hasBin: true
 
-  '@openuji/speculator@file:../../speculator/packages/speculator':
-    resolution: {directory: ../../speculator/packages/speculator, type: directory}
+  '@openuji/speculator@0.7.1':
+    resolution: {integrity: sha512-Ynl6AevzzzBawKif4QmXM59r9R1j7uGGOdEcR3up7S9b3q6cmZIh2AEbNzvSoRdxg+SXN8YzoM7Q/6uq85Ql2A==}
 
   '@oslojs/encoding@1.1.0':
     resolution: {integrity: sha512-70wQhgYmndg4GCPxPPxPGevRKqTIJ2Nh4OkiMWmDAVYsTQ+Ta7Sq+rPevXyXGdzr30/qZBnyOalCszoMxlyldQ==}
@@ -5227,9 +5227,8 @@ snapshots:
     dependencies:
       '@openuji/speculator': link:../../speculator/packages/speculator
 
-  '@openuji/speculator@file:../../speculator/packages/speculator':
+  '@openuji/speculator@0.7.1':
     dependencies:
-      hast-util-to-html: 9.0.5
       rehype-parse: 9.0.1
       remark-gfm: 4.0.1
       remark-parse: 11.0.0

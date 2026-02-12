@@ -1,6 +1,6 @@
 {
   "ed": [
-    { "entry": "../../specs/ed/designed/index.md" },
+    { "entry": "../../specs/ed/blueprint/index.md" },
     { "entry": "../../specs/ed/metrics/index.md" },
     { "entry": "../../specs/ed/observed/index.md" },
     { "entry": "../../specs/ed/overview/index.md" },

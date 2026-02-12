@@ -3,7 +3,7 @@
     "title": "Runtime",
     "maturityLevel": "draft",
     "deps": [
-        "designed"
+        "blueprint"
     ],
     "respec": {
         "modificationDate": "2026-01-28",
