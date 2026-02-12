@@ -3,7 +3,7 @@
     "title": "Metrics",
     "maturityLevel": "incubating",
     "deps": [
-        "serialization",
+        "core",
         "observed"
     ],
     "respec": {

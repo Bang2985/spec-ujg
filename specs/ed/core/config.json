@@ -1,13 +1,14 @@
 {
-    "id": "serialization",
-    "title": "Serialization",
+    "id": "core",
+    "title": "Core Wire Protocol",
     "maturityLevel": "draft",
     "baseUrl": "${SPEC_BASE_URL}/ed",
     "deps": [
         "overview"
     ],
     "respec": {
-        "modificationDate": "2026-01-28",
+        "noConformance": true,
+        "modificationDate": "${SPEC_MODIFICATION_DATE}",
         "group": {
             "name": "User Journal Graph Community Group",
             "url": "https://www.w3.org/community/ujg/"
@@ -46,7 +47,20 @@
             "DOM": { 
                 "title": "DOM Standard", 
                 "url": "https://dom.spec.whatwg.org/" 
+            },
+            "JSON": {
+                "title": "JSON",
+                "url": "https://www.rfc-editor.org/rfc/rfc8259"
+            },
+            "JSON-LD 1.1.": {
+                "title": "JSON 1.1.",
+                "url": "https://www.w3.org/TR/2020/REC-json-ld11-20200716/"
+            },
+            "RFC3339": {
+                "title": "RFC 3339",
+                "url": "https://www.rfc-editor.org/rfc/rfc3339"
             }
+
         }
     }
 }

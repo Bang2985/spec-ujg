@@ -3,7 +3,7 @@
     "title": "Designed",
     "maturityLevel": "draft",
     "deps": [
-        "serialization"
+        "core"
     ],
     "respec": {
         "modificationDate": "2026-01-28",

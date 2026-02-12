@@ -7,9 +7,8 @@ export const getDocuments = async (): Promise<Document[]> => {
   const workspaceContent = readFileSync('ujg.workspace.json', 'utf-8');
   const entryMap = JSON.parse(workspaceContent);
 
-  console.log('DEBUG: SPEC_BASE_URL from import.meta.env:', import.meta.env.SPEC_BASE_URL);
   const result = await buildWorkspaces({ entryMap, env: import.meta.env });
-
+  console.log('result', result.workspaces);
   return result.workspaces.ed.documents;
 };
 

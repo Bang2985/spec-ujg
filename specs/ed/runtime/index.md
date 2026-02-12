@@ -28,7 +28,7 @@ This module does **not** cover:
 
 ## Data Model (Normative)
 
-All objects defined here are [=UJG Object|UJG Objects=] and **MUST** conform to the **Serialization** module rules (JSON format, reserved keys, timestamps).
+All objects defined here are [=Node|UJG Nodes=] and **MUST** conform to the **Serialization** module rules (JSON format, reserved keys, timestamps).
 
 ### 1. RuntimeEvent (The Atom)
 

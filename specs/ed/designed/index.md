@@ -314,7 +314,7 @@ When a Consumer loads a Journey that lists `transitionSets`:
 
 ## Journey version reference (journeyRef)
 
-When a [=UJG Object=] references a specific [=Journey=] version, it **MUST** use a `journeyRef` member whose value is a JSON object of the form:
+When a [=Node|UJG Node=] references a specific [=Journey=] version, it **MUST** use a `journeyRef` member whose value is a JSON object of the form:
 
 ```json
 { "id": "…", "version": "…" }
