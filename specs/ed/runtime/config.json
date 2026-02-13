@@ -2,8 +2,9 @@
     "id": "runtime",
     "title": "Runtime",
     "maturityLevel": "draft",
+    "baseUrl": "${SPEC_BASE_URL}/ed",
     "deps": [
-        "designed"
+        "blueprint"
     ],
     "respec": {
         "modificationDate": "2026-01-28",

@@ -1,26 +1,26 @@
 {
-    "id": "serialization",
-    "title": "Serialization",
+    "id": "blueprint",
+    "title": "Blueprint",
     "maturityLevel": "draft",
-    "baseUrl": "${SPEC_BASE_URL}/ed",
     "deps": [
-        "overview"
+        "core"
     ],
     "respec": {
-        "modificationDate": "2026-01-28",
+        "noConformance": true,
+        "modificationDate": "${SPEC_MODIFICATION_DATE}",
         "group": {
             "name": "User Journal Graph Community Group",
             "url": "https://www.w3.org/community/ujg/"
         },
-        "repository": "https://github.com/openuji/spec-ujg/blob/main/specs/ed/serialization/index.md",
+        "repository": "https://github.com/openuji/spec-ujg/blob/main/specs/ed/designed/index.md",
         "editors": [
-        {
-            "name": "Seva Dolgopolov",
-            "w3cid": "169225"
-        }
+            {
+                "name": "Seva Dolgopolov",
+                "w3cid": "169225"
+            }
         ],
         "license": "W3C-Software-and-Document",
-        "localBiblio": {
+         "localBiblio": {
             "RFC2119": {
                 "title": "Key words for use in RFCs to Indicate Requirement Levels",
                 "url": "https://datatracker.ietf.org/doc/html/rfc2119",
@@ -37,16 +37,11 @@
                 "publisher": "IETF",
                 "status": "Best Current Practice"
             },
-            "HTML": {
-                "title": "HTML Standard",
-                "url": "https://html.spec.whatwg.org/multipage/",
-                "publisher": "WHATWG",
-                "status": "Living Standard"
-            },
-            "DOM": { 
-                "title": "DOM Standard", 
-                "url": "https://dom.spec.whatwg.org/" 
+            "UJG Core": {
+                "title": "UJG Core",
+                "url": "/ed/core"                
             }
+            
         }
     }
 }

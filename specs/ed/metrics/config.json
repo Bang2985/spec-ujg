@@ -3,10 +3,10 @@
     "title": "Metrics",
     "maturityLevel": "incubating",
     "deps": [
-        "serialization",
-        "observed"
+        "mapping"
     ],
     "respec": {
+        "noConformance": true,
         "modificationDate": "2026-01-28",
         "group": {
             "name": "User Journal Graph Community Group",
@@ -19,6 +19,12 @@
                 "w3cid": "169225"
             }
         ],
-        "license": "W3C-Software-and-Document"
+        "license": "W3C-Software-and-Document",
+        "localBiblio": {
+            "UJG Mapping": {
+                "title": "UJG Mapping",
+                "url": "/ed/mapping"
+            }
+        }
     }
 }
