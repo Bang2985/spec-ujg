@@ -18,11 +18,11 @@ This module defines the data model for recording actual user behavior as a **cau
 graph LR
   subgraph Execution [JourneyExecution]
     direction LR
-    E1[Event A<br/>id: e1<br/>previousId: null]
-    E2[Event B<br/>id: e2<br/>previousId: e1]
-    E3[Event C<br/>id: e3<br/>previousId: e2]
-    E2 -->|previousId| E1
-    E3 -->|previousId| E2
+    E1[Event A, id: e1<br/>previousId: null]
+    E2[Event B, id: e2<br/>previousId: e1]
+    E3[Event C, id: e3<br/>previousId: e2]
+    E1 -->|previousId| E2
+    E2 -->|previousId| E3
   end
 ```
 

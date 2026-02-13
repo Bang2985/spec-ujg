@@ -1,13 +1,9 @@
 {
-    "id": "profiles",
-    "title": "Profiles",
+    "id": "mapping",
+    "title": "Mapping",
     "maturityLevel": "incubating",
     "deps": [
-        "core",
-        "runtime",
-        "blueprint",
-        "mapping",
-        "metrics"
+        "runtime"
     ],
     "respec": {
         "noConformance": true,
@@ -16,7 +12,7 @@
             "name": "User Journal Graph Community Group",
             "url": "https://www.w3.org/community/ujg/"
         },
-        "repository": "https://github.com/openuji/spec-ujg/blob/main/specs/ed/profiles/index.md",
+        "repository": "https://github.com/openuji/spec-ujg/blob/main/specs/ed/metrics/index.md",
         "editors": [
             {
                 "name": "Seva Dolgopolov",
@@ -25,9 +21,13 @@
         ],
         "license": "W3C-Software-and-Document",
         "localBiblio": {
-            "UJG Metrics": {
-                "title": "UJG Metrics",
-                "url": "/ed/metrics"
+            "UJG Blueprint": {
+                "title": "UJG Blueprint",
+                "url": "/ed/blueprint"                
+            },
+            "UJG Runtime": {
+                "title": "UJG Runtime",
+                "url": "/ed/runtime"                
             }
         }
     }

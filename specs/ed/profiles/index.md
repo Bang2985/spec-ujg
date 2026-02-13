@@ -1,8 +1,8 @@
 **Goal:** define *interoperability* when not everyone implements everything, and make extensions safe across tools.
 
-### This module SHOULD define (normative)
+### Normatives to evaluate
 
-* **Profiles**: named capability sets (e.g., `design-core`, `design-composition`, `runtime-basic`, `runtime-aligned`, `observed-aligned`).
+* **Profiles**: named capability sets (e.g., `blueprint-core`, `blueprint-composition`, `runtime-basic`, `runtime-mapped`).
 * **Profile declaration**: how a producer/emitter/consumer declares supported profiles (document-level field vs out-of-band).
 * **Extension interoperability rules**:
   * what "namespaced" means (URI-like vs compact prefix registry),
@@ -14,7 +14,7 @@
   * required keys/behaviors per profile,
   * how a consumer should degrade gracefully when profile data is missing.
 
-### This module SHOULD define (informative)
+### Informatives to evaluate
 
 * Recommended starter profile set for TR v1.
 * Patterns for vendor modules (e.g., UI presentation, experimentation, privacy).
@@ -27,5 +27,9 @@
 
 ### Must-align with
 
-* Serialization (`extensions` mechanics)
-* Conformance module (profile conformance hooks)
+* [[UJG Core]] extension mechanics
+* [[UJG Blueprint]] explicit vs outgoing transitions
+* [[UJG Runtime]] event tracing
+* [[UJG Mapping]] stratgies to handle cross-journey jumps
+* [[UJG Metrics]] aggragation depth
+
