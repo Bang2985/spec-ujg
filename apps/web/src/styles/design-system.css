@@ -526,6 +526,10 @@
   @apply auto-grid;
 }
 
+.flow__cta {
+  @apply justify-self-end text-accent font-mono font-semibold text-sm no-underline transition-colors duration-200 hover:underline;
+}
+
 /* === COMPONENT: PILL === */
 
 .pill {

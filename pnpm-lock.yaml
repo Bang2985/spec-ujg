@@ -221,8 +221,8 @@ importers:
         specifier: 0.7.1
         version: 0.7.1
       '@openuji/speculator-lint':
-        specifier: file:/Users/zavalit/Projects/openuji/speculator/packages/speculator-lint
-        version: file:../../speculator/packages/speculator-lint
+        specifier: ^0.3.1
+        version: 0.3.1
       '@radix-ui/react-dialog':
         specifier: ^1.1.15
         version: 1.1.15(@types/react-dom@19.2.3(@types/react@19.2.13))(@types/react@19.2.13)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -1029,8 +1029,8 @@ packages:
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
 
-  '@openuji/speculator-lint@file:../../speculator/packages/speculator-lint':
-    resolution: {directory: ../../speculator/packages/speculator-lint, type: directory}
+  '@openuji/speculator-lint@0.3.1':
+    resolution: {integrity: sha512-TbrnOxHpnYCMIjJynKkJV1Sm7pJ1EIHycFJ3cW2z7XVzz5IzdH8nGzXazYjTWvE34eXUS2NPP+55A/3kCJ18Yw==}
     hasBin: true
 
   '@openuji/speculator@0.7.1':
@@ -5223,9 +5223,11 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.20.1
 
-  '@openuji/speculator-lint@file:../../speculator/packages/speculator-lint':
+  '@openuji/speculator-lint@0.3.1':
     dependencies:
-      '@openuji/speculator': link:../../speculator/packages/speculator
+      '@openuji/speculator': 0.7.1
+    transitivePeerDependencies:
+      - supports-color
 
   '@openuji/speculator@0.7.1':
     dependencies:
