@@ -1,6 +1,6 @@
 {
     "id": "blueprint",
-    "title": "Journey Blueprint",
+    "title": "Blueprint",
     "maturityLevel": "draft",
     "deps": [
         "core"

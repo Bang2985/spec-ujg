@@ -26,6 +26,16 @@ graph LR
 
 ### Data Model
 
+#### The Journey Container
+
+A [=Journey=] **MUST** include:
+
+* `type`: `"Journey"`
+* `startState`: ID of the entry [=State=].
+* `states`: Array of [=State=] or [=CompositeState=] objects.
+* `transitions`: Array of [=Transition=] objects.
+* `outgoingTransitionGroups`: (Optional) Array of [=OutgoingTransitionGroup=] IDs.
+
 #### The State Object
 
 A [=State=] **MUST** include:
@@ -44,15 +54,7 @@ A [=Transition=] **MUST** include:
 * `to`: ID of the target [=State=].
 * `label`: (Optional) Action name.
 
-#### The Journey Container
 
-A [=Journey=] **MUST** include:
-
-* `type`: `"Journey"`
-* `startState`: ID of the entry [=State=].
-* `states`: Array of [=State=] or [=CompositeState=] objects.
-* `transitions`: Array of [=Transition=] objects.
-* `outgoingTransitionGroups`: (Optional) Array of [=OutgoingTransitionGroup=] IDs.
 
 ---
 

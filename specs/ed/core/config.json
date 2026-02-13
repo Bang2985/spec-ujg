@@ -1,6 +1,6 @@
 {
     "id": "core",
-    "title": "Core Wire Protocol",
+    "title": "Core",
     "maturityLevel": "draft",
     "baseUrl": "${SPEC_BASE_URL}/ed",
     "deps": [
