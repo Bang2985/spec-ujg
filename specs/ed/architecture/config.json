@@ -1,6 +1,6 @@
 {
-    "id": "overview",
-    "title": "Overview",
+    "id": "architecture",
+    "title": "Architecture",
     "maturityLevel": "draft",
     "deps": [],
     "custom": {

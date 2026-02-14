@@ -1,5 +1,4 @@
 ---
-import HomeLayout from '@/layouts/HomeLayout.astro';
 import PageLayout from '@/layouts/PageLayout.astro';
 
 export async function getStaticPaths() {
@@ -26,14 +25,17 @@ const { fileName, title } = Astro.props;
 
 // Use import.meta.glob to load the markdown files from the specs directory
 // We need to use the relative path from this file to the specs directory
-const allSpecs = import.meta.glob('../../../../specs/*.md');
+const allSpecs = import.meta.glob<import('astro').MarkdownInstance<Record<string, unknown>>>(
+  '../../../../specs/*.md'
+);
 const specPath = `../../../../specs/${fileName}`;
 
-if (!allSpecs[specPath]) {
+const loader = allSpecs[specPath];
+if (!loader) {
   throw new Error(`Spec file not found: ${specPath}`);
 }
 
-const post = (await allSpecs[specPath]()) as any;
+const post = await loader();
 const { Content } = post;
 ---
 

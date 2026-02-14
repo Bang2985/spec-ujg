@@ -21,9 +21,9 @@
         ],
         "license": "W3C-Software-and-Document",
         "localBiblio": {
-            "UJG Blueprint": {
-                "title": "UJG Blueprint",
-                "url": "/ed/blueprint"                
+            "UJG Graph": {
+                "title": "UJG Graph",
+                "url": "/ed/graph"                
             },
             "UJG Runtime": {
                 "title": "UJG Runtime",

@@ -5,7 +5,7 @@
     "deps": [
         "core",
         "runtime",
-        "blueprint",
+        "graph",
         "mapping",
         "metrics"
     ],

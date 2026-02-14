@@ -8,7 +8,9 @@ export const getDocuments = async (): Promise<Document[]> => {
   const entryMap = JSON.parse(workspaceContent);
 
   const result = await buildWorkspaces({ entryMap, env: import.meta.env });
-  console.log('result', result.workspaces);
+  if (result.errors.length > 0) {
+    console.error('Errors building workspaces:', result.errors);
+  }
   return result.workspaces.ed.documents;
 };
 

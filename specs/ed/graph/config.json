@@ -1,6 +1,6 @@
 {
-    "id": "blueprint",
-    "title": "Blueprint",
+    "id": "graph",
+    "title": "Graph",
     "maturityLevel": "draft",
     "deps": [
         "core"

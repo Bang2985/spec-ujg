@@ -4,7 +4,7 @@
     "maturityLevel": "draft",
     "baseUrl": "${SPEC_BASE_URL}/ed",
     "deps": [
-        "overview"
+        "architecture"
     ],
     "respec": {
         "noConformance": true,

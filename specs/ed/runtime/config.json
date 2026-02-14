@@ -4,7 +4,7 @@
     "maturityLevel": "draft",
     "baseUrl": "${SPEC_BASE_URL}/ed",
     "deps": [
-        "blueprint"
+        "graph"
     ],
     "respec": {
         "modificationDate": "2026-01-28",
