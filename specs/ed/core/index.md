@@ -4,6 +4,11 @@ This specification defines a mandatory envelope for all **User Journey Graph (UJ
 
 ---
 
+## Terminology
+
+* <dfn>UJGDocument</dfn>: A JSON-LD bundle that serves as the container for the graph data.
+* <dfn>Node</dfn>: The atomic addressable object in UJG.
+
 ## General Requirements
 
 > The keywords **MUST**, **MUST NOT**, **REQUIRED**, **SHALL**, **SHALL NOT**, **SHOULD**, **SHOULD NOT**, **RECOMMENDED**, **MAY**, and **OPTIONAL** in this document are to be interpreted as described in [[!RFC2119]] and [[!RFC8174]].
@@ -15,14 +20,22 @@ This specification defines a mandatory envelope for all **User Journey Graph (UJ
 
 ### Document Structure {data-cop-concept="data-structure"}
 
-* <spec-statement>**Root Object:** The root of the file **MUST** be a valid single `UJGDocument` bundle.</spec-statement>
-* <spec-statement>**Context**: The root **MUST** include a `@context` object defining:
+<spec-statement>
+* **Root Object:** The root of the file **MUST** be a valid single `UJGDocument` bundle.
+
+* **Context**: The root **MUST** include a `@context` object defining:
   * `id` aliased to `@id`
   * `type` aliased to `@type`
   * `items` aliased to `@graph`
   * A vocabulary (via `@vocab` or prefix like `ujg:`) ensuring types are resolvable (e.g., `Journey` or `ujg:Journey`).
-  </spec-statement>
-* <spec-statement>**Payload**: The `items` property **MUST** be an array of Nodes. This array represents the JSON-LD graph.</spec-statement>
+  
+* **Payload:** The `items` property **MUST** contain every [=Node=] in the document.
+* **Flat Binding**: 
+  * A reference to another Node **MUST** be expressed as either:
+    * a string equal to the target [=Node=]’s `id`, or
+    * a JSON object that is a [=Node Reference=].
+  * The referenced id **MUST** resolve to exactly one Node within the current resolution scope (including imports).
+</spec-statement>
 
 ### Node Integrity and Uniqueness {data-cop-concept="uniqueness"}
 
@@ -30,46 +43,7 @@ This specification defines a mandatory envelope for all **User Journey Graph (UJ
   * `type`: A non-empty string.
   * `id`: A non-empty string representing a valid URI/URN.</spec-statement>
 * <spec-statement>**Uniqueness:** No two Nodes within a single document **MAY** share the same `id`.</spec-statement>
-* <spec-statement>**Reserved Keys:** The keys `@context`, `type`, `id`, `meta`, `extensions`, `specVersion`, and `items` are reserved for system use.</spec-statement>
-
----
-
-## The Root Object (The Envelope) {data-cop-concept="root"}
-
-The Root Object acts as the container for the graph data and is defined by [=UJGDocument=].
-
-### UJGDocument
-
-<dfn>UJGDocument</dfn>: A JSON-LD bundle that serves as the container for the graph data. 
-<spec-statement>It **MUST** satisfy the following schema:
-
-| Field | Requirement | Description |
-| :--- | :--- | :--- |
-| `@context` | `required` | JSON-LD context definitions. |
-| `type` | `required` | Must be `"UJGDocument"`. |
-| `specVersion` | `required` | The version of the UJG Core spec (e.g., `"1.0"`). |
-| `items`| `required` | An array of **Universal Nodes**. |
-</spec-statement>
-
-### Example Envelope
-
-```json
-{
-  "@context": {
-    "@vocab": "[https://ujg.specs.openuji.org/ns#](https://ujg.specs.openuji.org/ns#)",
-    "id": "@id",
-    "type": "@type",
-    "items": "@graph"
-  },
-  "type": "UJGDocument",
-  "specVersion": "1.0",
-  "items": [
-    {"type": "Journey", "id": "urn:ujg:journey:checkout"},
-    {"type": "State", "id": "urn:ujg:state:cart"}
-  ]
-}
-
-```
+* <spec-statement>**Reserved Keys:** The keys `@context`, `type`, `id`, `meta`, `extensions`, `specVersion`, `items`, and `imports` are reserved for system use.</spec-statement>
 
 ---
 
@@ -79,7 +53,6 @@ Every object inside `items` is a [=Node=].
 
 ### Node
 
-<dfn>Node</dfn>: The first-level unit of the graph.
 <spec-statement>It **MUST** satisfy the following schema:
 
 | Field | Requirement | Description |
@@ -89,6 +62,18 @@ Every object inside `items` is a [=Node=].
 | `meta` | `optional` | Metadata object (versioning, timestamps). |
 | `extensions` | `optional` | Use case and/or Vendor-specific data. |
  </spec-statement>
+
+### Node Reference
+
+<dfn>Node Reference</dfn>: A JSON object used to reference a Node without embedding it.
+
+<spec-statement>
+A Node Reference **MUST** satisfy:
+
+  * It **MUST** contain id (a non-empty string representing a valid URI/URN).
+  * It **MAY** contain type.
+  * It **MUST NOT** contain any other keys.
+</spec-statement>
 
 ### Handling Meta & Extensions
 
@@ -104,17 +89,95 @@ Every object inside `items` is a [=Node=].
 
 ```json
 {
-  "type": "Journey",
+  "type": "ExampleNode",
   "id": "urn:ujg:journey:checkout",
   "meta": {
-    "created": "2026-02-11T12:00:00Z",
-    "version": "v1.2"
+    "created": "2026-02-11T12:00:00Z"
   },
   "extensions": {
     "io.security.audit": {
       "checksum": "sha256:abc1234..."
     }
   }
+}
+
+```
+---
+
+## The Root Object (The Envelope) {data-cop-concept="root"}
+
+The Root Object acts as the container for the graph data and is defined by [=UJGDocument=].
+
+### UJGDocument
+
+<spec-statement>It **MUST** satisfy the following schema:
+
+| Field | Requirement | Description |
+| :--- | :--- | :--- |
+| `@context` | `required` | JSON-LD context definitions. |
+| `type` | `required` | Must be `"UJGDocument"`. |
+| `specVersion` | `required` | The version of the UJG Core spec (e.g., `"1.0"`). |
+| `items`| `required` | An array of **Universal Nodes**. |
+| `imports` | `optional` | Import declarations for additional UJGDocument resources. |
+</spec-statement>
+
+### Document Imports {data-cop-concept="imports"}
+
+<spec-statement>A UJGDocument MAY declare dependencies on other UJGDocument resources via `imports`.</spec-statement>
+
+* <spec-statement>If present, `imports` **MUST** be an array.</spec-statement>
+* <spec-statement>Each entry in `imports` **MUST** be a valid URI.</spec-statement>
+
+### Document Resolution (Processing Model) {data-cop-concept="resolution"}
+
+Consumers may process multiple UJGDocument files as a single logical graph.
+<spec-statement>
+* A Consumer validating references across documents **MUST** treat the union of all loaded documents’ `items[]` arrays as a single resolution set.
+* If `imports` is present, a Consumer performing full resolution **SHOULD** attempt to load each referenced import.
+* If an imported document cannot be loaded, a Consumer performing full resolution **MUST** report unresolved references.
+* A Consumer performing full resolution **MUST** detect import cycles.
+* A Consumer **MUST** terminate resolution when an import cycle is detected.
+</spec-statement>
+
+
+### Example Envelope
+
+```json
+{
+  "@context": {
+    "@vocab": "https://ujg.specs.openuji.org/ns#",
+    "id": "@id",
+    "type": "@type",
+    "items": "@graph"
+  },
+  "type": "UJGDocument",
+  "specVersion": "1.0",
+  "imports": [
+    "https://example.com/ujg/graph-shard.json",
+    "https://example.com/ujg/runtime-shard.json"
+  ],
+  "items": [
+    {
+      "type": "ExampleNode",
+      "id": "urn:ujg:example:node:a",
+      "thingRef": {
+        "id": "urn:ujg:example:thing:b",
+        "type": "ExampleThing"
+      },
+      "meta": {
+        "created": "2026-02-16T10:26:58Z"
+      }
+    },
+    {
+      "type": "ExampleThing",
+      "id": "urn:ujg:example:thing:b",
+      "extensions": {
+        "com.example.vendor": {
+          "note": "Unknown fields are allowed by Core; successor specs may define semantics."
+        }
+      }
+    }
+  ]
 }
 
 ```

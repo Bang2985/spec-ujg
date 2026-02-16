@@ -10,7 +10,7 @@ This module defines the data model for recording actual user behavior as a **cau
 
 ---
 
-## Event Chaining
+## Event Chaining {data-cop-concept="event-chaining"}
 
 ### Visual Model
 
@@ -26,43 +26,43 @@ graph LR
   end
 ```
 
-### The JourneyExecution Object (The Container)
+### The JourneyExecution Object (The Container) 
 
-A [=JourneyExecution=] **MUST** include:
+<spec-statement>A [=JourneyExecution=] **MUST** include:
 
 * `type`: `"JourneyExecution"`
-* `id`: non-empty string (unique within the containing [[UJG Core]] document)
-* `events`: array of [=RuntimeEvent=] objects
+* `id`: required, MUST be a valid URI/URN, unique within resolution scope.
+* `eventRefs`: array of [=RuntimeEvent=] IDs
+</spec-statement>
 
 
 ### The RuntimeEvent Object (The Atom)
 
-A [=RuntimeEvent=] **MUST** include:
+<spec-statement>A [=RuntimeEvent=] **MUST** include:
 
 * `type`: `"RuntimeEvent"`
-* `id`: non-empty string (unique within the containing [=JourneyExecution=])
+* `id`: required, MUST be a valid URI/URN, unique within resolution scope.
+* `executionId`: ID of the owning [=JourneyExecution=]
 * `previousId`: string or null
-
-  * `null` (or empty string) indicates the **Root Event**
+  * `null` indicates the **Root Event**
   * otherwise **MUST** equal the `id` of another event in the same [=JourneyExecution=]
-* `stateRef`: string (Journey [=State=] `id`)
+* `stateRef`: string (Graph [=State=] or [=CompositeState=] `id`)
+</spec-statement>
 
-A [=RuntimeEvent=] **MAY** include:
+<spec-statement>A [=RuntimeEvent=] **MAY** include:
 
 * `payload`: object (domain-specific data)
-
+</spec-statement>
 
 ---
 
 ## Chain Validity Rules
 
-Within a single [=JourneyExecution=]:
-
-1. **Uniqueness:** No two events **MAY** share the same `id`.
-2. **Root:** Exactly one event **MUST** be the Root Event (`previousId` is `null` or empty string).
-3. **Resolution:** Every non-root `previousId` **MUST** match the `id` of an event in the same `events[]`.
-4. **Single Successor:** An event `id` **MUST NOT** be referenced as `previousId` by more than one event. (No branching.)
-5. **Acyclic:** The chain **MUST NOT** contain cycles.
+Within a single execution (events where `executionId` equals the [=JourneyExecution=] id):
+  1. **Root**: Exactly one event MUST be the Root Event.
+  2. **Resolution**: Every non-root previousId MUST match the id of an event in the same execution.
+  3. **Single Successor**: An event id MUST NOT be referenced as previousId by more than one event in the same execution.
+  4. **Acyclic**: The chain MUST NOT contain cycles.
 
 If any rule above is violated, the [=JourneyExecution=] is invalid.
 
@@ -70,12 +70,11 @@ If any rule above is violated, the [=JourneyExecution=] is invalid.
 
 ## Reconstruction
 
-A Consumer reconstructing event order **MUST**:
-
-1. Identify the Root Event.
-2. Repeatedly select the unique event whose `previousId` equals the current event’s `id`.
-3. Continue until no successor exists.
-
+<spec-statement>A Consumer reconstructing event order **MUST**:
+  1. Identify the Root Event.
+  2. Repeatedly select the unique event whose `previousId` equals the current event’s `id`.
+  3. Continue until no successor exists.
+</spec-statement>
 
 ---
 
@@ -84,28 +83,38 @@ A Consumer reconstructing event order **MUST**:
 
 ```json
 {
+  "@context": {
+    "@vocab": "https://ujg.specs.openuji.org/ns#",
+    "id": "@id",
+    "type": "@type",
+    "items": "@graph"
+  },
   "type": "UJGDocument",
   "specVersion": "1.0",
-  "items": [
+   "items": [
     {
       "type": "JourneyExecution",
-      "id": "urn:session:12345",
-      "events": [
-        {
-          "type": "RuntimeEvent",
-          "id": "evt-100",
-          "previousId": null,
-          "stateRef": "urn:ujg:state:product-page",
-          "payload": { "action": "view" }
-        },
-        {
-          "type": "RuntimeEvent",
-          "id": "evt-200",
-          "previousId": "evt-100",
-          "stateRef": "urn:ujg:state:cart",
-          "payload": { "item": "shoes" }
-        }
+      "id": "urn:ujg:execution:12345",
+      "eventRefs": [
+        "urn:ujg:event:12345:100",
+        "urn:ujg:event:12345:200"
       ]
+    },
+    {
+      "type": "RuntimeEvent",
+      "id": "urn:ujg:event:12345:100",
+      "executionId": "urn:ujg:execution:12345",
+      "previousId": null,
+      "stateRef": "urn:ujg:state:product-page",
+      "payload": { "action": "view" }
+    },
+    {
+      "type": "RuntimeEvent",
+      "id": "urn:ujg:event:12345:200",
+      "executionId": "urn:ujg:execution:12345",
+      "previousId": "urn:ujg:event:12345:100",
+      "stateRef": "urn:ujg:state:cart",
+      "payload": { "item": "shoes" }
     }
   ]
 }
