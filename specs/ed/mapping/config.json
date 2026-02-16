@@ -3,7 +3,8 @@
     "title": "Mapping",
     "maturityLevel": "incubating",
     "deps": [
-        "runtime"
+        "runtime",
+        "experience"
     ],
     "respec": {
         "noConformance": true,
