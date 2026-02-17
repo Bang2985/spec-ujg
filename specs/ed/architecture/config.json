@@ -13,7 +13,7 @@
             "name": "User Journal Graph Community Group",
             "url": "https://www.w3.org/community/ujg/"
         },
-        "repository": "https://github.com/openuji/spec-ujg/blob/main/specs/ed/overview/index.md",
+        "repository": "https://github.com/openuji/spec-ujg/blob/main/specs/ed/architecture/index.md",
         "editors": [
             {
                 "name": "Seva Dolgopolov",

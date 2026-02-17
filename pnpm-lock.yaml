@@ -218,11 +218,11 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0(nanostores@1.1.0)(react@19.2.4)
       '@openuji/speculator':
-        specifier: ^0.7.3
-        version: 0.7.3
+        specifier: ^0.7.4
+        version: 0.7.4
       '@openuji/speculator-lint':
-        specifier: ^0.3.3
-        version: 0.3.3
+        specifier: ^0.3.4
+        version: 0.3.4
       '@radix-ui/react-dialog':
         specifier: ^1.1.15
         version: 1.1.15(@types/react-dom@19.2.3(@types/react@19.2.13))(@types/react@19.2.13)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -1029,12 +1029,12 @@ packages:
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
 
-  '@openuji/speculator-lint@0.3.3':
-    resolution: {integrity: sha512-HMdt5yH51r6o0lIap45lW7kaRC4qH0pd9RVLxfD8Awk3gkMOvP9xe4lBm6NXezPvXLU2xMBl31Z4wOCMvSmPGw==}
+  '@openuji/speculator-lint@0.3.4':
+    resolution: {integrity: sha512-63jP5AMiI64kEWl1gvdHfI6LtLmpx2lSAg7anxrVBk4LgJLfz6ijkP9DlaPFQWtnHr0O0w1v8N9qj/pVwqNpwA==}
     hasBin: true
 
-  '@openuji/speculator@0.7.3':
-    resolution: {integrity: sha512-WTAk8ErV1XAp5c3Vy2kJGhivzxqdtHoZ1CFjFfh3l7YQPav+CdFE/o/E08D4nKi9BIuxD74qiWI2lPxdva2jWw==}
+  '@openuji/speculator@0.7.4':
+    resolution: {integrity: sha512-s7gso4KmYaqL7wiIIsKTNex/++casjBtid8wQ3qqIqDaM4dJF6C0Jl4qxpeDRLoe+Q3wIk0eypGkQKwmSIxjXQ==}
 
   '@oslojs/encoding@1.1.0':
     resolution: {integrity: sha512-70wQhgYmndg4GCPxPPxPGevRKqTIJ2Nh4OkiMWmDAVYsTQ+Ta7Sq+rPevXyXGdzr30/qZBnyOalCszoMxlyldQ==}
@@ -5223,13 +5223,13 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.20.1
 
-  '@openuji/speculator-lint@0.3.3':
+  '@openuji/speculator-lint@0.3.4':
     dependencies:
-      '@openuji/speculator': 0.7.3
+      '@openuji/speculator': 0.7.4
     transitivePeerDependencies:
       - supports-color
 
-  '@openuji/speculator@0.7.3':
+  '@openuji/speculator@0.7.4':
     dependencies:
       hast-util-to-html: 9.0.5
       rehype-parse: 9.0.1
