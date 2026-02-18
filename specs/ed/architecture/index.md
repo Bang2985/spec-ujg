@@ -10,7 +10,7 @@ The standard is organized into five logical layers:
 2. **The Graph (Definition):** Defines the "Happy Path." It is the vocabulary for States, Transitions, and Composition (sub-journey referencing).
 3. **The Experience (Semantic):** Describes the journey in canonical human semantics (Steps, Touchpoints, Phases, Pain Points), enabling qualitative intent to be represented as data.
 4. **The Runtime (Execution):** Captures the "Actual Path." It records events as a causal chain.
-5. **The Mapping (Conformance):** Closes the loop. It overlays Reality(Runtime) onto Intent(Graph) to calculate conversion and detect friction.
+5. **The Mapping (Conformance):** Closes the loop. It overlays Reality(*Runtime*) onto Intent(*Graph*) to calculate conversion and detect friction.
 
 ## Guiding Principles
 

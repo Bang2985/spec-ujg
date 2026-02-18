@@ -84,12 +84,7 @@ If any rule above is violated, the [=JourneyExecution=] is invalid.
 
 ```json
 {
-  "@context": {
-    "@vocab": "https://ujg.specs.openuji.org/ns#",
-    "id": "@id",
-    "type": "@type",
-    "items": "@graph"
-  },
+  "@context": "https://ujg.specs.openuji.org/context.jsonld",
   "type": "UJGDocument",
   "specVersion": "1.0",
    "items": [
