@@ -18,3 +18,15 @@ The standard is organized into five logical layers:
 2. **Stable Identity:** Entities must be named with URIs to survive refactors.
 3. **Separation of Concerns:** A "Journey" (the plan) is immutable; a "Session" (the instance) is ephemeral.
 4. **Vendor Neutrality:** The spec defines _data shapes_, not visualization rules.
+
+## Supported Extensions
+
+The Editor's Draft also publishes a parallel family of **supported extensions** for optional capabilities
+that build on the core UJG layers without expanding the shared interoperability baseline. These
+extensions are official specifications, but they are normative only for implementations that claim
+support for them.
+
+Supported extensions MAY add optional semantics above the shared layers, but they MUST NOT silently
+redefine Core, Graph, Runtime, Experience, Mapping, or Metrics semantics. Capabilities that become
+universal across compliant implementations should graduate from the extension family into the main
+spec family rather than remain hidden as optional add-ons.

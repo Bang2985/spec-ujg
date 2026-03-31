@@ -5,6 +5,10 @@
     "deps": [
         "mapping"
     ],
+    "custom": {
+        "family": "spec",
+        "order": 70
+    },
     "respec": {
         "noConformance": true,
         "modificationDate": "2026-01-28",

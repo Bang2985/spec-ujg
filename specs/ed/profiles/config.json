@@ -9,6 +9,10 @@
         "mapping",
         "metrics"
     ],
+    "custom": {
+        "family": "spec",
+        "order": 80
+    },
     "respec": {
         "noConformance": true,
         "modificationDate": "2026-01-28",

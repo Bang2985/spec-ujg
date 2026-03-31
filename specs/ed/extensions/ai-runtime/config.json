@@ -1,13 +1,11 @@
 {
-    "id": "conformance",
-    "title": "Conformance",
-    "maturityLevel": "draft",
+    "id": "extensions/ai-runtime",
+    "title": "AI Runtime",
+    "maturityLevel": "incubating",
     "baseUrl": "${SPEC_BASE_URL}/ed",
-    "deps": [
-        "profiles"
-    ],
+    "deps": [],
     "custom": {
-        "family": "spec",
+        "family": "extension",
         "order": 90
     },
     "respec": {
@@ -17,12 +15,12 @@
             "name": "User Journal Graph Community Group",
             "url": "https://www.w3.org/community/ujg/"
         },
-        "repository": "https://github.com/openuji/spec-ujg/blob/main/specs/ed/core/index.md",
+        "repository": "https://github.com/openuji/spec-ujg/blob/main/specs/ed/extensions/ai-runtime/index.md",
         "editors": [
-        {
-            "name": "Seva Dolgopolov",
-            "w3cid": "169225"
-        }
+            {
+                "name": "Seva Dolgopolov",
+                "w3cid": "169225"
+            }
         ],
         "license": "W3C-Software-and-Document"
     }

@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 
-import { createJsonResponse } from '../../lib/spec-artifacts';
+import { createJsonResponse } from '../../../lib/spec-artifacts';
 
 const CANONICAL_SPEC_BASE_URL = 'https://ujg.specs.openuji.org';
 const SPEC_BASE_URL = String(import.meta.env.SPEC_BASE_URL ?? CANONICAL_SPEC_BASE_URL).replace(

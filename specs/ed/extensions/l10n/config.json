@@ -1,14 +1,12 @@
 {
-    "id": "conformance",
-    "title": "Conformance",
-    "maturityLevel": "draft",
+    "id": "extensions/l10n",
+    "title": "Localization",
+    "maturityLevel": "incubating",
     "baseUrl": "${SPEC_BASE_URL}/ed",
-    "deps": [
-        "profiles"
-    ],
+    "deps": [],
     "custom": {
-        "family": "spec",
-        "order": 90
+        "family": "extension",
+        "order": 40
     },
     "respec": {
         "noConformance": true,
@@ -17,12 +15,12 @@
             "name": "User Journal Graph Community Group",
             "url": "https://www.w3.org/community/ujg/"
         },
-        "repository": "https://github.com/openuji/spec-ujg/blob/main/specs/ed/core/index.md",
+        "repository": "https://github.com/openuji/spec-ujg/blob/main/specs/ed/extensions/l10n/index.md",
         "editors": [
-        {
-            "name": "Seva Dolgopolov",
-            "w3cid": "169225"
-        }
+            {
+                "name": "Seva Dolgopolov",
+                "w3cid": "169225"
+            }
         ],
         "license": "W3C-Software-and-Document"
     }

@@ -6,6 +6,10 @@
     "deps": [
         "graph"
     ],
+    "custom": {
+        "family": "spec",
+        "order": 50
+    },
     "respec": {
         "noConformance": true,
         "modificationDate": "${SPEC_MODIFICATION_DATE}",

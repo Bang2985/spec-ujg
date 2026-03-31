@@ -4,7 +4,9 @@
     "maturityLevel": "draft",
     "deps": [],
     "custom": {
-        "boom": true
+        "boom": true,
+        "family": "spec",
+        "order": 10
     },
     "noConformance": true,
     "respec": {

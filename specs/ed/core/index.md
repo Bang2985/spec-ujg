@@ -39,7 +39,7 @@ The normative Core JSON-LD context is defined below and is published at `https:/
 
 <spec-statement>Specifications or deployments **MAY** publish convenience aggregate contexts that compose the Core context with additional contexts, but such aggregate contexts are outside the scope of Core.</spec-statement>
 
-A composed context is expressed as a JSON-LD `@context` array in which the Core context appears together with one or more additional contexts required by the document and published at `https://ujg.specs.openuji.org/ed/context.jsonld`
+A composed context is expressed as a JSON-LD `@context` array in which the Core context appears together with one or more additional contexts required by the document and published at `https://ujg.specs.openuji.org/ed/ns/context.jsonld`
 
 #### Composed Context Example
 ```json

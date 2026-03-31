@@ -1,5 +1,11 @@
 **Goal:** define _interoperability_ when not everyone implements everything, and make extensions safe across tools.
 
+The [Supported Extensions](/ed#supported-extensions) published in the Editor's Draft define the
+official optional extension family. Profiles are the future place to describe how implementations
+declare support for those extensions, how extensions are bundled into named capability sets, and how
+consumers degrade gracefully when optional capabilities are absent. This draft does not yet
+standardize the declaration format for those claims.
+
 ### Normatives to evaluate
 
 - **Profiles**: named capability sets (e.g., `graph-core`, `graph-composition`, `runtime-basic`, `runtime-mapped`).
@@ -17,13 +23,15 @@
 ### Informatives to evaluate
 
 - Recommended starter profile set for TR v1.
-- Patterns for vendor modules (e.g., UI presentation, experimentation, privacy).
+- Patterns for supported extensions and vendor modules (e.g., UI presentation, experimentation, privacy).
 - Examples: same Journey expressed with/without optional profile features.
 
 ### Decisions to make
 
 - Do profiles live **inside** the JSON payload (e.g., `profiles: ["..."]`) or **outside** (HTTP header, metadata)?
 - Do you want a formal prefix registry for compact namespaces, or just "SHOULD be URI-like"?
+- How should implementations declare support for the [Supported Extensions](/ed#supported-extensions) published in the Editor's Draft?
+- How should profiles bundle supported extensions into named capability sets?
 
 ### Must-align with
 

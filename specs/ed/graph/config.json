@@ -5,6 +5,10 @@
     "deps": [
         "core"
     ],
+    "custom": {
+        "family": "spec",
+        "order": 30
+    },
     "respec": {
         "noConformance": true,
         "modificationDate": "${SPEC_MODIFICATION_DATE}",

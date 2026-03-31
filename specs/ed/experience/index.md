@@ -10,7 +10,7 @@ This module is published through the following artifacts:
 - `experience.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/ed/ns/experience.context.jsonld`
 - `experience.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/ed/ns/experience.shape`
 
-Examples in this page use an explicit context array composed from the published module contexts. The same composition is also published as the convenience context `https://ujg.specs.openuji.org/ed/context.jsonld`.
+Examples in this page use an explicit context array composed from the published module contexts. The same composition is also published as the convenience context `https://ujg.specs.openuji.org/ed/ns/context.jsonld`.
 
 **Non-goals:**
 
@@ -68,12 +68,7 @@ The rules below define the remaining resolution and non-structural constraints f
 
 ```json
 {
-  "@context": [
-    "https://ujg.specs.openuji.org/ed/ns/core.context.jsonld",
-    "https://ujg.specs.openuji.org/ed/ns/graph.context.jsonld",
-    "https://ujg.specs.openuji.org/ed/ns/runtime.context.jsonld",
-    "https://ujg.specs.openuji.org/ed/ns/experience.context.jsonld"
-  ],
+  "@context": "https://ujg.specs.openuji.org/ed/ns/context.jsonld",
   "@id": "https://example.com/ujg/experience/checkout.jsonld",
   "@type": "UJGDocument",
   "specVersion": "1.0",

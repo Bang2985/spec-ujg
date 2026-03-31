@@ -6,6 +6,10 @@
     "deps": [
         "architecture"
     ],
+    "custom": {
+        "family": "spec",
+        "order": 20
+    },
     "respec": {
         "noConformance": true,
         "modificationDate": "${SPEC_MODIFICATION_DATE}",

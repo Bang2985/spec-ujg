@@ -1,11 +1,33 @@
 ---
 import Panel from '@/components/astro/Panel.astro';
 import EditorDraftLayout from '@/layouts/EditorDraftLayout.astro';
-import { getDocuments } from '@/lib/load';
+import { getDocumentFamily, getDocuments, type EditorDraftDocumentFamily } from '@/lib/load';
 import { type Document } from '@openuji/speculator';
 import MaturityPill from '@/components/astro/speculator/w3c-cg/MaturityPill.astro';
 
 const documents = await getDocuments();
+
+const familySections: Array<{
+  family: EditorDraftDocumentFamily;
+  title: string;
+  description: string;
+  documents: Document[];
+}> = [
+  {
+    family: 'spec',
+    title: 'Spec Family',
+    description:
+      'Foundational UJG modules and supporting drafts that define the shared interoperability baseline.',
+    documents: documents.filter((doc) => getDocumentFamily(doc) === 'spec'),
+  },
+  {
+    family: 'extension',
+    title: 'Supported Extensions',
+    description:
+      'Official optional extension specs that producers and consumers may implement selectively.',
+    documents: documents.filter((doc) => getDocumentFamily(doc) === 'extension'),
+  },
+].filter((section) => section.documents.length > 0);
 ---
 
 <EditorDraftLayout title="Editor's Draft">
@@ -24,18 +46,29 @@ const documents = await getDocuments();
     </Panel>
   </section>
 
-  <div class="flow__grid">
-    {
-      documents.map((doc: Document) => (
-        <a
-          href={`/ed/${doc.id}`}
-          class="card min-h-auto hover:bg-accent-soft/40 hover:translate-y-[1px] transition-[background-color,transform]"
-        >
-          <h3>{doc.metadata?.title}</h3>
-          <MaturityPill metadata={doc.metadata || {}} />
-          View Spec →
-        </a>
-      ))
-    }
-  </div>
+  {
+    familySections.map((section) => (
+      <section
+        class="flow"
+        id={section.family === 'extension' ? 'supported-extensions' : 'spec-family'}
+      >
+        <div class="flow__header">
+          <h2 class="font-medium">{section.title}</h2>
+          <p>{section.description}</p>
+        </div>
+        <div class="flow__grid">
+          {section.documents.map((doc: Document) => (
+            <a
+              href={`/ed/${doc.id}`}
+              class="card min-h-auto hover:bg-accent-soft/40 hover:translate-y-[1px] transition-[background-color,transform]"
+            >
+              <h3>{doc.metadata?.title}</h3>
+              <MaturityPill metadata={doc.metadata || {}} />
+              View Spec →
+            </a>
+          ))}
+        </div>
+      </section>
+    ))
+  }
 </EditorDraftLayout>

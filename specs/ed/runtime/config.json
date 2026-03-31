@@ -6,6 +6,10 @@
     "deps": [
         "graph"
     ],
+    "custom": {
+        "family": "spec",
+        "order": 40
+    },
     "respec": {
         "modificationDate": "2026-01-28",
         "group": {
