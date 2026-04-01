@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ujg.specs.openuji.org/ed/ns/a11y.schema.json",
+  "title": "UJG Accessibility Extension Payload",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "version": { "type": "string" },
+    "label": { "type": "string" },
+    "description": { "type": "string" },
+    "role": { "type": "string" },
+    "focusOrder": { "type": "integer", "minimum": 0 },
+    "reducedMotion": { "type": "boolean" },
+    "highContrast": { "type": "boolean" },
+    "keyboardShortcuts": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "liveRegion": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "politeness": {
+          "type": "string",
+          "enum": ["off", "polite", "assertive"]
+        },
+        "messageKey": { "type": "string" }
+      }
+    },
+    "aria": {
+      "type": "object",
+      "additionalProperties": {
+        "type": ["string", "number", "boolean"]
+      }
+    }
+  },
+  "required": ["label"]
+}

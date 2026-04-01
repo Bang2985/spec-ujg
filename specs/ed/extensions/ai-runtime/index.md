@@ -16,40 +16,9 @@ brainstorming material, not normative conformance artifacts.
 
 ## Exploratory JSON Schema
 
-```json
-{
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://ujg.specs.openuji.org/ed/extensions/ai-runtime/schema",
-  "title": "UJG AI Runtime Extension Payload",
-  "type": "object",
-  "additionalProperties": false,
-  "properties": {
-    "version": { "type": "string" },
-    "promptTemplateRef": { "type": "string", "format": "uri-reference" },
-    "systemPolicyRef": { "type": "string", "format": "uri-reference" },
-    "memoryPolicy": {
-      "type": "string",
-      "enum": ["none", "session", "user"]
-    },
-    "toolRefs": {
-      "type": "array",
-      "items": { "type": "string", "format": "uri-reference" }
-    },
-    "fallbackMessageKey": { "type": "string" },
-    "maxTokens": { "type": "integer", "minimum": 1 },
-    "guardrails": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "blockPII": { "type": "boolean" },
-        "requireCitation": { "type": "boolean" },
-        "escalateNodeRef": { "type": "string", "format": "uri-reference" }
-      }
-    }
-  },
-  "required": ["promptTemplateRef"]
-}
-```
+The current exploratory schema is defined below and is published at `https://ujg.specs.openuji.org/ed/ns/ai-runtime.schema.json`.
+
+:::include ./ai-runtime.schema.json :::
 
 ## Example
 

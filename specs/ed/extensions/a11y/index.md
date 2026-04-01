@@ -16,46 +16,9 @@ informative brainstorming material, not normative conformance artifacts.
 
 ## Exploratory JSON Schema
 
-```json
-{
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://ujg.specs.openuji.org/ed/extensions/a11y/schema",
-  "title": "UJG Accessibility Extension Payload",
-  "type": "object",
-  "additionalProperties": false,
-  "properties": {
-    "version": { "type": "string" },
-    "label": { "type": "string" },
-    "description": { "type": "string" },
-    "role": { "type": "string" },
-    "focusOrder": { "type": "integer", "minimum": 0 },
-    "reducedMotion": { "type": "boolean" },
-    "highContrast": { "type": "boolean" },
-    "keyboardShortcuts": {
-      "type": "array",
-      "items": { "type": "string" }
-    },
-    "liveRegion": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "politeness": {
-          "type": "string",
-          "enum": ["off", "polite", "assertive"]
-        },
-        "messageKey": { "type": "string" }
-      }
-    },
-    "aria": {
-      "type": "object",
-      "additionalProperties": {
-        "type": ["string", "number", "boolean"]
-      }
-    }
-  },
-  "required": ["label"]
-}
-```
+The current exploratory schema is defined below and is published at `https://ujg.specs.openuji.org/ed/ns/a11y.schema.json`.
+
+:::include ./a11y.schema.json :::
 
 ## Example
 

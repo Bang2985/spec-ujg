@@ -16,44 +16,9 @@ informative brainstorming material, not normative conformance artifacts.
 
 ## Exploratory JSON Schema
 
-```json
-{
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://ujg.specs.openuji.org/ed/extensions/forms/schema",
-  "title": "UJG Forms Extension Payload",
-  "type": "object",
-  "additionalProperties": false,
-  "properties": {
-    "version": { "type": "string" },
-    "formId": { "type": "string" },
-    "method": {
-      "type": "string",
-      "enum": ["GET", "POST", "PUT", "PATCH"]
-    },
-    "action": { "type": "string", "format": "uri-reference" },
-    "schemaRef": { "type": "string", "format": "uri-reference" },
-    "autosave": { "type": "boolean" },
-    "fields": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": { "type": "string" },
-          "type": { "type": "string" },
-          "labelKey": { "type": "string" },
-          "required": { "type": "boolean" },
-          "validationRef": { "type": "string", "format": "uri-reference" }
-        },
-        "required": ["id", "type"]
-      }
-    },
-    "successNodeRef": { "type": "string", "format": "uri-reference" },
-    "errorNodeRef": { "type": "string", "format": "uri-reference" }
-  },
-  "required": ["formId", "method"]
-}
-```
+The current exploratory schema is defined below and is published at `https://ujg.specs.openuji.org/ed/ns/forms.schema.json`.
+
+:::include ./forms.schema.json :::
 
 ## Example
 

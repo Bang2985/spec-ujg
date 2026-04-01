@@ -16,31 +16,9 @@ brainstorming material, not normative conformance artifacts.
 
 ## Exploratory JSON Schema
 
-```json
-{
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://ujg.specs.openuji.org/ed/extensions/routing/schema",
-  "title": "UJG Routing Extension Payload",
-  "type": "object",
-  "additionalProperties": false,
-  "properties": {
-    "version": { "type": "string" },
-    "routeName": { "type": "string" },
-    "path": { "type": "string" },
-    "deepLink": { "type": "string", "format": "uri-reference" },
-    "guards": {
-      "type": "array",
-      "items": { "type": "string" }
-    },
-    "params": {
-      "type": "object",
-      "additionalProperties": { "type": "string" }
-    },
-    "fallbackNodeRef": { "type": "string", "format": "uri-reference" }
-  },
-  "required": ["routeName", "path"]
-}
-```
+The current exploratory schema is defined below and is published at `https://ujg.specs.openuji.org/ed/ns/routing.schema.json`.
+
+:::include ./routing.schema.json :::
 
 ## Example
 

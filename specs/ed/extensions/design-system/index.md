@@ -16,38 +16,9 @@ are informative brainstorming material, not normative conformance artifacts.
 
 ## Exploratory JSON Schema
 
-```json
-{
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://ujg.specs.openuji.org/ed/extensions/design-system/schema",
-  "title": "UJG Design System Extension Payload",
-  "type": "object",
-  "additionalProperties": false,
-  "properties": {
-    "version": { "type": "string" },
-    "component": { "type": "string" },
-    "variant": { "type": "string" },
-    "themeRef": { "type": "string", "format": "uri-reference" },
-    "tokenRefs": {
-      "type": "object",
-      "additionalProperties": { "type": "string" }
-    },
-    "slots": {
-      "type": "object",
-      "additionalProperties": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "component": { "type": "string" },
-          "contentKey": { "type": "string" },
-          "visible": { "type": "boolean" }
-        }
-      }
-    }
-  },
-  "required": ["component"]
-}
-```
+The current exploratory schema is defined below and is published at `https://ujg.specs.openuji.org/ed/ns/design-system.schema.json`.
+
+:::include ./design-system.schema.json :::
 
 ## Example
 

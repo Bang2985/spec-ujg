@@ -2,8 +2,18 @@ import type { APIRoute } from 'astro';
 import fs from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 
+export const CANONICAL_SPEC_BASE_URL = 'https://ujg.specs.openuji.org';
+
 function resolveSpecPath(importMetaUrl: string, relativeSpecPath: string): string {
   return fileURLToPath(new URL(relativeSpecPath, importMetaUrl));
+}
+
+export function getSpecBaseUrl(envSpecBaseUrl: unknown): string {
+  return String(envSpecBaseUrl ?? CANONICAL_SPEC_BASE_URL).replace(/\/$/, '');
+}
+
+export function rewriteCanonicalSpecBaseUrl(fileContent: string, specBaseUrl: string): string {
+  return fileContent.replaceAll(CANONICAL_SPEC_BASE_URL, specBaseUrl);
 }
 
 export function createArtifactHandler(

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ujg.specs.openuji.org/ed/ns/l10n.schema.json",
+  "title": "UJG Localization Extension Payload",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "version": { "type": "string" },
+    "namespace": { "type": "string" },
+    "messageKey": { "type": "string" },
+    "defaultLocale": { "type": "string" },
+    "fallbackLocales": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "rtl": { "type": "boolean" },
+    "locales": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": { "type": "string" }
+      }
+    }
+  },
+  "required": ["messageKey"]
+}

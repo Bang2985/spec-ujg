@@ -16,34 +16,9 @@ material, not normative conformance artifacts.
 
 ## Exploratory JSON Schema
 
-```json
-{
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://ujg.specs.openuji.org/ed/extensions/l10n/schema",
-  "title": "UJG Localization Extension Payload",
-  "type": "object",
-  "additionalProperties": false,
-  "properties": {
-    "version": { "type": "string" },
-    "namespace": { "type": "string" },
-    "messageKey": { "type": "string" },
-    "defaultLocale": { "type": "string" },
-    "fallbackLocales": {
-      "type": "array",
-      "items": { "type": "string" }
-    },
-    "rtl": { "type": "boolean" },
-    "locales": {
-      "type": "object",
-      "additionalProperties": {
-        "type": "object",
-        "additionalProperties": { "type": "string" }
-      }
-    }
-  },
-  "required": ["messageKey"]
-}
-```
+The current exploratory schema is defined below and is published at `https://ujg.specs.openuji.org/ed/ns/l10n.schema.json`.
+
+:::include ./l10n.schema.json :::
 
 ## Example
 

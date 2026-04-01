@@ -16,40 +16,9 @@ informative brainstorming material, not normative conformance artifacts.
 
 ## Exploratory JSON Schema
 
-```json
-{
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://ujg.specs.openuji.org/ed/extensions/experimentation/schema",
-  "title": "UJG Experimentation Extension Payload",
-  "type": "object",
-  "additionalProperties": false,
-  "properties": {
-    "version": { "type": "string" },
-    "experimentKey": { "type": "string" },
-    "variantKey": { "type": "string" },
-    "audiences": {
-      "type": "array",
-      "items": { "type": "string" }
-    },
-    "exposureEvent": { "type": "string" },
-    "fallbackVariant": { "type": "string" },
-    "stickyAssignment": {
-      "type": "string",
-      "enum": ["none", "session", "user"]
-    },
-    "activation": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "startAt": { "type": "string", "format": "date-time" },
-        "endAt": { "type": "string", "format": "date-time" },
-        "killSwitch": { "type": "boolean" }
-      }
-    }
-  },
-  "required": ["experimentKey", "variantKey"]
-}
-```
+The current exploratory schema is defined below and is published at `https://ujg.specs.openuji.org/ed/ns/experimentation.schema.json`.
+
+:::include ./experimentation.schema.json :::
 
 ## Example
 

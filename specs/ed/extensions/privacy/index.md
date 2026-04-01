@@ -16,44 +16,9 @@ informative brainstorming material, not normative conformance artifacts.
 
 ## Exploratory JSON Schema
 
-```json
-{
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://ujg.specs.openuji.org/ed/extensions/privacy/schema",
-  "title": "UJG Privacy Extension Payload",
-  "type": "object",
-  "additionalProperties": false,
-  "properties": {
-    "version": { "type": "string" },
-    "dataClassification": {
-      "type": "string",
-      "enum": ["public", "internal", "personal", "sensitive"]
-    },
-    "legalBasis": { "type": "string" },
-    "consentPurposes": {
-      "type": "array",
-      "items": { "type": "string" }
-    },
-    "retentionDays": { "type": "integer", "minimum": 0 },
-    "redaction": {
-      "type": "object",
-      "additionalProperties": { "type": "boolean" }
-    },
-    "sharing": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "processors": {
-          "type": "array",
-          "items": { "type": "string" }
-        },
-        "transferRegion": { "type": "string" }
-      }
-    }
-  },
-  "required": ["dataClassification"]
-}
-```
+The current exploratory schema is defined below and is published at `https://ujg.specs.openuji.org/ed/ns/privacy.schema.json`.
+
+:::include ./privacy.schema.json :::
 
 ## Example
 

@@ -16,35 +16,9 @@ informative brainstorming material, not normative conformance artifacts.
 
 ## Exploratory JSON Schema
 
-```json
-{
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://ujg.specs.openuji.org/ed/extensions/personalization/schema",
-  "title": "UJG Personalization Extension Payload",
-  "type": "object",
-  "additionalProperties": false,
-  "properties": {
-    "version": { "type": "string" },
-    "audiences": {
-      "type": "array",
-      "items": { "type": "string" }
-    },
-    "rankingStrategy": { "type": "string" },
-    "sessionSticky": { "type": "boolean" },
-    "fallbackNodeRef": { "type": "string", "format": "uri-reference" },
-    "variantRefs": {
-      "type": "object",
-      "additionalProperties": { "type": "string", "format": "uri-reference" }
-    },
-    "eligibility": {
-      "type": "object",
-      "additionalProperties": {
-        "type": ["string", "number", "boolean"]
-      }
-    }
-  }
-}
-```
+The current exploratory schema is defined below and is published at `https://ujg.specs.openuji.org/ed/ns/personalization.schema.json`.
+
+:::include ./personalization.schema.json :::
 
 ## Example
 
