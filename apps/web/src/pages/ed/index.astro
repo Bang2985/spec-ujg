@@ -21,10 +21,17 @@ const familySections: Array<{
     documents: documents.filter((doc) => getDocumentFamily(doc) === 'spec'),
   },
   {
-    family: 'extension',
-    title: 'Supported Extensions',
+    family: 'module',
+    title: 'Optional Modules',
     description:
-      'Official optional extension specs that producers and consumers may implement selectively.',
+      'Official optional modules that publish their own ontology, JSON-LD context, and SHACL artifacts.',
+    documents: documents.filter((doc) => getDocumentFamily(doc) === 'module'),
+  },
+  {
+    family: 'extension',
+    title: 'Opaque Extensions',
+    description:
+      'Opaque JSON payload conventions carried in Core `extensions` for pass-through and vendor-specific processing.',
     documents: documents.filter((doc) => getDocumentFamily(doc) === 'extension'),
   },
 ].filter((section) => section.documents.length > 0);
@@ -50,8 +57,15 @@ const familySections: Array<{
     familySections.map((section) => (
       <section
         class="flow"
-        id={section.family === 'extension' ? 'supported-extensions' : 'spec-family'}
+        id={
+          section.family === 'module'
+            ? 'optional-modules'
+            : section.family === 'extension'
+              ? 'opaque-extensions'
+              : 'spec-family'
+        }
       >
+        {section.family === 'module' && <a id="supported-extensions" aria-hidden="true" />}
         <div class="flow__header">
           <h2 class="font-medium">{section.title}</h2>
           <p>{section.description}</p>

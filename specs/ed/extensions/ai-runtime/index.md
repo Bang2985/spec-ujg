@@ -1,4 +1,4 @@
-**Status:** incubating supported extension for AI runtime metadata on UJG nodes.
+**Status:** incubating opaque extension payload convention for AI runtime metadata on UJG nodes.
 
 This page provides an exploratory payload shape for AI-runtime concerns such as prompt references,
 memory policy, tool preferences, and guardrail hints. The schema and examples below are informative

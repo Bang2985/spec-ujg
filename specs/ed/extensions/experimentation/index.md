@@ -1,4 +1,4 @@
-**Status:** incubating supported extension for experimentation metadata on UJG nodes.
+**Status:** incubating opaque extension payload convention for experimentation metadata on UJG nodes.
 
 This page provides an exploratory payload shape for experimentation concerns such as experiment keys,
 variant assignment, activation windows, and kill-switch behavior. The schema and examples below are

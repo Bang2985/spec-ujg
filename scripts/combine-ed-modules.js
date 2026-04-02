@@ -41,6 +41,29 @@ async function readMarkdown(modulePath) {
 }
 
 /**
+ * Recursively collect directories that contain a config.json file.
+ */
+async function collectModuleDirs(rootDir) {
+    const entries = await readdir(rootDir, { withFileTypes: true });
+    const moduleDirs = [];
+
+    for (const entry of entries) {
+        if (!entry.isDirectory()) continue;
+
+        const entryPath = join(rootDir, entry.name);
+        const config = await readConfig(entryPath);
+        if (config) {
+            moduleDirs.push(entryPath);
+            continue;
+        }
+
+        moduleDirs.push(...await collectModuleDirs(entryPath));
+    }
+
+    return moduleDirs;
+}
+
+/**
  * Perform topological sort based on dependencies
  */
 function topologicalSort(modules) {
@@ -78,24 +101,20 @@ function topologicalSort(modules) {
 async function main() {
     console.log('🔍 Scanning ed modules...');
 
-    // Read all module directories
-    const entries = await readdir(ED_DIR, { withFileTypes: true });
-    const moduleDirs = entries
-        .filter(e => e.isDirectory())
-        .map(e => e.name);
+    // Read all module directories recursively
+    const moduleDirs = await collectModuleDirs(ED_DIR);
 
-    console.log(`📁 Found ${moduleDirs.length} modules: ${moduleDirs.join(', ')}`);
+    console.log(`📁 Found ${moduleDirs.length} modules: ${moduleDirs.map(dir => dir.replace(`${ED_DIR}/`, '')).join(', ')}`);
 
     // Load configs and markdown for each module
     const modules = [];
-    for (const dirName of moduleDirs) {
-        const modulePath = join(ED_DIR, dirName);
+    for (const modulePath of moduleDirs) {
         const config = await readConfig(modulePath);
         const markdown = await readMarkdown(modulePath);
 
         if (config && markdown) {
             modules.push({
-                id: config.id || dirName,
+                id: config.id || modulePath.replace(`${ED_DIR}/`, ''),
                 deps: config.deps || [],
                 path: modulePath,
                 markdown: markdown.trim()

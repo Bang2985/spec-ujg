@@ -1,4 +1,4 @@
-**Status:** incubating supported extension for accessibility metadata on UJG nodes.
+**Status:** incubating opaque extension payload convention for accessibility metadata on UJG nodes.
 
 This page provides an exploratory payload shape for accessibility concerns such as labels, focus
 behavior, live-region announcements, and ARIA-style hints. The schema and examples below are

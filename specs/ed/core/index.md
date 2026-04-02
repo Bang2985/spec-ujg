@@ -73,6 +73,10 @@ A composed context is expressed as a JSON-LD `@context` array in which the Core 
 
 <spec-statement>Extensions that change core graph meaning **SHOULD** be standardized as first-class UJG modules rather than hidden inside `extensions`.</spec-statement>
 
+<spec-statement>Terms intended to participate in interoperable graph semantics, reference resolution, validation, or RDF querying **MUST** be defined by published JSON-LD contexts and corresponding module artifacts rather than being hidden inside `extensions`.</spec-statement>
+
+<spec-statement>Identifiers that appear only inside `extensions` **MUST NOT** be treated as Core or Graph references for standardized UJG processing unless an implementation applies explicit namespace-specific processing outside module conformance.</spec-statement>
+
 ### Import Resolution
 
 <spec-statement>`imports` values **MUST** be IRI references.</spec-statement>
@@ -99,7 +103,7 @@ The normative Core SHACL shape is defined below and is published at `https://ujg
 
 ## Examples {.unnumbered}
 
-The examples below are informative. Each example uses `https://ujg.specs.openuji.org/ed/ns/core.context.jsonld` as its JSON-LD context and stays within the Core vocabulary. `extensions` appears only on node objects; document-level `extensions` is invalid in Core.
+The examples below are informative. Each example uses `https://ujg.specs.openuji.org/ed/ns/core.context.jsonld` as its JSON-LD context and stays within the Core vocabulary. `extensions` appears only on node objects; document-level `extensions` is invalid in Core. Graph-native optional terms belong in composed module contexts, not inside `extensions`.
 
 ### Minimal Document
 

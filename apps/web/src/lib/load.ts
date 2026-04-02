@@ -3,11 +3,12 @@ import { type Document } from '@openuji/speculator';
 
 import { buildWorkspaces } from '@openuji/speculator';
 
-export type EditorDraftDocumentFamily = 'spec' | 'extension';
+export type EditorDraftDocumentFamily = 'spec' | 'module' | 'extension';
 
 const FAMILY_ORDER: Record<EditorDraftDocumentFamily, number> = {
   spec: 0,
-  extension: 1,
+  module: 1,
+  extension: 2,
 };
 
 function getDocumentCustom(doc: Document): Record<string, unknown> {
@@ -17,7 +18,9 @@ function getDocumentCustom(doc: Document): Record<string, unknown> {
 
 export function getDocumentFamily(doc: Document): EditorDraftDocumentFamily {
   const family = getDocumentCustom(doc).family;
-  return family === 'extension' ? 'extension' : 'spec';
+  if (family === 'module') return 'module';
+  if (family === 'extension') return 'extension';
+  return 'spec';
 }
 
 export function getDocumentOrder(doc: Document): number {

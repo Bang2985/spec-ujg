@@ -9,5 +9,5 @@ Serialization
 │     ├─ Conformance        (compares Runtime ↔ Designed; uses Runtime rules)
 │     └─ Observed           (aggregates Runtime; optionally aligns to Designed)
 │        └─ Metrics         (metric keys/units used in Observed artifacts)
-└─ Profiles & Extensibility (uses Serialization extension mechanics; defines interoperability profiles)
+└─ Profiles & Optional Modules (uses Serialization extension mechanics; includes `modules/*` optional vocabularies)
 ```

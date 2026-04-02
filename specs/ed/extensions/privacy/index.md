@@ -1,4 +1,4 @@
-**Status:** incubating supported extension for privacy metadata on UJG nodes.
+**Status:** incubating opaque extension payload convention for privacy metadata on UJG nodes.
 
 This page provides an exploratory payload shape for privacy concerns such as data classification,
 consent purposes, retention windows, and redaction rules. The schema and examples below are

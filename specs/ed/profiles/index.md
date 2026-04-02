@@ -1,20 +1,25 @@
-**Goal:** define _interoperability_ when not everyone implements everything, and make extensions safe across tools.
+**Goal:** define _interoperability_ when not everyone implements everything, and make optional modules plus opaque extensions safe across tools.
 
-The [Supported Extensions](/ed#supported-extensions) published in the Editor's Draft define the
-official optional extension family. Profiles are the future place to describe how implementations
-declare support for those extensions, how extensions are bundled into named capability sets, and how
-consumers degrade gracefully when optional capabilities are absent. This draft does not yet
-standardize the declaration format for those claims.
+The [Optional Modules](/ed#optional-modules) published in the Editor's Draft define the official
+optional capability family. Profiles are the future place to describe how implementations declare
+support for those modules, how modules are bundled into named capability sets, and how consumers
+degrade gracefully when optional capabilities are absent. Opaque Core `extensions` remain outside
+semantic profile claims except for pass-through behavior. This draft does not yet standardize the
+declaration format for those claims.
 
 ### Normatives to evaluate
 
 - **Profiles**: named capability sets (e.g., `graph-core`, `graph-composition`, `runtime-basic`, `runtime-mapped`).
 - **Profile declaration**: how a producer/emitter/consumer declares supported profiles (document-level field vs out-of-band).
-- **Extension interoperability rules**:
-  - what "namespaced" means (URI-like vs compact prefix registry),
+- **Optional module interoperability rules**:
+  - required publication artifacts (`*.ttl`, `*.context.jsonld`, `*.shape.ttl`),
+  - collision handling for composed contexts and overlapping terms,
+  - versioning expectations for module vocabularies,
+  - graceful degradation when a module is unsupported.
+- **Opaque extension safety rules**:
+  - what "namespaced" means for `extensions` keys,
   - collision handling,
-  - versioning expectations for extension vocabularies,
-  - pass-through requirements for stores/proxies.
+  - preservation and pass-through requirements for stores/proxies.
 - **Profile conformance** rules:
   - what it means to "conform to profile X",
   - required keys/behaviors per profile,
@@ -23,15 +28,16 @@ standardize the declaration format for those claims.
 ### Informatives to evaluate
 
 - Recommended starter profile set for TR v1.
-- Patterns for supported extensions and vendor modules (e.g., UI presentation, experimentation, privacy).
+- Patterns for optional modules and vendor-private extension payloads (e.g., UI presentation, experimentation, privacy).
 - Examples: same Journey expressed with/without optional profile features.
 
 ### Decisions to make
 
 - Do profiles live **inside** the JSON payload (e.g., `profiles: ["..."]`) or **outside** (HTTP header, metadata)?
 - Do you want a formal prefix registry for compact namespaces, or just "SHOULD be URI-like"?
-- How should implementations declare support for the [Supported Extensions](/ed#supported-extensions) published in the Editor's Draft?
-- How should profiles bundle supported extensions into named capability sets?
+- How should implementations declare support for the [Optional Modules](/ed#optional-modules) published in the Editor's Draft?
+- How should profiles bundle optional modules into named capability sets?
+- Should opaque `extensions` pass-through guarantees be declared as part of a profile or stay solely in Core?
 
 ### Must-align with
 

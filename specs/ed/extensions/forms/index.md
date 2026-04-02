@@ -1,4 +1,4 @@
-**Status:** incubating supported extension for form metadata on UJG nodes.
+**Status:** incubating opaque extension payload convention for form metadata on UJG nodes.
 
 This page provides an exploratory payload shape for forms concerns such as action endpoints, methods,
 field definitions, validation hints, and success or error routing. The schema and examples below are

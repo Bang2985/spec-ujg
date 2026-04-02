@@ -1,4 +1,4 @@
-**Status:** incubating supported extension for analytics metadata on UJG nodes.
+**Status:** incubating opaque extension payload convention for analytics metadata on UJG nodes.
 
 This page provides an exploratory payload shape for analytics concerns such as event names, tags,
 dimensions, metrics, and consent flags. The schema and examples below are informative brainstorming

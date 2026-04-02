@@ -19,14 +19,22 @@ The standard is organized into five logical layers:
 3. **Separation of Concerns:** A "Journey" (the plan) is immutable; a "Session" (the instance) is ephemeral.
 4. **Vendor Neutrality:** The spec defines _data shapes_, not visualization rules.
 
-## Supported Extensions
+## Optional Modules
 
-The Editor's Draft also publishes a parallel family of **supported extensions** for optional capabilities
-that build on the core UJG layers without expanding the shared interoperability baseline. These
-extensions are official specifications, but they are normative only for implementations that claim
-support for them.
+The Editor's Draft also publishes a parallel family of **optional modules** for capabilities that
+build on the core UJG layers without expanding the shared interoperability baseline. Earlier drafts
+called these "supported extensions", but the normative model is now module-oriented: optional
+capabilities that need interoperable graph terms publish their own ontology, JSON-LD context, and
+SHACL shape.
 
-Supported extensions MAY add optional semantics above the shared layers, but they MUST NOT silently
-redefine Core, Graph, Runtime, Experience, Mapping, or Metrics semantics. Capabilities that become
-universal across compliant implementations should graduate from the extension family into the main
-spec family rather than remain hidden as optional add-ons.
+Optional modules MAY add semantics above the shared layers, but they MUST NOT silently redefine
+Core, Graph, Runtime, Experience, Mapping, or Metrics semantics. Capabilities that become universal
+across compliant implementations should graduate from the optional module family into the main spec
+family rather than remain optional add-ons.
+
+## Opaque Extensions
+
+Core `extensions` remains the pass-through mechanism for vendor-private or deployment-specific JSON
+payloads on UJG node objects. Opaque extensions do not participate in standardized graph semantics,
+reference resolution, or profile conformance, even when their payloads happen to contain identifiers
+or structured JSON objects.

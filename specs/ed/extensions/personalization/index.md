@@ -1,4 +1,4 @@
-**Status:** incubating supported extension for personalization metadata on UJG nodes.
+**Status:** incubating opaque extension payload convention for personalization metadata on UJG nodes.
 
 This page provides an exploratory payload shape for personalization concerns such as audiences,
 ranking strategy, variant references, and session stickiness. The schema and examples below are
