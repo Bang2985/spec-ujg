@@ -1,12 +1,17 @@
 {
-    "id": "extensions/privacy",
-    "title": "Privacy",
+    "id": "extensions/collection",
+    "title": "Collection",
     "maturityLevel": "incubating",
     "baseUrl": "${SPEC_BASE_URL}/ed",
-    "deps": [],
+    "deps": [
+        "graph",
+        "modules/template",
+        "modules/routing",
+        "modules/l10n"
+    ],
     "custom": {
         "family": "extension",
-        "order": 80
+        "order": 94
     },
     "respec": {
         "noConformance": true,
@@ -15,7 +20,7 @@
             "name": "User Journal Graph Community Group",
             "url": "https://www.w3.org/community/ujg/"
         },
-        "repository": "https://github.com/openuji/spec-ujg/blob/main/specs/ed/extensions/privacy/index.md",
+        "repository": "https://github.com/openuji/spec-ujg/blob/main/specs/ed/extensions/collection/index.md",
         "editors": [
             {
                 "name": "Seva Dolgopolov",

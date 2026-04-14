@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ujg.specs.openuji.org/ed/ns/content.schema.json",
+  "title": "UJG Content Extension Payload",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "contentTypes": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "editableRegions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/region" }
+    },
+    "ownershipMode": {
+      "type": "string",
+      "enum": ["editorial", "application", "mixed", "external"]
+    },
+    "publicationMode": {
+      "type": "string",
+      "enum": ["runtime-only", "draft", "review", "publish", "scheduled"]
+    },
+    "entityBindings": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/entityBinding" }
+    }
+  },
+  "$defs": {
+    "region": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "kind": {
+          "type": "string",
+          "enum": ["rich-text", "media", "summary", "promo", "legal"]
+        },
+        "repeatable": { "type": "boolean" },
+        "disabled": { "type": "boolean" }
+      },
+      "required": ["name"]
+    },
+    "entityBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "role": { "type": "string" },
+        "entityRef": { "type": "string" },
+        "cardinality": {
+          "type": "string",
+          "enum": ["one", "many"]
+        },
+        "region": { "type": "string" },
+        "disabled": { "type": "boolean" }
+      },
+      "required": ["role", "entityRef"]
+    }
+  }
+}

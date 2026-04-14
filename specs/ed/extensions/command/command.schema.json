@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ujg.specs.openuji.org/ed/ns/command.schema.json",
+  "title": "UJG Command Extension Payload",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "commandRef": { "type": "string" },
+    "parameters": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/parameter" }
+    },
+    "preconditions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/precondition" }
+    },
+    "result": { "$ref": "#/$defs/resultLike" },
+    "error": { "$ref": "#/$defs/resultLike" },
+    "retry": {
+      "type": "string",
+      "enum": ["none", "manual", "automatic"]
+    },
+    "idempotency": {
+      "type": "string",
+      "enum": ["unknown", "idempotent", "non-idempotent"]
+    },
+    "triggerKinds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["submit", "tap", "shortcut", "deep-link", "timer", "webhook", "cli-argv", "stdin-line", "background", "job", "auto"]
+      }
+    },
+    "outputDestinations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["current-node", "next-node", "stdout", "stderr", "artifact", "event", "download"]
+      }
+    },
+    "outcomes": { "$ref": "#/$defs/outcomes" }
+  },
+  "$defs": {
+    "parameter": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "kind": {
+          "type": "string",
+          "enum": ["scalar", "structured", "entity-ref", "selection", "file", "secret"]
+        },
+        "required": { "type": "boolean" },
+        "source": {
+          "type": "string",
+          "enum": ["user", "form", "record", "collection", "route", "context", "argv", "stdin", "event"]
+        },
+        "defaultValueHint": {
+          "oneOf": [
+            { "type": "string" },
+            { "type": "number" },
+            { "type": "integer" },
+            { "type": "boolean" },
+            { "type": "object" },
+            { "type": "array" }
+          ]
+        }
+      },
+      "required": ["name", "kind"]
+    },
+    "precondition": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": ["selection-required", "non-empty", "confirmed", "validated", "reachable", "custom"]
+        },
+        "ref": { "type": "string" },
+        "value": {
+          "oneOf": [
+            { "type": "string" },
+            { "type": "number" },
+            { "type": "integer" },
+            { "type": "boolean" }
+          ]
+        }
+      },
+      "required": ["kind"]
+    },
+    "resultLike": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": ["none", "replace", "append", "emit", "download", "preview", "inline", "summary", "global", "retry", "fallback"]
+        },
+        "destination": {
+          "type": "string",
+          "enum": ["current-node", "next-node", "stdout", "stderr", "artifact", "event", "download"]
+        }
+      }
+    },
+    "outcomes": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "successNodeRef": { "type": "string" },
+        "errorNodeRef": { "type": "string" },
+        "emitEvents": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}

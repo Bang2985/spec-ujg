@@ -1,12 +1,16 @@
 {
-    "id": "extensions/personalization",
-    "title": "Personalization",
+    "id": "extensions/command",
+    "title": "Command",
     "maturityLevel": "incubating",
     "baseUrl": "${SPEC_BASE_URL}/ed",
-    "deps": [],
+    "deps": [
+        "graph",
+        "modules/routing",
+        "modules/l10n"
+    ],
     "custom": {
         "family": "extension",
-        "order": 110
+        "order": 95
     },
     "respec": {
         "noConformance": true,
@@ -15,7 +19,7 @@
             "name": "User Journal Graph Community Group",
             "url": "https://www.w3.org/community/ujg/"
         },
-        "repository": "https://github.com/openuji/spec-ujg/blob/main/specs/ed/extensions/personalization/index.md",
+        "repository": "https://github.com/openuji/spec-ujg/blob/main/specs/ed/extensions/command/index.md",
         "editors": [
             {
                 "name": "Seva Dolgopolov",

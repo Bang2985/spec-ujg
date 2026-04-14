@@ -1,12 +1,16 @@
 {
-    "id": "extensions/experimentation",
-    "title": "Experimentation",
+    "id": "extensions/content",
+    "title": "Content",
     "maturityLevel": "incubating",
     "baseUrl": "${SPEC_BASE_URL}/ed",
-    "deps": [],
+    "deps": [
+        "graph",
+        "modules/template",
+        "modules/l10n"
+    ],
     "custom": {
         "family": "extension",
-        "order": 70
+        "order": 98
     },
     "respec": {
         "noConformance": true,
@@ -15,7 +19,7 @@
             "name": "User Journal Graph Community Group",
             "url": "https://www.w3.org/community/ujg/"
         },
-        "repository": "https://github.com/openuji/spec-ujg/blob/main/specs/ed/extensions/experimentation/index.md",
+        "repository": "https://github.com/openuji/spec-ujg/blob/main/specs/ed/extensions/content/index.md",
         "editors": [
             {
                 "name": "Seva Dolgopolov",

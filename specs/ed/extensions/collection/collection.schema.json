@@ -1,0 +1,175 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ujg.specs.openuji.org/ed/ns/collection.schema.json",
+  "title": "UJG Collection Extension Payload",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "itemTypeRef": { "type": "string" },
+    "source": { "$ref": "#/$defs/source" },
+    "itemProjection": { "$ref": "#/$defs/itemProjection" },
+    "filters": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/filter" }
+    },
+    "sorts": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/sort" }
+    },
+    "search": { "$ref": "#/$defs/search" },
+    "selectionMode": {
+      "type": "string",
+      "enum": ["none", "single", "multiple"]
+    },
+    "pagination": { "$ref": "#/$defs/pagination" },
+    "itemActions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/action" }
+    },
+    "bulkActions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/action" }
+    },
+    "loadingPosture": {
+      "type": "string",
+      "enum": ["skeleton", "spinner", "placeholder", "silent"]
+    },
+    "emptyPosture": {
+      "type": "string",
+      "enum": ["blank", "message", "suggest-search", "fallback"]
+    },
+    "errorPosture": {
+      "type": "string",
+      "enum": ["inline", "banner", "full-state", "fallback"]
+    },
+    "appearanceRoles": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    }
+  },
+  "$defs": {
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "contractRef": { "type": "string" },
+        "timing": {
+          "type": "string",
+          "enum": ["startup", "on-enter", "on-visible", "on-demand"]
+        },
+        "blocking": {
+          "type": "string",
+          "enum": ["required", "deferred", "non-blocking"]
+        },
+        "cacheHint": {
+          "type": "string",
+          "enum": ["none", "request", "session", "stable", "revalidate"]
+        }
+      },
+      "required": ["contractRef"]
+    },
+    "itemProjection": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "layout": {
+          "type": "string",
+          "enum": ["list", "table", "cards", "grid", "stream"]
+        },
+        "properties": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/property" }
+        },
+        "appearanceRole": { "type": "string" }
+      }
+    },
+    "property": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "kind": { "type": "string" },
+        "appearanceRole": { "type": "string" },
+        "disabled": { "type": "boolean" }
+      },
+      "required": ["name"]
+    },
+    "filter": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "kind": {
+          "type": "string",
+          "enum": ["choice", "multichoice", "range", "date", "toggle"]
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              { "type": "string" },
+              { "type": "number" },
+              { "type": "integer" }
+            ]
+          }
+        },
+        "multiple": { "type": "boolean" },
+        "disabled": { "type": "boolean" }
+      },
+      "required": ["name", "kind"]
+    },
+    "sort": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "direction": {
+          "type": "string",
+          "enum": ["asc", "desc"]
+        },
+        "default": { "type": "boolean" },
+        "disabled": { "type": "boolean" }
+      },
+      "required": ["name"]
+    },
+    "search": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "mode": {
+          "type": "string",
+          "enum": ["prefix", "contains", "full-text"]
+        },
+        "placeholderRole": { "type": "string" }
+      }
+    },
+    "pagination": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": ["none", "page", "cursor", "infinite"]
+        },
+        "sizeHint": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": ["mode"]
+    },
+    "action": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "transitionRef": { "type": "string" },
+        "kind": { "type": "string" },
+        "appearanceRole": { "type": "string" },
+        "disabled": { "type": "boolean" }
+      },
+      "required": ["name"]
+    }
+  }
+}

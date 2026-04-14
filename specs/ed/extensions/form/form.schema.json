@@ -1,0 +1,229 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ujg.specs.openuji.org/ed/ns/form.schema.json",
+  "title": "UJG Form Extension Payload",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "modelRefs": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "forms": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/form" }
+    },
+    "prefill": { "$ref": "#/$defs/prefill" },
+    "resume": { "$ref": "#/$defs/resume" },
+    "autosave": { "$ref": "#/$defs/autosave" },
+    "submit": { "$ref": "#/$defs/submitLike" },
+    "reset": { "$ref": "#/$defs/reset" },
+    "draftSave": { "$ref": "#/$defs/draftSave" },
+    "validation": { "$ref": "#/$defs/validation" }
+  },
+  "$defs": {
+    "form": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "mode": {
+          "type": "string",
+          "enum": ["single-step", "multi-step", "wizard"]
+        },
+        "steps": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/step" }
+        },
+        "groups": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/group" }
+        },
+        "fields": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/field" }
+        },
+        "presentation": { "type": "string" },
+        "disabled": { "type": "boolean" }
+      },
+      "required": ["name"]
+    },
+    "step": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "groups": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/group" }
+        },
+        "fields": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/field" }
+        },
+        "presentation": { "type": "string" },
+        "disabled": { "type": "boolean" }
+      },
+      "required": ["name"]
+    },
+    "group": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "labelRole": { "type": "string" },
+        "fields": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/field" }
+        },
+        "presentation": { "type": "string" },
+        "disabled": { "type": "boolean" }
+      },
+      "required": ["name"]
+    },
+    "field": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "kind": {
+          "type": "string",
+          "enum": ["text", "textarea", "email", "number", "money", "date", "choice", "multichoice", "toggle", "file", "secret"]
+        },
+        "required": { "type": "boolean" },
+        "options": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/option" }
+        },
+        "presentation": { "type": "string" },
+        "disabled": { "type": "boolean" }
+      },
+      "required": ["name", "kind"]
+    },
+    "option": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "value": { "type": "string" },
+        "labelRole": { "type": "string" }
+      },
+      "required": ["value"]
+    },
+    "prefill": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": ["none", "default", "read", "resume"]
+        },
+        "sourceRefs": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "resume": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "scope": {
+          "type": "string",
+          "enum": ["session", "user", "device"]
+        }
+      }
+    },
+    "autosave": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "mode": {
+          "type": "string",
+          "enum": ["none", "local", "draft", "remote"]
+        },
+        "intervalHint": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "submitLike": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "transitionRef": { "type": "string" },
+        "result": {
+          "type": "string",
+          "enum": ["advance", "stay", "replace"]
+        },
+        "error": {
+          "type": "string",
+          "enum": ["inline", "summary", "global"]
+        }
+      }
+    },
+    "reset": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "mode": {
+          "type": "string",
+          "enum": ["clear", "restore-initial", "restore-prefill"]
+        }
+      }
+    },
+    "draftSave": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "transitionRef": { "type": "string" },
+        "mode": {
+          "type": "string",
+          "enum": ["local", "remote", "both"]
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": ["field", "group", "form", "mixed"]
+        },
+        "timing": {
+          "type": "string",
+          "enum": ["change", "blur", "submit", "mixed"]
+        },
+        "rules": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/rule" }
+        }
+      }
+    },
+    "rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": ["required", "pattern", "min-length", "max-length", "min", "max", "equals-field", "custom"]
+        },
+        "field": { "type": "string" },
+        "pattern": { "type": "string" },
+        "value": {
+          "oneOf": [
+            { "type": "string" },
+            { "type": "number" },
+            { "type": "integer" },
+            { "type": "boolean" }
+          ]
+        },
+        "ref": { "type": "string" }
+      },
+      "required": ["kind"]
+    }
+  }
+}

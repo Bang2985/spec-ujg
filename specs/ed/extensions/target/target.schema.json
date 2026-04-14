@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ujg.specs.openuji.org/ed/ns/target.schema.json",
+  "title": "UJG Target Extension Payload",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "platformFamilies": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["web", "native", "cms", "commerce", "cli", "headless"]
+      }
+    },
+    "preferredStacks": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "excludedStacks": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "deployModes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["local", "hosted", "hybrid", "embedded", "container"]
+      }
+    },
+    "capabilityRequirements": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

@@ -1,0 +1,184 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ujg.specs.openuji.org/ed/ns/surface.schema.json",
+  "title": "UJG Surface Extension Payload",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "surfaceKind": {
+      "type": "string",
+      "enum": ["page", "screen", "dialog", "sheet", "panel", "wizard-step", "prompt", "stream", "job"]
+    },
+    "composition": {
+      "type": "string",
+      "enum": ["single", "split", "stacked", "stepped", "streaming", "background"]
+    },
+    "slots": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          { "type": "string" },
+          { "$ref": "#/$defs/slot" }
+        ]
+      }
+    },
+    "blocks": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/block" }
+    },
+    "variants": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/variant" }
+    },
+    "theme": { "$ref": "#/$defs/theme" },
+    "recipes": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "library": { "$ref": "#/$defs/library" },
+    "adaptation": {
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": ["strict", "balanced", "platform-native"]
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "enum": ["strict", "balanced", "platform-native"]
+          }
+        }
+      ]
+    }
+  },
+  "$defs": {
+    "slot": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "role": { "type": "string" },
+        "required": { "type": "boolean" },
+        "multiple": { "type": "boolean" },
+        "disabled": { "type": "boolean" }
+      },
+      "required": ["name"]
+    },
+    "block": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "kind": { "type": "string" },
+        "slot": { "type": "string" },
+        "recipe": { "type": "string" },
+        "appearanceRole": { "type": "string" },
+        "importance": {
+          "type": "string",
+          "enum": ["primary", "secondary", "supporting"]
+        },
+        "variant": { "type": "string" },
+        "disabled": { "type": "boolean" }
+      },
+      "required": ["id", "kind", "slot"]
+    },
+    "variant": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "when": { "$ref": "#/$defs/selector" },
+        "overrides": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "surfaceKind": {
+              "type": "string",
+              "enum": ["page", "screen", "dialog", "sheet", "panel", "wizard-step", "prompt", "stream", "job"]
+            },
+            "composition": {
+              "type": "string",
+              "enum": ["single", "split", "stacked", "stepped", "streaming", "background"]
+            },
+            "disabledSlots": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "disabledBlocks": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
+        },
+        "disabled": { "type": "boolean" }
+      },
+      "required": ["name", "when"]
+    },
+    "selector": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "axis": {
+          "type": "string",
+          "enum": ["platform", "viewport", "mode", "input", "context"]
+        },
+        "value": { "type": "string" }
+      },
+      "required": ["axis", "value"]
+    },
+    "theme": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "tokenSources": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "themeRef": { "type": "string" },
+        "defaultMode": {
+          "type": "string",
+          "enum": ["light", "dark", "system"]
+        },
+        "supportedModes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["light", "dark", "system"]
+          }
+        },
+        "defaultContrastMode": {
+          "type": "string",
+          "enum": ["normal", "high", "system"]
+        },
+        "supportedContrastModes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["normal", "high", "system"]
+          }
+        },
+        "defaultDensityMode": {
+          "type": "string",
+          "enum": ["compact", "comfortable", "spacious"]
+        },
+        "supportedDensityModes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["compact", "comfortable", "spacious"]
+          }
+        }
+      }
+    },
+    "library": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "family": { "type": "string" },
+        "version": { "type": "string" }
+      },
+      "required": ["family"]
+    }
+  }
+}

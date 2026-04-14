@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ujg.specs.openuji.org/ed/ns/record.schema.json",
+  "title": "UJG Record Extension Payload",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "recordTypeRef": { "type": "string" },
+    "source": { "$ref": "#/$defs/source" },
+    "sections": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/section" }
+    },
+    "loadingPosture": {
+      "type": "string",
+      "enum": ["skeleton", "spinner", "placeholder", "silent"]
+    },
+    "emptyPosture": {
+      "type": "string",
+      "enum": ["blank", "message", "fallback", "error"]
+    },
+    "errorPosture": {
+      "type": "string",
+      "enum": ["inline", "banner", "full-state", "fallback"]
+    },
+    "refresh": { "$ref": "#/$defs/refresh" },
+    "actions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/action" }
+    },
+    "appearanceRoles": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    }
+  },
+  "$defs": {
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "contractRef": { "type": "string" },
+        "timing": {
+          "type": "string",
+          "enum": ["startup", "on-enter", "on-visible", "on-demand"]
+        },
+        "blocking": {
+          "type": "string",
+          "enum": ["required", "deferred", "non-blocking"]
+        },
+        "cacheHint": {
+          "type": "string",
+          "enum": ["none", "request", "session", "stable", "revalidate"]
+        }
+      },
+      "required": ["contractRef"]
+    },
+    "section": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "titleRole": { "type": "string" },
+        "properties": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/property" }
+        },
+        "actions": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/action" }
+        },
+        "disabled": { "type": "boolean" }
+      },
+      "required": ["name"]
+    },
+    "property": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "kind": {
+          "type": "string",
+          "enum": ["text", "number", "money", "date", "status", "badge", "link", "media"]
+        },
+        "appearanceRole": { "type": "string" },
+        "disabled": { "type": "boolean" }
+      },
+      "required": ["name"]
+    },
+    "action": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "kind": { "type": "string" },
+        "transitionRef": { "type": "string" },
+        "appearanceRole": { "type": "string" },
+        "disabled": { "type": "boolean" }
+      },
+      "required": ["name"]
+    },
+    "refresh": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": ["none", "manual", "automatic", "manual-and-automatic"]
+        },
+        "trigger": {
+          "type": "string",
+          "enum": ["pull", "button", "interval", "visible"]
+        }
+      }
+    }
+  }
+}

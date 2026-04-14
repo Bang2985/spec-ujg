@@ -1,12 +1,15 @@
 {
-    "id": "extensions/a11y",
-    "title": "Accessibility",
+    "id": "extensions/target",
+    "title": "Target",
     "maturityLevel": "incubating",
     "baseUrl": "${SPEC_BASE_URL}/ed",
-    "deps": [],
+    "deps": [
+        "graph",
+        "modules/template"
+    ],
     "custom": {
         "family": "extension",
-        "order": 50
+        "order": 97
     },
     "respec": {
         "noConformance": true,
@@ -15,7 +18,7 @@
             "name": "User Journal Graph Community Group",
             "url": "https://www.w3.org/community/ujg/"
         },
-        "repository": "https://github.com/openuji/spec-ujg/blob/main/specs/ed/extensions/a11y/index.md",
+        "repository": "https://github.com/openuji/spec-ujg/blob/main/specs/ed/extensions/target/index.md",
         "editors": [
             {
                 "name": "Seva Dolgopolov",

@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ujg.specs.openuji.org/ed/ns/access.schema.json",
+  "title": "UJG Access Extension Payload",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "authRequirement": {
+      "type": "string",
+      "enum": ["none", "required", "elevated"]
+    },
+    "audiences": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "roles": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "capabilityRefs": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "privacyPosture": {
+      "type": "string",
+      "enum": ["public", "internal", "restricted", "sensitive"]
+    },
+    "denyBehavior": {
+      "type": "string",
+      "enum": ["hide", "disable", "redirect", "message", "error"]
+    },
+    "fallbackNodeRef": { "type": "string" },
+    "redactionDefaults": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["mask-secrets", "mask-identifiers", "omit-sensitive-fields", "no-logs", "summary-only"]
+      }
+    }
+  }
+}

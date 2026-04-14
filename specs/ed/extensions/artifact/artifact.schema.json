@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ujg.specs.openuji.org/ed/ns/artifact.schema.json",
+  "title": "UJG Artifact Extension Payload",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "upload": { "$ref": "#/$defs/upload" },
+    "download": { "$ref": "#/$defs/download" },
+    "preview": { "$ref": "#/$defs/preview" },
+    "acceptedMediaKinds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["image", "video", "audio", "pdf", "document", "archive", "data"]
+      }
+    },
+    "captureSources": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["file-picker", "camera", "gallery", "scanner", "clipboard", "generated", "remote"]
+      }
+    },
+    "resultPosture": { "$ref": "#/$defs/resultPosture" }
+  },
+  "$defs": {
+    "upload": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "multiple": { "type": "boolean" },
+        "destinationHint": {
+          "type": "string",
+          "enum": ["replace", "append", "draft", "submission"]
+        },
+        "transitionRef": { "type": "string" }
+      }
+    },
+    "download": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "kind": {
+          "type": "string",
+          "enum": ["direct", "generated", "linked"]
+        },
+        "transitionRef": { "type": "string" }
+      }
+    },
+    "preview": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "mode": {
+          "type": "string",
+          "enum": ["inline", "modal", "separate", "external"]
+        },
+        "inlinePreferred": { "type": "boolean" }
+      }
+    },
+    "resultPosture": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "success": {
+          "type": "string",
+          "enum": ["stay", "advance", "append", "replace", "download", "preview"]
+        },
+        "error": {
+          "type": "string",
+          "enum": ["inline", "banner", "fallback"]
+        },
+        "successNodeRef": { "type": "string" }
+      }
+    }
+  }
+}
