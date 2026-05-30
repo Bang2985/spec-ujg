@@ -12,6 +12,13 @@ ujgmappingshape:StateLikeShape a sh:NodeShape ;
     [ sh:class ujggraph:CompositeState ]
   ) .
 
+ujgmappingshape:TransitionLikeShape a sh:NodeShape ;
+  sh:nodeKind sh:IRI ;
+  sh:or (
+    [ sh:class ujggraph:Transition ]
+    [ sh:class ujggraph:OutgoingTransition ]
+  ) .
+
 ujgmappingshape:JourneyMappingShape a sh:NodeShape ;
   sh:targetClass ujgmapping:JourneyMapping ;
   sh:nodeKind sh:IRI ;
@@ -33,8 +40,9 @@ ujgmappingshape:JourneyMappingShape a sh:NodeShape ;
   ] ;
 
   sh:property [
-    sh:path ujgmapping:mappedStateRef ;
-    sh:node ujgmappingshape:StateLikeShape ;
+    sh:path ujgmapping:mappedStepRef ;
+    sh:class ujgmapping:MappedStep ;
+    sh:nodeKind sh:IRI ;
     sh:minCount 1 ;
   ] ;
 
@@ -42,5 +50,45 @@ ujgmappingshape:JourneyMappingShape a sh:NodeShape ;
     sh:path ujgmapping:mappingStatus ;
     sh:datatype xsd:string ;
     sh:in ( "in-model" "jump" "mixed" ) ;
+    sh:maxCount 1 ;
+  ] .
+
+ujgmappingshape:MappedStepShape a sh:NodeShape ;
+  sh:targetClass ujgmapping:MappedStep ;
+  sh:nodeKind sh:IRI ;
+
+  sh:property [
+    sh:path ujgmapping:mappedEventRef ;
+    sh:class ujgruntime:RuntimeEvent ;
+    sh:nodeKind sh:IRI ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path ujgmapping:mappedStateRef ;
+    sh:node ujgmappingshape:StateLikeShape ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path ujgmapping:stepStatus ;
+    sh:datatype xsd:string ;
+    sh:in ( "origin" "in-model" "jump" ) ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path ujgmapping:mappedScopeRef ;
+    sh:class ujggraph:Journey ;
+    sh:nodeKind sh:IRI ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path ujgmapping:explainedByTransitionRef ;
+    sh:node ujgmappingshape:TransitionLikeShape ;
     sh:maxCount 1 ;
   ] .

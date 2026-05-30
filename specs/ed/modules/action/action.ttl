@@ -17,5 +17,8 @@ ujgaction:Action a owl:Class ;
 ### Properties
 
 ujgaction:actionRef a owl:ObjectProperty ;
-  rdfs:domain ujggraph:Transition ;
+  rdfs:domain [
+    a owl:Class ;
+    owl:unionOf ( ujggraph:Transition ujggraph:OutgoingTransition )
+  ] ;
   rdfs:range ujgaction:Action .

@@ -1,16 +1,16 @@
 ## Overview
 
 This optional module defines a minimal graph-native vocabulary for attaching declared side effects
-to Graph `Transition` nodes.
+to Graph `Transition` and `OutgoingTransition` nodes.
 
 The rationale follows the module discussion in `agent_findings.md`: without an action primitive,
 implementations tend to hide form submission, API invocation, analytics events, or
 navigate-with-payload behavior in opaque extensions. That makes a graph appear to advance while the
 effect that caused the transition remains non-portable.
 
-This first version is intentionally small. It declares that a transition has an associated `Action`;
-it does not define transport protocols, API request formats, queues, form libraries, analytics
-payloads, backend workers, or framework event handlers.
+This first version is intentionally small. It declares that an effective transition has an associated
+`Action`; it does not define transport protocols, API request formats, queues, form libraries,
+analytics payloads, backend workers, or framework event handlers.
 
 ## Normative Artifacts
 
@@ -25,15 +25,15 @@ with the Action context.
 
 ## Terminology
 
-- <dfn>Action</dfn>: An addressable declaration of a side effect associated with a Graph
-  `Transition`.
+- <dfn>Action</dfn>: An addressable declaration of a side effect associated with a Graph transition
+  edge.
 - <dfn>Action attachment</dfn>: The relation that assigns a transition to an action declaration.
 
 ## Attachment Model
 
 The module introduces one canonical interoperable attachment:
 
-- `action:actionRef` links a Graph `Transition` to an `Action`.
+- `action:actionRef` links a Graph `Transition` or `OutgoingTransition` to an `Action`.
 
 A transition without `actionRef` remains fully valid and traversable. Consumers MAY ignore this
 module and still process the graph.
@@ -62,10 +62,10 @@ The normative Action SHACL shape is defined below and is published at
 The rules below define the remaining module semantics beyond the structural constraints captured by
 the SHACL shape.
 
-1. **Declaration only:** Action describes that a transition has an associated side effect; it does
-   not define how that effect is invoked.
+1. **Declaration only:** Action describes that a transition edge has an associated side effect; it
+   does not define how that effect is invoked.
 2. **Graph preservation:** `actionRef` MUST NOT create a hidden edge or change the `from`/`to`
-   semantics of the host `Transition`.
+   semantics of the host `Transition` or `OutgoingTransition`.
 3. **Graceful degradation:** Consumers that do not implement this module MAY ignore Action semantics,
    but SHOULD preserve recognized JSON-LD data during read-transform-write when possible.
 4. **Private contracts:** Transport, command, mutation, retry, idempotency, and result-handling

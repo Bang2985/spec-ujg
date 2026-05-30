@@ -1,7 +1,7 @@
 ## Overview
 
-This optional module defines a graph-native vocabulary for assigning a Graph `State` to its own
-addressable `Surface`.
+This optional module defines a graph-native vocabulary for assigning a Graph state-like node
+(`State` or `CompositeState`) to its own addressable `Surface`.
 
 A `Surface` identifies the materialized interface boundary for one state: for example a page,
 screen, dialog, prompt, or other user-facing surface. The relation is intentionally one-to-one. A
@@ -30,18 +30,19 @@ Non-goals:
 
 ## Terminology
 
-- <dfn>Surface</dfn>: An addressable materialized interface boundary for exactly one Graph `State`.
+- <dfn>Surface</dfn>: An addressable materialized interface boundary for exactly one Graph
+  state-like node.
 - <dfn>Surface attachment</dfn>: The relation that assigns a state to its surface.
 
 ## Attachment Model
 
 The module introduces one canonical interoperable attachment:
 
-- `surface:surfaceRef` links a Graph `State` to a `Surface`.
+- `surface:surfaceRef` links a Graph `State` or `CompositeState` to a `Surface`.
 
 The module also allows a secondary reverse pointer for overlay documents:
 
-- `surface:surfaceStateRef` links a `Surface` to its Graph `State`.
+- `surface:surfaceStateRef` links a `Surface` to its Graph `State` or `CompositeState`.
 
 `surfaceRef` is the canonical assignment form.
 
@@ -51,8 +52,9 @@ owned, read-only, or published separately from a surface pack.
 A state without `surfaceRef` remains fully valid and traversable. Consumers MAY ignore this module
 and still process the graph.
 
-A `Surface` MUST NOT be assigned to more than one state. Producers SHOULD use one `Surface` resource
-per realized Graph `State`.
+A `Surface` MUST be assigned to exactly one state-like Graph node in the validated document set,
+using `surfaceRef`, `surfaceStateRef`, or both. Producers SHOULD use one `Surface` resource per
+realized state-like Graph node.
 
 If `surfaceRef` and `surfaceStateRef` are both present across the same document set, they MUST
 resolve to the same state-surface assignment. A mismatch is invalid.
@@ -86,7 +88,8 @@ the SHACL shape.
 
 1. **Attachment only:** Surface properties MUST NOT change Graph validity, graph traversal behavior,
    import resolution, or core node identity.
-2. **One-to-one surface identity:** A `Surface` MUST identify at most one Graph `State`.
+2. **One-to-one surface identity:** A `Surface` MUST identify exactly one Graph state-like node, and
+   a state-like node MUST NOT be assigned to more than one `Surface`.
 3. **Canonical direction:** `surfaceRef` is the canonical assignment from state to surface.
 4. **Graceful degradation:** A consumer that does not implement this module MAY ignore Surface
    semantics, but it SHOULD preserve recognized JSON-LD data during read-transform-write when

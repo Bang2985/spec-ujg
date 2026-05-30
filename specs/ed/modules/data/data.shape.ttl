@@ -4,7 +4,7 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
 ujgdatashape:StateDataShape a sh:NodeShape ;
-  sh:targetClass ujggraph:State ;
+  sh:targetClass ujggraph:State, ujggraph:CompositeState ;
   sh:nodeKind sh:IRI ;
 
   sh:property [

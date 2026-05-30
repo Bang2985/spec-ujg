@@ -18,7 +18,7 @@ The [UJG Community Group](https://www.w3.org/community/ujg/) is a forum for disc
 
 - **[`specs/`](./specs/)**: Contains the source markdown files for the specifications.
   - **[`ed/`](./specs/ed/)**: The Editor's Draft workspace.
-  - **[`v1/`](./specs/v1/)**: (Future) Stable version snapshots.
+  - **`tr/`**: (Future) immutable Technical Report snapshots for community experimentation.
 - **[`apps/web/`](./apps/web/)**: The Astro-based documentation website that renders the specifications.
 
 ## 🚀 Getting Started

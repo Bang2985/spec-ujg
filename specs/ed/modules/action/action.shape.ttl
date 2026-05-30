@@ -4,7 +4,7 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
 ujgactionshape:TransitionActionShape a sh:NodeShape ;
-  sh:targetClass ujggraph:Transition ;
+  sh:targetClass ujggraph:Transition, ujggraph:OutgoingTransition ;
   sh:nodeKind sh:IRI ;
 
   sh:property [

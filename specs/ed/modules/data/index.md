@@ -1,16 +1,16 @@
 ## Overview
 
 This optional module defines a minimal graph-native vocabulary for attaching data context or binding
-identity to Graph `State` nodes.
+identity to Graph `State` and `CompositeState` nodes.
 
 The rationale follows the module discussion in `agent_findings.md`: without a data primitive,
 implementations tend to invent incompatible state-management, data-context, and binding conventions
 inside opaque extensions. This module gives producers a shared place to say which addressable data
-resource belongs to a state while leaving lifecycle and runtime details for later work.
+resource belongs to a state-like node while leaving lifecycle and runtime details for later work.
 
-This first version is intentionally small. It declares that a state has an associated `Data`
-resource; it does not define schemas, reactive stores, fetch policies, cache directives, lifecycle
-status, authentication context, or realtime behavior.
+This first version is intentionally small. It declares that a state-like node has an associated
+`Data` resource; it does not define schemas, reactive stores, fetch policies, cache directives,
+lifecycle status, authentication context, or realtime behavior.
 
 ## Normative Artifacts
 
@@ -26,14 +26,14 @@ with the Data context.
 ## Terminology
 
 - <dfn>Data</dfn>: An addressable declaration of data context or binding identity for a Graph
-  `State`.
+  state-like node.
 - <dfn>Data attachment</dfn>: The relation that assigns a state to a data declaration.
 
 ## Attachment Model
 
 The module introduces one canonical interoperable attachment:
 
-- `data:dataRef` links a Graph `State` to `Data`.
+- `data:dataRef` links a Graph `State` or `CompositeState` to `Data`.
 
 A state without `dataRef` remains fully valid and traversable. Consumers MAY ignore this module and
 still process the graph.
@@ -62,12 +62,14 @@ The normative Data SHACL shape is defined below and is published at
 The rules below define the remaining module semantics beyond the structural constraints captured by
 the SHACL shape.
 
-1. **Declaration only:** Data describes that a state has associated data identity; it does not define
-   how the data is loaded, updated, cached, or observed.
-2. **Graph preservation:** `dataRef` MUST NOT change Graph topology or traversal semantics.
-3. **Graceful degradation:** Consumers that do not implement this module MAY ignore Data semantics,
+1. **Declaration only:** Data describes that a state-like node has associated data identity; it does
+   not define how the data is loaded, updated, cached, or observed.
+2. **Shared data identity:** Multiple state-like nodes MAY reference the same `Data` resource when
+   they intentionally share a data context or binding identity.
+3. **Graph preservation:** `dataRef` MUST NOT change Graph topology or traversal semantics.
+4. **Graceful degradation:** Consumers that do not implement this module MAY ignore Data semantics,
    but SHOULD preserve recognized JSON-LD data during read-transform-write when possible.
-4. **Private lifecycle details:** Fetch policy, cache behavior, lifecycle status, and reactive-store
+5. **Private lifecycle details:** Fetch policy, cache behavior, lifecycle status, and reactive-store
    bindings SHOULD remain in Core `extensions` unless a future optional module defines them as
    interoperable vocabulary.
 

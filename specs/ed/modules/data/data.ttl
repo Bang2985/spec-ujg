@@ -17,5 +17,8 @@ ujgdata:Data a owl:Class ;
 ### Properties
 
 ujgdata:dataRef a owl:ObjectProperty ;
-  rdfs:domain ujggraph:State ;
+  rdfs:domain [
+    a owl:Class ;
+    owl:unionOf ( ujggraph:State ujggraph:CompositeState )
+  ] ;
   rdfs:range ujgdata:Data .

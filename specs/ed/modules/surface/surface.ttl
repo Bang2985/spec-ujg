@@ -18,9 +18,15 @@ ujgsurface:Surface a owl:Class ;
 ### Properties
 
 ujgsurface:surfaceRef a owl:ObjectProperty ;
-  rdfs:domain ujggraph:State ;
+  rdfs:domain [
+    a owl:Class ;
+    owl:unionOf ( ujggraph:State ujggraph:CompositeState )
+  ] ;
   rdfs:range ujgsurface:Surface .
 
 ujgsurface:surfaceStateRef a owl:ObjectProperty ;
   rdfs:domain ujgsurface:Surface ;
-  rdfs:range ujggraph:State .
+  rdfs:range [
+    a owl:Class ;
+    owl:unionOf ( ujggraph:State ujggraph:CompositeState )
+  ] .

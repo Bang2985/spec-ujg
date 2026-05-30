@@ -6,6 +6,7 @@
     "mapping": "https://ujg.specs.openuji.org/ed/ns/mapping#",
 
     "JourneyMapping": "ujgmapping:JourneyMapping",
+    "MappedStep": "ujgmapping:MappedStep",
 
     "mappedJourneyRef": {
       "@id": "ujgmapping:mappedJourneyRef",
@@ -15,11 +16,28 @@
       "@id": "ujgmapping:mappedRuntimeRef",
       "@type": "@id"
     },
-    "mappedStateRef": {
-      "@id": "ujgmapping:mappedStateRef",
+    "mappedStepRef": {
+      "@id": "ujgmapping:mappedStepRef",
       "@type": "@id",
       "@container": "@set"
     },
-    "mappingStatus": "ujgmapping:mappingStatus"
+    "mappedEventRef": {
+      "@id": "ujgmapping:mappedEventRef",
+      "@type": "@id"
+    },
+    "mappedStateRef": {
+      "@id": "ujgmapping:mappedStateRef",
+      "@type": "@id"
+    },
+    "mappingStatus": "ujgmapping:mappingStatus",
+    "stepStatus": "ujgmapping:stepStatus",
+    "mappedScopeRef": {
+      "@id": "ujgmapping:mappedScopeRef",
+      "@type": "@id"
+    },
+    "explainedByTransitionRef": {
+      "@id": "ujgmapping:explainedByTransitionRef",
+      "@type": "@id"
+    }
   }
 }
