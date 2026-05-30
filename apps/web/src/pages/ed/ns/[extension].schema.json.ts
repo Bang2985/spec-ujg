@@ -28,6 +28,10 @@ const EXTENSIONS_DIRECTORY = fileURLToPath(
 const SPEC_BASE_URL = getSpecBaseUrl(import.meta.env.SPEC_BASE_URL);
 
 export async function getStaticPaths() {
+  if (import.meta.env.PUBLISH_UJG_EXTENSIONS !== 'true') {
+    return [];
+  }
+
   const entries = await readdir(EXTENSIONS_DIRECTORY, { withFileTypes: true });
   const staticPaths = await Promise.all(
     entries

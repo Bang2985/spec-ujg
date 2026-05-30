@@ -1,15 +1,14 @@
 {
-    "id": "mapping",
-    "title": "Mapping",
-    "maturityLevel": "draft",
+    "id": "modules/action",
+    "title": "Action",
+    "maturityLevel": "incubating",
     "baseUrl": "${SPEC_BASE_URL}/ed",
     "deps": [
-        "runtime",
         "graph"
     ],
     "custom": {
-        "family": "spec",
-        "order": 60
+        "family": "module",
+        "order": 45
     },
     "respec": {
         "noConformance": true,
@@ -18,7 +17,7 @@
             "name": "User Journal Graph Community Group",
             "url": "https://www.w3.org/community/ujg/"
         },
-        "repository": "https://github.com/openuji/spec-ujg/blob/main/specs/ed/mapping/index.md",
+        "repository": "https://github.com/openuji/spec-ujg/blob/main/specs/ed/modules/action/index.md",
         "editors": [
             {
                 "name": "Seva Dolgopolov",
@@ -33,11 +32,7 @@
             },
             "UJG Graph": {
                 "title": "UJG Graph",
-                "url": "/ed/graph"                
-            },
-            "UJG Runtime": {
-                "title": "UJG Runtime",
-                "url": "/ed/runtime"                
+                "url": "/ed/graph"
             }
         }
     }

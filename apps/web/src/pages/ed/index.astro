@@ -5,7 +5,7 @@ import { getDocumentFamily, getDocuments, type EditorDraftDocumentFamily } from 
 import { type Document } from '@openuji/speculator';
 import MaturityPill from '@/components/astro/speculator/w3c-cg/MaturityPill.astro';
 
-const documents = await getDocuments();
+const documents = await getDocuments('ed');
 
 const familySections: Array<{
   family: EditorDraftDocumentFamily;

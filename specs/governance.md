@@ -17,7 +17,9 @@ This policy ensures the **User Journey Graph (UJG)** spec is developed with tran
 ### Publication Model
 
 - **Editor’s Draft (ED):** The live, evolving workspace (`/ed/`).
-- **Technical Reports (TR):** Frozen, immutable snapshots (`/TR/version/`) for stable implementation.
+- **Technical Reports (TR):** Frozen, immutable snapshots (`/tr/version/`) of modules the editors
+  believe are reliable enough for community experimentation. A TR publication does not mean every
+  included part is final or stable.
 
 ### Core Principles
 

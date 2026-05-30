@@ -1,0 +1,46 @@
+@prefix ujggraph: <https://ujg.specs.openuji.org/ed/ns/graph#> .
+@prefix ujgruntime: <https://ujg.specs.openuji.org/ed/ns/runtime#> .
+@prefix ujgmapping: <https://ujg.specs.openuji.org/ed/ns/mapping#> .
+@prefix ujgmappingshape: <https://ujg.specs.openuji.org/ed/ns/mapping.shape#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ujgmappingshape:StateLikeShape a sh:NodeShape ;
+  sh:nodeKind sh:IRI ;
+  sh:or (
+    [ sh:class ujggraph:State ]
+    [ sh:class ujggraph:CompositeState ]
+  ) .
+
+ujgmappingshape:JourneyMappingShape a sh:NodeShape ;
+  sh:targetClass ujgmapping:JourneyMapping ;
+  sh:nodeKind sh:IRI ;
+
+  sh:property [
+    sh:path ujgmapping:mappedJourneyRef ;
+    sh:class ujggraph:Journey ;
+    sh:nodeKind sh:IRI ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path ujgmapping:mappedRuntimeRef ;
+    sh:class ujgruntime:JourneyExecution ;
+    sh:nodeKind sh:IRI ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path ujgmapping:mappedStateRef ;
+    sh:node ujgmappingshape:StateLikeShape ;
+    sh:minCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path ujgmapping:mappingStatus ;
+    sh:datatype xsd:string ;
+    sh:in ( "in-model" "jump" "mixed" ) ;
+    sh:maxCount 1 ;
+  ] .

@@ -2,23 +2,30 @@
 import { MobilePanel } from '@/components/react/toc/MobilePanel';
 import type { TocEntry, Document } from '@openuji/speculator';
 import BreadcrumbSelect from '@/components/react/select/BreadcrumbSelect';
-import { getDocumentFamily, getDocuments } from '@/lib/load';
+import {
+  getDocumentFamily,
+  getDocuments,
+  getWorkspaceConfig,
+  type SpecWorkspaceKey,
+} from '@/lib/load';
 
 interface Props {
   title: string;
   toc?: TocEntry[];
   breadcrumb?: { title: string; href: string }[];
+  workspace?: SpecWorkspaceKey;
 }
 
-const { title, breadcrumb = [], toc } = Astro.props;
+const { title, breadcrumb = [], toc, workspace = 'ed' } = Astro.props;
+const workspaceConfig = getWorkspaceConfig(workspace);
 
-const docs = await getDocuments();
+const docs = await getDocuments(workspace);
 
 const options = docs
   .filter((doc: Document) => doc.metadata?.title !== undefined)
   .map((doc: Document) => ({
     label: doc.metadata?.title || '',
-    href: `/ed/${doc.id}`,
+    href: `${workspaceConfig.basePath}/${doc.id}`,
     family: getDocumentFamily(doc),
   }));
 

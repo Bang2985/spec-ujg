@@ -1,0 +1,19 @@
+@prefix ujggraph: <https://ujg.specs.openuji.org/ed/ns/graph#> .
+@prefix ujgaction: <https://ujg.specs.openuji.org/ed/ns/action#> .
+@prefix ujgactionshape: <https://ujg.specs.openuji.org/ed/ns/action.shape#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ujgactionshape:TransitionActionShape a sh:NodeShape ;
+  sh:targetClass ujggraph:Transition ;
+  sh:nodeKind sh:IRI ;
+
+  sh:property [
+    sh:path ujgaction:actionRef ;
+    sh:class ujgaction:Action ;
+    sh:nodeKind sh:IRI ;
+    sh:maxCount 1 ;
+  ] .
+
+ujgactionshape:ActionShape a sh:NodeShape ;
+  sh:targetClass ujgaction:Action ;
+  sh:nodeKind sh:IRI .

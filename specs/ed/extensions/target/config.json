@@ -5,7 +5,7 @@
     "baseUrl": "${SPEC_BASE_URL}/ed",
     "deps": [
         "graph",
-        "modules/template"
+        "modules/surface"
     ],
     "custom": {
         "family": "extension",

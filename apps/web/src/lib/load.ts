@@ -4,6 +4,23 @@ import { type Document } from '@openuji/speculator';
 import { buildWorkspaces } from '@openuji/speculator';
 
 export type EditorDraftDocumentFamily = 'spec' | 'module' | 'extension';
+export type SpecWorkspaceKey = 'ed' | 'tr202605';
+
+export const WORKSPACE_CONFIG: Record<
+  SpecWorkspaceKey,
+  { title: string; basePath: string; label: string }
+> = {
+  ed: {
+    title: "Editor's Draft",
+    basePath: '/ed',
+    label: 'ED',
+  },
+  tr202605: {
+    title: 'First Editor Draft',
+    basePath: '/tr/2026.05',
+    label: 'TR 2026.05',
+  },
+};
 
 const FAMILY_ORDER: Record<EditorDraftDocumentFamily, number> = {
   spec: 0,
@@ -23,9 +40,18 @@ export function getDocumentFamily(doc: Document): EditorDraftDocumentFamily {
   return 'spec';
 }
 
+function shouldPublishDocument(doc: Document): boolean {
+  if (getDocumentFamily(doc) !== 'extension') return true;
+  return import.meta.env.PUBLISH_UJG_EXTENSIONS === 'true';
+}
+
 export function getDocumentOrder(doc: Document): number {
   const order = Number(getDocumentCustom(doc).order);
   return Number.isFinite(order) ? order : Number.MAX_SAFE_INTEGER;
+}
+
+export function getWorkspaceConfig(workspace: SpecWorkspaceKey) {
+  return WORKSPACE_CONFIG[workspace];
 }
 
 function compareDocuments(left: Document, right: Document): number {
@@ -38,7 +64,7 @@ function compareDocuments(left: Document, right: Document): number {
   return (left.metadata?.title || left.id).localeCompare(right.metadata?.title || right.id);
 }
 
-export const getDocuments = async (): Promise<Document[]> => {
+export const getDocuments = async (workspace: SpecWorkspaceKey = 'ed'): Promise<Document[]> => {
   const workspaceContent = readFileSync('ujg.workspace.json', 'utf-8');
   const entryMap = JSON.parse(workspaceContent);
 
@@ -46,10 +72,12 @@ export const getDocuments = async (): Promise<Document[]> => {
   if (result.errors.length > 0) {
     console.error('Errors building workspaces:', result.errors);
   }
-  return [...result.workspaces.ed.documents].sort(compareDocuments);
+  return [...(result.workspaces[workspace]?.documents || [])]
+    .filter(shouldPublishDocument)
+    .sort(compareDocuments);
 };
 
-export const loadDocument = async (spec: string) => {
-  const docs = await getDocuments();
+export const loadDocument = async (spec: string, workspace: SpecWorkspaceKey = 'ed') => {
+  const docs = await getDocuments(workspace);
   return docs.find((doc: Document) => doc.id === spec);
 };

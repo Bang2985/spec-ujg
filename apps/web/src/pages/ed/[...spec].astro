@@ -9,7 +9,7 @@ import CGLogo from '@/components/astro/speculator/w3c-cg/CGLogo.astro';
 import MaturityPill from '@/components/astro/speculator/w3c-cg/MaturityPill.astro';
 
 export async function getStaticPaths() {
-  const specs = await getDocuments();
+  const specs = await getDocuments('ed');
 
   return specs.map((spec: Document) => ({
     params: {
@@ -24,13 +24,14 @@ export async function getStaticPaths() {
 
 const { id, title } = Astro.props;
 
-const document = await loadDocument(id);
+const document = await loadDocument(id, 'ed');
 const statementsJsonLd = document?.computed?.statementsJsonLd;
 ---
 
 <SpecLayout
   title={title}
   parent={{ href: '/ed', title: "Editor's Draft" }}
+  workspace="ed"
   toc={document?.computed?.toc || []}
 >
   {
