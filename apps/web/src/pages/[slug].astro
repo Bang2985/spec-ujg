@@ -1,5 +1,6 @@
 ---
 import PageLayout from '@/layouts/PageLayout.astro';
+import type { TocEntry } from '@openuji/speculator';
 
 export async function getStaticPaths() {
   const pages = [
@@ -13,15 +14,27 @@ export async function getStaticPaths() {
       fileName: 'contribution.md',
       title: 'Contributing',
     },
+    {
+      slug: 'adoption-faq',
+      fileName: 'adoption-faq.md',
+      title: 'Adoption FAQ',
+      toc: true,
+    },
+    {
+      slug: 'ai-governance-faq',
+      fileName: 'ai-governance-faq.md',
+      title: 'AI Governance',
+      toc: true,
+    },
   ];
 
-  return pages.map(({ slug, fileName, title }) => ({
+  return pages.map(({ slug, fileName, title, toc = false }) => ({
     params: { slug },
-    props: { fileName, title },
+    props: { fileName, title, toc },
   }));
 }
 
-const { fileName, title } = Astro.props;
+const { fileName, title, toc: includeToc = false } = Astro.props;
 
 // Use import.meta.glob to load the markdown files from the specs directory
 // We need to use the relative path from this file to the specs directory
@@ -36,10 +49,21 @@ if (!loader) {
 }
 
 const post = await loader();
+const headings = typeof post.getHeadings === 'function' ? post.getHeadings() : [];
+const toc: TocEntry[] = includeToc
+  ? headings
+      .filter((heading) => heading.depth === 2)
+      .map((heading) => ({
+        id: heading.slug,
+        text: heading.text,
+        depth: 1,
+        children: [],
+      }))
+  : [];
 const { Content } = post;
 ---
 
-<PageLayout title={title}>
+<PageLayout title={title} toc={toc}>
   <article class="spec max-w-spec min-w-0 mx-auto p-md">
     <Content />
   </article>

@@ -1,14 +1,63 @@
 ---
-import BaseLayout from "./BaseLayout.astro";
-import Header from "@/components/astro/Header.astro";
+import BaseLayout from './BaseLayout.astro';
+import Header from '@/components/astro/Header.astro';
+import { Toc } from '@/components/react/toc/Toc';
+import type { TocEntry } from '@openuji/speculator';
 
 interface Props {
   title: string;
+  toc?: TocEntry[];
 }
-const { title } = Astro.props;
+const { title, toc = [] } = Astro.props;
+const hasToc = toc.length > 0;
+const bodyClass = hasToc ? 'static-page bg-spec' : 'static-page';
 ---
 
-<BaseLayout title={title}>
-  <Header title={title} />
-  <slot />
+<BaseLayout title={title} bodyClass={bodyClass}>
+  <Header title={title} toc={hasToc ? toc : undefined} />
+  {
+    hasToc ? (
+      <div class="sidebar-container is-initializing flex px-lg" transition:animate="fade">
+        <aside class="sidebar w-sidebar border-r border-border shrink-0">
+          <div class="sidebar-content sticky top-[var(--height-header)] -ml-3">
+            <Toc toc={toc} client:load />
+          </div>
+        </aside>
+
+        <main class="max-w-spec min-w-0 mx-auto py-md md:p-md text-base leading-relaxed">
+          <slot />
+        </main>
+      </div>
+    ) : (
+      <slot />
+    )
+  }
+
+  <script>
+    import { tocCollapsed } from '@/stores/tocSidebar';
+
+    let unbind: (() => void) | undefined;
+
+    function init() {
+      if (unbind) unbind();
+
+      const container = document.querySelector('.sidebar-container') as HTMLElement;
+      if (!container) return;
+
+      container.setAttribute('data-toc-toggled', tocCollapsed.get().toString());
+
+      unbind = tocCollapsed.subscribe((collapsed: boolean) => {
+        container.setAttribute('data-toc-toggled', collapsed.toString());
+      });
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          container.classList.remove('is-initializing');
+        });
+      });
+    }
+
+    document.addEventListener('astro:page-load', init);
+    init();
+  </script>
 </BaseLayout>

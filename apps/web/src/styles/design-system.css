@@ -1171,4 +1171,36 @@
     opacity: 0.5;
     transform: scale(0.9);
   }
+
+  /* Static Markdown pages use the spec typography without being ED spec documents. */
+  .static-page .spec h2 {
+    margin-top: 3.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .static-page .spec :is(h2, h3, h4, h5, h6) {
+    scroll-margin-top: calc(var(--height-header) + 1.5rem);
+  }
+
+  .static-page .spec h1 + h2 {
+    margin-top: 2.5rem;
+  }
+
+  .static-page .spec pre.astro-code {
+    background-color: #f6f8fa !important;
+    color: var(--foreground) !important;
+  }
+
+  .static-page .spec pre code {
+    color: inherit !important;
+  }
+
+  .static-page .spec pre code span {
+    color: inherit !important;
+  }
+
+  :root[data-theme='dark'] .static-page .spec pre.astro-code {
+    background-color: #24292e !important;
+    color: #e1e4e8 !important;
+  }
 }
