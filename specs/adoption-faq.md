@@ -448,6 +448,66 @@ study task
 For research platforms, UJG is most useful when it makes research findings portable without
 commoditizing the whole research product.
 
+## Is UJG useful for product analytics tools?
+
+Yes, if UJG is treated as journey semantics for analytics events, not as a replacement for analytics.
+
+Analytics tools usually answer:
+
+```text
+What happened?
+```
+
+UJG can help answer:
+
+```text
+Where in the intended journey did it happen?
+Which state was active?
+Which surface was exposed?
+Which transition was attempted?
+Which variant did the user see?
+Did the observed path match the intended graph?
+```
+
+A product analytics tool could integrate UJG by allowing events to carry stable journey references:
+
+```json
+{
+  "event": "surface exposed",
+  "properties": {
+    "ujg.journey_ref": "checkout",
+    "ujg.state_ref": "checkout-payment",
+    "ujg.surface_ref": "payment-form",
+    "ujg.transition_ref": "payment-to-confirmation",
+    "ujg.variant": "B",
+    "ujg.graph_version": "2026-06-05"
+  }
+}
+```
+
+This makes existing analytics features more journey-aware:
+
+* funnels can be grouped by journey state
+* paths can be compared with the intended journey graph
+* session replays can be filtered by state or surface
+* experiments can be interpreted by affected journey step
+* surveys and feedback can be attached to the relevant journey moment
+* warehouse queries can join product behavior with journey semantics
+* AI tools can summarize behavior against a structured journey model
+
+For analytics vendors, UJG should not require a new tracking system. A realistic first integration is:
+
+```text
+existing event tracking
++ UJG state and surface references
++ graph version
++ optional variant and transition references
+= journey-aware analytics
+```
+
+A more advanced integration could import a UJG file and validate whether incoming events reference
+known journeys, states, surfaces, and transitions.
+
 
 ## Is UJG useful for legal, compliance, or trust teams?
 
