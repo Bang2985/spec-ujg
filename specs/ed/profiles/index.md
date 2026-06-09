@@ -1,4 +1,4 @@
-**Goal:** define _interoperability_ when not everyone implements everything, and make optional modules plus opaque extensions safe across tools.
+**Goal:** define _interoperability_ when not everyone implements every optional module, while keeping opaque Core `extensions` outside semantic profile claims.
 
 The [Optional Modules](/ed#optional-modules) published in the Editor's Draft define the official
 optional capability family. Profiles are the future place to describe how implementations declare
@@ -6,6 +6,9 @@ support for those modules, how modules are bundled into named capability sets, a
 degrade gracefully when optional capabilities are absent. Opaque Core `extensions` remain outside
 semantic profile claims except for pass-through behavior. This draft does not yet standardize the
 declaration format for those claims.
+
+Archived extension specifications under `specs/archive/extensions` are historical material only.
+Profiles MUST NOT treat those archived packages as active Editor's Draft capabilities.
 
 ### Normatives to evaluate
 
@@ -28,7 +31,7 @@ declaration format for those claims.
 ### Informatives to evaluate
 
 - Recommended starter profile set for TR v1.
-- Patterns for optional modules and vendor-private extension payloads (e.g., UI presentation, experimentation, privacy).
+- Patterns for optional modules and vendor-private opaque payloads (e.g., UI presentation, experimentation, privacy).
 - Examples: same Journey expressed with/without optional profile features.
 
 ### Decisions to make

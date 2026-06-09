@@ -3,8 +3,13 @@
 @prefix ujgsurfaceshape: <https://ujg.specs.openuji.org/ed/ns/surface.shape#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ujgsurfaceshape:StateSurfaceShape a sh:NodeShape ;
-  sh:targetClass ujggraph:State, ujggraph:CompositeState ;
+ujgsurfaceshape:GraphSubjectSurfaceShape a sh:NodeShape ;
+  sh:targetClass
+    ujggraph:State,
+    ujggraph:CompositeState,
+    ujggraph:Transition,
+    ujggraph:OutgoingTransition,
+    ujggraph:OutgoingTransitionGroup ;
   sh:nodeKind sh:IRI ;
 
   sh:property [
@@ -18,76 +23,26 @@ ujgsurfaceshape:SurfaceShape a sh:NodeShape ;
   sh:targetClass ujgsurface:Surface ;
   sh:nodeKind sh:IRI ;
 
-  sh:property [
-    sh:path ujgsurface:surfaceStateRef ;
-    sh:or (
-      [ sh:class ujggraph:State ]
-      [ sh:class ujggraph:CompositeState ]
-    ) ;
-    sh:nodeKind sh:IRI ;
-    sh:maxCount 1 ;
-  ] ;
-
   sh:sparql [
     a sh:SPARQLConstraint ;
-    sh:message "A Surface must not be referenced by more than one State or CompositeState through surfaceRef." ;
+    sh:message "A Surface must not be referenced by more than one graph subject through surfaceRef." ;
     sh:select """
       SELECT $this
       WHERE {
-        ?state ujgsurface:surfaceRef $this .
+        ?graphSubject ujgsurface:surfaceRef $this .
       }
       GROUP BY $this
-      HAVING (COUNT(?state) > 1)
+      HAVING (COUNT(?graphSubject) > 1)
     """ ;
   ] ;
 
   sh:sparql [
     a sh:SPARQLConstraint ;
-    sh:message "A Surface must attach to exactly one State or CompositeState through surfaceRef, surfaceStateRef, or both." ;
+    sh:message "A Surface must attach to exactly one graph subject through surfaceRef." ;
     sh:select """
       SELECT $this
       WHERE {
-        FILTER (NOT EXISTS { ?state ujgsurface:surfaceRef $this . })
-        FILTER (NOT EXISTS { $this ujgsurface:surfaceStateRef ?state . })
-      }
-    """ ;
-  ] ;
-
-  sh:sparql [
-    a sh:SPARQLConstraint ;
-    sh:message "A State or CompositeState must not be referenced by more than one Surface through surfaceStateRef." ;
-    sh:select """
-      SELECT $this ?state
-      WHERE {
-        $this ujgsurface:surfaceStateRef ?state .
-        ?otherSurface ujgsurface:surfaceStateRef ?state .
-        FILTER (?otherSurface != $this)
-      }
-    """ ;
-  ] ;
-
-  sh:sparql [
-    a sh:SPARQLConstraint ;
-    sh:message "surfaceRef and surfaceStateRef must describe the same state-surface assignment." ;
-    sh:select """
-      SELECT $this ?state ?declaredState
-      WHERE {
-        ?state ujgsurface:surfaceRef $this .
-        $this ujgsurface:surfaceStateRef ?declaredState .
-        FILTER (?state != ?declaredState)
-      }
-    """ ;
-  ] ;
-
-  sh:sparql [
-    a sh:SPARQLConstraint ;
-    sh:message "A State or CompositeState surfaceRef must agree with any reverse surfaceStateRef for that state." ;
-    sh:select """
-      SELECT $this ?state ?otherSurface
-      WHERE {
-        ?state ujgsurface:surfaceRef $this .
-        ?otherSurface ujgsurface:surfaceStateRef ?state .
-        FILTER (?otherSurface != $this)
+        FILTER (NOT EXISTS { ?graphSubject ujgsurface:surfaceRef $this . })
       }
     """ ;
   ] .

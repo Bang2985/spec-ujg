@@ -8,7 +8,8 @@
     ],
     "custom": {
         "family": "module",
-        "order": 42
+        "order": 42,
+        "moduleLevel": 1
     },
     "respec": {
         "noConformance": true,

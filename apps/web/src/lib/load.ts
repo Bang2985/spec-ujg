@@ -4,7 +4,7 @@ import { type Document } from '@openuji/speculator';
 
 import { buildWorkspaces } from '@openuji/speculator';
 
-export type EditorDraftDocumentFamily = 'spec' | 'module' | 'extension';
+export type EditorDraftDocumentFamily = 'spec' | 'module';
 export type SpecWorkspaceKey = 'ed';
 
 export const WORKSPACE_CONFIG: Record<
@@ -21,7 +21,6 @@ export const WORKSPACE_CONFIG: Record<
 const FAMILY_ORDER: Record<EditorDraftDocumentFamily, number> = {
   spec: 0,
   module: 1,
-  extension: 2,
 };
 
 function getDocumentCustom(doc: Document): Record<string, unknown> {
@@ -32,20 +31,22 @@ function getDocumentCustom(doc: Document): Record<string, unknown> {
 export function getDocumentFamily(doc: Document): EditorDraftDocumentFamily {
   const family = getDocumentCustom(doc).family;
   if (family === 'module') return 'module';
-  if (family === 'extension') return 'extension';
   return 'spec';
 }
 
 function shouldPublishDocument(doc: Document): boolean {
-  if (getDocumentFamily(doc) !== 'extension') return true;
-  return (
-    import.meta.env.PUBLISH_UJG_EXTENSIONS === 'true' || getDocumentCustom(doc).publish === true
-  );
+  return getDocumentFamily(doc) === 'spec' || getDocumentFamily(doc) === 'module';
 }
 
 export function getDocumentOrder(doc: Document): number {
   const order = Number(getDocumentCustom(doc).order);
   return Number.isFinite(order) ? order : Number.MAX_SAFE_INTEGER;
+}
+
+export function getDocumentModuleLevel(doc: Document): number {
+  if (getDocumentFamily(doc) !== 'module') return 0;
+  const moduleLevel = Number(getDocumentCustom(doc).moduleLevel);
+  return Number.isFinite(moduleLevel) ? moduleLevel : 1;
 }
 
 export function getWorkspaceConfig(workspace: SpecWorkspaceKey) {

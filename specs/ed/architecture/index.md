@@ -32,9 +32,20 @@ Core, Graph, Runtime, Experience, Mapping, or Metrics semantics. Capabilities th
 across compliant implementations should graduate from the optional module family into the main spec
 family rather than remain optional add-ons.
 
+Optional modules can be layered when a capability is intentionally mediated by another optional
+module. A first-level module MAY attach directly to Core or Graph nodes. A second-level module SHOULD
+depend on the first-level bridge instead of adding representational detail to Core or Graph nodes.
+For user-interface materialization, the Surface module is the first-level bridge from
+`State`/`CompositeState` to an addressable `Surface`; design-system realization belongs in a
+Surface-dependent module, not directly on graph topology.
+
 ## Opaque Extensions
 
 Core `extensions` remains the pass-through mechanism for vendor-private or deployment-specific JSON
 payloads on UJG node objects. Opaque extensions do not participate in standardized graph semantics,
 reference resolution, or profile conformance, even when their payloads happen to contain identifiers
 or structured JSON objects.
+
+Earlier Editor's Draft extension specifications are archived under `specs/archive/extensions` as
+historical, non-normative material. They are not part of the active Editor's Draft publication set
+and MUST NOT constrain evaluation of active optional modules.

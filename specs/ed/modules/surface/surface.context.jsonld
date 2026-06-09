@@ -10,10 +10,6 @@
     "surfaceRef": {
       "@id": "ujgsurface:surfaceRef",
       "@type": "@id"
-    },
-    "surfaceStateRef": {
-      "@id": "ujgsurface:surfaceStateRef",
-      "@type": "@id"
     }
   }
 }

@@ -1,38 +1,39 @@
 ---
 import Panel from '@/components/astro/Panel.astro';
 import EditorDraftLayout from '@/layouts/EditorDraftLayout.astro';
-import { getDocumentFamily, getDocuments, type EditorDraftDocumentFamily } from '@/lib/load';
+import { getDocumentFamily, getDocumentModuleLevel, getDocuments } from '@/lib/load';
 import { type Document } from '@openuji/speculator';
 import MaturityPill from '@/components/astro/speculator/w3c-cg/MaturityPill.astro';
 
 const documents = await getDocuments('ed');
+const moduleDocuments = documents.filter((doc) => getDocumentFamily(doc) === 'module');
 
 const familySections: Array<{
-  family: EditorDraftDocumentFamily;
+  id: string;
   title: string;
   description: string;
   documents: Document[];
 }> = [
   {
-    family: 'spec',
+    id: 'spec-family',
     title: 'Spec Family',
     description:
       'Foundational UJG modules and supporting drafts that define the shared interoperability baseline.',
     documents: documents.filter((doc) => getDocumentFamily(doc) === 'spec'),
   },
   {
-    family: 'module',
-    title: 'Optional Modules',
+    id: 'optional-modules',
+    title: 'First-Level Optional Modules',
     description:
-      'Official optional modules that publish their own ontology, JSON-LD context, and SHACL artifacts.',
-    documents: documents.filter((doc) => getDocumentFamily(doc) === 'module'),
+      'Optional modules that attach directly to Core or Graph concepts and publish their own ontology, JSON-LD context, and SHACL artifacts.',
+    documents: moduleDocuments.filter((doc) => getDocumentModuleLevel(doc) === 1),
   },
   {
-    family: 'extension',
-    title: 'Opaque Extensions',
+    id: 'second-level-optional-modules',
+    title: 'Second-Level Optional Modules',
     description:
-      'Opaque JSON payload conventions carried in Core `extensions` for pass-through and vendor-specific processing.',
-    documents: documents.filter((doc) => getDocumentFamily(doc) === 'extension'),
+      'Optional modules mediated by another optional module, keeping specialized concerns out of Core and Graph.',
+    documents: moduleDocuments.filter((doc) => getDocumentModuleLevel(doc) > 1),
   },
 ].filter((section) => section.documents.length > 0);
 ---
@@ -55,19 +56,10 @@ const familySections: Array<{
 
   {
     familySections.map((section) => (
-      <section
-        class="flow"
-        id={
-          section.family === 'module'
-            ? 'optional-modules'
-            : section.family === 'extension'
-              ? 'opaque-extensions'
-              : 'spec-family'
-        }
-      >
-        {section.family === 'module' && <a id="supported-extensions" aria-hidden="true" />}
+      <section class="flow" id={section.id}>
+        {section.id === 'optional-modules' && <a id="supported-extensions" aria-hidden="true" />}
         <div class="flow__header">
-          <h2 class="font-medium">{section.title}</h2>
+          <h2 class="font-bold pb-2">{section.title}</h2>
           <p>{section.description}</p>
         </div>
         <div class="flow__grid">
