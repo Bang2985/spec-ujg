@@ -97,7 +97,15 @@ const wrapperClass = collapsible
       setExpanded(false);
 
       newToggle.addEventListener('click', () => {
-        setExpanded(newToggle.getAttribute('aria-expanded') !== 'true');
+        const nextExpanded = newToggle.getAttribute('aria-expanded') !== 'true';
+        setExpanded(nextExpanded);
+
+        if (!nextExpanded) {
+          wrapper.scrollIntoView({
+            block: 'start',
+            behavior: 'auto',
+          });
+        }
       });
     });
   }
