@@ -124,7 +124,7 @@ Use [=Journey=] when the modeled object owns local traversal, progression, or st
 7. A [=Journey=] **MUST** contain one or more [=State|States=] and **MAY** connect those states with [=Transition|Transitions=].
 8. Every `stateRefs` value of a [=Journey=] **SHOULD** belong to that journey's local topology.
 9. A state belongs to a journey when it is the `startStateRef`, a `from` or `to` endpoint of a transition listed in that journey's `transitionRefs`, an exported boundary state referenced by a local [=JourneyExit=], or a local observable segment or condition connected by the journey's structural order.
-10. A [=Journey=] **SHOULD NOT** list a linked destination page, surface, flow, or journey entry inside `stateRefs` merely because an [=OutgoingTransition=] can reach it.
+10. A [=Journey=] **MUST NOT** list a linked destination page, surface, flow, or journey entry inside `stateRefs` merely because an [=OutgoingTransition=] can reach it.
 </spec-statement>
 
 ```mermaid
@@ -208,8 +208,14 @@ In common use, a [=JourneyIndex=] lists [=CompositeState=] entries whose `subjou
 8. A [=JourneyIndex=] **MUST NOT** declare `transitionRefs`.
 9. A [=JourneyIndex=] **MUST NOT** declare `exitRefs`.
 10. A [=JourneyIndex=] **MUST NOT** declare `outgoingTransitionGroupRefs`.
-11. `stateRefs` on a [=JourneyIndex=] **MUST NOT** imply traversal order, reachability, user path, progression, or parent continuation.
-12. The order of values in `stateRefs` **MUST NOT** be interpreted normatively unless a future ordering mechanism is explicitly added.
+11. A [=JourneyIndex=] **MUST NOT** declare `from`.
+12. A [=JourneyIndex=] **MUST NOT** declare `to`.
+13. A [=JourneyIndex=] **MUST NOT** declare `fromExitRef`.
+14. A [=JourneyIndex=] **MUST NOT** declare `subjourneyId`.
+15. A [=JourneyIndex=] **MUST NOT** declare `exitStateRef`.
+16. A [=JourneyIndex=] **MUST NOT** declare `outgoingTransitionRefs`.
+17. `stateRefs` on a [=JourneyIndex=] **MUST NOT** imply traversal order, reachability, user path, progression, or parent continuation.
+18. The order of values in `stateRefs` **MUST NOT** be interpreted normatively unless a future ordering mechanism is explicitly added.
 </spec-statement>
 
 [=JourneyIndex=] is intended for top-level page maps, product surface indexes, search-result target indexes, documentation indexes, route or catalogue manifests, and other collections of known journey entry points. Do not use [=JourneyIndex=] to model page-segment order, local journey progression, child completion, runtime observations, or experience annotations.
