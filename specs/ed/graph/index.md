@@ -600,18 +600,21 @@ Example JSON graph:
 
 ## OutgoingTransition {data-cop-concept="outgoing-transition"}
 
-An [=OutgoingTransition=] is a navigational affordance. It points to a possible target state but does not declare a structural transition in a journey's local topology.
+An [=OutgoingTransition=] is a navigational affordance. It defines a possible effective target state but does not declare a structural transition in a journey's local topology.
 
 An [=OutgoingTransition=] has no explicit `from` property. Its effective source comes from either a state-scoped `outgoingTransitionRefs` value or an injected [=OutgoingTransitionGroup=].
 
 <spec-statement>
 1. An [=OutgoingTransition=] **MUST** be identified by an IRI.
-2. An [=OutgoingTransition=] **MUST** declare exactly one `to` value.
-3. `OutgoingTransition.to` **MAY** reference a resolvable [=State=] or [=CompositeState=] outside the journey that contributes the affordance.
-4. `OutgoingTransition.to` **MUST NOT** reference a [=BoundaryState=].
-5. An [=OutgoingTransition=] **MUST NOT** be listed in a [=Journey=]'s `transitionRefs`.
-6. An [=OutgoingTransition=] **MUST NOT** be used for ordinary internal journey progression when a local [=Transition=] is appropriate.
-7. An [=OutgoingTransition=] **MUST NOT** declare more than one `label`.
+2. An [=OutgoingTransition=] **MUST** declare exactly one effective target mechanism: either exactly one `to` value, or `toCurrentState: true`.
+3. An [=OutgoingTransition=] with `toCurrentState: true` **MUST NOT** also declare `to`.
+4. An [=OutgoingTransition=] with neither `to` nor `toCurrentState: true` is invalid.
+5. `toCurrentState: false` is equivalent to the property being absent and does not satisfy the target requirement.
+6. `OutgoingTransition.to` **MAY** reference a resolvable [=State=] or [=CompositeState=] outside the journey that contributes the affordance.
+7. `OutgoingTransition.to` **MUST NOT** reference a [=BoundaryState=].
+8. An [=OutgoingTransition=] **MUST NOT** be listed in a [=Journey=]'s `transitionRefs`.
+9. An [=OutgoingTransition=] **MUST NOT** be used for ordinary internal journey progression when a local [=Transition=] is appropriate.
+10. An [=OutgoingTransition=] **MUST NOT** declare more than one `label`.
 </spec-statement>
 
 If the `to` target is a known page, surface, or flow entry, it should normally be listed in a [=JourneyIndex=]. Do not list that target in the source [=Journey=]'s `stateRefs` unless it also belongs to the source journey's local topology.
@@ -622,15 +625,19 @@ classDiagram
     id
     label
     to
+    toCurrentState
   }
   class State
   class CompositeState
 
-  OutgoingTransition --> State : to
-  OutgoingTransition --> CompositeState : to
+  OutgoingTransition --> State : effective target
+  OutgoingTransition --> CompositeState : effective target
+  note for OutgoingTransition "target mechanism is either to or toCurrentState"
 ```
 
-Example JSON node:
+Example JSON nodes:
+
+Fixed target navigation:
 
 ```json
 {
@@ -638,6 +645,24 @@ Example JSON node:
   "@id": "urn:ujg:ot:go-home",
   "label": "Home",
   "to": "urn:ujg:state:home"
+}
+```
+
+### Relative Current-State Targeting
+
+Some outgoing affordances do not target a fixed state. Instead, they preserve the current effective state and modify some non-topological dimension such as locale, presentation mode, or filter context. Such affordances **MAY** use `toCurrentState: true`. When used, the outgoing transition resolves to the effective source where the affordance is available, which can be a [=State=] or [=CompositeState=]. This allows reusable outgoing transition groups, such as global language switchers, to be attached across journeys without duplicating per-page transitions.
+
+`toCurrentState` changes graph target resolution, but it does not imply any runtime event, click, URL, locale, payload, or private extension behavior.
+
+
+Current-state targeting:
+
+```json
+{
+  "@type": "OutgoingTransition",
+  "@id": "urn:ujg:ot:keep-current-state",
+  "label": "Keep current state",
+  "toCurrentState": true
 }
 ```
 
@@ -661,9 +686,11 @@ For journey-level group injection:
 
 1. The Consumer **MUST** resolve each referenced [=OutgoingTransitionGroup=] and each group `outgoingTransitionRefs` entry to an [=OutgoingTransition=].
 2. The Consumer **MUST** iterate over every [=State=] and [=CompositeState=] ID in `stateRefs` except [=BoundaryState=] instances.
-3. The Consumer **MUST** treat each iterated state as having an outgoing edge to every resolved [=OutgoingTransition=] `to`.
-4. The Consumer **MUST NOT** create effective outgoing transitions from a [=BoundaryState=].
-5. A Consumer **SHOULD** treat duplicate effective outgoing edges with the same effective source state and same [=OutgoingTransition=] `to` target as one effective edge.
+3. The Consumer **MUST** resolve each [=OutgoingTransition=] target at the iterated state where the group is applied.
+4. For a resolved [=OutgoingTransition=] with `toCurrentState: true`, the effective target is the current iterated [=State=] or [=CompositeState=].
+5. For a resolved [=OutgoingTransition=] with `to`, the effective target is the referenced `to` state.
+6. The Consumer **MUST NOT** create effective outgoing transitions from a [=BoundaryState=].
+7. A Consumer **SHOULD** treat duplicate effective outgoing edges with the same effective source state and same effective target as one effective edge.
 </spec-statement>
 
 ```mermaid
@@ -676,14 +703,16 @@ classDiagram
   }
   class OutgoingTransition {
     to
+    toCurrentState
   }
   class State
   class CompositeState
 
   Journey --> OutgoingTransitionGroup : outgoingTransitionGroupRefs
   OutgoingTransitionGroup --> OutgoingTransition : outgoingTransitionRefs
-  OutgoingTransition --> State : to
-  OutgoingTransition --> CompositeState : to
+  OutgoingTransition --> State : effective target
+  OutgoingTransition --> CompositeState : effective target
+  note for OutgoingTransition "target mechanism is either to or toCurrentState"
 ```
 
 Example JSON node:
@@ -699,6 +728,37 @@ Example JSON node:
 }
 ```
 
+Example JSON nodes for a shared language switcher:
+
+```json
+{
+  "@type": "OutgoingTransitionGroup",
+  "@id": "urn:ankommenskreis:otg:shared-header-language-switcher",
+  "label": "Shared header language switcher",
+  "outgoingTransitionRefs": [
+    "urn:ankommenskreis:ot:lang-de",
+    "urn:ankommenskreis:ot:lang-en",
+    "urn:ankommenskreis:ot:lang-ar",
+    "urn:ankommenskreis:ot:lang-fa",
+    "urn:ankommenskreis:ot:lang-tr",
+    "urn:ankommenskreis:ot:lang-uk",
+    "urn:ankommenskreis:ot:lang-ru"
+  ]
+}
+```
+
+```json
+{
+  "@type": "OutgoingTransition",
+  "@id": "urn:ankommenskreis:ot:lang-en",
+  "label": "English",
+  "toCurrentState": true,
+  "l10n:targetLocale": "en"
+}
+```
+
+The `l10n:targetLocale` value in this example is locale metadata from the Localization module. The current-state target behavior is defined only by Graph's `toCurrentState`.
+
 ---
 
 ## State-scoped Outgoing Affordances {data-cop-concept="state-scoped-outgoing"}
@@ -713,8 +773,10 @@ Direct state-scoped affordances are for local navigational options, not for ordi
 3. A [=BoundaryState=] **MUST NOT** declare `outgoingTransitionRefs`.
 4. Each state-scoped `outgoingTransitionRefs` value **MUST** reference an [=OutgoingTransition=].
 5. The effective source of a state-scoped [=OutgoingTransition=] is the [=State=] that declares the `outgoingTransitionRefs` value.
-6. A Consumer **MUST NOT** treat a state-scoped [=OutgoingTransition=] as a member of the enclosing [=Journey=]'s `transitionRefs`.
-7. A Consumer **SHOULD** treat duplicate effective outgoing edges with the same effective source state and same [=OutgoingTransition=] `to` target as one effective edge.
+6. For a state-scoped [=OutgoingTransition=] with `toCurrentState: true`, the effective target is the [=State=] that declares the `outgoingTransitionRefs` value.
+7. For a state-scoped [=OutgoingTransition=] with `to`, the effective target is the referenced `to` state.
+8. A Consumer **MUST NOT** treat a state-scoped [=OutgoingTransition=] as a member of the enclosing [=Journey=]'s `transitionRefs`.
+9. A Consumer **SHOULD** treat duplicate effective outgoing edges with the same effective source state and same effective target as one effective edge.
 </spec-statement>
 
 If navigation should be available while a [=CompositeState=] is active, model it either as an [=OutgoingTransitionGroup=] referenced by the enclosing journey or as direct `outgoingTransitionRefs` on concrete states inside the composite state's subjourney.
@@ -728,11 +790,13 @@ classDiagram
   class BoundaryState
   class OutgoingTransition {
     to
+    toCurrentState
   }
 
   State --> OutgoingTransition : outgoingTransitionRefs
-  OutgoingTransition --> State : to
-  OutgoingTransition --> CompositeState : to
+  OutgoingTransition --> State : effective target
+  OutgoingTransition --> CompositeState : effective target
+  note for OutgoingTransition "target mechanism is either to or toCurrentState"
 
   note for CompositeState "MUST NOT declare outgoingTransitionRefs"
   note for BoundaryState "MUST NOT declare outgoingTransitionRefs"
@@ -766,7 +830,7 @@ This example shows a search form state with a local "Back to home page" affordan
 
 ## Ontology {data-cop-concept="ontology"}
 
-The normative Graph ontology is defined below and is published at `https://ujg.specs.openuji.org/ed/ns/graph`. It is the authoritative structural definition for Graph classes and properties, including `Journey`, `JourneyIndex`, `State`, `CompositeState`, `BoundaryState`, `Transition`, `JourneyExit`, `OutgoingTransition`, `OutgoingTransitionGroup`, `exitRefs`, `fromExitRef`, `exitStateRef`, and `outgoingTransitionRefs`.
+The normative Graph ontology is defined below and is published at `https://ujg.specs.openuji.org/ed/ns/graph`. It is the authoritative structural definition for Graph classes and properties, including `Journey`, `State`, `CompositeState`, `BoundaryState`, `Transition`, `JourneyExit`, `OutgoingTransition`, `OutgoingTransitionGroup`, `exitRefs`, `fromExitRef`, `exitStateRef`, `toCurrentState`, and `outgoingTransitionRefs`.
 
 :::include ./graph.ttl :::
 
@@ -794,11 +858,11 @@ The rules below define additional graph integrity and resolution behavior beyond
 To ensure graph integrity, the following constraints **MUST** be met:
 1. **Reference Integrity:** All `startStateRef`, `stateRefs`, `transitionRefs`, `exitRefs`, `outgoingTransitionGroupRefs`, and `outgoingTransitionRefs` IDs **MUST** resolve to valid Nodes within the current scope or imported modules.
 2. **Transition Endpoint Resolution:** The `from` and `to` IDs of a [=Transition=] **MUST** resolve to valid Nodes, and are required to be members of the enclosing [=Journey=]'s `stateRefs`. A transition **MUST NOT** reference states belonging to other journeys.
-3. **JourneyIndex Resolution:** Every `stateRefs` ID in a [=JourneyIndex=] **MUST** resolve to a [=State=] or [=CompositeState=]. A [=JourneyIndex=]'s `stateRefs` **MUST NOT** imply reachability among entries.
-4. **Composition Safety:** `subjourneyId` **MUST** resolve to a valid [=Journey=].
-5. **Journey Exit Resolution:** Every ID in `exitRefs` **MUST** resolve to a [=JourneyExit=].
-6. **Group Resolution:** Every ID in `outgoingTransitionGroupRefs` **MUST** resolve to an [=OutgoingTransitionGroup=].
-7. **Outgoing Resolution:** Every ID in `outgoingTransitionRefs` **MUST** resolve to an [=OutgoingTransition=].
+3. **Composition Safety:** `subjourneyId` **MUST** resolve to a valid [=Journey=].
+4. **Journey Exit Resolution:** Every ID in `exitRefs` **MUST** resolve to a [=JourneyExit=].
+5. **Group Resolution:** Every ID in `outgoingTransitionGroupRefs` **MUST** resolve to an [=OutgoingTransitionGroup=].
+6. **Outgoing Resolution:** Every ID in `outgoingTransitionRefs` **MUST** resolve to an [=OutgoingTransition=].
+7. **Outgoing Target Resolution:** Each [=OutgoingTransition=] **MUST** resolve through exactly one effective target mechanism: a fixed `to` target, or `toCurrentState: true` resolved at the current effective source where the outgoing affordance is available.
 </spec-statement>
 
 ---
