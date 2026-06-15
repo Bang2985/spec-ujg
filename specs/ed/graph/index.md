@@ -539,12 +539,6 @@ An [=OutgoingTransition=] has no explicit `from` property. Its effective source 
 10. An [=OutgoingTransition=] **MUST NOT** declare more than one `label`.
 </spec-statement>
 
-### Relative Current-State Targeting
-
-Some outgoing affordances do not target a fixed state. Instead, they preserve the current effective state and modify some non-topological dimension such as locale, presentation mode, or filter context. Such affordances **MAY** use `toCurrentState: true`. When used, the outgoing transition resolves to the state where the affordance is available. This allows reusable outgoing transition groups, such as global language switchers, to be attached across journeys without duplicating per-page transitions.
-
-`toCurrentState` changes graph target resolution, but it does not imply any runtime event, click, URL, locale, payload, or private extension behavior.
-
 ```mermaid
 classDiagram
   class OutgoingTransition {
@@ -556,12 +550,14 @@ classDiagram
   class State
   class CompositeState
 
-  OutgoingTransition --> State : to
-  OutgoingTransition --> CompositeState : to
-  OutgoingTransition ..> State : toCurrentState
+  OutgoingTransition --> State : effective target
+  OutgoingTransition --> CompositeState : effective target
+  note for OutgoingTransition "target mechanism is either to or toCurrentState"
 ```
 
-Example JSON node:
+Example JSON nodes:
+
+Fixed target navigation:
 
 ```json
 {
@@ -569,6 +565,24 @@ Example JSON node:
   "@id": "urn:ujg:ot:go-home",
   "label": "Home",
   "to": "urn:ujg:state:home"
+}
+```
+
+### Relative Current-State Targeting
+
+Some outgoing affordances do not target a fixed state. Instead, they preserve the current effective state and modify some non-topological dimension such as locale, presentation mode, or filter context. Such affordances **MAY** use `toCurrentState: true`. When used, the outgoing transition resolves to the effective source where the affordance is available, which can be a [=State=] or [=CompositeState=]. This allows reusable outgoing transition groups, such as global language switchers, to be attached across journeys without duplicating per-page transitions.
+
+`toCurrentState` changes graph target resolution, but it does not imply any runtime event, click, URL, locale, payload, or private extension behavior.
+
+
+Current-state targeting:
+
+```json
+{
+  "@type": "OutgoingTransition",
+  "@id": "urn:ujg:ot:keep-current-state",
+  "label": "Keep current state",
+  "toCurrentState": true
 }
 ```
 
@@ -593,7 +607,7 @@ For journey-level group injection:
 1. The Consumer **MUST** resolve each referenced [=OutgoingTransitionGroup=] and each group `outgoingTransitionRefs` entry to an [=OutgoingTransition=].
 2. The Consumer **MUST** iterate over every [=State=] and [=CompositeState=] ID in `stateRefs` except [=BoundaryState=] instances.
 3. The Consumer **MUST** resolve each [=OutgoingTransition=] target at the iterated state where the group is applied.
-4. For a resolved [=OutgoingTransition=] with `toCurrentState: true`, the effective target is the current iterated state.
+4. For a resolved [=OutgoingTransition=] with `toCurrentState: true`, the effective target is the current iterated [=State=] or [=CompositeState=].
 5. For a resolved [=OutgoingTransition=] with `to`, the effective target is the referenced `to` state.
 6. The Consumer **MUST NOT** create effective outgoing transitions from a [=BoundaryState=].
 7. A Consumer **SHOULD** treat duplicate effective outgoing edges with the same effective source state and same effective target as one effective edge.
@@ -616,9 +630,9 @@ classDiagram
 
   Journey --> OutgoingTransitionGroup : outgoingTransitionGroupRefs
   OutgoingTransitionGroup --> OutgoingTransition : outgoingTransitionRefs
-  OutgoingTransition --> State : to
-  OutgoingTransition --> CompositeState : to
-  OutgoingTransition ..> State : toCurrentState
+  OutgoingTransition --> State : effective target
+  OutgoingTransition --> CompositeState : effective target
+  note for OutgoingTransition "target mechanism is either to or toCurrentState"
 ```
 
 Example JSON node:
@@ -700,9 +714,9 @@ classDiagram
   }
 
   State --> OutgoingTransition : outgoingTransitionRefs
-  OutgoingTransition --> State : to
-  OutgoingTransition --> CompositeState : to
-  OutgoingTransition ..> State : toCurrentState
+  OutgoingTransition --> State : effective target
+  OutgoingTransition --> CompositeState : effective target
+  note for OutgoingTransition "target mechanism is either to or toCurrentState"
 
   note for CompositeState "MUST NOT declare outgoingTransitionRefs"
   note for BoundaryState "MUST NOT declare outgoingTransitionRefs"
