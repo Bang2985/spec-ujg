@@ -12,7 +12,7 @@ Spec URL: https://ujg.specs.openuji.org/ed
 
 ## Relevant Modules
 
-- architecture: sha256:ded03d1fe832daa62acb19262047174a670e480a50c40a995e918a5ecc003078
+- architecture: sha256:e2d23f05903e4aa0e51f805b5849323eceaa1c8dbb196ff0f919083ab9d265a0
 - core: sha256:ebddb568c1dc679274e7a825683bfe877af6b1de038a76e334cf590486d18ceb
 - modules/routing: sha256:e67394a66d3e631948ee3ebe1eb225c76f597e27eb0a7aca80e62c7e92b507ad
 - graph: sha256:061397db2543ec1108d257510671c96b699889a9599def195f9d07883add267e
@@ -22,9 +22,13 @@ Spec URL: https://ujg.specs.openuji.org/ed
 - runtime: sha256:86c322e2f8509e4b9df217b739cb42323de4b435ba45c1c5fbd25bc2995f5075
 - modules/data: sha256:bb8edcf449ee236475c3c3dfb5d0d4020da55ed807311cd4a5369777e1a894c2
 - modules/action: sha256:85bf439ada55ec13eadc7b95997cd240e356ff2b8e8d82e108db36d13e6de3d1
+- modules/actor: sha256:3afca9dd2d35e89f2fe7b4d8ce0a5e3dd9259983e919cc45e85cf9711d25d1f6
+- modules/artifact: sha256:a1c30285fdc110df9aa6f542fbe1eb20a0d106b76bcaaf61949e47bf627e7cbf
+- modules/evidence: sha256:4b0896269b4633f4a6fc36a0f120b73102b3aff0c73d593273e48d84998d5cbd
 - experience: sha256:3df01150e516db142414176143cd8a35ccfee0b41129f7da483e9b3f1ce3288c
 - mapping: sha256:3a7996ad1ef7c691b0f7fa1f0c803e3224f562fdc19dfa0fc471a44ea632101f
 - modules/design-system: sha256:c30ec0912d435c986272f1ef0c30d23881fb41c4617802ffe5fc10000b9f501f
+- modules/distributed-journey: sha256:24fcbd7997fd7ed47afe4429569b92ee0ea3037e675d767394bb3c30909c364b
 - metrics: sha256:9a8414801ef1a2f9c497d3ac2872dbe6b90c9698c7a306db52eff0d1c80b65b4
 - profiles: sha256:6a574a75946444a774fcb53ee74efaf121051a0b52e4a667f789a50df1bc7a10
 - conformance: sha256:b77f657cce8b9b7cc8d80768756ab2ef69677df3d2c010c07c4c835851cf0078

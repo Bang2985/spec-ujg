@@ -25,9 +25,12 @@ Module scope: graph
 - runtime
 - modules/data
 - modules/action
+- modules/actor
+- modules/evidence
 - experience
 - mapping
 - modules/design-system
+- modules/distributed-journey
 - metrics
 - profiles
 - conformance

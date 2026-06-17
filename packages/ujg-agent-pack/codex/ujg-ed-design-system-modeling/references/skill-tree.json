@@ -25,9 +25,13 @@
         "runtime",
         "modules/data",
         "modules/action",
+        "modules/actor",
+        "modules/artifact",
+        "modules/evidence",
         "experience",
         "mapping",
         "modules/design-system",
+        "modules/distributed-journey",
         "metrics",
         "profiles",
         "conformance"
@@ -54,9 +58,13 @@
         "runtime",
         "modules/data",
         "modules/action",
+        "modules/actor",
+        "modules/artifact",
+        "modules/evidence",
         "experience",
         "mapping",
         "modules/design-system",
+        "modules/distributed-journey",
         "metrics",
         "profiles",
         "conformance"
@@ -84,9 +92,12 @@
         "runtime",
         "modules/data",
         "modules/action",
+        "modules/actor",
+        "modules/evidence",
         "experience",
         "mapping",
         "modules/design-system",
+        "modules/distributed-journey",
         "metrics",
         "profiles",
         "conformance"
@@ -122,12 +133,35 @@
       "title": "Metrics"
     },
     "modules/action": {
-      "dependents": [],
+      "dependents": [
+        "modules/distributed-journey"
+      ],
       "deps": [
         "graph"
       ],
       "generatedSkill": null,
       "title": "Action"
+    },
+    "modules/actor": {
+      "dependents": [
+        "modules/evidence",
+        "modules/distributed-journey"
+      ],
+      "deps": [
+        "graph"
+      ],
+      "generatedSkill": null,
+      "title": "Actor"
+    },
+    "modules/artifact": {
+      "dependents": [
+        "modules/distributed-journey"
+      ],
+      "deps": [
+        "core"
+      ],
+      "generatedSkill": null,
+      "title": "Artifact"
     },
     "modules/condition": {
       "dependents": [],
@@ -153,6 +187,28 @@
       ],
       "generatedSkill": "ujg-ed-design-system-modeling",
       "title": "Design System"
+    },
+    "modules/distributed-journey": {
+      "dependents": [],
+      "deps": [
+        "modules/actor",
+        "modules/action",
+        "modules/artifact",
+        "modules/evidence"
+      ],
+      "generatedSkill": null,
+      "title": "Distributed Journey"
+    },
+    "modules/evidence": {
+      "dependents": [
+        "modules/distributed-journey"
+      ],
+      "deps": [
+        "core",
+        "modules/actor"
+      ],
+      "generatedSkill": null,
+      "title": "Evidence"
     },
     "modules/l10n": {
       "dependents": [],
