@@ -44,7 +44,7 @@
       "publicUrl": "https://ujg.specs.openuji.org/ed",
       "skills": [
         {
-          "artifactHash": "sha256:8f871e1cb364489a50e0dfcfce0fef96e6fec4b1a359bc80d83ecbe33eeb0507",
+          "artifactHash": "sha256:366a3d95203aef72ccdec28c6834450352a74c668647a9cec6187ecbee7e3be4",
           "key": "root",
           "moduleId": null,
           "name": "ujg-ed-modeling",
@@ -72,10 +72,10 @@
           ],
           "source": "sources/ed/skills/root/skill.md",
           "sourceHash": "sha256:99721adf9eef2cb431b0b8db6d64c1a9b24b8b24928122c9b2ddedf6000b5b9d",
-          "specHash": "sha256:9513a1e9640a6d7d9447dcd3ab4d838a90865253e65d60cdd6526b2b5a9f776f"
+          "specHash": "sha256:4c8e4d2f23a8ad8aa262511665fdb266d2db4a9a2191b37bd5330a92cb47dcd6"
         },
         {
-          "artifactHash": "sha256:ece0cc46cb4020ec1556ec8cdff5d2a2ca64f26186804a98d0f6ce6cf96569b9",
+          "artifactHash": "sha256:6fa5d9a0dfc519ab99a2a57cf6bbd733a5de529f13a6363547addd3ef83e594a",
           "key": "graph",
           "moduleId": "graph",
           "name": "ujg-ed-graph-modeling",
@@ -86,10 +86,10 @@
           ],
           "source": "sources/ed/skills/graph/skill.md",
           "sourceHash": "sha256:fe3325bd7a11ce61abb603fce3ef789a2f32d3725c9eb2ea57f974144beb9f98",
-          "specHash": "sha256:c25fa39b69bb029fae7f121254737b80940c542542dffa5db9796d65e2ade26a"
+          "specHash": "sha256:0cce1ac65c6c9a5b765df08f3f17487c652ae26f96e5dc446f26677aeb83506b"
         },
         {
-          "artifactHash": "sha256:a944e6cce3353fa51a9fda970e8fca19b50e0f23fab02722d33406357b62e995",
+          "artifactHash": "sha256:4a6b30fbd474f173877631569402bbb998ab4393dacae77a3b2c0219200712a4",
           "key": "design-system",
           "moduleId": "modules/design-system",
           "name": "ujg-ed-design-system-modeling",
@@ -102,7 +102,7 @@
           ],
           "source": "sources/ed/skills/design-system/skill.md",
           "sourceHash": "sha256:8078d81a7fc356ff7d6b350bc5e36bdaf67240714edd38b0491927170d0db904",
-          "specHash": "sha256:66b8d087388cfa9bfca7cef2659fc171178e82a842a1313965928086b4fd70f4"
+          "specHash": "sha256:eb0b7a440ba795d3097f1f7ee396ef5fe16dd321d050affdd40465c93eeb39d8"
         }
       ],
       "specRoot": "specs/ed"

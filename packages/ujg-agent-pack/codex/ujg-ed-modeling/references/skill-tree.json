@@ -207,6 +207,7 @@
       "dependents": [],
       "deps": [
         "modules/actor",
+        "modules/surface",
         "modules/action",
         "modules/artifact",
         "modules/evidence"
@@ -243,7 +244,8 @@
     },
     "modules/surface": {
       "dependents": [
-        "modules/design-system"
+        "modules/design-system",
+        "modules/distributed-journey"
       ],
       "deps": [
         "graph"
