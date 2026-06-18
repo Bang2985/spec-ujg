@@ -16,6 +16,13 @@
           "moduleId": null
         },
         {
+          "key": "core",
+          "title": "Core Modeling",
+          "scope": "Core module document containers, imports, top-level nodes, and extensions",
+          "nameSuffix": "core-modeling",
+          "moduleId": "core"
+        },
+        {
           "key": "graph",
           "title": "Graph Modeling",
           "scope": "Graph module topology, journeys, states, transitions, exits, outgoing navigation, and indexes",

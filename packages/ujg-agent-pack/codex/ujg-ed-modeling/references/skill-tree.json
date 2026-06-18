@@ -87,7 +87,7 @@
       "deps": [
         "architecture"
       ],
-      "generatedSkill": null,
+      "generatedSkill": "ujg-ed-core-modeling",
       "title": "Core"
     },
     "experience": {
@@ -287,6 +287,14 @@
       "publicUrl": "https://ujg.specs.openuji.org/ed",
       "scope": "whole UJG document modeling across Core, Graph, Runtime, Experience, Localization, and optional modules",
       "source": "sources/ed/skills/root/skill.md"
+    },
+    {
+      "key": "core",
+      "moduleId": "core",
+      "name": "ujg-ed-core-modeling",
+      "publicUrl": "https://ujg.specs.openuji.org/ed/core",
+      "scope": "Core module document containers, imports, top-level nodes, and extensions",
+      "source": "sources/ed/skills/core/skill.md"
     },
     {
       "key": "graph",
