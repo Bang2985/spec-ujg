@@ -80,10 +80,10 @@ opaque extension payloads, or nodes defined by other optional modules.
 
 Runtime actor attribution is intentionally not standardized in Actor v0.
 
-Open questions include whether observed performer, uploader, subject, or evidence identity belongs
-on runtime events, journey stack frames, payload evidence, a provenance or audit module, or a future
-runtime-observation module. Until that is standardized, runtime actor attribution should remain
-implementation-specific or be carried in extensions.
+Runtime Evidence can identify an observing actor for execution-level or event-level runtime
+metadata. Open questions such as observed performer, uploader, or domain subject remain outside
+Actor v0 and should stay implementation-specific or be carried in extensions until a future module
+defines them.
 
 ## Ontology {data-cop-concept="ontology"}
 

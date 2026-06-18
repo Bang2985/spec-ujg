@@ -13,7 +13,7 @@ This first version is intentionally small. It declares that a state-like node ha
 directives, lifecycle status, authentication context, or realtime behavior.
 
 State Data is not the general resource primitive for UJG. Portable resources that are produced,
-consumed, exchanged, or evidenced during a journey are modeled by the Artifact module.
+consumed, or exchanged during a journey are modeled by the Artifact module.
 
 ## Normative Artifacts
 
@@ -44,10 +44,10 @@ module and still process the graph.
 
 State Data and Artifact intentionally remain separate. Use `StateData` when a state-like graph node
 needs a stable data-context or binding identity. Use `Artifact` when a file, archive, report,
-invite, media object, token, protocol object, or other portable resource is produced, consumed,
-exchanged, or evidenced. If the same external thing is both the context behind a state and a
-transferred resource, model separate `StateData` and `Artifact` nodes unless a future module defines
-an explicit relationship between them.
+invite, media object, token, protocol object, or other portable resource is produced, consumed, or
+exchanged. If the same external thing is both the context behind a state and a transferred resource,
+model separate `StateData` and `Artifact` nodes unless a future module defines an explicit
+relationship between them.
 
 ## Ontology {data-cop-concept="ontology"}
 
@@ -78,8 +78,8 @@ the SHACL shape.
 2. **Shared state data identity:** Multiple state-like nodes MAY reference the same `StateData`
    resource when they intentionally share a data context or binding identity.
 3. **Graph preservation:** `stateDataRef` MUST NOT change Graph topology or traversal semantics.
-4. **Artifact boundary:** `StateData` MUST NOT be interpreted as a produced, consumed, exchanged, or
-   evidenced resource. Use Artifact for portable resource identity.
+4. **Artifact boundary:** `StateData` MUST NOT be interpreted as a produced, consumed, or exchanged
+   resource. Use Artifact for portable resource identity.
 5. **Graceful degradation:** Consumers that do not implement this module MAY ignore State Data
    semantics, but SHOULD preserve recognized JSON-LD data during read-transform-write when possible.
 6. **Private lifecycle details:** Fetch policy, cache behavior, lifecycle status, and reactive-store

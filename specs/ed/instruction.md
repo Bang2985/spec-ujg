@@ -17,7 +17,7 @@ Before generating JSON-LD, identify the needed modules:
 * Runtime: observed events, values, clicks, URLs, timestamps, payloads
 * Experience: journey-map annotations such as phases, touchpoints, steps, and pain points
 * State Data: state-like data context or binding identity (`StateData`, `stateDataRef`)
-* Artifact: portable resources produced, consumed, exchanged, or evidenced by UJG nodes
+* Artifact: portable resources produced, consumed, exchanged, or referenced by UJG nodes
 * Distributed Journey: cross-authority human-facing journeys composed from first-level bridge modules
 
 Do not include optional module contexts unless needed.

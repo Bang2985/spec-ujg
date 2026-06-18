@@ -22,7 +22,7 @@ The Core module consists of:
 - <dfn>Optional module</dfn>: A UJG module for a capability that not every compliant UJG document or
   tool needs.
 - <dfn>First-level UJG module</dfn>: An optional module that gives the shared UJG layers a simple
-  concept to reference directly.
+  concept or attachment point to reference directly.
 - <dfn>First-level bridge module</dfn>: A first-level UJG module designed to stay small and reusable
   so more specialized modules can build on it.
 - <dfn>Second-level UJG module</dfn>: An optional module that depends on at least one first-level
@@ -72,7 +72,7 @@ A composed context is expressed as a JSON-LD `@context` array in which the Core 
 
 <spec-statement>A [=UJG module=] that depends on Core or another UJG module **MUST** identify the modules whose terms, classes, or validation semantics it relies on.</spec-statement>
 
-<spec-statement>A [=first-level UJG module=] **MAY** define references from Core [=Node=] instances or classes defined by lower-layer modules, provided those references do not alter Core identity, import resolution, or reference resolution.</spec-statement>
+<spec-statement>A [=first-level UJG module=] **MAY** define references from Core [=Node=] instances or classes defined by lower-layer modules, including Graph and Runtime classes, provided those references do not alter Core identity, import resolution, reference resolution, graph traversal, or runtime ordering.</spec-statement>
 
 <spec-statement>A [=first-level bridge module=] **SHOULD** define a narrow, domain-neutral vocabulary that can be specialized by modules that depend on it.</spec-statement>
 

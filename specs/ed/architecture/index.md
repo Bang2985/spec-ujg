@@ -37,11 +37,15 @@ thing to point at. Later modules can build on that thing and describe it in more
 new capabilities become precise without forcing the shared baseline, or this architecture page, to
 know every specialized vocabulary that may be added later.
 
-First-level optional modules are small bridges that attach directly to Core or Graph concepts, such
-as Surface, Actor, State Data, Action, Artifact, and Evidence. Second-level optional modules compose
-one or more first-level bridges. Design System builds on Surface; Distributed Journey composes
-Actor, Surface, Action, Artifact, and Evidence without making those concerns part of Core, Graph, or
-Runtime.
+First-level optional modules are small bridges that attach directly to Core, Graph, or Runtime
+concepts, such as Surface, Actor, State Data, Action, Artifact, and Runtime Evidence. Second-level
+optional modules compose one or more first-level bridges. Design System builds on Surface;
+Distributed Journey composes Actor, Surface, Action, and Artifact without making those concerns part
+of Core, Graph, or Runtime.
+
+Runtime is the Editor's Draft observation channel. Runtime Evidence can add optional metadata that
+points back to Runtime executions and events, but it does not create a separate observation stream
+or change Runtime ordering, Mapping, or Metrics behavior.
 
 ## Opaque Extensions
 

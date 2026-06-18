@@ -1,7 +1,7 @@
 ## Overview
 
 This optional module defines a minimal bridge vocabulary for addressable artifacts that are
-produced, consumed, exchanged, or evidenced by UJG nodes.
+produced, consumed, exchanged, or referenced by UJG nodes.
 
 An artifact is a portable identity for a file, media object, archive, token, invite, report,
 protocol object, generated document, or other resource that participates in a journey. The module
@@ -25,7 +25,7 @@ Examples in this page compose the Core context with the Artifact context.
 ## Terminology
 
 - <dfn>Artifact</dfn>: An addressable resource that may be produced, consumed, exchanged, or
-  evidenced during a journey.
+  referenced during a journey.
 - <dfn>Produced artifact</dfn>: An artifact created, emitted, prepared, exported, generated, or made
   available by a UJG node.
 - <dfn>Consumed artifact</dfn>: An artifact accepted, imported, read, redeemed, or otherwise used by
@@ -39,9 +39,9 @@ The module introduces two interoperable references:
 - `artifact:consumedArtifactRefs` links a Core `Node` to one or more consumed [=Artifact|Artifacts=].
 
 The references are intentionally generic. Producers SHOULD attach them to the node that owns the
-artifact-producing or artifact-consuming semantics, such as an Action, a domain operation, or an
-evidence node. Producers SHOULD NOT use artifact references to create hidden Graph traversal or to
-replace Graph `Transition` semantics.
+artifact-producing or artifact-consuming semantics, such as an Action, a domain operation, or a
+module-defined metadata node. Producers SHOULD NOT use artifact references to create hidden Graph
+traversal or to replace Graph `Transition` semantics.
 
 Artifact and State Data intentionally remain separate. Use `Artifact` for portable resource identity
 such as a file, archive, report, invite, media object, token, protocol object, or generated

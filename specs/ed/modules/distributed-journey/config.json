@@ -7,8 +7,7 @@
         "modules/actor",
         "modules/surface",
         "modules/action",
-        "modules/artifact",
-        "modules/evidence"
+        "modules/artifact"
     ],
     "custom": {
         "family": "module",
@@ -18,8 +17,7 @@
             "modules/actor",
             "modules/surface",
             "modules/action",
-            "modules/artifact",
-            "modules/evidence"
+            "modules/artifact"
         ]
     },
     "respec": {
@@ -56,10 +54,6 @@
             "UJG Artifact": {
                 "title": "UJG Artifact",
                 "url": "/ed/modules/artifact"
-            },
-            "UJG Evidence": {
-                "title": "UJG Evidence",
-                "url": "/ed/modules/evidence"
             }
         }
     }

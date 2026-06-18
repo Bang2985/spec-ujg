@@ -5,8 +5,9 @@ actions, artifacts, or outcomes depend on more than one independently operated a
 
 UJG still models human interaction with machine-presented systems. A distributed journey is not a
 model of what servers believe, how queues retry, or how protocols propagate state. Those details can
-be implementation context or evidence, but the journey remains about what a person sees, does,
-waits for, cannot access, must recover from, or completes.
+be implementation context, Runtime facts, Runtime Evidence metadata, artifacts, or private
+extension data, but the journey remains about what a person sees, does, waits for, cannot access,
+must recover from, or completes.
 
 This module is intentionally second-level. It composes first-level bridge modules instead of adding
 distributed systems semantics directly to Core, Graph, or Runtime:
@@ -16,7 +17,6 @@ distributed systems semantics directly to Core, Graph, or Runtime:
 - Action identifies side effects associated with Graph transitions or outgoing transitions.
 - Artifact identifies files, archives, reports, invites, media, or other resources involved in the
   journey.
-- Evidence records partial, merged, inferred, or redacted observations from the outside.
 
 State Data is not a dependency of this module unless a distributed-journey document also needs
 state-like data binding identity. Distributed Journey uses Artifact for portable resources that
@@ -32,20 +32,17 @@ This module is published through the following artifacts:
 - `distributed-journey.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/ed/ns/distributed-journey.context.jsonld`
 - `distributed-journey.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/ed/ns/distributed-journey.shape`
 
-Examples in this page compose the Core, Graph, Actor, Surface, Action, Artifact, Evidence, and
-Distributed Journey contexts as needed.
+Examples in this page compose the Core, Graph, Actor, Surface, Action, Artifact, and
+Distributed Journey contexts as needed. Companion Runtime Evidence examples compose Core, Runtime,
+Actor, and Runtime Evidence contexts and import the distributed graph document they describe.
 
 ## Terminology
 
 - <dfn>Authority</dfn>: An independently operated machine or system boundary relevant to a
-  human-facing surface, action, artifact, observation, or outcome. `Authority` specializes Actor.
-- <dfn>DistributedOperation</dfn>: Optional metadata for a cross-authority dependency behind a
-  human-facing [=Action=].
-- <dfn>DistributedArtifact</dfn>: An [=Artifact=] that is visible to, handled by, exchanged for, or
-  evidenced in a human-facing journey that crosses authorities.
+  human-facing surface, action, artifact, or outcome. `Authority` specializes Actor.
+- <dfn>DistributedArtifact</dfn>: An [=Artifact=] that is visible to, handled by, produced by, or
+  consumed by a human-facing journey that crosses authorities.
 - <dfn>Presented authority</dfn>: The [=Authority=] that presents or controls a [=Surface=].
-- <dfn>Visible subject</dfn>: A human-facing UJG node, such as a [=State=], [=Surface=], or
-  [=Action=], that a [=DistributedOperation=] helps explain.
 
 ## Model
 
@@ -55,20 +52,23 @@ Distributed Journey contexts as needed.
 the module's main human-facing attachment: it lets a journey cross multiple systems while keeping
 the graph surface-oriented.
 
-`DistributedOperation` references exactly one `Action` using `operationActionRef`. It may identify
-source and target authorities, and it may reference visible subjects using `visibleSubjectRefs`.
-Those visible subjects remain ordinary UJG nodes.
+An `Action` may identify source and target authorities when the action itself crosses authority
+boundaries and no more specific produced or consumed artifact carries that relationship.
 
 `DistributedArtifact` specializes Artifact. It may identify source and target authorities when a
 file, archive, report, invite, media object, or similar resource crosses authority boundaries.
+
+Examples use the most-specific distributed type. `Authority` and `DistributedArtifact` inherit their
+Actor and Artifact meaning through the ontology.
 
 Pending, failed, partial, unavailable, accepted, revoked, and blocked are ordinary human-visible
 `State` nodes when a person sees or experiences them. This module does not define value objects for
 those statuses.
 
-Protocol messages, server logs, API responses, queues, and synchronization state are evidence or
-private extension data unless they are directly exposed to a human as a visible status,
-confirmation, error, affordance, unavailable action, recovery path, or outcome.
+Protocol messages, server logs, API responses, queues, and synchronization state are Runtime facts,
+Runtime Evidence metadata, artifacts, or private extension data unless they are directly exposed to
+a human as a visible status, confirmation, error, affordance, unavailable action, recovery path, or
+outcome.
 
 ## Non-Goals
 
@@ -110,17 +110,18 @@ the SHACL shape.
 1. **Human-facing graph:** Distributed Journey terms MUST NOT replace the human-facing UJG Journey
    graph. A UJG Journey remains a model of human interaction with machine-presented surfaces,
    affordances, responses, statuses, errors, and outcomes.
-2. **Authority meaning:** `Authority` identifies a system boundary responsible for presenting,
-   controlling, observing, or evidencing a human-facing surface, action, artifact, or outcome. It
-   MUST NOT be interpreted as a statement of what a server internally believes.
-3. **Operation host:** `DistributedOperation` describes a cross-authority dependency behind a
-   human-facing `Action`. It MUST NOT be interpreted as a Journey `State`.
+2. **Authority meaning:** `Authority` identifies a system boundary responsible for presenting or
+   controlling a human-facing surface, action, artifact, or outcome. It MUST NOT be interpreted as a
+   statement of what a server internally believes.
+3. **Action authority metadata:** `sourceAuthorityRef` and `targetAuthorityRefs` MAY be attached to
+   an `Action` when the human-facing action crosses authority boundaries directly. They MUST NOT be
+   interpreted as graph edges, runtime causality, or server-internal state.
 4. **Visible statuses:** Pending, failed, partial, unavailable, accepted, revoked, and blocked
    outcomes SHOULD be modeled as ordinary Graph states when they are visible or meaningful to a
    human.
-5. **Machine details as evidence:** Protocol messages, logs, API responses, queues, and sync state
-   SHOULD remain Evidence, Artifact, Runtime, or private extension data unless directly exposed to a
-   human.
+5. **Machine details stay outside graph:** Protocol messages, logs, API responses, queues, and sync
+   state SHOULD remain Runtime, Runtime Evidence, Artifact, or private extension data unless
+   directly exposed to a human.
 6. **No hidden graph behavior:** Distributed terms MUST NOT create hidden graph edges or change
    transition endpoint semantics.
 7. **Graceful degradation:** Consumers that do not implement this module MAY ignore Distributed
@@ -137,7 +138,6 @@ the SHACL shape.
     "https://ujg.specs.openuji.org/ed/ns/surface.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/action.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/artifact.context.jsonld",
-    "https://ujg.specs.openuji.org/ed/ns/evidence.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/distributed-journey.context.jsonld"
   ],
   "@id": "https://example.com/ujg/distributed/nextcloud-share.jsonld",
@@ -145,12 +145,12 @@ the SHACL shape.
   "nodes": [
     {
       "@id": "urn:authority:cloud-a",
-      "@type": ["Authority", "Actor"],
+      "@type": "Authority",
       "origin": "https://cloud-a.example"
     },
     {
       "@id": "urn:authority:cloud-b",
-      "@type": ["Authority", "Actor"],
+      "@type": "Authority",
       "origin": "https://cloud-b.example"
     },
     {
@@ -300,32 +300,9 @@ the SHACL shape.
     },
     {
       "@id": "urn:artifact:remote-share",
-      "@type": ["DistributedArtifact", "Artifact"],
+      "@type": "DistributedArtifact",
       "sourceAuthorityRef": "urn:authority:cloud-a",
       "targetAuthorityRefs": ["urn:authority:cloud-b"]
-    },
-    {
-      "@id": "urn:operation:federated-share",
-      "@type": "DistributedOperation",
-      "operationActionRef": "urn:action:share-with-bob",
-      "sourceAuthorityRef": "urn:authority:cloud-a",
-      "targetAuthorityRefs": ["urn:authority:cloud-b"],
-      "visibleSubjectRefs": [
-        "urn:state:alice-share-confirmed",
-        "urn:state:bob-incoming-share",
-        "urn:state:bob-file-available"
-      ]
-    },
-    {
-      "@id": "urn:evidence-state:observed",
-      "@type": "EvidenceState"
-    },
-    {
-      "@id": "urn:evidence:bob-file-visible",
-      "@type": "EvidenceRecord",
-      "evidenceSubjectRef": "urn:state:bob-file-available",
-      "observedByActorRef": "urn:authority:cloud-b",
-      "evidenceStateRef": "urn:evidence-state:observed"
     }
   ]
 }
@@ -333,6 +310,54 @@ the SHACL shape.
 
 This example keeps Alice's confirmation and Bob's access as separate visible states. The model does
 not claim that Alice seeing "shared with Bob" is the same as Bob being able to open the folder.
+
+A companion Runtime Evidence document can record that Bob's visible access state was observed in a
+runtime execution without adding evidence nodes to the distributed graph itself:
+
+```json
+{
+  "@context": [
+    "https://ujg.specs.openuji.org/ed/ns/core.context.jsonld",
+    "https://ujg.specs.openuji.org/ed/ns/runtime.context.jsonld",
+    "https://ujg.specs.openuji.org/ed/ns/actor.context.jsonld",
+    "https://ujg.specs.openuji.org/ed/ns/runtime-evidence.context.jsonld"
+  ],
+  "@id": "https://example.com/ujg/runtime-evidence/execution-12345.jsonld",
+  "@type": "UJGDocument",
+  "imports": ["https://example.com/ujg/distributed/nextcloud-share.jsonld"],
+  "nodes": [
+    {
+      "@id": "urn:authority:cloud-b",
+      "@type": "Actor"
+    },
+    {
+      "@id": "urn:execution:nextcloud-share-12345",
+      "@type": "JourneyExecution"
+    },
+    {
+      "@id": "urn:journey-instance:federated-share:12345",
+      "@type": "JourneyInstance",
+      "journeyRef": "urn:journey:federated-share"
+    },
+    {
+      "@id": "urn:event:nextcloud-share-12345:bob-file-available",
+      "@type": "RuntimeEvent",
+      "executionId": "urn:execution:nextcloud-share-12345",
+      "stateRef": "urn:state:bob-file-available",
+      "journeyInstanceRef": "urn:journey-instance:federated-share:12345",
+      "payload": { "action": "surface.visible" }
+    },
+    {
+      "@id": "urn:runtime-evidence:nextcloud-share:bob-file-available",
+      "@type": "RuntimeEvidenceRecord",
+      "journeyExecutionRef": "urn:execution:nextcloud-share-12345",
+      "runtimeEventRef": "urn:event:nextcloud-share-12345:bob-file-available",
+      "observedByActorRef": "urn:authority:cloud-b",
+      "evidencePayload": { "source": "cloud-b-runtime", "record": "state-observed" }
+    }
+  ]
+}
+```
 
 ## Federated Account Migration Example
 
@@ -344,7 +369,6 @@ not claim that Alice seeing "shared with Bob" is the same as Bob being able to o
     "https://ujg.specs.openuji.org/ed/ns/surface.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/action.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/artifact.context.jsonld",
-    "https://ujg.specs.openuji.org/ed/ns/evidence.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/distributed-journey.context.jsonld"
   ],
   "@id": "https://example.com/ujg/distributed/account-migration.jsonld",
@@ -352,12 +376,12 @@ not claim that Alice seeing "shared with Bob" is the same as Bob being able to o
   "nodes": [
     {
       "@id": "urn:authority:old",
-      "@type": ["Authority", "Actor"],
+      "@type": "Authority",
       "origin": "https://old.example"
     },
     {
       "@id": "urn:authority:new",
-      "@type": ["Authority", "Actor"],
+      "@type": "Authority",
       "origin": "https://new.example"
     },
     {
@@ -477,31 +501,9 @@ not claim that Alice seeing "shared with Bob" is the same as Bob being able to o
     },
     {
       "@id": "urn:artifact:account-archive",
-      "@type": ["DistributedArtifact", "Artifact"],
+      "@type": "DistributedArtifact",
       "sourceAuthorityRef": "urn:authority:old",
       "targetAuthorityRefs": ["urn:authority:new"]
-    },
-    {
-      "@id": "urn:operation:account-import",
-      "@type": "DistributedOperation",
-      "operationActionRef": "urn:action:import-archive",
-      "sourceAuthorityRef": "urn:authority:old",
-      "targetAuthorityRefs": ["urn:authority:new"],
-      "visibleSubjectRefs": [
-        "urn:state:partial-import-confirmed",
-        "urn:state:non-portable-warning"
-      ]
-    },
-    {
-      "@id": "urn:evidence-state:partial",
-      "@type": "EvidenceState"
-    },
-    {
-      "@id": "urn:evidence:import-summary",
-      "@type": "EvidenceRecord",
-      "evidenceSubjectRef": "urn:state:partial-import-confirmed",
-      "observedByActorRef": "urn:authority:new",
-      "evidenceStateRef": "urn:evidence-state:partial"
     }
   ]
 }
@@ -509,6 +511,54 @@ not claim that Alice seeing "shared with Bob" is the same as Bob being able to o
 
 The non-portable content warning is an ordinary visible state. The module does not need a
 portability taxonomy to represent partial success.
+
+A companion Runtime Evidence document can describe the runtime observation of the partial import
+confirmation as metadata attached to a runtime event:
+
+```json
+{
+  "@context": [
+    "https://ujg.specs.openuji.org/ed/ns/core.context.jsonld",
+    "https://ujg.specs.openuji.org/ed/ns/runtime.context.jsonld",
+    "https://ujg.specs.openuji.org/ed/ns/actor.context.jsonld",
+    "https://ujg.specs.openuji.org/ed/ns/runtime-evidence.context.jsonld"
+  ],
+  "@id": "https://example.com/ujg/runtime-evidence/execution-23456.jsonld",
+  "@type": "UJGDocument",
+  "imports": ["https://example.com/ujg/distributed/account-migration.jsonld"],
+  "nodes": [
+    {
+      "@id": "urn:authority:new",
+      "@type": "Actor"
+    },
+    {
+      "@id": "urn:execution:account-migration-23456",
+      "@type": "JourneyExecution"
+    },
+    {
+      "@id": "urn:journey-instance:account-migration:23456",
+      "@type": "JourneyInstance",
+      "journeyRef": "urn:journey:account-migration"
+    },
+    {
+      "@id": "urn:event:account-migration-23456:partial-import-confirmed",
+      "@type": "RuntimeEvent",
+      "executionId": "urn:execution:account-migration-23456",
+      "stateRef": "urn:state:partial-import-confirmed",
+      "journeyInstanceRef": "urn:journey-instance:account-migration:23456",
+      "payload": { "action": "surface.visible" }
+    },
+    {
+      "@id": "urn:runtime-evidence:account-migration:partial-import-confirmed",
+      "@type": "RuntimeEvidenceRecord",
+      "journeyExecutionRef": "urn:execution:account-migration-23456",
+      "runtimeEventRef": "urn:event:account-migration-23456:partial-import-confirmed",
+      "observedByActorRef": "urn:authority:new",
+      "evidencePayload": { "source": "new-server-runtime", "record": "state-observed" }
+    }
+  ]
+}
+```
 
 ## Remote Follow Or Subscription Example
 
@@ -519,7 +569,6 @@ portability taxonomy to represent partial success.
     "https://ujg.specs.openuji.org/ed/ns/actor.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/surface.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/action.context.jsonld",
-    "https://ujg.specs.openuji.org/ed/ns/evidence.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/distributed-journey.context.jsonld"
   ],
   "@id": "https://example.com/ujg/distributed/remote-follow.jsonld",
@@ -527,12 +576,12 @@ portability taxonomy to represent partial success.
   "nodes": [
     {
       "@id": "urn:authority:local",
-      "@type": ["Authority", "Actor"],
+      "@type": "Authority",
       "origin": "https://local.example"
     },
     {
       "@id": "urn:authority:remote",
-      "@type": ["Authority", "Actor"],
+      "@type": "Authority",
       "origin": "https://remote.example"
     },
     {
@@ -681,32 +730,9 @@ portability taxonomy to represent partial success.
     },
     {
       "@id": "urn:action:click-follow",
-      "@type": "Action"
-    },
-    {
-      "@id": "urn:operation:remote-follow",
-      "@type": "DistributedOperation",
-      "operationActionRef": "urn:action:click-follow",
+      "@type": "Action",
       "sourceAuthorityRef": "urn:authority:local",
-      "targetAuthorityRefs": ["urn:authority:remote"],
-      "visibleSubjectRefs": [
-        "urn:state:follow-pending",
-        "urn:state:following-visible",
-        "urn:state:follow-rejected",
-        "urn:state:remote-unavailable",
-        "urn:state:remote-feed-visible"
-      ]
-    },
-    {
-      "@id": "urn:evidence-state:partial",
-      "@type": "EvidenceState"
-    },
-    {
-      "@id": "urn:evidence:feed-visible",
-      "@type": "EvidenceRecord",
-      "evidenceSubjectRef": "urn:state:remote-feed-visible",
-      "observedByActorRef": "urn:authority:local",
-      "evidenceStateRef": "urn:evidence-state:partial"
+      "targetAuthorityRefs": ["urn:authority:remote"]
     }
   ]
 }
@@ -714,3 +740,51 @@ portability taxonomy to represent partial success.
 
 The invisible federation request is not modeled as a journey state. The visible pending state and
 later feed visibility are the user-facing graph.
+
+A companion Runtime Evidence document can describe the runtime observation of the remote feed
+becoming visible while leaving the invisible federation request outside the graph:
+
+```json
+{
+  "@context": [
+    "https://ujg.specs.openuji.org/ed/ns/core.context.jsonld",
+    "https://ujg.specs.openuji.org/ed/ns/runtime.context.jsonld",
+    "https://ujg.specs.openuji.org/ed/ns/actor.context.jsonld",
+    "https://ujg.specs.openuji.org/ed/ns/runtime-evidence.context.jsonld"
+  ],
+  "@id": "https://example.com/ujg/runtime-evidence/execution-34567.jsonld",
+  "@type": "UJGDocument",
+  "imports": ["https://example.com/ujg/distributed/remote-follow.jsonld"],
+  "nodes": [
+    {
+      "@id": "urn:authority:local",
+      "@type": "Actor"
+    },
+    {
+      "@id": "urn:execution:remote-follow-34567",
+      "@type": "JourneyExecution"
+    },
+    {
+      "@id": "urn:journey-instance:remote-follow:34567",
+      "@type": "JourneyInstance",
+      "journeyRef": "urn:journey:remote-follow"
+    },
+    {
+      "@id": "urn:event:remote-follow-34567:remote-feed-visible",
+      "@type": "RuntimeEvent",
+      "executionId": "urn:execution:remote-follow-34567",
+      "stateRef": "urn:state:remote-feed-visible",
+      "journeyInstanceRef": "urn:journey-instance:remote-follow:34567",
+      "payload": { "action": "surface.visible" }
+    },
+    {
+      "@id": "urn:runtime-evidence:remote-follow:remote-feed-visible",
+      "@type": "RuntimeEvidenceRecord",
+      "journeyExecutionRef": "urn:execution:remote-follow-34567",
+      "runtimeEventRef": "urn:event:remote-follow-34567:remote-feed-visible",
+      "observedByActorRef": "urn:authority:local",
+      "evidencePayload": { "source": "local-runtime", "record": "state-observed" }
+    }
+  ]
+}
+```

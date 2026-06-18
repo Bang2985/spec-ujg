@@ -25,7 +25,7 @@
         "modules/action",
         "modules/actor",
         "modules/artifact",
-        "modules/evidence",
+        "modules/runtime-evidence",
         "experience",
         "mapping",
         "modules/design-system",
@@ -58,7 +58,7 @@
         "modules/action",
         "modules/actor",
         "modules/artifact",
-        "modules/evidence",
+        "modules/runtime-evidence",
         "experience",
         "mapping",
         "modules/design-system",
@@ -91,7 +91,7 @@
         "modules/state-data",
         "modules/action",
         "modules/actor",
-        "modules/evidence",
+        "modules/runtime-evidence",
         "experience",
         "mapping",
         "modules/design-system",
@@ -142,7 +142,7 @@
     },
     "modules/actor": {
       "dependents": [
-        "modules/evidence",
+        "modules/runtime-evidence",
         "modules/distributed-journey"
       ],
       "deps": [
@@ -184,22 +184,10 @@
         "modules/actor",
         "modules/surface",
         "modules/action",
-        "modules/artifact",
-        "modules/evidence"
+        "modules/artifact"
       ],
       "generatedSkill": null,
       "title": "Distributed Journey"
-    },
-    "modules/evidence": {
-      "dependents": [
-        "modules/distributed-journey"
-      ],
-      "deps": [
-        "core",
-        "modules/actor"
-      ],
-      "generatedSkill": null,
-      "title": "Evidence"
     },
     "modules/l10n": {
       "dependents": [],
@@ -216,6 +204,15 @@
       ],
       "generatedSkill": null,
       "title": "Routing"
+    },
+    "modules/runtime-evidence": {
+      "dependents": [],
+      "deps": [
+        "runtime",
+        "modules/actor"
+      ],
+      "generatedSkill": null,
+      "title": "Runtime Evidence"
     },
     "modules/state-data": {
       "dependents": [],
@@ -252,6 +249,7 @@
     },
     "runtime": {
       "dependents": [
+        "modules/runtime-evidence",
         "mapping",
         "metrics",
         "profiles",

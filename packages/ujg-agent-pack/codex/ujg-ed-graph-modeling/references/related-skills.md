@@ -27,7 +27,7 @@ Module scope: graph
 - modules/state-data
 - modules/action
 - modules/actor
-- modules/evidence
+- modules/runtime-evidence
 - experience
 - mapping
 - modules/design-system

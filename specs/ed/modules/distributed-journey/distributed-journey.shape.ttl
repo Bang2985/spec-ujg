@@ -26,22 +26,9 @@ ujgdistshape:SurfaceAuthorityShape a sh:NodeShape ;
     sh:maxCount 1 ;
   ] .
 
-ujgdistshape:DistributedOperationShape a sh:NodeShape ;
-  sh:targetClass ujgdist:DistributedOperation ;
+ujgdistshape:ActionAuthorityShape a sh:NodeShape ;
+  sh:targetClass ujgaction:Action ;
   sh:nodeKind sh:IRI ;
-
-  sh:property [
-    sh:path ujgdist:operationActionRef ;
-    sh:class ujgaction:Action ;
-    sh:nodeKind sh:IRI ;
-    sh:minCount 1 ;
-    sh:maxCount 1 ;
-  ] ;
-
-  sh:property [
-    sh:path ujgdist:visibleSubjectRefs ;
-    sh:nodeKind sh:IRI ;
-  ] ;
 
   sh:property [
     sh:path ujgdist:sourceAuthorityRef ;

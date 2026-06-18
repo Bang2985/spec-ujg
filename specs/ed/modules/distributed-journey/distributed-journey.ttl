@@ -1,5 +1,3 @@
-@prefix ujg: <https://ujg.specs.openuji.org/ed/ns/core#> .
-@prefix ujgaction: <https://ujg.specs.openuji.org/ed/ns/action#> .
 @prefix ujgactor: <https://ujg.specs.openuji.org/ed/ns/actor#> .
 @prefix ujgartifact: <https://ujg.specs.openuji.org/ed/ns/artifact#> .
 @prefix ujgdist: <https://ujg.specs.openuji.org/ed/ns/distributed-journey#> .
@@ -17,9 +15,6 @@
 ujgdist:Authority a owl:Class ;
   rdfs:subClassOf ujgactor:Actor .
 
-ujgdist:DistributedOperation a owl:Class ;
-  rdfs:subClassOf ujg:Node .
-
 ujgdist:DistributedArtifact a owl:Class ;
   rdfs:subClassOf ujgartifact:Artifact .
 
@@ -32,14 +27,6 @@ ujgdist:origin a owl:ObjectProperty ;
 ujgdist:presentedByAuthorityRef a owl:ObjectProperty ;
   rdfs:domain ujgsurface:Surface ;
   rdfs:range ujgdist:Authority .
-
-ujgdist:operationActionRef a owl:ObjectProperty ;
-  rdfs:domain ujgdist:DistributedOperation ;
-  rdfs:range ujgaction:Action .
-
-ujgdist:visibleSubjectRefs a owl:ObjectProperty ;
-  rdfs:domain ujgdist:DistributedOperation ;
-  rdfs:range ujg:Node .
 
 ujgdist:sourceAuthorityRef a owl:ObjectProperty ;
   rdfs:range ujgdist:Authority .

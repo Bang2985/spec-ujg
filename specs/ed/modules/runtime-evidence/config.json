@@ -1,10 +1,10 @@
 {
-    "id": "modules/evidence",
-    "title": "Evidence",
+    "id": "modules/runtime-evidence",
+    "title": "Runtime Evidence",
     "maturityLevel": "incubating",
     "baseUrl": "${SPEC_BASE_URL}/ed",
     "deps": [
-        "core",
+        "runtime",
         "modules/actor"
     ],
     "custom": {
@@ -18,7 +18,7 @@
             "name": "User Journal Graph Community Group",
             "url": "https://www.w3.org/community/ujg/"
         },
-        "repository": "https://github.com/openuji/spec-ujg/blob/main/specs/ed/modules/evidence/index.md",
+        "repository": "https://github.com/openuji/spec-ujg/blob/main/specs/ed/modules/runtime-evidence/index.md",
         "editors": [
             {
                 "name": "Seva Dolgopolov",
@@ -30,6 +30,10 @@
             "UJG Core": {
                 "title": "UJG Core",
                 "url": "/ed/core"
+            },
+            "UJG Runtime": {
+                "title": "UJG Runtime",
+                "url": "/ed/runtime"
             },
             "UJG Actor": {
                 "title": "UJG Actor",

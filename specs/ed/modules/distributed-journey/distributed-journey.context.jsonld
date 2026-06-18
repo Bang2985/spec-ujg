@@ -6,7 +6,6 @@
     "dist": "https://ujg.specs.openuji.org/ed/ns/distributed-journey#",
 
     "Authority": "ujgdist:Authority",
-    "DistributedOperation": "ujgdist:DistributedOperation",
     "DistributedArtifact": "ujgdist:DistributedArtifact",
 
     "origin": {
@@ -16,15 +15,6 @@
     "presentedByAuthorityRef": {
       "@id": "ujgdist:presentedByAuthorityRef",
       "@type": "@id"
-    },
-    "operationActionRef": {
-      "@id": "ujgdist:operationActionRef",
-      "@type": "@id"
-    },
-    "visibleSubjectRefs": {
-      "@id": "ujgdist:visibleSubjectRefs",
-      "@type": "@id",
-      "@container": "@set"
     },
     "sourceAuthorityRef": {
       "@id": "ujgdist:sourceAuthorityRef",
