@@ -151,24 +151,64 @@ the SHACL shape.
       "origin": "https://cloud-b.example"
     },
     {
-      "@id": "urn:journey:federated-share",
+      "@id": "urn:actor:alice",
+      "@type": "Actor"
+    },
+    {
+      "@id": "urn:actor:bob",
+      "@type": "Actor"
+    },
+    {
+      "@id": "urn:index:nextcloud-federated-sharing",
+      "@type": "JourneyEntryIndex",
+      "label": "Nextcloud federated sharing entries",
+      "stateRefs": [
+        "urn:composite:alice-federated-sharing",
+        "urn:composite:bob-remote-share-acceptance"
+      ]
+    },
+    {
+      "@id": "urn:composite:alice-federated-sharing",
+      "@type": "CompositeState",
+      "label": "Alice federated sharing journey",
+      "subjourneyId": "urn:journey:alice-federated-sharing"
+    },
+    {
+      "@id": "urn:composite:bob-remote-share-acceptance",
+      "@type": "CompositeState",
+      "label": "Bob remote-share acceptance journey",
+      "subjourneyId": "urn:journey:bob-remote-share-acceptance"
+    },
+    {
+      "@id": "urn:journey:alice-federated-sharing",
       "@type": "Journey",
-      "label": "Federated file share",
+      "label": "Alice federated sharing",
       "startStateRef": "urn:state:alice-share-panel",
       "stateRefs": [
         "urn:state:alice-share-panel",
         "urn:state:alice-recipient-recognized",
         "urn:state:alice-share-confirmed",
+        "urn:state:alice-share-revoked"
+      ],
+      "transitionRefs": [
+        "urn:transition:alice-recognize-recipient",
+        "urn:transition:alice-confirm-share",
+        "urn:transition:alice-revoke-share"
+      ]
+    },
+    {
+      "@id": "urn:journey:bob-remote-share-acceptance",
+      "@type": "Journey",
+      "label": "Bob remote-share acceptance",
+      "startStateRef": "urn:state:bob-incoming-share",
+      "stateRefs": [
         "urn:state:bob-incoming-share",
         "urn:state:bob-file-available",
         "urn:state:bob-access-removed"
       ],
       "transitionRefs": [
-        "urn:transition:recognize-recipient",
-        "urn:transition:confirm-share",
-        "urn:transition:bob-opens-cloud",
-        "urn:transition:bob-accepts",
-        "urn:transition:alice-revokes"
+        "urn:transition:bob-accepts-share",
+        "urn:transition:bob-observes-access-removed"
       ]
     },
     {
@@ -176,42 +216,56 @@ the SHACL shape.
       "@type": "State",
       "label": "Alice sees the share panel",
       "surfaceRef": "urn:surface:alice-share-panel",
-      "responsibleActorRef": "urn:authority:cloud-a"
+      "responsibleActorRef": "urn:authority:cloud-a",
+      "eligibleActorRefs": ["urn:actor:alice"]
     },
     {
       "@id": "urn:state:alice-recipient-recognized",
       "@type": "State",
       "label": "Alice sees Bob recognized as a remote recipient",
       "surfaceRef": "urn:surface:alice-recipient-recognized",
-      "responsibleActorRef": "urn:authority:cloud-a"
+      "responsibleActorRef": "urn:authority:cloud-a",
+      "eligibleActorRefs": ["urn:actor:alice"]
     },
     {
       "@id": "urn:state:alice-share-confirmed",
       "@type": "State",
       "label": "Alice sees shared with Bob",
       "surfaceRef": "urn:surface:alice-share-confirmed",
-      "responsibleActorRef": "urn:authority:cloud-a"
+      "responsibleActorRef": "urn:authority:cloud-a",
+      "eligibleActorRefs": ["urn:actor:alice"]
+    },
+    {
+      "@id": "urn:state:alice-share-revoked",
+      "@type": "State",
+      "label": "Alice sees the share revoked",
+      "surfaceRef": "urn:surface:alice-share-revoked",
+      "responsibleActorRef": "urn:authority:cloud-a",
+      "eligibleActorRefs": ["urn:actor:alice"]
     },
     {
       "@id": "urn:state:bob-incoming-share",
       "@type": "State",
       "label": "Bob sees an incoming remote share",
       "surfaceRef": "urn:surface:bob-incoming-share",
-      "responsibleActorRef": "urn:authority:cloud-b"
+      "responsibleActorRef": "urn:authority:cloud-b",
+      "eligibleActorRefs": ["urn:actor:bob"]
     },
     {
       "@id": "urn:state:bob-file-available",
       "@type": "State",
       "label": "Bob can open the shared folder",
       "surfaceRef": "urn:surface:bob-file-available",
-      "responsibleActorRef": "urn:authority:cloud-b"
+      "responsibleActorRef": "urn:authority:cloud-b",
+      "eligibleActorRefs": ["urn:actor:bob"]
     },
     {
       "@id": "urn:state:bob-access-removed",
       "@type": "State",
       "label": "Bob sees access removed",
       "surfaceRef": "urn:surface:bob-access-removed",
-      "responsibleActorRef": "urn:authority:cloud-b"
+      "responsibleActorRef": "urn:authority:cloud-b",
+      "eligibleActorRefs": ["urn:actor:bob"]
     },
     {
       "@id": "urn:surface:alice-share-panel",
@@ -225,6 +279,11 @@ the SHACL shape.
     },
     {
       "@id": "urn:surface:alice-share-confirmed",
+      "@type": "Surface",
+      "presentedByAuthorityRef": "urn:authority:cloud-a"
+    },
+    {
+      "@id": "urn:surface:alice-share-revoked",
       "@type": "Surface",
       "presentedByAuthorityRef": "urn:authority:cloud-a"
     },
@@ -244,43 +303,44 @@ the SHACL shape.
       "presentedByAuthorityRef": "urn:authority:cloud-b"
     },
     {
-      "@id": "urn:transition:recognize-recipient",
+      "@id": "urn:transition:alice-recognize-recipient",
       "@type": "Transition",
       "from": "urn:state:alice-share-panel",
       "to": "urn:state:alice-recipient-recognized"
     },
     {
-      "@id": "urn:transition:confirm-share",
+      "@id": "urn:transition:alice-confirm-share",
       "@type": "Transition",
       "from": "urn:state:alice-recipient-recognized",
       "to": "urn:state:alice-share-confirmed",
       "actionRef": "urn:action:share-with-bob"
     },
     {
-      "@id": "urn:transition:bob-accepts",
+      "@id": "urn:transition:alice-revoke-share",
+      "@type": "Transition",
+      "from": "urn:state:alice-share-confirmed",
+      "to": "urn:state:alice-share-revoked",
+      "actionRef": "urn:action:alice-revoke-share"
+    },
+    {
+      "@id": "urn:transition:bob-accepts-share",
       "@type": "Transition",
       "from": "urn:state:bob-incoming-share",
       "to": "urn:state:bob-file-available",
       "actionRef": "urn:action:bob-accepts-share"
     },
     {
-      "@id": "urn:transition:bob-opens-cloud",
-      "@type": "Transition",
-      "from": "urn:state:alice-share-confirmed",
-      "to": "urn:state:bob-incoming-share",
-      "actionRef": "urn:action:bob-opens-cloud"
-    },
-    {
-      "@id": "urn:transition:alice-revokes",
+      "@id": "urn:transition:bob-observes-access-removed",
       "@type": "Transition",
       "from": "urn:state:bob-file-available",
-      "to": "urn:state:bob-access-removed",
-      "actionRef": "urn:action:revoke-share"
+      "to": "urn:state:bob-access-removed"
     },
     {
       "@id": "urn:action:share-with-bob",
       "@type": "Action",
-      "producedArtifactRefs": ["urn:artifact:remote-share"]
+      "producedArtifactRefs": ["urn:artifact:remote-share"],
+      "sourceAuthorityRef": "urn:authority:cloud-a",
+      "targetAuthorityRefs": ["urn:authority:cloud-b"]
     },
     {
       "@id": "urn:action:bob-accepts-share",
@@ -288,12 +348,11 @@ the SHACL shape.
       "consumedArtifactRefs": ["urn:artifact:remote-share"]
     },
     {
-      "@id": "urn:action:bob-opens-cloud",
-      "@type": "Action"
-    },
-    {
-      "@id": "urn:action:revoke-share",
-      "@type": "Action"
+      "@id": "urn:action:alice-revoke-share",
+      "@type": "Action",
+      "consumedArtifactRefs": ["urn:artifact:remote-share"],
+      "sourceAuthorityRef": "urn:authority:cloud-a",
+      "targetAuthorityRefs": ["urn:authority:cloud-b"]
     },
     {
       "@id": "urn:artifact:remote-share",
@@ -305,11 +364,17 @@ the SHACL shape.
 }
 ```
 
-This example keeps Alice's confirmation and Bob's access as separate visible states. The model does
-not claim that Alice seeing "shared with Bob" is the same as Bob being able to open the folder.
+This example intentionally uses separate journeys for Alice and Bob. The distributed artifact links
+the journeys semantically, but it does not create Graph transitions between Alice's states and Bob's
+states. Runtime Evidence can record that one execution observed Alice sharing before Bob accepted,
+and Alice revoking before Bob observed removal.
 
-A companion Runtime Evidence document can record that Bob's visible access state was observed in a
-runtime execution without adding evidence nodes to the distributed graph itself:
+> **Note:** Do not use Distributed Journey to model an artifact lifecycle as a single Journey. If
+> the scenario involves multiple human actors on different surfaces, model each actor's local
+> journey separately and use Runtime Evidence to record execution interleaving.
+
+A companion Runtime Evidence document can record observed ordering across the separate journey
+instances without adding evidence nodes to the distributed graph itself:
 
 ```json
 {
@@ -324,6 +389,10 @@ runtime execution without adding evidence nodes to the distributed graph itself:
   "imports": ["https://example.com/ujg/distributed/nextcloud-share.jsonld"],
   "nodes": [
     {
+      "@id": "urn:authority:cloud-a",
+      "@type": "Actor"
+    },
+    {
       "@id": "urn:authority:cloud-b",
       "@type": "Actor"
     },
@@ -332,23 +401,88 @@ runtime execution without adding evidence nodes to the distributed graph itself:
       "@type": "JourneyExecution"
     },
     {
-      "@id": "urn:journey-instance:federated-share:12345",
+      "@id": "urn:journey-instance:alice-federated-sharing:12345",
       "@type": "JourneyInstance",
-      "journeyRef": "urn:journey:federated-share"
+      "journeyRef": "urn:journey:alice-federated-sharing"
+    },
+    {
+      "@id": "urn:journey-instance:bob-remote-share-acceptance:12345",
+      "@type": "JourneyInstance",
+      "journeyRef": "urn:journey:bob-remote-share-acceptance"
+    },
+    {
+      "@id": "urn:event:nextcloud-share-12345:alice-share-confirmed",
+      "@type": "RuntimeEvent",
+      "executionId": "urn:execution:nextcloud-share-12345",
+      "stateRef": "urn:state:alice-share-confirmed",
+      "journeyInstanceRef": "urn:journey-instance:alice-federated-sharing:12345",
+      "payload": { "action": "surface.visible" }
+    },
+    {
+      "@id": "urn:event:nextcloud-share-12345:bob-incoming-share",
+      "@type": "RuntimeEvent",
+      "executionId": "urn:execution:nextcloud-share-12345",
+      "previousId": "urn:event:nextcloud-share-12345:alice-share-confirmed",
+      "stateRef": "urn:state:bob-incoming-share",
+      "journeyInstanceRef": "urn:journey-instance:bob-remote-share-acceptance:12345",
+      "payload": { "action": "surface.visible" }
     },
     {
       "@id": "urn:event:nextcloud-share-12345:bob-file-available",
       "@type": "RuntimeEvent",
       "executionId": "urn:execution:nextcloud-share-12345",
+      "previousId": "urn:event:nextcloud-share-12345:bob-incoming-share",
       "stateRef": "urn:state:bob-file-available",
-      "journeyInstanceRef": "urn:journey-instance:federated-share:12345",
+      "journeyInstanceRef": "urn:journey-instance:bob-remote-share-acceptance:12345",
       "payload": { "action": "surface.visible" }
+    },
+    {
+      "@id": "urn:event:nextcloud-share-12345:alice-share-revoked",
+      "@type": "RuntimeEvent",
+      "executionId": "urn:execution:nextcloud-share-12345",
+      "previousId": "urn:event:nextcloud-share-12345:bob-file-available",
+      "stateRef": "urn:state:alice-share-revoked",
+      "journeyInstanceRef": "urn:journey-instance:alice-federated-sharing:12345",
+      "payload": { "action": "surface.visible" }
+    },
+    {
+      "@id": "urn:event:nextcloud-share-12345:bob-access-removed",
+      "@type": "RuntimeEvent",
+      "executionId": "urn:execution:nextcloud-share-12345",
+      "previousId": "urn:event:nextcloud-share-12345:alice-share-revoked",
+      "stateRef": "urn:state:bob-access-removed",
+      "journeyInstanceRef": "urn:journey-instance:bob-remote-share-acceptance:12345",
+      "payload": { "action": "surface.visible" }
+    },
+    {
+      "@id": "urn:runtime-evidence:nextcloud-share:alice-share-confirmed",
+      "@type": "RuntimeEvidenceRecord",
+      "journeyExecutionRef": "urn:execution:nextcloud-share-12345",
+      "runtimeEventRef": "urn:event:nextcloud-share-12345:alice-share-confirmed",
+      "observedByActorRef": "urn:authority:cloud-a",
+      "evidencePayload": { "source": "cloud-a-runtime", "record": "state-observed" }
     },
     {
       "@id": "urn:runtime-evidence:nextcloud-share:bob-file-available",
       "@type": "RuntimeEvidenceRecord",
       "journeyExecutionRef": "urn:execution:nextcloud-share-12345",
       "runtimeEventRef": "urn:event:nextcloud-share-12345:bob-file-available",
+      "observedByActorRef": "urn:authority:cloud-b",
+      "evidencePayload": { "source": "cloud-b-runtime", "record": "state-observed" }
+    },
+    {
+      "@id": "urn:runtime-evidence:nextcloud-share:alice-share-revoked",
+      "@type": "RuntimeEvidenceRecord",
+      "journeyExecutionRef": "urn:execution:nextcloud-share-12345",
+      "runtimeEventRef": "urn:event:nextcloud-share-12345:alice-share-revoked",
+      "observedByActorRef": "urn:authority:cloud-a",
+      "evidencePayload": { "source": "cloud-a-runtime", "record": "state-observed" }
+    },
+    {
+      "@id": "urn:runtime-evidence:nextcloud-share:bob-access-removed",
+      "@type": "RuntimeEvidenceRecord",
+      "journeyExecutionRef": "urn:execution:nextcloud-share-12345",
+      "runtimeEventRef": "urn:event:nextcloud-share-12345:bob-access-removed",
       "observedByActorRef": "urn:authority:cloud-b",
       "evidencePayload": { "source": "cloud-b-runtime", "record": "state-observed" }
     }
@@ -505,6 +639,10 @@ runtime execution without adding evidence nodes to the distributed graph itself:
   ]
 }
 ```
+
+This is one user's migration journey across two authorities, not an artifact-only lifecycle. The
+same actor continues from the old server's export surface to the new server's import surface, and
+the exported archive connects the authorities semantically without becoming the journey path.
 
 The non-portable content warning is an ordinary visible state. The module does not need a
 portability taxonomy to represent partial success.
@@ -736,7 +874,9 @@ confirmation as metadata attached to a runtime event:
 ```
 
 The invisible federation request is not modeled as a journey state. The visible pending state and
-later feed visibility are the user-facing graph.
+later feed visibility are Alice's local user-facing graph. Remote approval, delivery,
+moderation, queueing, or acceptance belongs in Runtime Evidence, or in a separate remote
+authority journey only when another actor sees and acts on those states through their own UI.
 
 A companion Runtime Evidence document can describe the runtime observation of the remote feed
 becoming visible while leaving the invisible federation request outside the graph:
