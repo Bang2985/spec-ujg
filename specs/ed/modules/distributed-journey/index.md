@@ -459,7 +459,7 @@ instances without adding evidence nodes to the distributed graph itself:
       "@id": "urn:event:nextcloud-share-12345:alice-share-confirmed",
       "@type": "RuntimeEvent",
       "executionId": "urn:execution:nextcloud-share-12345",
-      "stateRef": "urn:state:alice-share-confirmed",
+      "eventStateRef": "urn:state:alice-share-confirmed",
       "journeyInstanceRef": "urn:journey-instance:alice-federated-sharing:12345",
       "payload": {
         "action": "surface.visible"
@@ -470,7 +470,7 @@ instances without adding evidence nodes to the distributed graph itself:
       "@type": "RuntimeEvent",
       "executionId": "urn:execution:nextcloud-share-12345",
       "previousId": "urn:event:nextcloud-share-12345:alice-share-confirmed",
-      "stateRef": "urn:state:bob-incoming-share",
+      "eventStateRef": "urn:state:bob-incoming-share",
       "journeyInstanceRef": "urn:journey-instance:bob-remote-share-acceptance:12345",
       "payload": {
         "action": "surface.visible"
@@ -481,7 +481,7 @@ instances without adding evidence nodes to the distributed graph itself:
       "@type": "RuntimeEvent",
       "executionId": "urn:execution:nextcloud-share-12345",
       "previousId": "urn:event:nextcloud-share-12345:bob-incoming-share",
-      "stateRef": "urn:state:bob-file-available",
+      "eventStateRef": "urn:state:bob-file-available",
       "journeyInstanceRef": "urn:journey-instance:bob-remote-share-acceptance:12345",
       "payload": {
         "action": "surface.visible"
@@ -492,7 +492,7 @@ instances without adding evidence nodes to the distributed graph itself:
       "@type": "RuntimeEvent",
       "executionId": "urn:execution:nextcloud-share-12345",
       "previousId": "urn:event:nextcloud-share-12345:bob-file-available",
-      "stateRef": "urn:state:alice-share-revoked",
+      "eventStateRef": "urn:state:alice-share-revoked",
       "journeyInstanceRef": "urn:journey-instance:alice-federated-sharing:12345",
       "payload": {
         "action": "surface.visible"
@@ -503,7 +503,7 @@ instances without adding evidence nodes to the distributed graph itself:
       "@type": "RuntimeEvent",
       "executionId": "urn:execution:nextcloud-share-12345",
       "previousId": "urn:event:nextcloud-share-12345:alice-share-revoked",
-      "stateRef": "urn:state:bob-access-removed",
+      "eventStateRef": "urn:state:bob-access-removed",
       "journeyInstanceRef": "urn:journey-instance:bob-remote-share-acceptance:12345",
       "payload": {
         "action": "surface.visible"
@@ -763,7 +763,7 @@ confirmation as metadata attached to a runtime event:
       "@id": "urn:event:account-migration-23456:partial-import-confirmed",
       "@type": "RuntimeEvent",
       "executionId": "urn:execution:account-migration-23456",
-      "stateRef": "urn:state:partial-import-confirmed",
+      "eventStateRef": "urn:state:partial-import-confirmed",
       "journeyInstanceRef": "urn:journey-instance:account-migration:23456",
       "payload": {
         "action": "surface.visible"
@@ -1012,7 +1012,7 @@ becoming visible while leaving the invisible federation request outside the grap
       "@id": "urn:event:remote-follow-34567:remote-feed-visible",
       "@type": "RuntimeEvent",
       "executionId": "urn:execution:remote-follow-34567",
-      "stateRef": "urn:state:remote-feed-visible",
+      "eventStateRef": "urn:state:remote-feed-visible",
       "journeyInstanceRef": "urn:journey-instance:remote-follow:34567",
       "payload": {
         "action": "surface.visible"

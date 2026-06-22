@@ -14,7 +14,7 @@ Spec URL: https://ujg.specs.openuji.org/ed/modules/l10n
 
 - architecture: sha256:135c6d8ca91f5cb04a69dfcd50c75cac605695d718bcf3fbbe0723a2fad8384d
 - core: sha256:36056cb41e184a44433a644ebe39008580c831cd7b091de551801815e2a49990
-- graph: sha256:b252187a3e5aab43ed84b7d1cce16ce6366b33c33197c09d9e867bd60e351dab
+- graph: sha256:35435735ad84f22cdcfe3d3b7d65c4412bd35f7567e804afbbc7c6d8095a4233
 - modules/l10n: sha256:fe7cdc72b95afe567c7ed9d0dbfe356ccc825b49847d1c286298b35c5f49b64c
 
 ## Changed Modules

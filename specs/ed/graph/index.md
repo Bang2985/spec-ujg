@@ -10,7 +10,7 @@ This module is published through the following artifacts:
 - `graph.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/ed/ns/graph.context.jsonld`
 - `graph.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/ed/ns/graph.shape`
 
-Examples in this page use explicit Core and Graph context arrays. This keeps Graph's `stateRef` term scoped to [=JourneyEntry=] examples and avoids ambiguity with other modules that define their own compact `stateRef` terms.
+Examples in this page use explicit Core and Graph context arrays for module clarity. The aggregate context `https://ujg.specs.openuji.org/ed/ns/context.jsonld` also preserves Graph's compact `stateRef` term for [=JourneyEntry=].
 
 ## Terminology
 
@@ -1077,48 +1077,6 @@ To ensure graph integrity, the following constraints **MUST** be met:
 8. **Outgoing Resolution:** Every ID in `outgoingTransitionRefs` **MUST** resolve to an [=OutgoingTransition=].
 9. **Outgoing Target Resolution:** Each [=OutgoingTransition=] **MUST** resolve through exactly one effective target mechanism: a fixed `to` target, or `toCurrentState: true` resolved at the current effective source where the outgoing affordance is available.
 </spec-statement>
-
----
-
-## Migration from BoundaryState {data-cop-concept="boundary-state-migration"}
-
-Previous versions modeled journey exits through a `BoundaryState` plus `JourneyExit.exitStateRef`. This has been simplified. A `BoundaryState` should be migrated to a [=JourneyExit=], and transitions that previously targeted the `BoundaryState` should instead target the corresponding [=JourneyExit=]. The `exitStateRef` property is removed.
-
-Migration rule:
-
-```text
-BoundaryState B
-JourneyExit E where E.exitStateRef = B
-Transition T where T.to = B
-
-becomes:
-
-JourneyExit E
-Transition T where T.to = E
-```
-
-If the old `BoundaryState` represented a real user-visible screen, page, modal, or step, migrate it to a normal [=State=] and add an explicit transition from that state to the [=JourneyExit=].
-
----
-
-## Migration from startStateRef {data-cop-concept="start-state-ref-migration"}
-
-Previous versions identified a journey's starting state directly with `startStateRef`. The entry model replaces that direct pointer with an explicit [=JourneyEntry=].
-
-Migration rule:
-
-```text
-Journey J where J.startStateRef = S
-
-becomes:
-
-Journey J where J.defaultEntryRef = E and J.entryRefs includes E
-JourneyEntry E where E.stateRef = S
-```
-
-When a journey has only one possible entry, create one [=JourneyEntry=] and use it as both the `defaultEntryRef` and the only value in `entryRefs`. When a journey has multiple valid entries, list each as a [=JourneyEntry=] and choose the default entry explicitly with `defaultEntryRef`.
-
----
 
 ## Examples
 

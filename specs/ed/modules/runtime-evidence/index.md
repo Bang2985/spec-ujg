@@ -135,7 +135,7 @@ the SHACL shape.
     {
       "@type": "JourneyEntry",
       "@id": "urn:entry:checkout-default",
-      "ujggraph:stateRef": "urn:state:shipping-form"
+      "stateRef": "urn:state:shipping-form"
     },
     {
       "@id": "urn:state:shipping-form",
@@ -155,7 +155,7 @@ the SHACL shape.
       "@id": "urn:event:12345:100",
       "@type": "RuntimeEvent",
       "executionId": "urn:execution:12345",
-      "stateRef": "urn:state:shipping-form",
+      "eventStateRef": "urn:state:shipping-form",
       "journeyInstanceRef": "urn:journey-instance:checkout:12345",
       "payload": {
         "action": "surface.enter"

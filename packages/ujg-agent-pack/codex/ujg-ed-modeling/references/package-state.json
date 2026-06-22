@@ -12,7 +12,7 @@
     "name": "ujg-ed-modeling"
   },
   "sourceHash": "sha256:4c805e29a7019c55e0a669f42486aba6701532938447b9b86b0c6c4501184a4d",
-  "specHash": "sha256:27f829d6c7311290993d8cb3267674fb6ebae4a92deae979983612d1f9426383",
+  "specHash": "sha256:0bf156e03805f7bc203a1590f897549259a79728c49b20a6f7ae846a957dcd57",
   "target": {
     "id": "ed",
     "label": "Editor's Draft"
