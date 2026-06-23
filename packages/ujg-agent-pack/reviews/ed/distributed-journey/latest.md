@@ -8,26 +8,12 @@ Spec URL: https://ujg.specs.openuji.org/ed/modules/distributed-journey
 ## Status
 
 - Previous review state found.
-- No relevant spec module hash changes detected.
+- Source and spec hashes are unchanged.
 
-## Relevant Modules
+## Review Inputs
 
-- architecture: sha256:135c6d8ca91f5cb04a69dfcd50c75cac605695d718bcf3fbbe0723a2fad8384d
-- core: sha256:36056cb41e184a44433a644ebe39008580c831cd7b091de551801815e2a49990
-- graph: sha256:35435735ad84f22cdcfe3d3b7d65c4412bd35f7567e804afbbc7c6d8095a4233
-- modules/surface: sha256:834f9b89895363f3b5fa09a26acd5c9bea2d2f68a11e77c719961cb2c6878f00
-- modules/action: sha256:85bf439ada55ec13eadc7b95997cd240e356ff2b8e8d82e108db36d13e6de3d1
-- modules/actor: sha256:9c7374565d78a5b3af0b698aaf36d3eb59f18fc0babda1e6d6d5b9c73acb5f32
-- modules/artifact: sha256:ef364efa0c76b918cb52ba0e1d842b7a72f2953e08a10de051a731113234eebe
-- modules/distributed-journey: sha256:bad9c62d50e50b4b65d5bad98bd0b56fe7be910d77313e4cfad6c184e4c718c9
-
-## Changed Modules
-
-- None
-
-## Changed Context/TTL/Shape Files To Inspect
-
-- None
+- Source hash: sha256:865eac3c272dd3a602e4223d604edf2b3ec031059fb65824a0517713dee8f2cc
+- Spec hash: sha256:b49de9431ee5c089659d594c7cb1f98b3162b762ae70f346941ea1ba9dcc9cbc
 
 ## Source Headings Likely Affected
 

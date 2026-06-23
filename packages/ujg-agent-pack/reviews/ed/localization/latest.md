@@ -8,22 +8,12 @@ Spec URL: https://ujg.specs.openuji.org/ed/modules/l10n
 ## Status
 
 - Previous review state found.
-- No relevant spec module hash changes detected.
+- Source and spec hashes are unchanged.
 
-## Relevant Modules
+## Review Inputs
 
-- architecture: sha256:135c6d8ca91f5cb04a69dfcd50c75cac605695d718bcf3fbbe0723a2fad8384d
-- core: sha256:36056cb41e184a44433a644ebe39008580c831cd7b091de551801815e2a49990
-- graph: sha256:35435735ad84f22cdcfe3d3b7d65c4412bd35f7567e804afbbc7c6d8095a4233
-- modules/l10n: sha256:fe7cdc72b95afe567c7ed9d0dbfe356ccc825b49847d1c286298b35c5f49b64c
-
-## Changed Modules
-
-- None
-
-## Changed Context/TTL/Shape Files To Inspect
-
-- None
+- Source hash: sha256:211cbedf71491624af1820229e94e1eb5077ed55e5ed13c5d3b4f2e6afa0f239
+- Spec hash: sha256:f73f2627ae6cd79e0f6adbe4110b2763d7dae0f9705397ce21f5217bc3e5e559
 
 ## Source Headings Likely Affected
 

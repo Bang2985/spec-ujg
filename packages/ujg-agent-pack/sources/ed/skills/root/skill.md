@@ -233,6 +233,8 @@ Graph models intended topology. Runtime models observed behavior.
 
 Keep runtime facts out of Graph, including typed query, input value, clicked element, submitted value, selected result, timestamp, URL at interaction time, DOM selector, analytics metadata, runtime locale selection, and payload.
 
+For Runtime traces, a `RuntimeEvent` must identify the execution with `executionId`, the observed graph state with `eventStateRef`, and the local journey scope with `journeyInstanceRef`. Use `previousId` only to reconstruct observed event order.
+
 Use Experience only for journey-map annotations. Experience annotations must not change Graph traversal or repair missing Graph topology.
 
 ## Page and route modeling
