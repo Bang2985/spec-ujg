@@ -53,6 +53,7 @@ A [=RuntimeEvent=] references exactly one [=SurfaceInstance=] using `surfaceInst
 
 The core runtime address is `RuntimeEvent.surfaceInstanceRef`. Consumers that need Graph meaning resolve the surface instance through `SurfaceInstance.surfaceRef` and then through `Surface.graphNodeRef`. Consumers that need repeated-occurrence scope MAY also follow `SurfaceInstance.graphNodeInstanceRef`.
 
+
 ## Runtime Event {data-cop-concept="runtime-event"}
 
 <spec-statement>

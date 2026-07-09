@@ -38,7 +38,7 @@ Treat `/ed` as moving. Do not silently mix dated snapshots with current ED. Gene
 Select only required modules.
 
 Core: document container and top-level nodes.
-Graph: journeys, states, transitions, composition, exits, outgoing navigation, indexes.
+Graph: journeys, states, transitions, composition, exits, outgoing navigation, indexes, actors, and actor references.
 Surface: materialized graph-subject surfaces, concrete surface instances, surface attachments, touchpoints, channels, origins.
 Runtime: observed events, values, clicks, URLs, timestamps, payloads.
 Experience: journey-map annotations such as steps, phases, and pain points over surfaces.
@@ -47,9 +47,9 @@ Observability: accessible-object recognition contracts for surfaces, using local
 for accessible names and descriptions.
 State Data: state-like data context or binding identity attached with `stateDataRef`.
 Artifact: portable resources produced, consumed, exchanged, or referenced by UJG nodes.
-Distributed Journey: cross-touchpoint human-facing journeys composed from Surface and first-level bridge modules.
+Distributed Journey: cross-touchpoint human-facing journeys composed from Graph actors, Surface, Action, and Artifact.
 
-Core is required for UJG documents. Include Graph when modeling topology. Include Surface when using `Surface`, `SurfaceInstance`, `Touchpoint`, `GraphNodeInstance`, `graphNodeRef`, `surfaceRef`, `graphNodeInstanceRef`, `touchpointRef`, `parentInstanceRef`, `channel`, or `origin`. Include Runtime only for observed behavior or traces. Include Experience only for journey-map annotations such as `ExperienceStep`, `surfaceRefs`, `Phase`, or `PainPoint`. Include Localization only when using l10n terms such as `l10n:targetLocale`, `copyRef`, `defaultLocale`, `fallbackLocales`, or `locales`. Include Observability only when modeling `ObservationBinding`, `observeSurfaceRef`, `SurfaceInstanceResolver`, `surfaceInstanceResolverRef`, `instanceKeyFeatureRef`, `AccessibleLocator`, `accessibleNameRef`, or `accessibleDescriptionRef`; Observability also requires Localization for name and description bundles.
+Core is required for UJG documents. Include Graph when modeling topology or actor terms such as `Actor`, `subjectActorRef`, `responsibleActorRef`, and `eligibleActorRefs`. Include Surface when using `Surface`, `SurfaceInstance`, `Touchpoint`, `GraphNodeInstance`, `graphNodeRef`, `surfaceRef`, `graphNodeInstanceRef`, `touchpointRef`, `parentInstanceRef`, `channel`, or `origin`. Include Runtime only for observed behavior or traces. Include Experience only for journey-map annotations such as `ExperienceStep`, `surfaceRefs`, `Phase`, or `PainPoint`. Include Localization only when using l10n terms such as `l10n:targetLocale`, `copyRef`, `defaultLocale`, `fallbackLocales`, or `locales`. Include Observability only when modeling `ObservationBinding`, `observeSurfaceRef`, `SurfaceInstanceResolver`, `surfaceInstanceResolverRef`, `instanceKeyFeatureRef`, `AccessibleLocator`, `accessibleNameRef`, or `accessibleDescriptionRef`; Observability also requires Localization for name and description bundles.
 
 Include State Data only when using `StateData` or `stateDataRef`. Do not use State Data for files,
 archives, reports, invites, media, protocol objects, tokens, or other portable resources; use
@@ -136,6 +136,8 @@ Do not split one page into multiple journeys merely because it has sections, a f
 ## State and CompositeState
 
 Use `State` for a stable observable condition.
+
+Use Graph `subjectActorRef` on `State` or `CompositeState` when the state-like node represents one actor's journey perspective, such as "Alice sees share confirmed" or "Bob sees incoming share".
 
 Same-journey states usually include page sections, form ready, input-present condition, validation error, submission success/failure, empty/populated result, loading complete, confirmation message, inline error panel, and simple same-page modal/dialog.
 
@@ -256,6 +258,8 @@ Graph models intended topology. Runtime models observed behavior.
 Keep runtime facts out of Graph, including typed query, input value, clicked element, submitted value, selected result, timestamp, URL at interaction time, DOM selector, analytics metadata, runtime locale selection, and payload.
 
 For Runtime traces, a `RuntimeEvent` must identify the execution with `executionId` and the observed concrete occurrence with `surfaceInstanceRef`. Resolve Graph meaning through `SurfaceInstance.surfaceRef` and the referenced `Surface.graphNodeRef`. Use `previousId` only to reconstruct observed event order.
+
+To derive actor perspective for an observed state occurrence, resolve `RuntimeEvent.surfaceInstanceRef -> SurfaceInstance.surfaceRef -> Surface.graphNodeRef -> State|CompositeState.subjectActorRef`. Do not add collector or observer attribution fields to Runtime; keep collector/source metadata in `payload` or `extensions`.
 
 Use Experience only for journey-map annotations. Experience annotations must not change Graph traversal or repair missing Graph topology.
 

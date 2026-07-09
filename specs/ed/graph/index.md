@@ -24,6 +24,36 @@ Examples in this page use explicit Core and Graph context arrays for module clar
 - <dfn>JourneyExit</dfn>: A terminal local graph vertex and exported completion contract declared by a [=Journey=].
 - <dfn>OutgoingTransition</dfn>: A navigational affordance pointing to a next possible [=State=] or [=CompositeState=].
 - <dfn>OutgoingTransitionGroup</dfn>: A reusable set of outgoing transitions that a Consumer can treat as present on multiple states (e.g., global nav).
+- <dfn>Actor</dfn>: An addressable participant, role-like entity, system, organization, or other
+  party represented in Graph metadata.
+- <dfn>Subject actor</dfn>: The actor whose journey perspective a `State` or `CompositeState`
+  represents.
+- <dfn>Responsible actor</dfn>: The actor responsible for ownership or stewardship of a Graph node.
+- <dfn>Eligible actor</dfn>: An actor described as eligible to perform, approve, or trigger a
+  transition-like Graph edge.
+
+---
+
+## Actor Metadata {data-cop-concept="actor-metadata"}
+
+Graph defines `Actor` because actor perspective and responsibility are graph interpretation
+metadata. Actor terms do not define authentication, authorization enforcement, accounts, identity
+providers, provenance, runtime observation, or legal accountability.
+
+<spec-statement>`Actor` nodes **MUST** be addressable Core [=Node=] instances.</spec-statement>
+
+<spec-statement>`subjectActorRef` **MAY** appear on `State` and `CompositeState`. It identifies the
+actor whose journey perspective the state-like node represents.</spec-statement>
+
+<spec-statement>`responsibleActorRef` **MAY** appear on `Journey`, `State`, `CompositeState`,
+`Transition`, `OutgoingTransition`, and `OutgoingTransitionGroup`. It identifies ownership or
+stewardship, not legal accountability.</spec-statement>
+
+<spec-statement>`eligibleActorRefs` **MAY** appear on `Transition` and `OutgoingTransition`. It
+describes intended actor eligibility, not authorization enforcement.</spec-statement>
+
+<spec-statement>Actor references **MUST NOT** create hidden graph edges, change traversal behavior,
+define runtime attribution, or change Runtime event ordering.</spec-statement>
 
 ---
 
@@ -1067,7 +1097,7 @@ The rules below define additional graph integrity and resolution behavior beyond
 
 <spec-statement>
 To ensure graph integrity, the following constraints **MUST** be met:
-1. **Reference Integrity:** All `defaultEntryRef`, `entryRefs`, `stateRef`, `stateRefs`, `transitionRefs`, `exitRefs`, `outgoingTransitionGroupRefs`, and `outgoingTransitionRefs` IDs **MUST** resolve to valid Nodes within the current scope or imported modules.
+1. **Reference Integrity:** All `defaultEntryRef`, `entryRefs`, `stateRef`, `stateRefs`, `transitionRefs`, `exitRefs`, `outgoingTransitionGroupRefs`, `outgoingTransitionRefs`, `subjectActorRef`, `responsibleActorRef`, and `eligibleActorRefs` IDs **MUST** resolve to valid Nodes within the current scope or imported modules.
 2. **Transition Endpoint Resolution:** The `from` ID of a [=Transition=] **MUST** resolve to a [=State=] or [=CompositeState=] listed in the enclosing [=Journey=]'s `stateRefs`. The `to` ID of a [=Transition=] **MUST** resolve to a [=State=] or [=CompositeState=] listed in the enclosing [=Journey=]'s `stateRefs`, or a [=JourneyExit=] listed in the enclosing [=Journey=]'s `exitRefs`. A transition **MUST NOT** reference local vertices belonging to other journeys.
 3. **Entry Resolution:** Every ID in `entryRefs` **MUST** resolve to a [=JourneyEntry=], and each [=JourneyEntry=]'s `stateRef` **MUST** resolve to a [=State=] or [=CompositeState=] listed in the same [=Journey=]'s `stateRefs`.
 4. **Composition Safety:** `subjourneyId` **MUST** resolve to a valid [=Journey=].

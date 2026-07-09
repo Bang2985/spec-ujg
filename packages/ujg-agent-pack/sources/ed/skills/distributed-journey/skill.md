@@ -14,7 +14,8 @@ Distributed Journey describes human-facing journey models whose visible states, 
 Use it for federated sharing, cross-instance account migration, remote follow/subscribe flows, cross-touchpoint invites, portable artifacts, or human-visible outcomes involving multiple touchpoints.
 Do not use it for simple single-site forms, checkouts, dashboards, ordinary app flows, server-only integration flows, or artifact lifecycle diagrams.
 Distributed Journey does not define new journey classes, traversal semantics, runtime causality, protocol semantics, queue behavior, retry behavior, sync state, server truth, or database state.
-Multiple touchpoints do not automatically mean one distributed `Journey`. A distributed scenario may contain several related local journeys. Use `JourneyEntryIndex` to list related journey entries and Runtime Evidence to record observed order or interleaving.
+Multiple touchpoints do not automatically mean one distributed `Journey`. A distributed scenario may contain several related local journeys. Use `JourneyEntryIndex` to list related journey entries and Runtime to record observed order or interleaving.
+Use Graph `subjectActorRef` on states or composite states to identify whose local journey perspective a visible state represents.
 
 ## Contexts
 
@@ -31,7 +32,6 @@ Include bridge-module contexts only when their terms are used:
 [
   "https://ujg.specs.openuji.org/ed/ns/core.context.jsonld",
   "https://ujg.specs.openuji.org/ed/ns/graph.context.jsonld",
-  "https://ujg.specs.openuji.org/ed/ns/actor.context.jsonld",
   "https://ujg.specs.openuji.org/ed/ns/surface.context.jsonld",
   "https://ujg.specs.openuji.org/ed/ns/action.context.jsonld",
   "https://ujg.specs.openuji.org/ed/ns/artifact.context.jsonld",
@@ -39,7 +39,7 @@ Include bridge-module contexts only when their terms are used:
 ]
 ```
 
-Do not include Action, Artifact, Surface, Actor, Graph, Runtime, or Runtime Evidence contexts unless their terms appear.
+Do not include Action, Artifact, Surface, Graph, or Runtime contexts unless their terms appear. Actor terms are Graph terms.
 
 ## Vocabulary
 
@@ -111,6 +111,12 @@ Do not attach `touchpointRef` directly to Graph states unless the active ED expl
 Do not use `Touchpoint` as an `Actor`, runtime observer, authorization subject, ownership truth, database state, protocol state, queue state, or synchronization state. Touchpoint references do not create Graph traversal.
 Do not create a new `Surface` for every status if the same UI surface presents multiple stable states.
 
+## Actors
+
+Use Graph `Actor` nodes for human participants, roles, systems, or organizations that need to be addressable.
+Use `subjectActorRef` on `State` and `CompositeState` for Alice/Bob/local actor perspective.
+Use `eligibleActorRefs` only on `Transition` or `OutgoingTransition`, not on states.
+
 ## Actions across touchpoints
 
 Use `sourceTouchpointRef` and `targetTouchpointRefs` on an `Action` only when the human-facing action itself crosses touchpoint boundaries and no more specific artifact carries that relationship.
@@ -134,7 +140,7 @@ Example:
 
 A `DistributedArtifact` may have at most one `sourceTouchpointRef`.
 Prefer `DistributedArtifact` when the cross-touchpoint relationship belongs to the resource rather than the action.
-A `DistributedArtifact` does not create traversal. It does not mean delivered, accepted, declined, synchronized, revoked, opened, or visible unless those outcomes are modeled as human-visible states or Runtime Evidence.
+A `DistributedArtifact` does not create traversal. It does not mean delivered, accepted, declined, synchronized, revoked, opened, or visible unless those outcomes are modeled as human-visible states or Runtime events.
 Do not model the path an artifact takes as a user journey.
 
 ## Graph separation
@@ -142,7 +148,7 @@ Do not model the path an artifact takes as a user journey.
 Keep human-visible statuses as ordinary Graph `State` nodes when users see or experience them, such as Pending, Failed, Partial, Unavailable, Accepted, Declined, Revoked, Blocked, Access removed, File available, or Remote recipient recognized.
 Distributed Journey terms must not create hidden graph edges, change transition endpoints, replace `Journey`, replace `Transition`, or imply traversal.
 Use Graph `Transition` and `OutgoingTransition` for human-facing topology and navigation only.
-Use Runtime, Runtime Evidence, Artifact, or private extensions for protocol messages, logs, API responses, queues, synchronization state, request payloads, server-internal facts, and deployment evidence unless directly exposed to a human as visible UI state or outcome.
+Use Runtime payloads, Artifact, or private extensions for protocol messages, logs, API responses, queues, synchronization state, request payloads, server-internal facts, and deployment evidence unless directly exposed to a human as visible UI state or outcome.
 
 ## Multi-actor distributed scenarios
 
@@ -155,7 +161,7 @@ Preferred pattern:
 JourneyEntryIndex
   -> CompositeState for Actor A's local journey
   -> CompositeState for Actor B's local journey
-Runtime Evidence
+Runtime
   -> observed order and interleaving
 ```
 
@@ -172,7 +178,7 @@ Good:
 ```text
 Alice journey: Alice state -> Alice state -> Alice state
 Bob journey: Bob state -> Bob state -> Bob state
-Runtime Evidence: Alice event -> Bob event -> Alice event -> Bob event
+Runtime: Alice event -> Bob event -> Alice event -> Bob event
 ```
 
 Do not create a fake root `Journey` whose only purpose is to connect states from different actors, touchpoints, surfaces, or runtime moments.
@@ -194,7 +200,7 @@ Bob file visible -> Alice share revoked
 Alice share revoked -> Bob access removed
 ```
 
-Use Runtime Evidence to record this observed order instead.
+Use Runtime to record this observed order instead.
 
 ## JourneyEntryIndex pattern
 
@@ -202,12 +208,12 @@ Use `JourneyEntryIndex` when a distributed example contains several related loca
 Each entry can be a `CompositeState` with `subjourneyId`.
 The index is not traversable and does not imply order, progression, reachability, parent continuation, or scenario timing.
 
-## Runtime Evidence handoff rule
+## Runtime handoff rule
 
 If one actor's visible state becomes observable after another actor's action, do not encode that handoff as a Graph transition.
-Use Runtime Evidence.
+Use Runtime.
 
-When serializing Runtime Evidence, include Surface, Runtime, and Runtime Evidence contexts. A `RuntimeEvent` uses `executionId` and `surfaceInstanceRef`; use `previousId` only for observed event order.
+When serializing Runtime, include Surface and Runtime contexts. A `RuntimeEvent` uses `executionId` and `surfaceInstanceRef`; use `previousId` only for observed event order.
 
 Example observed interleaving:
 
@@ -255,7 +261,7 @@ If automation bindings are needed, use a clearly namespaced private extension or
 * Does any `Transition` cross from one actor's local state to another actor's local state?
 * Did I use a fake root `Journey` to connect a distributed scenario timeline?
 * Should this be a `JourneyEntryIndex` with multiple local journey entries instead?
-* Is execution order better represented as Runtime Evidence?
+* Is execution order better represented as Runtime?
 * Are `sourceTouchpointRef`, `targetTouchpointRefs`, or `DistributedArtifact` being treated as hidden graph edges?
 
 ## Output workflow

@@ -24,9 +24,7 @@ Module scope: core
 - modules/state-data
 - modules/action
 - surface
-- modules/actor
 - modules/artifact
-- modules/runtime-evidence
 - modules/observability
 - modules/experience
 - mapping

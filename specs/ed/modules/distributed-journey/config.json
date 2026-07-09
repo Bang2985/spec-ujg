@@ -4,7 +4,7 @@
     "maturityLevel": "draft",
     "baseUrl": "${SPEC_BASE_URL}/ed",
     "deps": [
-        "modules/actor",
+        "graph",
         "surface",
         "modules/action",
         "modules/artifact"
@@ -14,7 +14,6 @@
         "order": 65,
         "moduleLevel": 2,
         "bridgeModules": [
-            "modules/actor",
             "surface",
             "modules/action",
             "modules/artifact"
@@ -39,9 +38,9 @@
                 "title": "UJG Core",
                 "url": "/ed/core"
             },
-            "UJG Actor": {
-                "title": "UJG Actor",
-                "url": "/ed/modules/actor"
+            "UJG Graph": {
+                "title": "UJG Graph",
+                "url": "/ed/graph"
             },
             "UJG Action": {
                 "title": "UJG Action",
@@ -54,10 +53,6 @@
             "UJG Artifact": {
                 "title": "UJG Artifact",
                 "url": "/ed/modules/artifact"
-            },
-            "UJG Runtime Evidence": {
-                "title": "UJG Runtime Evidence",
-                "url": "/ed/modules/runtime-evidence"
             }
         }
     }

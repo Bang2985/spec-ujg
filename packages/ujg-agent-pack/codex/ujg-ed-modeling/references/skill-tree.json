@@ -18,9 +18,7 @@
         "modules/state-data",
         "modules/action",
         "surface",
-        "modules/actor",
         "modules/artifact",
-        "modules/runtime-evidence",
         "modules/observability",
         "modules/experience",
         "mapping",
@@ -52,9 +50,7 @@
         "modules/state-data",
         "modules/action",
         "surface",
-        "modules/actor",
         "modules/artifact",
-        "modules/runtime-evidence",
         "modules/observability",
         "modules/experience",
         "mapping",
@@ -79,8 +75,6 @@
         "modules/state-data",
         "modules/action",
         "surface",
-        "modules/actor",
-        "modules/runtime-evidence",
         "modules/observability",
         "modules/experience",
         "mapping",
@@ -131,17 +125,6 @@
       "generatedSkill": null,
       "title": "Action"
     },
-    "modules/actor": {
-      "dependents": [
-        "modules/runtime-evidence",
-        "modules/distributed-journey"
-      ],
-      "deps": [
-        "graph"
-      ],
-      "generatedSkill": null,
-      "title": "Actor"
-    },
     "modules/artifact": {
       "dependents": [
         "modules/distributed-journey"
@@ -172,7 +155,7 @@
     "modules/distributed-journey": {
       "dependents": [],
       "deps": [
-        "modules/actor",
+        "graph",
         "surface",
         "modules/action",
         "modules/artifact"
@@ -215,16 +198,6 @@
       "generatedSkill": null,
       "title": "Routing"
     },
-    "modules/runtime-evidence": {
-      "dependents": [],
-      "deps": [
-        "runtime",
-        "surface",
-        "modules/actor"
-      ],
-      "generatedSkill": null,
-      "title": "Runtime Evidence"
-    },
     "modules/state-data": {
       "dependents": [],
       "deps": [
@@ -249,7 +222,6 @@
     },
     "runtime": {
       "dependents": [
-        "modules/runtime-evidence",
         "mapping",
         "metrics",
         "profiles",
@@ -264,7 +236,6 @@
     "surface": {
       "dependents": [
         "runtime",
-        "modules/runtime-evidence",
         "modules/observability",
         "modules/experience",
         "mapping",

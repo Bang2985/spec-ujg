@@ -15,6 +15,7 @@
     "JourneyExit": "ujggraph:JourneyExit",
     "OutgoingTransition": "ujggraph:OutgoingTransition",
     "OutgoingTransitionGroup": "ujggraph:OutgoingTransitionGroup",
+    "Actor": "ujggraph:Actor",
 
     "label": "ujggraph:label",
     "tags": {
@@ -80,6 +81,19 @@
     },
     "outgoingTransitionRefs": {
       "@id": "ujggraph:outgoingTransitionRefs",
+      "@type": "@id",
+      "@container": "@set"
+    },
+    "subjectActorRef": {
+      "@id": "ujggraph:subjectActorRef",
+      "@type": "@id"
+    },
+    "responsibleActorRef": {
+      "@id": "ujggraph:responsibleActorRef",
+      "@type": "@id"
+    },
+    "eligibleActorRefs": {
+      "@id": "ujggraph:eligibleActorRefs",
       "@type": "@id",
       "@container": "@set"
     }

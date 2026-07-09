@@ -8,7 +8,8 @@ Protocol messages and API responses are evidence, not the primary journey.
 
 This module reuses existing UJG concepts instead of defining a separate distributed graph model:
 
-- Actor identifies participants and eligible actors when the journey needs actor metadata.
+- Graph Actor terms identify participants, state perspectives, and eligible actors when the journey
+  needs actor metadata.
 - Surface identifies the visible or operable boundary exposed at a touchpoint.
 - Action identifies side effects associated with Graph transitions or outgoing transitions.
 - Artifact identifies files, archives, reports, invites, media, or other resources involved in the
@@ -18,9 +19,8 @@ State Data is not a dependency of this module unless a document also needs state
 identity. Distributed Journey uses Surface touchpoints for the systems or channels where surfaces
 appear, and Artifact for portable resources that cross those boundaries.
 
-Runtime Evidence is not a dependency of this module. Companion Runtime Evidence documents can be
-used to record observed interleaving between separate local journeys, but that evidence layer does
-not define Distributed Journey vocabulary.
+Companion Runtime documents can record observed interleaving between separate local journeys without
+defining extra Distributed Journey vocabulary.
 
 Simple single-site forms, checkouts, dashboards, and app flows do not need this module.
 
@@ -32,9 +32,9 @@ This module is published through the following artifacts:
 - `distributed-journey.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/ed/ns/distributed-journey.context.jsonld`
 - `distributed-journey.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/ed/ns/distributed-journey.shape`
 
-Examples in this page compose the Core, Graph, Actor, Surface, Action, Artifact, and Distributed
-Journey contexts as needed. Companion Runtime Evidence examples compose Core, Surface, Runtime, and
-Runtime Evidence contexts and import the distributed graph document they describe.
+Examples in this page compose the Core, Graph, Surface, Action, Artifact, and Distributed Journey
+contexts as needed. Companion Runtime examples compose Core, Surface, and Runtime contexts and
+import the distributed graph document they describe.
 
 ## Terminology
 
@@ -63,10 +63,9 @@ Pending, failed, partial, unavailable, accepted, revoked, and blocked are ordina
 `State` nodes when a person sees or experiences them. This module does not define value objects for
 those statuses.
 
-Protocol messages, server logs, API responses, queues, and synchronization state are Runtime facts,
-Runtime Evidence metadata, artifacts, or private extension data unless they are directly exposed to
-a human as a visible status, confirmation, error, affordance, unavailable action, recovery path, or
-outcome.
+Protocol messages, server logs, API responses, queues, and synchronization state are Runtime
+payloads, artifacts, or private extension data unless they are directly exposed to a human as a
+visible status, confirmation, error, affordance, unavailable action, recovery path, or outcome.
 
 ## Non-Goals
 
@@ -99,9 +98,9 @@ This context intentionally defines only Distributed Journey terms:
 - `sourceTouchpointRef`
 - `targetTouchpointRefs`
 
-Terms such as `Touchpoint`, `touchpointRef`, `Surface`, `Action`, `Artifact`, and `Actor` come from
-their own module contexts and MUST be composed explicitly by documents that use them. The aggregate
-core-family context at `/ed/ns/context.jsonld` does not include optional module contexts.
+Terms such as `Actor`, `Touchpoint`, `touchpointRef`, `Surface`, `Action`, and `Artifact` come from
+Graph or their own module contexts and MUST be composed explicitly by documents that use them. The
+aggregate core-family context at `/ed/ns/context.jsonld` does not include optional module contexts.
 
 :::include ./distributed-journey.context.jsonld :::
 
@@ -129,8 +128,8 @@ the SHACL shape.
    outcomes SHOULD be modeled as ordinary Graph states when they are visible or meaningful to a
    human.
 5. **Machine details stay outside graph:** Protocol messages, logs, API responses, queues, and sync
-   state SHOULD remain Runtime, Runtime Evidence, Artifact, or private extension data unless
-   directly exposed to a human.
+   state SHOULD remain Runtime payload, Artifact, or private extension data unless directly exposed
+   to a human.
 6. **No hidden graph behavior:** Distributed terms MUST NOT create hidden graph edges or change
    transition endpoint semantics.
 7. **Graceful degradation:** Consumers that do not implement this module MAY ignore Distributed
@@ -144,7 +143,6 @@ the SHACL shape.
   "@context": [
     "https://ujg.specs.openuji.org/ed/ns/core.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/graph.context.jsonld",
-    "https://ujg.specs.openuji.org/ed/ns/actor.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/surface.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/action.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/artifact.context.jsonld",
@@ -246,57 +244,43 @@ the SHACL shape.
       "@id": "urn:state:alice-share-panel",
       "@type": "State",
       "label": "Alice sees the share panel",
-      "eligibleActorRefs": [
-        "urn:actor:alice"
-      ]
+      "subjectActorRef": "urn:actor:alice"
     },
     {
       "@id": "urn:state:alice-recipient-recognized",
       "@type": "State",
       "label": "Alice sees Bob recognized as a remote recipient",
-      "eligibleActorRefs": [
-        "urn:actor:alice"
-      ]
+      "subjectActorRef": "urn:actor:alice"
     },
     {
       "@id": "urn:state:alice-share-confirmed",
       "@type": "State",
       "label": "Alice sees shared with Bob",
-      "eligibleActorRefs": [
-        "urn:actor:alice"
-      ]
+      "subjectActorRef": "urn:actor:alice"
     },
     {
       "@id": "urn:state:alice-share-revoked",
       "@type": "State",
       "label": "Alice sees the share revoked",
-      "eligibleActorRefs": [
-        "urn:actor:alice"
-      ]
+      "subjectActorRef": "urn:actor:alice"
     },
     {
       "@id": "urn:state:bob-incoming-share",
       "@type": "State",
       "label": "Bob sees an incoming remote share",
-      "eligibleActorRefs": [
-        "urn:actor:bob"
-      ]
+      "subjectActorRef": "urn:actor:bob"
     },
     {
       "@id": "urn:state:bob-file-available",
       "@type": "State",
       "label": "Bob can open the shared folder",
-      "eligibleActorRefs": [
-        "urn:actor:bob"
-      ]
+      "subjectActorRef": "urn:actor:bob"
     },
     {
       "@id": "urn:state:bob-access-removed",
       "@type": "State",
       "label": "Bob sees access removed",
-      "eligibleActorRefs": [
-        "urn:actor:bob"
-      ]
+      "subjectActorRef": "urn:actor:bob"
     },
     {
       "@id": "urn:surface:alice-share-panel",
@@ -416,25 +400,24 @@ the SHACL shape.
 
 This example intentionally uses separate journeys for Alice and Bob. The distributed artifact links
 the journeys semantically, but it does not create Graph transitions between Alice's states and Bob's
-states. Runtime Evidence can record that one execution observed Alice sharing before Bob accepted,
-and Alice revoking before Bob observed removal.
+states. Runtime can record that one execution observed Alice sharing before Bob accepted, and Alice
+revoking before Bob observed removal.
 
 > **Note:** Do not use Distributed Journey to model an artifact lifecycle as a single Journey. If
 > the scenario involves multiple human actors on different surfaces, model each actor's local
-> journey separately and use Runtime Evidence to record execution interleaving.
+> journey separately and use Runtime to record observed interleaving.
 
-A companion Runtime Evidence document can record observed ordering across the separate journey
-instances without adding evidence nodes to the distributed graph itself:
+A companion Runtime document can record observed ordering across the separate journey instances
+without adding ordering edges to the distributed graph itself:
 
 ```json
 {
   "@context": [
     "https://ujg.specs.openuji.org/ed/ns/core.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/surface.context.jsonld",
-    "https://ujg.specs.openuji.org/ed/ns/runtime.context.jsonld",
-    "https://ujg.specs.openuji.org/ed/ns/runtime-evidence.context.jsonld"
+    "https://ujg.specs.openuji.org/ed/ns/runtime.context.jsonld"
   ],
-  "@id": "https://example.com/ujg/runtime-evidence/execution-12345.jsonld",
+  "@id": "https://example.com/ujg/runtime/execution-12345.jsonld",
   "@type": "UJGDocument",
   "imports": [
     "https://example.com/ujg/distributed/nextcloud-share.jsonld"
@@ -475,7 +458,8 @@ instances without adding evidence nodes to the distributed graph itself:
       "executionId": "urn:execution:nextcloud-share-12345",
       "surfaceInstanceRef": "urn:surface-instance:alice-share-confirmed",
       "payload": {
-        "action": "surface.visible"
+        "action": "surface.visible",
+        "source": "cloud-a-runtime"
       }
     },
     {
@@ -485,7 +469,8 @@ instances without adding evidence nodes to the distributed graph itself:
       "previousId": "urn:event:nextcloud-share-12345:alice-share-confirmed",
       "surfaceInstanceRef": "urn:surface-instance:bob-incoming-share",
       "payload": {
-        "action": "surface.visible"
+        "action": "surface.visible",
+        "source": "cloud-b-runtime"
       }
     },
     {
@@ -495,7 +480,8 @@ instances without adding evidence nodes to the distributed graph itself:
       "previousId": "urn:event:nextcloud-share-12345:bob-incoming-share",
       "surfaceInstanceRef": "urn:surface-instance:bob-file-available",
       "payload": {
-        "action": "surface.visible"
+        "action": "surface.visible",
+        "source": "cloud-b-runtime"
       }
     },
     {
@@ -505,7 +491,8 @@ instances without adding evidence nodes to the distributed graph itself:
       "previousId": "urn:event:nextcloud-share-12345:bob-file-available",
       "surfaceInstanceRef": "urn:surface-instance:alice-share-revoked",
       "payload": {
-        "action": "surface.visible"
+        "action": "surface.visible",
+        "source": "cloud-a-runtime"
       }
     },
     {
@@ -515,47 +502,8 @@ instances without adding evidence nodes to the distributed graph itself:
       "previousId": "urn:event:nextcloud-share-12345:alice-share-revoked",
       "surfaceInstanceRef": "urn:surface-instance:bob-access-removed",
       "payload": {
-        "action": "surface.visible"
-      }
-    },
-    {
-      "@id": "urn:runtime-evidence:nextcloud-share:alice-share-confirmed",
-      "@type": "RuntimeEvidenceRecord",
-      "journeyExecutionRef": "urn:execution:nextcloud-share-12345",
-      "runtimeEventRef": "urn:event:nextcloud-share-12345:alice-share-confirmed",
-      "evidencePayload": {
-        "source": "cloud-a-runtime",
-        "record": "state-observed"
-      }
-    },
-    {
-      "@id": "urn:runtime-evidence:nextcloud-share:bob-file-available",
-      "@type": "RuntimeEvidenceRecord",
-      "journeyExecutionRef": "urn:execution:nextcloud-share-12345",
-      "runtimeEventRef": "urn:event:nextcloud-share-12345:bob-file-available",
-      "evidencePayload": {
-        "source": "cloud-b-runtime",
-        "record": "state-observed"
-      }
-    },
-    {
-      "@id": "urn:runtime-evidence:nextcloud-share:alice-share-revoked",
-      "@type": "RuntimeEvidenceRecord",
-      "journeyExecutionRef": "urn:execution:nextcloud-share-12345",
-      "runtimeEventRef": "urn:event:nextcloud-share-12345:alice-share-revoked",
-      "evidencePayload": {
-        "source": "cloud-a-runtime",
-        "record": "state-observed"
-      }
-    },
-    {
-      "@id": "urn:runtime-evidence:nextcloud-share:bob-access-removed",
-      "@type": "RuntimeEvidenceRecord",
-      "journeyExecutionRef": "urn:execution:nextcloud-share-12345",
-      "runtimeEventRef": "urn:event:nextcloud-share-12345:bob-access-removed",
-      "evidencePayload": {
-        "source": "cloud-b-runtime",
-        "record": "state-observed"
+        "action": "surface.visible",
+        "source": "cloud-b-runtime"
       }
     }
   ]
@@ -730,18 +678,16 @@ the exported archive connects the touchpoints semantically without becoming the 
 The non-portable content warning is an ordinary visible state. The module does not need a
 portability taxonomy to represent partial success.
 
-A companion Runtime Evidence document can describe the runtime observation of the partial import
-confirmation as metadata attached to a runtime event:
+A companion Runtime document can describe the runtime observation of the partial import confirmation:
 
 ```json
 {
   "@context": [
     "https://ujg.specs.openuji.org/ed/ns/core.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/surface.context.jsonld",
-    "https://ujg.specs.openuji.org/ed/ns/runtime.context.jsonld",
-    "https://ujg.specs.openuji.org/ed/ns/runtime-evidence.context.jsonld"
+    "https://ujg.specs.openuji.org/ed/ns/runtime.context.jsonld"
   ],
-  "@id": "https://example.com/ujg/runtime-evidence/execution-23456.jsonld",
+  "@id": "https://example.com/ujg/runtime/execution-23456.jsonld",
   "@type": "UJGDocument",
   "imports": [
     "https://example.com/ujg/distributed/account-migration.jsonld"
@@ -762,17 +708,8 @@ confirmation as metadata attached to a runtime event:
       "executionId": "urn:execution:account-migration-23456",
       "surfaceInstanceRef": "urn:surface-instance:partial-import-confirmed",
       "payload": {
-        "action": "surface.visible"
-      }
-    },
-    {
-      "@id": "urn:runtime-evidence:account-migration:partial-import-confirmed",
-      "@type": "RuntimeEvidenceRecord",
-      "journeyExecutionRef": "urn:execution:account-migration-23456",
-      "runtimeEventRef": "urn:event:account-migration-23456:partial-import-confirmed",
-      "evidencePayload": {
-        "source": "new-server-runtime",
-        "record": "state-observed"
+        "action": "surface.visible",
+        "source": "new-server-runtime"
       }
     }
   ]
@@ -963,22 +900,21 @@ confirmation as metadata attached to a runtime event:
 ```
 
 The invisible federation request is not modeled as a journey state. The visible pending state and
-later feed visibility are Alice's local user-facing graph. Remote approval, delivery,
-moderation, queueing, or acceptance belongs in Runtime Evidence, or in a separate remote
+later feed visibility are Alice's local user-facing graph. Remote approval, delivery, moderation,
+queueing, or acceptance belongs in Runtime payload/private extension data, or in a separate remote
 touchpoint journey only when another actor sees and acts on those states through their own UI.
 
-A companion Runtime Evidence document can describe the runtime observation of the remote feed
-becoming visible while leaving the invisible federation request outside the graph:
+A companion Runtime document can describe the runtime observation of the remote feed becoming
+visible while leaving the invisible federation request outside the graph:
 
 ```json
 {
   "@context": [
     "https://ujg.specs.openuji.org/ed/ns/core.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/surface.context.jsonld",
-    "https://ujg.specs.openuji.org/ed/ns/runtime.context.jsonld",
-    "https://ujg.specs.openuji.org/ed/ns/runtime-evidence.context.jsonld"
+    "https://ujg.specs.openuji.org/ed/ns/runtime.context.jsonld"
   ],
-  "@id": "https://example.com/ujg/runtime-evidence/execution-34567.jsonld",
+  "@id": "https://example.com/ujg/runtime/execution-34567.jsonld",
   "@type": "UJGDocument",
   "imports": [
     "https://example.com/ujg/distributed/remote-follow.jsonld"
@@ -999,17 +935,8 @@ becoming visible while leaving the invisible federation request outside the grap
       "executionId": "urn:execution:remote-follow-34567",
       "surfaceInstanceRef": "urn:surface-instance:remote-feed-visible",
       "payload": {
-        "action": "surface.visible"
-      }
-    },
-    {
-      "@id": "urn:runtime-evidence:remote-follow:remote-feed-visible",
-      "@type": "RuntimeEvidenceRecord",
-      "journeyExecutionRef": "urn:execution:remote-follow-34567",
-      "runtimeEventRef": "urn:event:remote-follow-34567:remote-feed-visible",
-      "evidencePayload": {
-        "source": "local-runtime",
-        "record": "state-observed"
+        "action": "surface.visible",
+        "source": "local-runtime"
       }
     }
   ]

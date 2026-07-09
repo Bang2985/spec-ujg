@@ -33,6 +33,73 @@ ujggraphshape:IndexStateShape a sh:NodeShape ;
     [ sh:class ujggraph:CompositeState ]
   ) .
 
+ujggraphshape:ActorShape a sh:NodeShape ;
+  sh:targetClass ujggraph:Actor ;
+  sh:nodeKind sh:IRI .
+
+ujggraphshape:SubjectActorHostShape a sh:NodeShape ;
+  sh:targetClass ujggraph:State, ujggraph:CompositeState ;
+  sh:nodeKind sh:IRI ;
+
+  sh:property [
+    sh:path ujggraph:subjectActorRef ;
+    sh:class ujggraph:Actor ;
+    sh:nodeKind sh:IRI ;
+    sh:maxCount 1 ;
+  ] .
+
+ujggraphshape:SubjectActorUsageShape a sh:NodeShape ;
+  sh:targetSubjectsOf ujggraph:subjectActorRef ;
+  sh:or (
+    [ sh:class ujggraph:State ]
+    [ sh:class ujggraph:CompositeState ]
+  ) .
+
+ujggraphshape:ResponsibleActorHostShape a sh:NodeShape ;
+  sh:targetClass
+    ujggraph:Journey,
+    ujggraph:State,
+    ujggraph:CompositeState,
+    ujggraph:Transition,
+    ujggraph:OutgoingTransition,
+    ujggraph:OutgoingTransitionGroup ;
+  sh:nodeKind sh:IRI ;
+
+  sh:property [
+    sh:path ujggraph:responsibleActorRef ;
+    sh:class ujggraph:Actor ;
+    sh:nodeKind sh:IRI ;
+    sh:maxCount 1 ;
+  ] .
+
+ujggraphshape:ResponsibleActorUsageShape a sh:NodeShape ;
+  sh:targetSubjectsOf ujggraph:responsibleActorRef ;
+  sh:or (
+    [ sh:class ujggraph:Journey ]
+    [ sh:class ujggraph:State ]
+    [ sh:class ujggraph:CompositeState ]
+    [ sh:class ujggraph:Transition ]
+    [ sh:class ujggraph:OutgoingTransition ]
+    [ sh:class ujggraph:OutgoingTransitionGroup ]
+  ) .
+
+ujggraphshape:EligibleActorHostShape a sh:NodeShape ;
+  sh:targetClass ujggraph:Transition, ujggraph:OutgoingTransition ;
+  sh:nodeKind sh:IRI ;
+
+  sh:property [
+    sh:path ujggraph:eligibleActorRefs ;
+    sh:class ujggraph:Actor ;
+    sh:nodeKind sh:IRI ;
+  ] .
+
+ujggraphshape:EligibleActorUsageShape a sh:NodeShape ;
+  sh:targetSubjectsOf ujggraph:eligibleActorRefs ;
+  sh:or (
+    [ sh:class ujggraph:Transition ]
+    [ sh:class ujggraph:OutgoingTransition ]
+  ) .
+
 ujggraphshape:JourneyShape a sh:NodeShape ;
   sh:targetClass ujggraph:Journey ;
   sh:nodeKind sh:IRI ;

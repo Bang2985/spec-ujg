@@ -23,8 +23,6 @@ Module scope: graph
 - modules/state-data
 - modules/action
 - surface
-- modules/actor
-- modules/runtime-evidence
 - modules/observability
 - modules/experience
 - mapping
