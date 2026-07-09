@@ -6,18 +6,21 @@ or outcomes depend on more than one independently operated touchpoint.
 Distributed Journey does not model internal server truth.
 Protocol messages and API responses are evidence, not the primary journey.
 
-This module is intentionally second-level. It composes first-level bridge modules instead of adding
-distributed systems semantics directly to Core, Graph, or Runtime:
+This module reuses existing UJG concepts instead of defining a separate distributed graph model:
 
-- Actor identifies participants and eligible actors when a distributed journey also models them.
-- Surface identifies the machine-presented boundary a human sees or acts through.
+- Actor identifies participants and eligible actors when the journey needs actor metadata.
+- Surface identifies the visible or operable boundary exposed at a touchpoint.
 - Action identifies side effects associated with Graph transitions or outgoing transitions.
 - Artifact identifies files, archives, reports, invites, media, or other resources involved in the
   journey.
 
-State Data is not a dependency of this module unless a distributed-journey document also needs
-state-like data binding identity. Distributed Journey uses Surface touchpoints for human-facing
-boundaries and Artifact for portable resources that cross those boundaries.
+State Data is not a dependency of this module unless a document also needs state-like data binding
+identity. Distributed Journey uses Surface touchpoints for the systems or channels where surfaces
+appear, and Artifact for portable resources that cross those boundaries.
+
+Runtime Evidence is not a dependency of this module. Companion Runtime Evidence documents can be
+used to record observed interleaving between separate local journeys, but that evidence layer does
+not define Distributed Journey vocabulary.
 
 Simple single-site forms, checkouts, dashboards, and app flows do not need this module.
 
@@ -29,23 +32,23 @@ This module is published through the following artifacts:
 - `distributed-journey.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/ed/ns/distributed-journey.context.jsonld`
 - `distributed-journey.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/ed/ns/distributed-journey.shape`
 
-Examples in this page compose the Core, Graph, Actor, Surface, Action, Artifact, and
-Distributed Journey contexts as needed. Companion Runtime Evidence examples compose Core, Runtime,
-and Runtime Evidence contexts and import the distributed graph document they describe.
+Examples in this page compose the Core, Graph, Actor, Surface, Action, Artifact, and Distributed
+Journey contexts as needed. Companion Runtime Evidence examples compose Core, Surface, Runtime, and
+Runtime Evidence contexts and import the distributed graph document they describe.
 
 ## Terminology
 
 - <dfn>DistributedArtifact</dfn>: An [=Artifact=] that is visible to, handled by, produced by, or
   consumed by a human-facing journey that crosses touchpoints.
-- <dfn>Presented touchpoint</dfn>: The [=Touchpoint=] that presents or controls a [=Surface=].
+- <dfn>Presented touchpoint</dfn>: The [=Touchpoint=] through which a [=Surface=] is presented.
 
 ## Model
 
 Surface defines `Touchpoint` and `touchpointRef`. `touchpointRef` links a `Surface` to the
-touchpoint that presents or controls it. This is Distributed Journey's main human-facing attachment:
-it lets a journey cross multiple systems while keeping the graph surface-oriented. Surface
-`graphNodeRef` points from each `Surface` back to its Graph subject; Graph states do not depend on
-Distributed Journey or Surface.
+touchpoint through which it is presented. This is the main boundary used by Distributed Journey: it
+lets one journey model refer to multiple systems or channels while keeping Graph states independent
+from Surface and Distributed Journey. Surface `graphNodeRef` points from each `Surface` back to its
+Graph subject.
 
 An `Action` may identify source and target touchpoints when the action itself crosses touchpoint
 boundaries and no more specific produced or consumed artifact carries that relationship.
@@ -90,6 +93,16 @@ The normative Distributed Journey ontology is defined below and is published at
 The normative Distributed Journey JSON-LD context is defined below and is published at
 `https://ujg.specs.openuji.org/ed/ns/distributed-journey.context.jsonld`.
 
+This context intentionally defines only Distributed Journey terms:
+
+- `DistributedArtifact`
+- `sourceTouchpointRef`
+- `targetTouchpointRefs`
+
+Terms such as `Touchpoint`, `touchpointRef`, `Surface`, `Action`, `Artifact`, and `Actor` come from
+their own module contexts and MUST be composed explicitly by documents that use them. The aggregate
+core-family context at `/ed/ns/context.jsonld` does not include optional module contexts.
+
 :::include ./distributed-journey.context.jsonld :::
 
 ## Validation {data-cop-concept="validation"}
@@ -102,13 +115,13 @@ The normative Distributed Journey SHACL shape is defined below and is published 
 The rules below define the remaining module semantics beyond the structural constraints captured by
 the SHACL shape.
 
-1. **Human-facing graph:** Distributed Journey terms MUST NOT replace the human-facing UJG Journey
-   graph. A UJG Journey remains a model of human interaction with machine-presented surfaces,
-   affordances, responses, statuses, errors, and outcomes.
+1. **Human-facing graph:** Distributed Journey terms MUST NOT replace the UJG Journey graph. A UJG
+   Journey remains a model of human interaction with visible surfaces, affordances, responses,
+   statuses, errors, and outcomes.
 2. **Touchpoint meaning:** `Touchpoint` identifies a system, channel, origin, or service boundary
-   responsible for presenting or controlling a human-facing surface, action, artifact, or outcome.
-   It MUST NOT be interpreted as an Actor, runtime observer, authorization subject, or statement of
-   what a server internally believes.
+   through which a surface is presented, or which appears as source/target metadata for an action or
+   artifact. It MUST NOT be interpreted as an Actor, runtime observer, authorization subject, or
+   statement of what a server internally believes.
 3. **Action touchpoint metadata:** `sourceTouchpointRef` and `targetTouchpointRefs` MAY be attached to
    an `Action` when the human-facing action crosses touchpoint boundaries directly. They MUST NOT be
    interpreted as graph edges, runtime causality, or server-internal state.

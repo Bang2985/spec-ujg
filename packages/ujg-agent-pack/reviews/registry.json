@@ -18,7 +18,7 @@
       "reportPath": "reviews/ed/distributed-journey/latest.md",
       "skill": "distributed-journey",
       "sourceHash": "sha256:c53f3e127d5a88811235473693ecf6c23eab6b5158a32bd99eb91a4b2b8846b4",
-      "specHash": "sha256:5281830b07806e554c512c68801b9dcd762aceec89f5da780381437de68f4101",
+      "specHash": "sha256:b848367c6818e2893da792d87618e67dc352a757ea9ec0f09000467809d74b34",
       "target": "ed"
     },
     "ed/graph": {
@@ -39,7 +39,7 @@
       "reportPath": "reviews/ed/root/latest.md",
       "skill": "root",
       "sourceHash": "sha256:fb69f4765968f26b70a69f49908254daa1658aceaa93687680e711110af7fa9f",
-      "specHash": "sha256:e55175c90f3c7b286f68da0b721beb1fb98f5cfaabf78db4b4a814fd7acc176b",
+      "specHash": "sha256:d57ecb2cb18d55addc0d7651200d85bc97a702c7748af80862ea12f7e88976e5",
       "target": "ed"
     },
     "tr/2026.06/design-system": {

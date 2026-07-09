@@ -175,8 +175,7 @@
         "modules/actor",
         "surface",
         "modules/action",
-        "modules/artifact",
-        "modules/runtime-evidence"
+        "modules/artifact"
       ],
       "generatedSkill": "ujg-ed-distributed-journey-modeling",
       "title": "Distributed Journey"
@@ -217,9 +216,7 @@
       "title": "Routing"
     },
     "modules/runtime-evidence": {
-      "dependents": [
-        "modules/distributed-journey"
-      ],
+      "dependents": [],
       "deps": [
         "runtime",
         "surface",
@@ -254,7 +251,6 @@
       "dependents": [
         "modules/runtime-evidence",
         "mapping",
-        "modules/distributed-journey",
         "metrics",
         "profiles",
         "conformance"
