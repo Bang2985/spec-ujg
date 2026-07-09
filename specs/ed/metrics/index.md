@@ -55,8 +55,8 @@ A [=MetricObservation=] records a metric value using these fields:
 ## Mapping-derived Metrics {data-cop-concept="mapping-derived-metrics"}
 
 Mapping is the canonical interpretation layer for analytics over UJG execution data. Runtime records
-what happened, Graph defines the intended journey topology, and Mapping resolves each Runtime event
-to Graph state and transition intent.
+what happened at a Surface, Graph defines the intended journey topology, and Mapping resolves each
+Runtime event through Surface to Graph state and transition intent.
 
 Mapping-derived journey metrics attach to traversable [=Journey=] scopes. A [=JourneyEntryIndex=] is a
 discovery catalogue and does not itself define executions, movements, or traversal metrics.
@@ -113,7 +113,7 @@ The following metric keys are core for this draft.
 | `boundaryEntryCount` | `count` | [=CompositeState=], [=Journey=] | Number of mapped movements that enter the subject boundary. |
 | `boundaryExitCount` | `count` | [=CompositeState=], [=Journey=] | Number of mapped movements that exit the subject boundary. |
 | `boundaryCrossingCount` | `count` | [=JourneyMapping=], [=Journey=] | Number of mapped movements that enter or exit a journey boundary. |
-| `maxScopeDepth` | `count` | [=JourneyMapping=], [=Journey=] | Maximum nested journey scope depth observed in the mapped execution set. |
+| `maxScopeDepth` | `count` | [=JourneyMapping=], [=Journey=] | Maximum `GraphNodeInstance.parentInstanceRef` depth observed in the mapped execution set. |
 
 These keys use `unexplainedMovement*` terminology rather than `jump*`, `error*`, or `conversion*`.
 Mapping can derive a jump when no relevant effective transition explains a movement, but Metrics

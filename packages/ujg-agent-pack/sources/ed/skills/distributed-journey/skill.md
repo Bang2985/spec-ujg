@@ -10,11 +10,11 @@ Generate only terms defined by the active ED Distributed Journey context and req
 
 ## Scope
 
-Distributed Journey describes human-facing journey models whose visible states, surfaces, actions, artifacts, or outcomes depend on more than one independently operated authority.
-Use it for federated sharing, cross-instance account migration, remote follow/subscribe flows, cross-authority invites, portable artifacts, or human-visible outcomes involving multiple authorities.
+Distributed Journey describes human-facing journey models whose visible states, surfaces, actions, artifacts, or outcomes depend on more than one independently operated touchpoint.
+Use it for federated sharing, cross-instance account migration, remote follow/subscribe flows, cross-touchpoint invites, portable artifacts, or human-visible outcomes involving multiple touchpoints.
 Do not use it for simple single-site forms, checkouts, dashboards, ordinary app flows, server-only integration flows, or artifact lifecycle diagrams.
 Distributed Journey does not define new journey classes, traversal semantics, runtime causality, protocol semantics, queue behavior, retry behavior, sync state, server truth, or database state.
-Multiple authorities do not automatically mean one distributed `Journey`. A distributed scenario may contain several related local journeys. Use `JourneyEntryIndex` to list related journey entries and Runtime Evidence to record observed order or interleaving.
+Multiple touchpoints do not automatically mean one distributed `Journey`. A distributed scenario may contain several related local journeys. Use `JourneyEntryIndex` to list related journey entries and Runtime Evidence to record observed order or interleaving.
 
 ## Contexts
 
@@ -46,17 +46,14 @@ Do not include Action, Artifact, Surface, Actor, Graph, Runtime, or Runtime Evid
 Use only these Distributed Journey classes:
 
 ```text
-Authority
 DistributedArtifact
 ```
 
 Use only these Distributed Journey properties:
 
 ```text
-origin
-presentedByAuthorityRef
-sourceAuthorityRef
-targetAuthorityRefs
+sourceTouchpointRef
+targetTouchpointRefs
 ```
 
 Do not invent:
@@ -85,58 +82,58 @@ revokedArtifactRefs
 
 Use private `extensions` only for project-specific details that are not interoperable Distributed Journey semantics. Do not put interoperable distributed graph semantics in `extensions`.
 
-## Authority
+## Touchpoints and surfaces
 
-Use `Authority` for an independently operated machine or system boundary relevant to a human-facing surface, action, artifact, or outcome.
-Each `Authority` must have exactly one `origin`.
+Use Surface `Touchpoint` for an independently operated system, channel, origin, or service boundary relevant to a human-facing surface, action, artifact, or outcome.
+`Touchpoint`, `touchpointRef`, `origin`, and `channel` are Surface terms, not Distributed Journey terms.
 Example:
 
 ```json
 {
-  "@id": "urn:authority:cloud-a",
-  "@type": "Authority",
+  "@id": "urn:touchpoint:cloud-a",
+  "@type": "Touchpoint",
+  "label": "Cloud A",
   "origin": "https://cloud-a.example"
 }
 ```
 
-Do not use `Authority` to assert internal server truth, ownership truth, database state, protocol state, queue state, or synchronization state. Authority references do not create Graph traversal.
-
-## Surfaces and presented authority
-
-Use `presentedByAuthorityRef` on a `Surface` to identify the authority that presents or controls the human-facing surface.
+Use `touchpointRef` on a `Surface` to identify the touchpoint that presents or controls the human-facing surface.
 Prefer:
 
 ```text
-State -> surfaceRef -> Surface -> presentedByAuthorityRef -> Authority
+Surface -> graphNodeRef -> State
+Surface -> touchpointRef -> Touchpoint
 ```
 
-A `Surface` may have at most one `presentedByAuthorityRef`.
-Do not attach `presentedByAuthorityRef` directly to Graph states unless the active ED explicitly defines that subject.
+To resolve a state's touchpoint, find the `Surface` whose `graphNodeRef` points at that state, then read the surface's `touchpointRef`.
+A `Surface` may have at most one `touchpointRef`.
+Do not attach `touchpointRef` directly to Graph states unless the active ED explicitly defines that subject.
+Do not use `Touchpoint` as an `Actor`, runtime observer, authorization subject, ownership truth, database state, protocol state, queue state, or synchronization state. Touchpoint references do not create Graph traversal.
 Do not create a new `Surface` for every status if the same UI surface presents multiple stable states.
 
-## Actions across authorities
+## Actions across touchpoints
 
-Use `sourceAuthorityRef` and `targetAuthorityRefs` on an `Action` only when the human-facing action itself crosses authority boundaries and no more specific artifact carries that relationship.
-An `Action` may have at most one `sourceAuthorityRef`.
-Do not treat authority references as graph edges, runtime causality, delivery confirmation, or protocol messages.
-If a `DistributedArtifact` already carries `sourceAuthorityRef` and `targetAuthorityRefs`, avoid duplicating the same authority relationship on actions unless the action itself needs distinct authority semantics.
+Use `sourceTouchpointRef` and `targetTouchpointRefs` on an `Action` only when the human-facing action itself crosses touchpoint boundaries and no more specific artifact carries that relationship.
+An `Action` may have at most one `sourceTouchpointRef`.
+Do not treat touchpoint references as graph edges, runtime causality, delivery confirmation, or protocol messages.
+If a `DistributedArtifact` already carries `sourceTouchpointRef` and `targetTouchpointRefs`, avoid duplicating the same touchpoint relationship on actions unless the action itself needs distinct touchpoint semantics.
 
 ## DistributedArtifact
 
-Use `DistributedArtifact` for a file, archive, report, invite, media object, portable resource, remote share, migration bundle, or similar artifact that crosses authority boundaries.
+Use `DistributedArtifact` for a file, archive, report, invite, media object, portable resource, remote share, migration bundle, or similar artifact that crosses touchpoint boundaries.
 Example:
 
 ```json
 {
   "@id": "urn:artifact:remote-share",
   "@type": "DistributedArtifact",
-  "sourceAuthorityRef": "urn:authority:cloud-a",
-  "targetAuthorityRefs": ["urn:authority:cloud-b"]
+  "sourceTouchpointRef": "urn:touchpoint:cloud-a",
+  "targetTouchpointRefs": ["urn:touchpoint:cloud-b"]
 }
 ```
 
-A `DistributedArtifact` may have at most one `sourceAuthorityRef`.
-Prefer `DistributedArtifact` when the cross-authority relationship belongs to the resource rather than the action.
+A `DistributedArtifact` may have at most one `sourceTouchpointRef`.
+Prefer `DistributedArtifact` when the cross-touchpoint relationship belongs to the resource rather than the action.
 A `DistributedArtifact` does not create traversal. It does not mean delivered, accepted, declined, synchronized, revoked, opened, or visible unless those outcomes are modeled as human-visible states or Runtime Evidence.
 Do not model the path an artifact takes as a user journey.
 
@@ -149,7 +146,7 @@ Use Runtime, Runtime Evidence, Artifact, or private extensions for protocol mess
 
 ## Multi-actor distributed scenarios
 
-Do not model a distributed scenario as one `Journey` merely because one artifact, invite, file, request, permission, or remote share crosses authorities.
+Do not model a distributed scenario as one `Journey` merely because one artifact, invite, file, request, permission, or remote share crosses touchpoints.
 A `Journey` still models a local human-facing path through machine-presented surfaces.
 When multiple human actors each have their own visible path, model each actor's path as a separate local `Journey`.
 Preferred pattern:
@@ -178,7 +175,7 @@ Bob journey: Bob state -> Bob state -> Bob state
 Runtime Evidence: Alice event -> Bob event -> Alice event -> Bob event
 ```
 
-Do not create a fake root `Journey` whose only purpose is to connect states from different actors, authorities, surfaces, or runtime moments.
+Do not create a fake root `Journey` whose only purpose is to connect states from different actors, touchpoints, surfaces, or runtime moments.
 
 ## Cross-actor transition rule
 
@@ -210,7 +207,7 @@ The index is not traversable and does not imply order, progression, reachability
 If one actor's visible state becomes observable after another actor's action, do not encode that handoff as a Graph transition.
 Use Runtime Evidence.
 
-When serializing Runtime Evidence, include Runtime and Runtime Evidence contexts. A `RuntimeEvent` uses `executionId`, `eventStateRef`, and `journeyInstanceRef`; use `previousId` only for observed event order.
+When serializing Runtime Evidence, include Runtime and Runtime Evidence contexts. A `RuntimeEvent` uses `executionId` and `eventSurfaceRef`; use `previousId` only for observed event order.
 
 Example observed interleaving:
 
@@ -242,14 +239,14 @@ If automation bindings are needed, use a clearly namespaced private extension or
 
 ## Checks before answering
 
-* Is this actually cross-authority, not just a single-site flow?
+* Is this actually cross-touchpoint, not just a single-site flow?
 * Are all Distributed Journey terms defined by the active ED?
-* Does every `Authority` have exactly one `origin`?
-* Is `presentedByAuthorityRef` used on `Surface`, not as fake Graph topology?
-* Is each `sourceAuthorityRef` singular?
-* Are `targetAuthorityRefs` references to `Authority` nodes?
-* Did I use `DistributedArtifact` when the artifact carries the cross-authority relationship?
-* Did I avoid duplicating authority refs on actions when the artifact already carries the relationship?
+* Does every `Touchpoint` have a label, and at most one `origin`?
+* Is `touchpointRef` used on `Surface`, not as fake Graph topology?
+* Is each `sourceTouchpointRef` singular?
+* Are `targetTouchpointRefs` references to `Touchpoint` nodes?
+* Did I use `DistributedArtifact` when the artifact carries the cross-touchpoint relationship?
+* Did I avoid duplicating touchpoint refs on actions when the artifact already carries the relationship?
 * Did I keep visible statuses as ordinary Graph states?
 * Did I avoid protocol, queue, retry, sync, database, and server-truth semantics?
 * Did Distributed Journey avoid changing Graph traversal?
@@ -259,20 +256,20 @@ If automation bindings are needed, use a clearly namespaced private extension or
 * Did I use a fake root `Journey` to connect a distributed scenario timeline?
 * Should this be a `JourneyEntryIndex` with multiple local journey entries instead?
 * Is execution order better represented as Runtime Evidence?
-* Are `sourceAuthorityRef`, `targetAuthorityRefs`, or `DistributedArtifact` being treated as hidden graph edges?
+* Are `sourceTouchpointRef`, `targetTouchpointRefs`, or `DistributedArtifact` being treated as hidden graph edges?
 
 ## Output workflow
 
 When generating Distributed Journey JSON-LD:
 
 1. State that this skill is used together with `ujg-ed-modeling`.
-2. Identify whether the request is single-actor cross-authority or multi-actor cross-authority.
+2. Identify whether the request is single-actor cross-touchpoint or multi-actor cross-touchpoint.
 3. Select only required contexts.
-4. Define authorities, surfaces, and human-visible states.
+4. Define touchpoints, surfaces, and human-visible states.
 5. Decide whether one local journey is valid or multiple local journeys are required.
 6. For multi-actor scenarios, use `JourneyEntryIndex` with local journey entries.
-7. Add `DistributedArtifact` only when an artifact crosses authorities.
-8. Add authority refs on actions only when needed.
+7. Add `DistributedArtifact` only when an artifact crosses touchpoints.
+8. Add touchpoint refs on actions only when needed.
 9. Keep transitions local to one journey.
 10. Keep runtime order, API checks, logs, screenshots, and traces out of Graph.
 11. Provide a short self-audit.

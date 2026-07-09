@@ -5,13 +5,13 @@
     "baseUrl": "${SPEC_BASE_URL}/ed",
     "deps": [
         "graph",
-        "modules/surface"
+        "surface"
     ],
     "custom": {
         "family": "module",
         "order": 60,
         "moduleLevel": 2,
-        "bridgeModule": "modules/surface"
+        "bridgeSpec": "surface"
     },
     "respec": {
         "noConformance": true,
@@ -38,7 +38,7 @@
             },
             "UJG Surface": {
                 "title": "UJG Surface",
-                "url": "/ed/modules/surface"
+                "url": "/ed/surface"
             }
         }
     }

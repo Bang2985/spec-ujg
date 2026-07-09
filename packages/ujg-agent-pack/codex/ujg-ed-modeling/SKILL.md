@@ -19,7 +19,7 @@ Related generated skills:
 - ujg-ed-graph-modeling: Graph module topology, journeys, states, transitions, exits, outgoing navigation, and indexes
 - ujg-ed-design-system-modeling: Design System module semantics and its relationship to Graph and Surface
 - ujg-ed-l10n-modeling: Localization module semantics for MessageBundle copy metadata and locale-switch metadata
-- ujg-ed-distributed-journey-modeling: Distributed Journey module semantics for cross-authority human-facing journeys, authorities, distributed artifacts, and authority references
+- ujg-ed-distributed-journey-modeling: Distributed Journey module semantics for cross-touchpoint human-facing journeys, distributed artifacts, and touchpoint references
 
 When the task crosses module boundaries, read `references/related-skills.md` and `references/skill-tree.json` before continuing.
 
@@ -42,14 +42,15 @@ Select only required modules.
 
 Core: document container and top-level nodes.
 Graph: journeys, states, transitions, composition, exits, outgoing navigation, indexes.
+Surface: materialized graph-subject surfaces, surface attachments, touchpoints, channels, origins.
 Runtime: observed events, values, clicks, URLs, timestamps, payloads.
-Experience: journey-map annotations such as phases, touchpoints, steps, pain points.
+Experience: journey-map annotations such as steps, phases, and pain points over surfaces.
 Localization: locale metadata, localized copy references, locale switch affordance metadata.
 State Data: state-like data context or binding identity attached with `stateDataRef`.
 Artifact: portable resources produced, consumed, exchanged, or referenced by UJG nodes.
-Distributed Journey: cross-authority human-facing journeys composed from first-level bridge modules.
+Distributed Journey: cross-touchpoint human-facing journeys composed from Surface and first-level bridge modules.
 
-Core is required for UJG documents. Include Graph when modeling topology. Include Runtime only for observed behavior or traces. Include Experience only for journey-map annotations. Include Localization only when using l10n terms such as `l10n:targetLocale`, `copyRef`, `defaultLocale`, `fallbackLocales`, or `locales`.
+Core is required for UJG documents. Include Graph when modeling topology. Include Surface when using `Surface`, `Touchpoint`, `GraphNodeInstance`, `graphNodeRef`, `graphNodeInstanceRef`, `touchpointRef`, `parentInstanceRef`, `channel`, or `origin`. Include Runtime only for observed behavior or traces. Include Experience only for journey-map annotations such as `ExperienceStep`, `surfaceRefs`, `Phase`, or `PainPoint`. Include Localization only when using l10n terms such as `l10n:targetLocale`, `copyRef`, `defaultLocale`, `fallbackLocales`, or `locales`.
 
 Include State Data only when using `StateData` or `stateDataRef`. Do not use State Data for files,
 archives, reports, invites, media, protocol objects, tokens, or other portable resources; use
@@ -255,7 +256,7 @@ Graph models intended topology. Runtime models observed behavior.
 
 Keep runtime facts out of Graph, including typed query, input value, clicked element, submitted value, selected result, timestamp, URL at interaction time, DOM selector, analytics metadata, runtime locale selection, and payload.
 
-For Runtime traces, a `RuntimeEvent` must identify the execution with `executionId`, the observed graph state with `eventStateRef`, and the local journey scope with `journeyInstanceRef`. Use `previousId` only to reconstruct observed event order.
+For Runtime traces, a `RuntimeEvent` must identify the execution with `executionId` and the observed surface with `eventSurfaceRef`. Resolve Graph meaning through the referenced `Surface.graphNodeRef`. Use `previousId` only to reconstruct observed event order.
 
 Use Experience only for journey-map annotations. Experience annotations must not change Graph traversal or repair missing Graph topology.
 

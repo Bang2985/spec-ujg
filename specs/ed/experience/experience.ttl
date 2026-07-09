@@ -1,6 +1,6 @@
 @prefix ujg: <https://ujg.specs.openuji.org/ed/ns/core#> .
-@prefix ujggraph: <https://ujg.specs.openuji.org/ed/ns/graph#> .
 @prefix ujgexperience: <https://ujg.specs.openuji.org/ed/ns/experience#> .
+@prefix ujgsurface: <https://ujg.specs.openuji.org/ed/ns/surface#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -16,9 +16,6 @@
 ujgexperience:ExperienceStep a owl:Class ;
   rdfs:subClassOf ujg:Node .
 
-ujgexperience:Touchpoint a owl:Class ;
-  rdfs:subClassOf ujg:Node .
-
 ujgexperience:Phase a owl:Class ;
   rdfs:subClassOf ujg:Node .
 
@@ -27,21 +24,17 @@ ujgexperience:PainPoint a owl:Class ;
 
 ### Properties
 
+ujgexperience:surfaceRefs a owl:ObjectProperty ;
+  rdfs:domain ujgexperience:ExperienceStep ;
+  rdfs:range ujgsurface:Surface .
+
 ujgexperience:phaseRef a owl:ObjectProperty ;
   rdfs:domain ujgexperience:ExperienceStep ;
   rdfs:range ujgexperience:Phase .
 
-ujgexperience:touchpointRefs a owl:ObjectProperty ;
-  rdfs:domain ujgexperience:ExperienceStep ;
-  rdfs:range ujgexperience:Touchpoint .
-
 ujgexperience:order a owl:DatatypeProperty ;
   rdfs:domain ujgexperience:Phase ;
   rdfs:range xsd:integer .
-
-ujgexperience:channel a owl:DatatypeProperty ;
-  rdfs:domain ujgexperience:Touchpoint ;
-  rdfs:range xsd:string .
 
 ujgexperience:experienceRefs a owl:ObjectProperty ;
   rdfs:domain ujgexperience:PainPoint ;

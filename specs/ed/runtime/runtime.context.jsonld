@@ -6,7 +6,6 @@
 
     "JourneyExecution": "ujgruntime:JourneyExecution",
     "RuntimeEvent": "ujgruntime:RuntimeEvent",
-    "JourneyInstance": "ujgruntime:JourneyInstance",
 
     "executionId": {
       "@id": "ujgruntime:executionId",
@@ -16,24 +15,8 @@
       "@id": "ujgruntime:previousId",
       "@type": "@id"
     },
-    "eventStateRef": {
-      "@id": "ujgruntime:eventStateRef",
-      "@type": "@id"
-    },
-    "journeyInstanceRef": {
-      "@id": "ujgruntime:journeyInstanceRef",
-      "@type": "@id"
-    },
-    "journeyRef": {
-      "@id": "ujgruntime:journeyRef",
-      "@type": "@id"
-    },
-    "parentInstanceRef": {
-      "@id": "ujgruntime:parentInstanceRef",
-      "@type": "@id"
-    },
-    "viaStateRef": {
-      "@id": "ujgruntime:viaStateRef",
+    "eventSurfaceRef": {
+      "@id": "ujgruntime:eventSurfaceRef",
       "@type": "@id"
     },
     "payload": {

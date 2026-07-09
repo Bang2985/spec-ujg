@@ -4,7 +4,7 @@
     "moduleId": "modules/distributed-journey",
     "name": "ujg-ed-distributed-journey-modeling",
     "publicUrl": "https://ujg.specs.openuji.org/ed/modules/distributed-journey",
-    "scope": "Distributed Journey module semantics for cross-authority human-facing journeys, authorities, distributed artifacts, and authority references"
+    "scope": "Distributed Journey module semantics for cross-touchpoint human-facing journeys, distributed artifacts, and touchpoint references"
   },
   "moduleGraph": {
     "architecture": {
@@ -14,10 +14,10 @@
         "graph",
         "modules/l10n",
         "modules/condition",
-        "modules/surface",
         "runtime",
         "modules/state-data",
         "modules/action",
+        "surface",
         "modules/actor",
         "modules/artifact",
         "modules/runtime-evidence",
@@ -47,10 +47,10 @@
         "graph",
         "modules/l10n",
         "modules/condition",
-        "modules/surface",
         "runtime",
         "modules/state-data",
         "modules/action",
+        "surface",
         "modules/actor",
         "modules/artifact",
         "modules/runtime-evidence",
@@ -71,7 +71,8 @@
     "experience": {
       "dependents": [],
       "deps": [
-        "graph"
+        "graph",
+        "surface"
       ],
       "generatedSkill": null,
       "title": "Experience"
@@ -81,10 +82,10 @@
         "modules/routing",
         "modules/l10n",
         "modules/condition",
-        "modules/surface",
         "runtime",
         "modules/state-data",
         "modules/action",
+        "surface",
         "modules/actor",
         "modules/runtime-evidence",
         "experience",
@@ -109,6 +110,7 @@
       ],
       "deps": [
         "runtime",
+        "surface",
         "graph"
       ],
       "generatedSkill": null,
@@ -168,7 +170,7 @@
       "dependents": [],
       "deps": [
         "graph",
-        "modules/surface"
+        "surface"
       ],
       "generatedSkill": "ujg-ed-design-system-modeling",
       "title": "Design System"
@@ -177,7 +179,7 @@
       "dependents": [],
       "deps": [
         "modules/actor",
-        "modules/surface",
+        "surface",
         "modules/action",
         "modules/artifact",
         "modules/runtime-evidence"
@@ -207,6 +209,7 @@
       ],
       "deps": [
         "runtime",
+        "surface",
         "modules/actor"
       ],
       "generatedSkill": null,
@@ -219,17 +222,6 @@
       ],
       "generatedSkill": null,
       "title": "State Data"
-    },
-    "modules/surface": {
-      "dependents": [
-        "modules/design-system",
-        "modules/distributed-journey"
-      ],
-      "deps": [
-        "graph"
-      ],
-      "generatedSkill": null,
-      "title": "Surface"
     },
     "profiles": {
       "dependents": [
@@ -255,10 +247,28 @@
         "conformance"
       ],
       "deps": [
-        "graph"
+        "surface"
       ],
       "generatedSkill": null,
       "title": "Runtime"
+    },
+    "surface": {
+      "dependents": [
+        "runtime",
+        "modules/runtime-evidence",
+        "experience",
+        "mapping",
+        "modules/design-system",
+        "modules/distributed-journey",
+        "metrics",
+        "profiles",
+        "conformance"
+      ],
+      "deps": [
+        "graph"
+      ],
+      "generatedSkill": null,
+      "title": "Surface"
     }
   },
   "skills": [
@@ -307,7 +317,7 @@
       "moduleId": "modules/distributed-journey",
       "name": "ujg-ed-distributed-journey-modeling",
       "publicUrl": "https://ujg.specs.openuji.org/ed/modules/distributed-journey",
-      "scope": "Distributed Journey module semantics for cross-authority human-facing journeys, authorities, distributed artifacts, and authority references",
+      "scope": "Distributed Journey module semantics for cross-touchpoint human-facing journeys, distributed artifacts, and touchpoint references",
       "source": "sources/ed/skills/distributed-journey/skill.md"
     }
   ],

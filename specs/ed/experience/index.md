@@ -1,6 +1,8 @@
 ## Overview
 
-This module defines a vocabulary for **experience semantics** traditionally found in User Journey Maps (e.g., steps, touchpoints, phases, pain points). It **annotates** [[UJG Graph]] without changing graph topology.
+This module defines a vocabulary for **experience semantics** traditionally found in User Journey
+Maps, such as steps, phases, and pain points. It annotates [[UJG Graph]] through [[UJG Surface]]
+without changing graph topology.
 
 ## Normative Artifacts
 
@@ -21,8 +23,7 @@ Examples in this page use an explicit context array composed from the published 
 
 ## Terminology
 
-* <dfn>ExperienceStep</dfn>: A semantic grouping representing a “step” in a journey map. Not necessarily 1:1 with [=State=].
-* <dfn>Touchpoint</dfn>: A channel/surface where the experience occurs (e.g., web, mobile app, email, in-store).
+* <dfn>ExperienceStep</dfn>: A semantic grouping representing a “step” in a journey map. Not necessarily 1:1 with [=Surface=] or [=State=].
 * <dfn>Phase</dfn>: A high-level stage used for grouping (e.g., awareness, checkout).
 * <dfn>PainPoint</dfn>: A named issue or friction hypothesis attached to part of the intended experience.
 
@@ -30,18 +31,25 @@ Examples in this page use an explicit context array composed from the published 
 
 ## Annotation Model
 
-Experience annotations add semantic grouping and interpretation to a graph without changing traversal behavior. The normative structural definition is provided by the ontology below; the context and shape that follow also show the shared Graph terms reused by this module, including `label`, `tags`, and `stateRefs`.
+Experience annotations add semantic grouping and interpretation to graph-bound surfaces without
+changing traversal behavior. The normative structural definition is provided by the ontology below;
+the context and shape that follow also show the shared Graph terms reused by this module, including
+`label` and `tags`.
 
-`experienceRefs` records the journey steps a `PainPoint` annotates. Its values reference one or more `ExperienceStep` nodes, which in turn reference the underlying Graph states through `stateRefs`; it does not define new graph topology.
+`surfaceRefs` records the surfaces that participate in an `ExperienceStep`. A step's touchpoints are
+derived from the referenced surfaces' `touchpointRef` values when those references are present. The
+referenced `Surface` nodes point back to their Graph subjects through Surface `graphNodeRef`.
+`experienceRefs` records the journey steps a `PainPoint` annotates. None of these references define
+new graph topology.
 
 **Notes:**
 
 * A Step **MUST NOT** imply traversal order. Order is defined only by [[UJG Graph]] transitions.
-* A Step **MAY** include multiple states; multiple steps **MAY** reference the same state (e.g., when a state serves multiple intents).
+* A Step **MAY** include multiple surfaces; multiple steps **MAY** reference the same surface (e.g., when a surface serves multiple intents).
 
 ## Ontology {data-cop-concept="ontology"}
 
-The normative Experience ontology is defined below and is published at `https://ujg.specs.openuji.org/ed/ns/experience`. It is the authoritative structural definition for `ExperienceStep`, `Touchpoint`, `Phase`, `PainPoint`, and the Experience-specific properties declared by this module.
+The normative Experience ontology is defined below and is published at `https://ujg.specs.openuji.org/ed/ns/experience`. It is the authoritative structural definition for `ExperienceStep`, `Phase`, `PainPoint`, and the Experience-specific properties declared by this module.
 
 :::include ./experience.ttl :::
 
@@ -61,7 +69,7 @@ The normative Experience SHACL shape is defined below and is published at `https
 
 The rules below define the remaining resolution and non-structural constraints for Experience annotations.
 
-1. **Resolution:** Every ID in `stateRefs` **MUST** resolve to a [=State=] or [=CompositeState=]; every ID in `experienceRefs` **MUST** resolve to an [=ExperienceStep=]; `phaseRef` **MUST** resolve to a [=Phase=]; and every ID in `touchpointRefs` **MUST** resolve to a [=Touchpoint=]. All referenced IDs **MUST** be within the current scope or imported modules.
+1. **Resolution:** Every ID in `surfaceRefs` **MUST** resolve to a [=Surface=]; every ID in `experienceRefs` **MUST** resolve to an [=ExperienceStep=]; and `phaseRef` **MUST** resolve to a [=Phase=]. All referenced IDs **MUST** be within the current scope or imported modules.
 2. **Non-Structural:** Experience objects **MUST NOT** introduce additional traversal semantics beyond [[UJG Graph]].
 
 ---
@@ -74,30 +82,56 @@ The rules below define the remaining resolution and non-structural constraints f
   "@id": "https://example.com/ujg/experience/checkout.jsonld",
   "@type": "UJGDocument",
   "nodes": [
-    { "@type": "State", "@id": "urn:ujg:state:shipping-form", "label": "Shipping" },
+    {
+      "@type": "State",
+      "@id": "urn:ujg:state:shipping-form",
+      "label": "Shipping"
+    },
 
-    { "@type": "State", "@id": "urn:ujg:state:payment", "label": "Payment" },
+    {
+      "@type": "State",
+      "@id": "urn:ujg:state:payment",
+      "label": "Payment"
+    },
 
     { "@type": "Phase", "@id": "urn:ujg:phase:checkout", "label": "Checkout", "order": 2 },
 
-    { "@type": "Touchpoint", "@id": "urn:ujg:touchpoint:web", "label": "Web", "channel": "web" },
+    {
+      "@type": "Touchpoint",
+      "@id": "urn:ujg:touchpoint:web",
+      "label": "Web",
+      "channel": "web",
+      "origin": "https://shop.example"
+    },
+
+    {
+      "@type": "Surface",
+      "@id": "urn:ujg:surface:shipping-form",
+      "graphNodeRef": "urn:ujg:state:shipping-form",
+      "touchpointRef": "urn:ujg:touchpoint:web"
+    },
+
+    {
+      "@type": "Surface",
+      "@id": "urn:ujg:surface:payment",
+      "graphNodeRef": "urn:ujg:state:payment",
+      "touchpointRef": "urn:ujg:touchpoint:web"
+    },
 
     {
       "@type": "ExperienceStep",
       "@id": "urn:ujg:step:enter-shipping",
       "label": "Enter shipping details",
-      "stateRefs": ["urn:ujg:state:shipping-form"],
-      "phaseRef": "urn:ujg:phase:checkout",
-      "touchpointRefs": ["urn:ujg:touchpoint:web"]
+      "surfaceRefs": ["urn:ujg:surface:shipping-form"],
+      "phaseRef": "urn:ujg:phase:checkout"
     },
 
     {
       "@type": "ExperienceStep",
       "@id": "urn:ujg:step:enter-payment",
       "label": "Enter payment details",
-      "stateRefs": ["urn:ujg:state:payment"],
-      "phaseRef": "urn:ujg:phase:checkout",
-      "touchpointRefs": ["urn:ujg:touchpoint:web"]
+      "surfaceRefs": ["urn:ujg:surface:payment"],
+      "phaseRef": "urn:ujg:phase:checkout"
     },
 
     {
@@ -117,17 +151,10 @@ The rules below define the remaining resolution and non-structural constraints f
     },
 
     {
-      "@type": "JourneyInstance",
-      "@id": "urn:ujg:journey-instance:checkout:12345",
-      "journeyRef": "urn:ujg:journey:checkout"
-    },
-
-    {
       "@type": "RuntimeEvent",
       "@id": "urn:ujg:event:12345:100",
       "executionId": "urn:ujg:execution:12345",
-      "eventStateRef": "urn:ujg:state:shipping-form",
-      "journeyInstanceRef": "urn:ujg:journey-instance:checkout:12345"
+      "eventSurfaceRef": "urn:ujg:surface:shipping-form"
     }
   ]
 }

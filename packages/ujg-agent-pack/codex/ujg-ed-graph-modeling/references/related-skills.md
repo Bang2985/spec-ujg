@@ -12,17 +12,17 @@ Module scope: graph
 - ujg-ed-core-modeling: Core module document containers, imports, top-level nodes, and extensions
 - ujg-ed-design-system-modeling: Design System module semantics and its relationship to Graph and Surface
 - ujg-ed-l10n-modeling: Localization module semantics for MessageBundle copy metadata and locale-switch metadata
-- ujg-ed-distributed-journey-modeling: Distributed Journey module semantics for cross-authority human-facing journeys, authorities, distributed artifacts, and authority references
+- ujg-ed-distributed-journey-modeling: Distributed Journey module semantics for cross-touchpoint human-facing journeys, distributed artifacts, and touchpoint references
 
 ## Downstream Spec Modules
 
 - modules/routing
 - modules/l10n
 - modules/condition
-- modules/surface
 - runtime
 - modules/state-data
 - modules/action
+- surface
 - modules/actor
 - modules/runtime-evidence
 - experience

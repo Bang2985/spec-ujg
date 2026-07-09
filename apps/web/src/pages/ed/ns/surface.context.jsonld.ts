@@ -2,6 +2,6 @@ import { createArtifactHandler } from '../../../lib/spec-artifacts';
 
 export const GET = createArtifactHandler(
   import.meta.url,
-  '../../../../../../specs/ed/modules/surface/surface.context.jsonld',
+  '../../../../../../specs/ed/surface/surface.context.jsonld',
   'application/ld+json; charset=utf-8'
 );

@@ -1,4 +1,3 @@
-@prefix ujgactor: <https://ujg.specs.openuji.org/ed/ns/actor#> .
 @prefix ujgartifact: <https://ujg.specs.openuji.org/ed/ns/artifact#> .
 @prefix ujgdist: <https://ujg.specs.openuji.org/ed/ns/distributed-journey#> .
 @prefix ujgsurface: <https://ujg.specs.openuji.org/ed/ns/surface#> .
@@ -12,24 +11,13 @@
 
 ### Classes
 
-ujgdist:Authority a owl:Class ;
-  rdfs:subClassOf ujgactor:Actor .
-
 ujgdist:DistributedArtifact a owl:Class ;
   rdfs:subClassOf ujgartifact:Artifact .
 
 ### Properties
 
-ujgdist:origin a owl:ObjectProperty ;
-  rdfs:domain ujgdist:Authority ;
-  rdfs:range rdfs:Resource .
+ujgdist:sourceTouchpointRef a owl:ObjectProperty ;
+  rdfs:range ujgsurface:Touchpoint .
 
-ujgdist:presentedByAuthorityRef a owl:ObjectProperty ;
-  rdfs:domain ujgsurface:Surface ;
-  rdfs:range ujgdist:Authority .
-
-ujgdist:sourceAuthorityRef a owl:ObjectProperty ;
-  rdfs:range ujgdist:Authority .
-
-ujgdist:targetAuthorityRefs a owl:ObjectProperty ;
-  rdfs:range ujgdist:Authority .
+ujgdist:targetTouchpointRefs a owl:ObjectProperty ;
+  rdfs:range ujgsurface:Touchpoint .

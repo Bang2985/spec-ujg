@@ -1,6 +1,6 @@
 {
-  "artifactHash": "sha256:46781786a3605be8bafbc2e6d257e6b8949d47c06ecb6c4804e536a1df26b07c",
-  "configHash": "sha256:340584d9b72f407cb6b75a89d79945103706fe0375cc4725e3d48d0af966fd6c",
+  "artifactHash": "sha256:02759389e36ea0ed9a5ad09ed97de82b3c38626a1dd2429a11192a5a33a565e4",
+  "configHash": "sha256:6708c3cfaf71e22741fd44a1026b81d5e3ada182766c7e67e9dc9ba2f02e1bc6",
   "package": {
     "id": "ujg-agent-pack",
     "name": "@openuji/ujg-agent-pack",
@@ -12,7 +12,7 @@
     "name": "ujg-ed-l10n-modeling"
   },
   "sourceHash": "sha256:211cbedf71491624af1820229e94e1eb5077ed55e5ed13c5d3b4f2e6afa0f239",
-  "specHash": "sha256:f73f2627ae6cd79e0f6adbe4110b2763d7dae0f9705397ce21f5217bc3e5e559",
+  "specHash": "sha256:def1baa4bd485f1601d4b559b5d56131976a088b560f897b62d2bf7fa4ee563a",
   "target": {
     "id": "ed",
     "label": "Editor's Draft"

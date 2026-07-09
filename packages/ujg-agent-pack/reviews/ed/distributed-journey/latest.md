@@ -1,7 +1,7 @@
 # Skill Review: ujg-ed-distributed-journey-modeling
 
 Target: Editor's Draft
-Skill scope: Distributed Journey module semantics for cross-authority human-facing journeys, authorities, distributed artifacts, and authority references
+Skill scope: Distributed Journey module semantics for cross-touchpoint human-facing journeys, distributed artifacts, and touchpoint references
 Source: sources/ed/skills/distributed-journey/skill.md
 Spec URL: https://ujg.specs.openuji.org/ed/modules/distributed-journey
 
@@ -12,8 +12,8 @@ Spec URL: https://ujg.specs.openuji.org/ed/modules/distributed-journey
 
 ## Review Inputs
 
-- Source hash: sha256:865eac3c272dd3a602e4223d604edf2b3ec031059fb65824a0517713dee8f2cc
-- Spec hash: sha256:b49de9431ee5c089659d594c7cb1f98b3162b762ae70f346941ea1ba9dcc9cbc
+- Source hash: sha256:52c0429093e10d5f56e04a47152076c201722ac5a27be1db4a7e9337b1e47b25
+- Spec hash: sha256:228f67bf8ab331a97f88aefe3493302a721a88fa8e7aef3bf7d2d44c5e33d393
 
 ## Source Headings Likely Affected
 

@@ -5,7 +5,7 @@
     "baseUrl": "${SPEC_BASE_URL}/ed",
     "deps": [
         "modules/actor",
-        "modules/surface",
+        "surface",
         "modules/action",
         "modules/artifact",
         "modules/runtime-evidence"
@@ -16,7 +16,7 @@
         "moduleLevel": 2,
         "bridgeModules": [
             "modules/actor",
-            "modules/surface",
+            "surface",
             "modules/action",
             "modules/artifact"
         ]
@@ -50,7 +50,7 @@
             },
             "UJG Surface": {
                 "title": "UJG Surface",
-                "url": "/ed/modules/surface"
+                "url": "/ed/surface"
             },
             "UJG Artifact": {
                 "title": "UJG Artifact",

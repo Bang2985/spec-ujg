@@ -44,7 +44,7 @@ Do not hand-edit generated files. Edit source files or `agent-pack.config.json`,
 
 The generator reads spec `config.json` files from each target spec tree. It uses module dependencies to create related-skill references.
 
-For example, `modules/design-system` depends on `graph` and `modules/surface`, so the generated design-system skill knows it should consult graph-related guidance when topology or traversal is involved.
+For example, `modules/design-system` depends on `graph` and `surface`, so the generated design-system skill knows it should consult graph-related guidance when topology or traversal is involved.
 
 Each Codex skill includes lightweight references:
 

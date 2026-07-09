@@ -4,7 +4,8 @@
     "maturityLevel": "draft",
     "baseUrl": "${SPEC_BASE_URL}/ed",
     "deps": [
-        "graph"
+        "graph",
+        "surface"
     ],
     "custom": {
         "family": "spec",
@@ -23,6 +24,12 @@
             "w3cid": "169225"
         }
         ],
-        "license": "W3C-Software-and-Document"
+        "license": "W3C-Software-and-Document",
+        "localBiblio": {
+            "UJG Surface": {
+                "title": "UJG Surface",
+                "url": "/ed/surface"
+            }
+        }
     }
 }

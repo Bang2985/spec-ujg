@@ -19,7 +19,8 @@ This module is published through the following artifacts:
 - `runtime-evidence.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/ed/ns/runtime-evidence.context.jsonld`
 - `runtime-evidence.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/ed/ns/runtime-evidence.shape`
 
-Examples in this page compose the Core, Graph, Runtime, Actor, and Runtime Evidence contexts.
+Examples in this page compose the Core, Graph, Surface, Runtime, Actor, and Runtime Evidence
+contexts.
 
 ## Terminology
 
@@ -109,6 +110,7 @@ the SHACL shape.
   "@context": [
     "https://ujg.specs.openuji.org/ed/ns/core.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/graph.context.jsonld",
+    "https://ujg.specs.openuji.org/ed/ns/surface.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/runtime.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/actor.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/runtime-evidence.context.jsonld"
@@ -147,16 +149,15 @@ the SHACL shape.
       "@type": "JourneyExecution"
     },
     {
-      "@id": "urn:journey-instance:checkout:12345",
-      "@type": "JourneyInstance",
-      "journeyRef": "urn:journey:checkout"
+      "@id": "urn:surface:shipping-form",
+      "@type": "Surface",
+      "graphNodeRef": "urn:state:shipping-form"
     },
     {
       "@id": "urn:event:12345:100",
       "@type": "RuntimeEvent",
       "executionId": "urn:execution:12345",
-      "eventStateRef": "urn:state:shipping-form",
-      "journeyInstanceRef": "urn:journey-instance:checkout:12345",
+      "eventSurfaceRef": "urn:surface:shipping-form",
       "payload": {
         "action": "surface.enter"
       }
