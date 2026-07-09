@@ -25,7 +25,8 @@ Module scope: graph
 - surface
 - modules/actor
 - modules/runtime-evidence
-- experience
+- modules/observability
+- modules/experience
 - mapping
 - modules/design-system
 - modules/distributed-journey

@@ -1,15 +1,15 @@
 {
-    "id": "experience",
+    "id": "modules/experience",
     "title": "Experience",
     "maturityLevel": "draft",
     "baseUrl": "${SPEC_BASE_URL}/ed",
     "deps": [
-        "graph",
         "surface"
     ],
     "custom": {
-        "family": "spec",
-        "order": 50
+        "family": "module",
+        "order": 50,
+        "moduleLevel": 1
     },
     "respec": {
         "noConformance": true,
@@ -17,7 +17,7 @@
             "name": "User Journal Graph Community Group",
             "url": "https://www.w3.org/community/ujg/"
         },
-        "repository": "https://github.com/openuji/spec-ujg/blob/main/specs/ed/experience/index.md",
+        "repository": "https://github.com/openuji/spec-ujg/blob/main/specs/ed/modules/experience/index.md",
         "editors": [
         {
             "name": "Seva Dolgopolov",

@@ -1,0 +1,103 @@
+@prefix ujg: <https://ujg.specs.openuji.org/ed/ns/core#> .
+@prefix ujgsurface: <https://ujg.specs.openuji.org/ed/ns/surface#> .
+@prefix ujgl10n: <https://ujg.specs.openuji.org/ed/ns/l10n#> .
+@prefix ujgobservability: <https://ujg.specs.openuji.org/ed/ns/observability#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+
+<https://ujg.specs.openuji.org/ed/ns/observability#> a owl:Ontology ;
+  rdfs:label "UJG Observability Editor's Draft Vocabulary"@en ;
+  dct:description "UJG Observability ontology declaration" .
+
+### Classes
+
+ujgobservability:ObservationBinding a owl:Class ;
+  rdfs:subClassOf ujg:Node .
+
+ujgobservability:ObservationEvent a owl:Class ;
+  rdfs:subClassOf ujg:Node .
+
+ujgobservability:AccessibleLocator a owl:Class ;
+  rdfs:subClassOf ujg:Node .
+
+ujgobservability:AccessibleFeature a owl:Class ;
+  rdfs:subClassOf ujg:Node .
+
+ujgobservability:AccessibleRelation a owl:Class ;
+  rdfs:subClassOf ujg:Node .
+
+ujgobservability:CustomLocator a owl:Class ;
+  rdfs:subClassOf ujg:Node .
+
+ujgobservability:SurfaceInstanceResolver a owl:Class ;
+  rdfs:subClassOf ujg:Node .
+
+### Properties
+
+ujgobservability:observeSurfaceRef a owl:ObjectProperty ;
+  rdfs:domain ujgobservability:ObservationBinding ;
+  rdfs:range ujgsurface:Surface .
+
+ujgobservability:observationEventRef a owl:ObjectProperty ;
+  rdfs:domain ujgobservability:ObservationBinding ;
+  rdfs:range ujgobservability:ObservationEvent .
+
+ujgobservability:locatorRefs a owl:ObjectProperty ;
+  rdfs:domain ujgobservability:ObservationBinding ;
+  rdfs:range [
+    a owl:Class ;
+    owl:unionOf (
+      ujgobservability:AccessibleLocator
+      ujgobservability:CustomLocator
+    )
+  ] .
+
+ujgobservability:surfaceInstanceResolverRef a owl:ObjectProperty ;
+  rdfs:domain ujgobservability:ObservationBinding ;
+  rdfs:range ujgobservability:SurfaceInstanceResolver .
+
+ujgobservability:instanceKeyFeatureRef a owl:ObjectProperty ;
+  rdfs:domain ujgobservability:SurfaceInstanceResolver ;
+  rdfs:range ujgobservability:AccessibleFeature .
+
+ujgobservability:role a owl:DatatypeProperty ;
+  rdfs:domain ujgobservability:AccessibleLocator ;
+  rdfs:range xsd:string .
+
+ujgobservability:accessibleNameRef a owl:ObjectProperty ;
+  rdfs:domain ujgobservability:AccessibleLocator ;
+  rdfs:range ujgl10n:MessageBundle .
+
+ujgobservability:accessibleDescriptionRef a owl:ObjectProperty ;
+  rdfs:domain ujgobservability:AccessibleLocator ;
+  rdfs:range ujgl10n:MessageBundle .
+
+ujgobservability:accessibleFeatureRefs a owl:ObjectProperty ;
+  rdfs:domain ujgobservability:AccessibleLocator ;
+  rdfs:range ujgobservability:AccessibleFeature .
+
+ujgobservability:accessibleRelationRefs a owl:ObjectProperty ;
+  rdfs:domain ujgobservability:AccessibleLocator ;
+  rdfs:range ujgobservability:AccessibleRelation .
+
+ujgobservability:contextLocatorRefs a owl:ObjectProperty ;
+  rdfs:domain ujgobservability:AccessibleLocator ;
+  rdfs:range ujgobservability:AccessibleLocator .
+
+ujgobservability:accessibleFeatureName a owl:DatatypeProperty ;
+  rdfs:domain ujgobservability:AccessibleFeature ;
+  rdfs:range xsd:string .
+
+ujgobservability:accessibleFeatureValue a owl:DatatypeProperty ;
+  rdfs:domain ujgobservability:AccessibleFeature ;
+  rdfs:range xsd:string .
+
+ujgobservability:accessibleRelationType a owl:DatatypeProperty ;
+  rdfs:domain ujgobservability:AccessibleRelation ;
+  rdfs:range xsd:string .
+
+ujgobservability:targetLocatorRef a owl:ObjectProperty ;
+  rdfs:domain ujgobservability:AccessibleRelation ;
+  rdfs:range ujgobservability:AccessibleLocator .

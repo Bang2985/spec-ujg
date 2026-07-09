@@ -29,9 +29,9 @@ ujgruntime:previousId a owl:ObjectProperty ;
   rdfs:domain ujgruntime:RuntimeEvent ;
   rdfs:range ujgruntime:RuntimeEvent .
 
-ujgruntime:eventSurfaceRef a owl:ObjectProperty ;
+ujgruntime:surfaceInstanceRef a owl:ObjectProperty ;
   rdfs:domain ujgruntime:RuntimeEvent ;
-  rdfs:range ujgsurface:Surface .
+  rdfs:range ujgsurface:SurfaceInstance .
 
 ujgruntime:payload a owl:DatatypeProperty ;
   rdfs:domain ujgruntime:RuntimeEvent ;

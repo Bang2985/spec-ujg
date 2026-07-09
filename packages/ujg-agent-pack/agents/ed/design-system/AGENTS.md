@@ -87,7 +87,8 @@ targetComponentRef
 ```
 
 When modeling `Surface` nodes themselves, use Surface `graphNodeRef` to point to the Graph node
-the surface exposes. Keep `surfaceRef` for `SurfaceRealization` only.
+the surface exposes. Design System `surfaceRef` belongs to `SurfaceRealization` and points to stable
+`Surface`; Surface also uses `surfaceRef` on `SurfaceInstance` for runtime occurrences.
 
 Do not invent:
 

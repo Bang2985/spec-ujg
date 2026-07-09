@@ -116,8 +116,8 @@ the SHACL shape.
   "@type": "UJGDocument",
   "nodes": [
     {
-      "@type": "ExperienceStep",
-      "@id": "urn:ujg:step:order-confirmation",
+      "@type": "State",
+      "@id": "urn:ujg:state:order-confirmation",
       "label": "Order confirmation",
       "l10n:copyRef": "urn:l10n:bundle:order-confirmation"
     },

@@ -15,8 +15,8 @@
       "@id": "ujgruntime:previousId",
       "@type": "@id"
     },
-    "eventSurfaceRef": {
-      "@id": "ujgruntime:eventSurfaceRef",
+    "surfaceInstanceRef": {
+      "@id": "ujgruntime:surfaceInstanceRef",
       "@type": "@id"
     },
     "payload": {

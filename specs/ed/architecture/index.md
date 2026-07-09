@@ -4,15 +4,14 @@ The **User Journey Graph (UJG)** standardizes user experience as **computable da
 
 ## Conceptual Stack
 
-The standard is organized into six logical layers:
+The main spec family is organized into five logical layers:
 
 1. **The Core (Transport):** The universal JSON-LD envelope. Ensures any tool—human or AI—can parse the file structure without ambiguity.
 2. **The Graph (Definition):** Defines the "Happy Path." It is the vocabulary for States, Transitions, and Composition (sub-journey referencing).
 3. **The Surface (Materialization):** Exposes graph subjects as addressable human-facing surfaces,
    optional touchpoints, and optional visible occurrence instances.
-4. **The Experience (Semantic):** Describes the journey in canonical human semantics (Steps, Phases, Pain Points), enabling qualitative intent to be represented as data.
-5. **The Runtime (Execution):** Captures the "Actual Path." It records observed surface events as a causal chain.
-6. **The Mapping (Conformance):** Closes the loop. It resolves Reality(*Runtime*) through Surface onto Intent(*Graph*) to calculate conversion and detect friction.
+4. **The Runtime (Execution):** Captures the "Actual Path." It records observed surface events as a causal chain.
+5. **The Mapping (Conformance):** Closes the loop. It resolves Reality(*Runtime*) through Surface onto Intent(*Graph*) to calculate conversion and detect friction.
 
 ## Guiding Principles
 
@@ -40,10 +39,13 @@ new capabilities become precise without forcing the shared baseline, or this arc
 know every specialized vocabulary that may be added later.
 
 First-level optional modules are small bridges that attach directly to Core, Graph, Surface, or
-Runtime concepts, such as Actor, State Data, Action, Artifact, and Runtime Evidence. Second-level
-optional modules compose one or more shared layers or first-level bridges. Design System builds on
-Surface; Distributed Journey composes Actor, Surface, Action, and Artifact without making those
-concerns part of Core, Graph, or Runtime.
+Runtime concepts, such as Experience, Actor, State Data, Action, Artifact, and Runtime Evidence.
+Experience describes UXR and journey-map semantics such as steps, phases, and pain points over
+Surface without making those semantics part of core journey mechanics. Second-level optional modules
+compose one or more shared layers or first-level bridges. Design System builds on Surface;
+Observability composes Surface and Localization so accessible-object recognition can use localized
+message bundles. Distributed Journey composes Actor, Surface, Action, and Artifact without making
+those concerns part of Core, Graph, or Runtime.
 
 Runtime is the Editor's Draft observation channel. Runtime Evidence can add optional metadata that
 points back to Runtime executions and events, but it does not create a separate observation stream

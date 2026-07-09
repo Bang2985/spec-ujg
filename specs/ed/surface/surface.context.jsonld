@@ -7,6 +7,7 @@
     "xsd": "http://www.w3.org/2001/XMLSchema#",
 
     "Surface": "ujgsurface:Surface",
+    "SurfaceInstance": "ujgsurface:SurfaceInstance",
     "Touchpoint": "ujgsurface:Touchpoint",
     "GraphNodeInstance": "ujgsurface:GraphNodeInstance",
 
@@ -16,6 +17,10 @@
     },
     "touchpointRef": {
       "@id": "ujgsurface:touchpointRef",
+      "@type": "@id"
+    },
+    "surfaceRef": {
+      "@id": "ujgsurface:surfaceRef",
       "@type": "@id"
     },
     "graphNodeInstanceRef": {

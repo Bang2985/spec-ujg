@@ -3,21 +3,21 @@
 This core-family layer defines a graph-successor vocabulary for assigning an addressable `Surface`
 to a Graph subject and, when needed, to the `Touchpoint` that presents that surface.
 
-A `Surface` identifies a design-system-agnostic visible occurrence of one graph subject. Supported
+A `Surface` identifies a design-system-agnostic materialized boundary for one graph subject. Supported
 graph subjects are `State`, `CompositeState`, `Transition`, `OutgoingTransition`, and
 `OutgoingTransitionGroup`. A surface may represent a page, screen, dialog, prompt, frame,
 application shell, transition affordance, action bar, reusable choice group, repeated card, repeated
-slide, or other user-facing boundary. A single `Surface` is not a reusable template shared by many
-graph subjects, but many `Surface` nodes may expose the same graph subject in different visible
-occurrences.
+slide, or other user-facing boundary. A single `Surface` is stable surface identity, not one runtime
+occurrence. Concrete runtime-visible occurrences are represented by `SurfaceInstance`.
 
 A `Touchpoint` identifies the system, channel, origin, or service boundary through which a surface is
 presented to a human. Touchpoints are optional: a surface can be addressable without declaring its
 touchpoint, and a document can model graph topology without using Surface at all.
 
-`GraphNodeInstance` identifies a concrete visible occurrence of a graph node. It is useful when the
-same graph node is repeated with different content or under different parent occurrences, such as
-slides inside one image slider occurrence inside one blog post occurrence.
+`SurfaceInstance` identifies a concrete runtime-visible occurrence of one `Surface`.
+`GraphNodeInstance` identifies a concrete occurrence of a graph node. It is useful when the same
+graph node is repeated with different content or under different parent occurrences, such as slides
+inside one image slider occurrence inside one blog post occurrence.
 
 Surface annotates the shared graph with materialized boundary identity from the Surface layer. Graph
 subjects do not carry Surface references and do not depend on this module. Surface does not change
@@ -49,23 +49,25 @@ Non-goals:
 ## Terminology
 
 - <dfn>Surface</dfn>: An addressable, design-system-agnostic materialized boundary for exactly one
-  Graph subject occurrence.
+  Graph subject.
+- <dfn>SurfaceInstance</dfn>: An addressable concrete occurrence of one `Surface`.
 - <dfn>Touchpoint</dfn>: An addressable system, channel, origin, or service boundary through which a
   surface is presented to a human.
 - <dfn>GraphNodeInstance</dfn>: An addressable concrete occurrence of one supported Graph node.
 - <dfn>Surface attachment</dfn>: The relation that assigns a surface to the graph node it exposes.
 - <dfn>Touchpoint attachment</dfn>: The relation that assigns a surface to its presenting
   touchpoint.
-- <dfn>Instance attachment</dfn>: The relation that assigns a surface to the graph-node occurrence it
-  materializes.
+- <dfn>Instance attachment</dfn>: The relation that assigns a surface instance to the graph-node
+  occurrence it materializes.
 
 ## Attachment Model
 
-Surface introduces two canonical interoperable attachments:
+Surface introduces canonical interoperable attachments:
 
 - `surface:graphNodeRef` links a `Surface` to a Graph subject.
 - `surface:touchpointRef` links a `Surface` to a `Touchpoint`.
-- `surface:graphNodeInstanceRef` links a `Surface` to a `GraphNodeInstance`.
+- `surface:surfaceRef` links a `SurfaceInstance` to a `Surface`.
+- `surface:graphNodeInstanceRef` links a `SurfaceInstance` to a `GraphNodeInstance`.
 
 Allowed graph subjects are:
 
@@ -79,8 +81,9 @@ Allowed graph subjects are:
 for a graph subject, consumers find `Surface` nodes whose `graphNodeRef` value is that graph
 subject.
 
-A graph subject without a referencing `Surface` remains fully valid and traversable. Consumers MAY
-ignore this module and still process the graph.
+A graph subject without a referencing `Surface` remains fully valid and traversable. A surface
+without a `SurfaceInstance` remains a valid stable design, UXR, observability, or distributed-journey
+reference. Consumers MAY ignore this module and still process the graph.
 
 A `Surface` MUST reference exactly one Graph subject in the validated document set using
 `graphNodeRef`. A graph subject MAY be referenced by more than one `Surface` when it has multiple
@@ -91,10 +94,11 @@ the presenting system, channel, origin, or service boundary for that surface. `t
 NOT be interpreted as graph traversal, actor responsibility, runtime attribution, or ownership truth.
 A `Touchpoint` MAY be referenced by many surfaces.
 
-A `Surface` MAY reference at most one `GraphNodeInstance` using `graphNodeInstanceRef`.
-`GraphNodeInstance.graphNodeRef` MUST reference exactly one supported Graph node. Producers SHOULD
-use matching `graphNodeRef` values on the `Surface` and its referenced `GraphNodeInstance` when the
-surface is a direct visible occurrence of that graph node. A `GraphNodeInstance` MAY reference a
+A `SurfaceInstance` MUST reference exactly one `Surface` using `surfaceRef`. A `SurfaceInstance` MAY
+reference at most one `GraphNodeInstance` using `graphNodeInstanceRef`. `GraphNodeInstance.graphNodeRef`
+MUST reference exactly one supported Graph node. Producers SHOULD use matching graph-node values on
+the `SurfaceInstance`'s referenced `Surface` and its referenced `GraphNodeInstance` when the surface
+instance is a direct visible occurrence of that graph node. A `GraphNodeInstance` MAY reference a
 parent `GraphNodeInstance` using `parentInstanceRef`, allowing consumers to derive occurrence trees.
 
 A `CompositeState` MAY have its own `Surface` when the composite state has a user-facing material
@@ -124,8 +128,8 @@ distinct visible occurrences, not component or renderer variants.
 
 The normative Surface ontology is defined below and is published at
 `https://ujg.specs.openuji.org/ed/ns/surface`. It is the authoritative structural definition for
-`Surface`, `Touchpoint`, `GraphNodeInstance`, `graphNodeRef`, `touchpointRef`, and
-`graphNodeInstanceRef`.
+`Surface`, `SurfaceInstance`, `Touchpoint`, `GraphNodeInstance`, `graphNodeRef`, `surfaceRef`,
+`touchpointRef`, and `graphNodeInstanceRef`.
 
 :::include ./surface.ttl :::
 
@@ -153,18 +157,19 @@ the SHACL shape.
 2. **Single exposed graph node:** A `Surface` MUST identify exactly one Graph subject. A graph subject
    MAY be referenced by more than one `Surface`.
 3. **Canonical direction:** `graphNodeRef` is the canonical assignment from `Surface` to Graph subject.
-4. **Optional instance:** `graphNodeInstanceRef` MAY identify the concrete graph-node occurrence that
-   a surface materializes.
-5. **Optional touchpoint:** `touchpointRef` MAY identify the touchpoint that presents a surface.
+4. **Surface instance:** A `SurfaceInstance` MUST identify exactly one `Surface` using `surfaceRef`.
+5. **Optional graph-node instance:** `SurfaceInstance.graphNodeInstanceRef` MAY identify the
+   concrete graph-node occurrence that a surface instance materializes.
+6. **Optional touchpoint:** `touchpointRef` MAY identify the touchpoint that presents a surface.
    Missing `touchpointRef` means the presenting touchpoint is not stated.
-6. **Touchpoint boundary only:** `Touchpoint` MUST NOT be interpreted as an Actor, as authorization
+7. **Touchpoint boundary only:** `Touchpoint` MUST NOT be interpreted as an Actor, as authorization
    data, as runtime evidence, or as server-internal truth.
-7. **Graceful degradation:** A consumer that does not implement Surface semantics MAY ignore Surface
+8. **Graceful degradation:** A consumer that does not implement Surface semantics MAY ignore Surface
    data, but it SHOULD preserve recognized JSON-LD data during read-transform-write when possible.
-8. **Design-system agnostic:** Surface properties MUST NOT define or imply design-system
+9. **Design-system agnostic:** Surface properties MUST NOT define or imply design-system
    realization, component selection, template selection, slot binding, token-source selection, or
    rendering behavior.
-9. **Interoperable realization:** Component, template, slot, slot-binding, token-source, and
+10. **Interoperable realization:** Component, template, slot, slot-binding, token-source, and
    surface-realization relationships intended for interoperability SHOULD be expressed by an optional
    module that depends on Surface.
 
@@ -324,9 +329,14 @@ represents that outgoing transition's own affordance. Neither surface overrides 
       "parentInstanceRef": "urn:graph-node-instance:blog-post:123"
     },
     {
-      "@id": "urn:surface:image-slide:post-123:slide-1",
+      "@id": "urn:surface:image-slide",
       "@type": "Surface",
-      "graphNodeRef": "urn:state:image-slide",
+      "graphNodeRef": "urn:state:image-slide"
+    },
+    {
+      "@id": "urn:surface-instance:image-slide:post-123:slide-1",
+      "@type": "SurfaceInstance",
+      "surfaceRef": "urn:surface:image-slide",
       "graphNodeInstanceRef": "urn:graph-node-instance:blog-post:123:slide-1"
     }
   ]

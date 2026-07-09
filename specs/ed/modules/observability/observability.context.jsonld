@@ -1,0 +1,65 @@
+{
+  "@context": {
+    "@version": 1.1,
+
+    "ujgobservability": "https://ujg.specs.openuji.org/ed/ns/observability#",
+    "observability": "https://ujg.specs.openuji.org/ed/ns/observability#",
+
+    "ObservationBinding": "ujgobservability:ObservationBinding",
+    "ObservationEvent": "ujgobservability:ObservationEvent",
+    "AccessibleLocator": "ujgobservability:AccessibleLocator",
+    "AccessibleFeature": "ujgobservability:AccessibleFeature",
+    "AccessibleRelation": "ujgobservability:AccessibleRelation",
+    "CustomLocator": "ujgobservability:CustomLocator",
+    "SurfaceInstanceResolver": "ujgobservability:SurfaceInstanceResolver",
+
+    "observeSurfaceRef": {
+      "@id": "ujgobservability:observeSurfaceRef",
+      "@type": "@id"
+    },
+    "observationEventRef": {
+      "@id": "ujgobservability:observationEventRef",
+      "@type": "@id"
+    },
+    "locatorRefs": {
+      "@id": "ujgobservability:locatorRefs",
+      "@type": "@id"
+    },
+    "surfaceInstanceResolverRef": {
+      "@id": "ujgobservability:surfaceInstanceResolverRef",
+      "@type": "@id"
+    },
+    "instanceKeyFeatureRef": {
+      "@id": "ujgobservability:instanceKeyFeatureRef",
+      "@type": "@id"
+    },
+    "role": "ujgobservability:role",
+    "accessibleNameRef": {
+      "@id": "ujgobservability:accessibleNameRef",
+      "@type": "@id"
+    },
+    "accessibleDescriptionRef": {
+      "@id": "ujgobservability:accessibleDescriptionRef",
+      "@type": "@id"
+    },
+    "accessibleFeatureRefs": {
+      "@id": "ujgobservability:accessibleFeatureRefs",
+      "@type": "@id"
+    },
+    "accessibleRelationRefs": {
+      "@id": "ujgobservability:accessibleRelationRefs",
+      "@type": "@id"
+    },
+    "contextLocatorRefs": {
+      "@id": "ujgobservability:contextLocatorRefs",
+      "@type": "@id"
+    },
+    "accessibleFeatureName": "ujgobservability:accessibleFeatureName",
+    "accessibleFeatureValue": "ujgobservability:accessibleFeatureValue",
+    "accessibleRelationType": "ujgobservability:accessibleRelationType",
+    "targetLocatorRef": {
+      "@id": "ujgobservability:targetLocatorRef",
+      "@type": "@id"
+    }
+  }
+}

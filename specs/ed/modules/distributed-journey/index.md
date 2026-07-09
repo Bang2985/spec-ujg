@@ -417,6 +417,7 @@ instances without adding evidence nodes to the distributed graph itself:
 {
   "@context": [
     "https://ujg.specs.openuji.org/ed/ns/core.context.jsonld",
+    "https://ujg.specs.openuji.org/ed/ns/surface.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/runtime.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/runtime-evidence.context.jsonld"
   ],
@@ -431,10 +432,35 @@ instances without adding evidence nodes to the distributed graph itself:
       "@type": "JourneyExecution"
     },
     {
+      "@id": "urn:surface-instance:alice-share-confirmed",
+      "@type": "SurfaceInstance",
+      "surfaceRef": "urn:surface:alice-share-confirmed"
+    },
+    {
+      "@id": "urn:surface-instance:bob-incoming-share",
+      "@type": "SurfaceInstance",
+      "surfaceRef": "urn:surface:bob-incoming-share"
+    },
+    {
+      "@id": "urn:surface-instance:bob-file-available",
+      "@type": "SurfaceInstance",
+      "surfaceRef": "urn:surface:bob-file-available"
+    },
+    {
+      "@id": "urn:surface-instance:alice-share-revoked",
+      "@type": "SurfaceInstance",
+      "surfaceRef": "urn:surface:alice-share-revoked"
+    },
+    {
+      "@id": "urn:surface-instance:bob-access-removed",
+      "@type": "SurfaceInstance",
+      "surfaceRef": "urn:surface:bob-access-removed"
+    },
+    {
       "@id": "urn:event:nextcloud-share-12345:alice-share-confirmed",
       "@type": "RuntimeEvent",
       "executionId": "urn:execution:nextcloud-share-12345",
-      "eventSurfaceRef": "urn:surface:alice-share-confirmed",
+      "surfaceInstanceRef": "urn:surface-instance:alice-share-confirmed",
       "payload": {
         "action": "surface.visible"
       }
@@ -444,7 +470,7 @@ instances without adding evidence nodes to the distributed graph itself:
       "@type": "RuntimeEvent",
       "executionId": "urn:execution:nextcloud-share-12345",
       "previousId": "urn:event:nextcloud-share-12345:alice-share-confirmed",
-      "eventSurfaceRef": "urn:surface:bob-incoming-share",
+      "surfaceInstanceRef": "urn:surface-instance:bob-incoming-share",
       "payload": {
         "action": "surface.visible"
       }
@@ -454,7 +480,7 @@ instances without adding evidence nodes to the distributed graph itself:
       "@type": "RuntimeEvent",
       "executionId": "urn:execution:nextcloud-share-12345",
       "previousId": "urn:event:nextcloud-share-12345:bob-incoming-share",
-      "eventSurfaceRef": "urn:surface:bob-file-available",
+      "surfaceInstanceRef": "urn:surface-instance:bob-file-available",
       "payload": {
         "action": "surface.visible"
       }
@@ -464,7 +490,7 @@ instances without adding evidence nodes to the distributed graph itself:
       "@type": "RuntimeEvent",
       "executionId": "urn:execution:nextcloud-share-12345",
       "previousId": "urn:event:nextcloud-share-12345:bob-file-available",
-      "eventSurfaceRef": "urn:surface:alice-share-revoked",
+      "surfaceInstanceRef": "urn:surface-instance:alice-share-revoked",
       "payload": {
         "action": "surface.visible"
       }
@@ -474,7 +500,7 @@ instances without adding evidence nodes to the distributed graph itself:
       "@type": "RuntimeEvent",
       "executionId": "urn:execution:nextcloud-share-12345",
       "previousId": "urn:event:nextcloud-share-12345:alice-share-revoked",
-      "eventSurfaceRef": "urn:surface:bob-access-removed",
+      "surfaceInstanceRef": "urn:surface-instance:bob-access-removed",
       "payload": {
         "action": "surface.visible"
       }
@@ -698,6 +724,7 @@ confirmation as metadata attached to a runtime event:
 {
   "@context": [
     "https://ujg.specs.openuji.org/ed/ns/core.context.jsonld",
+    "https://ujg.specs.openuji.org/ed/ns/surface.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/runtime.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/runtime-evidence.context.jsonld"
   ],
@@ -712,10 +739,15 @@ confirmation as metadata attached to a runtime event:
       "@type": "JourneyExecution"
     },
     {
+      "@id": "urn:surface-instance:partial-import-confirmed",
+      "@type": "SurfaceInstance",
+      "surfaceRef": "urn:surface:partial-import-confirmed"
+    },
+    {
       "@id": "urn:event:account-migration-23456:partial-import-confirmed",
       "@type": "RuntimeEvent",
       "executionId": "urn:execution:account-migration-23456",
-      "eventSurfaceRef": "urn:surface:partial-import-confirmed",
+      "surfaceInstanceRef": "urn:surface-instance:partial-import-confirmed",
       "payload": {
         "action": "surface.visible"
       }
@@ -929,6 +961,7 @@ becoming visible while leaving the invisible federation request outside the grap
 {
   "@context": [
     "https://ujg.specs.openuji.org/ed/ns/core.context.jsonld",
+    "https://ujg.specs.openuji.org/ed/ns/surface.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/runtime.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/runtime-evidence.context.jsonld"
   ],
@@ -943,10 +976,15 @@ becoming visible while leaving the invisible federation request outside the grap
       "@type": "JourneyExecution"
     },
     {
+      "@id": "urn:surface-instance:remote-feed-visible",
+      "@type": "SurfaceInstance",
+      "surfaceRef": "urn:surface:remote-feed-visible"
+    },
+    {
       "@id": "urn:event:remote-follow-34567:remote-feed-visible",
       "@type": "RuntimeEvent",
       "executionId": "urn:execution:remote-follow-34567",
-      "eventSurfaceRef": "urn:surface:remote-feed-visible",
+      "surfaceInstanceRef": "urn:surface-instance:remote-feed-visible",
       "payload": {
         "action": "surface.visible"
       }

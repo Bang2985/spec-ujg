@@ -31,6 +31,18 @@ ujgsurfaceshape:SurfaceShape a sh:NodeShape ;
     sh:class ujgsurface:Touchpoint ;
     sh:nodeKind sh:IRI ;
     sh:maxCount 1 ;
+  ] .
+
+ujgsurfaceshape:SurfaceInstanceShape a sh:NodeShape ;
+  sh:targetClass ujgsurface:SurfaceInstance ;
+  sh:nodeKind sh:IRI ;
+
+  sh:property [
+    sh:path ujgsurface:surfaceRef ;
+    sh:class ujgsurface:Surface ;
+    sh:nodeKind sh:IRI ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
   ] ;
 
   sh:property [

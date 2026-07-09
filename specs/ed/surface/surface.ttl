@@ -15,6 +15,9 @@
 ujgsurface:Surface a owl:Class ;
   rdfs:subClassOf ujg:Node .
 
+ujgsurface:SurfaceInstance a owl:Class ;
+  rdfs:subClassOf ujg:Node .
+
 ujgsurface:Touchpoint a owl:Class ;
   rdfs:subClassOf ujg:Node .
 
@@ -46,8 +49,12 @@ ujgsurface:touchpointRef a owl:ObjectProperty ;
   rdfs:domain ujgsurface:Surface ;
   rdfs:range ujgsurface:Touchpoint .
 
+ujgsurface:surfaceRef a owl:ObjectProperty ;
+  rdfs:domain ujgsurface:SurfaceInstance ;
+  rdfs:range ujgsurface:Surface .
+
 ujgsurface:graphNodeInstanceRef a owl:ObjectProperty ;
-  rdfs:domain ujgsurface:Surface ;
+  rdfs:domain ujgsurface:SurfaceInstance ;
   rdfs:range ujgsurface:GraphNodeInstance .
 
 ujgsurface:parentInstanceRef a owl:ObjectProperty ;

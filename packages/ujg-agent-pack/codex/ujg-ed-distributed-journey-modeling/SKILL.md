@@ -231,7 +231,7 @@ The index is not traversable and does not imply order, progression, reachability
 If one actor's visible state becomes observable after another actor's action, do not encode that handoff as a Graph transition.
 Use Runtime Evidence.
 
-When serializing Runtime Evidence, include Runtime and Runtime Evidence contexts. A `RuntimeEvent` uses `executionId` and `eventSurfaceRef`; use `previousId` only for observed event order.
+When serializing Runtime Evidence, include Surface, Runtime, and Runtime Evidence contexts. A `RuntimeEvent` uses `executionId` and `surfaceInstanceRef`; use `previousId` only for observed event order.
 
 Example observed interleaving:
 

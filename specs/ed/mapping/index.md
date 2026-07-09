@@ -4,9 +4,9 @@ This module defines the basic vocabulary and processing model for mapping causal
 events back to the intended Graph journey model.
 
 Runtime records what happened. Graph defines the intended journey topology. Mapping connects the two
-by resolving each `RuntimeEvent.eventSurfaceRef` to a `Surface`, then resolving that surface's
-`graphNodeRef` to the observed Graph node. Mapping associates the resolved execution with an
-explicit root Graph `Journey`.
+by resolving each `RuntimeEvent.surfaceInstanceRef` to a `SurfaceInstance`, then resolving that
+instance's `surfaceRef` to a `Surface` and that surface's `graphNodeRef` to the observed Graph node.
+Mapping associates the resolved execution with an explicit root Graph `Journey`.
 
 Mapping roots are traversable Graph [=Journey|Journeys=]. A [=JourneyEntryIndex=] can help discover known
 entry states before mapping, but it is not a local traversal scope and is not the target of
@@ -35,7 +35,8 @@ with the Mapping context.
 - <dfn>Mapped runtime</dfn>: The `JourneyExecution` whose causal `RuntimeEvent` chain is being
   resolved.
 - <dfn>Mapped state</dfn>: A Graph `State` or `CompositeState` resolved from a
-  `RuntimeEvent.eventSurfaceRef` through `Surface.graphNodeRef`.
+  `RuntimeEvent.surfaceInstanceRef` through `SurfaceInstance.surfaceRef` and
+  `Surface.graphNodeRef`.
 - <dfn>Observed affordance</dfn>: A `Transition`, `OutgoingTransition`, or
   `OutgoingTransitionGroup` resolved from a runtime event's surface.
 - <dfn>Relevant effective transition</dfn>: A Graph transition that can explain an observed movement
@@ -59,7 +60,7 @@ Each `MappedStep` links:
   `OutgoingTransition` that explains the movement.
 
 Mapping does not serialize a separate step scope. For each `MappedStep`, the local Graph `Journey`
-scope is derived from the mapped journey and, when present, from the referenced surface's
+scope is derived from the mapped journey and, when present, from the referenced surface instance's
 `GraphNodeInstance` occurrence tree.
 
 The Runtime event order remains defined by Runtime's causal chain: a root event followed by the
@@ -95,7 +96,8 @@ the SHACL shape.
 2. **Step correspondence:** Each `MappedStep` MUST identify one `RuntimeEvent` in the mapped
    runtime chain through `mappedEventRef`.
 3. **Surface resolution:** For each `MappedStep`, the Consumer MUST resolve the referenced
-   `RuntimeEvent.eventSurfaceRef` to a [=Surface=].
+   `RuntimeEvent.surfaceInstanceRef` to a [=SurfaceInstance=], then follow `surfaceRef` to a
+   [=Surface=].
 4. **State resolution:** Each `MappedStep.mappedStateRef` MUST be the Graph `State` or
    `CompositeState` resolved from the event surface's `graphNodeRef` in the mapped journey scope or
    imported documents.
@@ -113,8 +115,8 @@ the SHACL shape.
    - an effective `OutgoingTransition` contributed by an `OutgoingTransitionGroup` referenced by the
      local scope, where the previous resolved state is in the local scope and the outgoing
      transition's `to` is the current resolved state.
-9. **Occurrence scope:** If a resolved surface has `graphNodeInstanceRef`, Consumers MAY follow
-   `GraphNodeInstance.parentInstanceRef` to derive an occurrence tree for repeated graph-node
+9. **Occurrence scope:** If a resolved surface instance has `graphNodeInstanceRef`, Consumers MAY
+   follow `GraphNodeInstance.parentInstanceRef` to derive an occurrence tree for repeated graph-node
    occurrences.
 10. **Observed affordance evidence:** If a runtime event's surface resolves to a `Transition`,
    `OutgoingTransition`, or `OutgoingTransitionGroup`, the event is observed affordance evidence. It
@@ -225,27 +227,37 @@ model and does not need a serialized status value.
     {
       "@type": "Surface",
       "@id": "urn:ujg:surface:cart:nested-1",
-      "graphNodeRef": "urn:ujg:state:cart",
-      "graphNodeInstanceRef": "urn:ujg:graph-node-instance:checkout:nested-1"
+      "graphNodeRef": "urn:ujg:state:cart"
     },
     {
       "@type": "Surface",
       "@id": "urn:ujg:surface:payment-card:nested-1",
-      "graphNodeRef": "urn:ujg:state:payment-card",
+      "graphNodeRef": "urn:ujg:state:payment-card"
+    },
+    {
+      "@type": "SurfaceInstance",
+      "@id": "urn:ujg:surface-instance:cart:nested-1",
+      "surfaceRef": "urn:ujg:surface:cart:nested-1",
+      "graphNodeInstanceRef": "urn:ujg:graph-node-instance:checkout:nested-1"
+    },
+    {
+      "@type": "SurfaceInstance",
+      "@id": "urn:ujg:surface-instance:payment-card:nested-1",
+      "surfaceRef": "urn:ujg:surface:payment-card:nested-1",
       "graphNodeInstanceRef": "urn:ujg:graph-node-instance:checkout:nested-1:payment"
     },
     {
       "@type": "RuntimeEvent",
       "@id": "urn:ujg:event:nested-1:100",
       "executionId": "urn:ujg:execution:nested-1",
-      "eventSurfaceRef": "urn:ujg:surface:cart:nested-1"
+      "surfaceInstanceRef": "urn:ujg:surface-instance:cart:nested-1"
     },
     {
       "@type": "RuntimeEvent",
       "@id": "urn:ujg:event:nested-1:200",
       "executionId": "urn:ujg:execution:nested-1",
       "previousId": "urn:ujg:event:nested-1:100",
-      "eventSurfaceRef": "urn:ujg:surface:payment-card:nested-1"
+      "surfaceInstanceRef": "urn:ujg:surface-instance:payment-card:nested-1"
     },
     {
       "@id": "urn:mapping:nested-1",
@@ -275,6 +287,7 @@ model and does not need a serialized status value.
 ```
 
 The second mapped step resolves its observed Graph node by following
-`urn:ujg:event:nested-1:200` to `urn:ujg:surface:payment-card:nested-1`, then following that
-surface's `graphNodeRef` to `urn:ujg:state:payment-card`. The surface's `graphNodeInstanceRef`
+`urn:ujg:event:nested-1:200` to `urn:ujg:surface-instance:payment-card:nested-1`, then following
+that instance's `surfaceRef` to `urn:ujg:surface:payment-card:nested-1` and that surface's
+`graphNodeRef` to `urn:ujg:state:payment-card`. The surface instance's `graphNodeInstanceRef`
 identifies the concrete payment-card occurrence and its parent occurrence.

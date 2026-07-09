@@ -129,7 +129,10 @@ The normative DesignSystem JSON-LD context is defined below and is published at
 mappings and coercions for DesignSystem-specific properties and classes.
 
 Surface uses `graphNodeRef` for graph-node attachment. This module keeps a separate, type-scoped
-`surfaceRef` on `SurfaceRealization`, where it means realization-to-Surface.
+`surfaceRef` on `SurfaceRealization`, where it means realization-to-Surface. Surface also defines
+`surfaceRef` on `SurfaceInstance`, where it means surface-instance-to-Surface. Design System
+realization and slot-binding references continue to target stable `Surface` nodes, not
+`SurfaceInstance` nodes.
 
 :::include ./design-system.context.jsonld :::
 

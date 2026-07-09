@@ -1,8 +1,9 @@
 ## Overview
 
-This module defines a vocabulary for **experience semantics** traditionally found in User Journey
-Maps, such as steps, phases, and pain points. It annotates [[UJG Graph]] through [[UJG Surface]]
-without changing graph topology.
+This optional module defines a vocabulary for **experience semantics** traditionally found in User
+Journey Maps, such as steps, phases, and pain points. It adds UXR-oriented annotations over
+[[UJG Surface]] without changing graph topology, runtime ordering, mapping behavior, or the core
+journey mechanics.
 
 ## Normative Artifacts
 
@@ -12,7 +13,9 @@ This module is published through the following artifacts:
 - `experience.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/ed/ns/experience.context.jsonld`
 - `experience.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/ed/ns/experience.shape`
 
-Examples in this page use an explicit context array composed from the published module contexts. The same composition is also published as the convenience context `https://ujg.specs.openuji.org/ed/ns/context.jsonld`.
+Examples in this page use an explicit context array composed from the published module contexts.
+Documents that use Experience terms must include `https://ujg.specs.openuji.org/ed/ns/experience.context.jsonld`
+explicitly; the aggregate ED context does not include this optional module.
 
 **Non-goals:**
 
@@ -31,10 +34,9 @@ Examples in this page use an explicit context array composed from the published 
 
 ## Annotation Model
 
-Experience annotations add semantic grouping and interpretation to graph-bound surfaces without
-changing traversal behavior. The normative structural definition is provided by the ontology below;
-the context and shape that follow also show the shared Graph terms reused by this module, including
-`label` and `tags`.
+Experience annotations add semantic grouping and interpretation to surfaces without changing
+traversal behavior. The normative structural definition is provided by the ontology below; graph
+meaning is derived through the referenced [=Surface=] and its `graphNodeRef`.
 
 `surfaceRefs` records the surfaces that participate in an `ExperienceStep`. A step's touchpoints are
 derived from the referenced surfaces' `touchpointRef` values when those references are present. The
@@ -55,7 +57,7 @@ The normative Experience ontology is defined below and is published at `https://
 
 ## JSON-LD Context {data-cop-concept="jsonld-context"}
 
-The normative Experience JSON-LD context is defined below and is published at `https://ujg.specs.openuji.org/ed/ns/experience.context.jsonld`. It provides the compact JSON-LD term mappings for the Experience vocabulary and the shared Graph terms reused by Experience examples.
+The normative Experience JSON-LD context is defined below and is published at `https://ujg.specs.openuji.org/ed/ns/experience.context.jsonld`. It provides the compact JSON-LD term mappings for the Experience vocabulary.
 
 :::include ./experience.context.jsonld :::
 
@@ -78,7 +80,13 @@ The rules below define the remaining resolution and non-structural constraints f
 
 ```json
 {
-  "@context": "https://ujg.specs.openuji.org/ed/ns/context.jsonld",
+  "@context": [
+    "https://ujg.specs.openuji.org/ed/ns/core.context.jsonld",
+    "https://ujg.specs.openuji.org/ed/ns/graph.context.jsonld",
+    "https://ujg.specs.openuji.org/ed/ns/surface.context.jsonld",
+    "https://ujg.specs.openuji.org/ed/ns/runtime.context.jsonld",
+    "https://ujg.specs.openuji.org/ed/ns/experience.context.jsonld"
+  ],
   "@id": "https://example.com/ujg/experience/checkout.jsonld",
   "@type": "UJGDocument",
   "nodes": [
@@ -151,10 +159,16 @@ The rules below define the remaining resolution and non-structural constraints f
     },
 
     {
+      "@type": "SurfaceInstance",
+      "@id": "urn:ujg:surface-instance:shipping-form",
+      "surfaceRef": "urn:ujg:surface:shipping-form"
+    },
+
+    {
       "@type": "RuntimeEvent",
       "@id": "urn:ujg:event:12345:100",
       "executionId": "urn:ujg:execution:12345",
-      "eventSurfaceRef": "urn:ujg:surface:shipping-form"
+      "surfaceInstanceRef": "urn:ujg:surface-instance:shipping-form"
     }
   ]
 }

@@ -21,7 +21,8 @@
         "modules/actor",
         "modules/artifact",
         "modules/runtime-evidence",
-        "experience",
+        "modules/observability",
+        "modules/experience",
         "mapping",
         "modules/design-system",
         "modules/distributed-journey",
@@ -54,7 +55,8 @@
         "modules/actor",
         "modules/artifact",
         "modules/runtime-evidence",
-        "experience",
+        "modules/observability",
+        "modules/experience",
         "mapping",
         "modules/design-system",
         "modules/distributed-journey",
@@ -68,15 +70,6 @@
       "generatedSkill": "ujg-ed-core-modeling",
       "title": "Core"
     },
-    "experience": {
-      "dependents": [],
-      "deps": [
-        "graph",
-        "surface"
-      ],
-      "generatedSkill": null,
-      "title": "Experience"
-    },
     "graph": {
       "dependents": [
         "modules/routing",
@@ -88,7 +81,8 @@
         "surface",
         "modules/actor",
         "modules/runtime-evidence",
-        "experience",
+        "modules/observability",
+        "modules/experience",
         "mapping",
         "modules/design-system",
         "modules/distributed-journey",
@@ -187,13 +181,32 @@
       "generatedSkill": "ujg-ed-distributed-journey-modeling",
       "title": "Distributed Journey"
     },
-    "modules/l10n": {
+    "modules/experience": {
       "dependents": [],
+      "deps": [
+        "surface"
+      ],
+      "generatedSkill": null,
+      "title": "Experience"
+    },
+    "modules/l10n": {
+      "dependents": [
+        "modules/observability"
+      ],
       "deps": [
         "graph"
       ],
       "generatedSkill": "ujg-ed-l10n-modeling",
       "title": "Localization"
+    },
+    "modules/observability": {
+      "dependents": [],
+      "deps": [
+        "surface",
+        "modules/l10n"
+      ],
+      "generatedSkill": null,
+      "title": "Observability"
     },
     "modules/routing": {
       "dependents": [],
@@ -256,7 +269,8 @@
       "dependents": [
         "runtime",
         "modules/runtime-evidence",
-        "experience",
+        "modules/observability",
+        "modules/experience",
         "mapping",
         "modules/design-system",
         "modules/distributed-journey",

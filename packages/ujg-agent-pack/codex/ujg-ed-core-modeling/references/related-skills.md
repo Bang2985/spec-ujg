@@ -27,7 +27,8 @@ Module scope: core
 - modules/actor
 - modules/artifact
 - modules/runtime-evidence
-- experience
+- modules/observability
+- modules/experience
 - mapping
 - modules/design-system
 - modules/distributed-journey

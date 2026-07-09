@@ -17,7 +17,8 @@ Localization attaches locale and copy metadata to UJG nodes.
 It does not define routes, traversal, locale negotiation, runtime translation loading, ICU behavior, imports, or graph identity.
 
 Graph defines topology.
-Localization annotates graph or experience resources with copy and locale metadata.
+Localization annotates UJG nodes with copy and locale metadata. It can be used with Experience
+resources only when the Experience optional module is explicitly composed.
 
 ## Required context
 

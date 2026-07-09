@@ -154,10 +154,15 @@ the SHACL shape.
       "graphNodeRef": "urn:state:shipping-form"
     },
     {
+      "@id": "urn:surface-instance:shipping-form",
+      "@type": "SurfaceInstance",
+      "surfaceRef": "urn:surface:shipping-form"
+    },
+    {
       "@id": "urn:event:12345:100",
       "@type": "RuntimeEvent",
       "executionId": "urn:execution:12345",
-      "eventSurfaceRef": "urn:surface:shipping-form",
+      "surfaceInstanceRef": "urn:surface-instance:shipping-form",
       "payload": {
         "action": "surface.enter"
       }

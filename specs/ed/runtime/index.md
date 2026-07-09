@@ -1,8 +1,8 @@
 ## Overview
 
-This module defines the data model for recording actual user behavior as a **causally ordered event chain** within a bounded execution. Ordering is established by explicit linkage between events, not by timestamps. Runtime events reference the exposed `Surface` where the runtime moment was observed.
+This module defines the data model for recording actual user behavior as a **causally ordered event chain** within a bounded execution. Ordering is established by explicit linkage between events, not by timestamps. Runtime events reference the concrete `SurfaceInstance` where the runtime moment was observed.
 
-Runtime records observed execution facts. A Client does not need to receive or understand the whole UJG graph document in order to emit runtime events. Each event records the observed surface, and Mapping can later resolve that surface through `Surface.graphNodeRef` and optional Surface occurrence data.
+Runtime records observed execution facts. A Client does not need to receive or understand the whole UJG graph document in order to emit runtime events. Each event records the observed surface instance, and Mapping can later resolve that instance through `SurfaceInstance.surfaceRef`, `Surface.graphNodeRef`, and optional `GraphNodeInstance` occurrence data.
 
 ## Normative Artifacts
 
@@ -37,31 +37,34 @@ graph TB
   E2 -->|previousId| E1
   E3 -->|previousId| E2
   end
-  E1 -->|eventSurfaceRef| S1[Surface<br/>cart]
-  E2 -->|eventSurfaceRef| S2[Surface<br/>payment]
-  E3 -->|eventSurfaceRef| S3[Surface<br/>confirmation]
+  E1 -->|surfaceInstanceRef| SI1[SurfaceInstance<br/>cart]
+  E2 -->|surfaceInstanceRef| SI2[SurfaceInstance<br/>payment]
+  E3 -->|surfaceInstanceRef| SI3[SurfaceInstance<br/>confirmation]
+  SI1 -->|surfaceRef| S1[Surface<br/>cart]
+  SI2 -->|surfaceRef| S2[Surface<br/>payment]
+  SI3 -->|surfaceRef| S3[Surface<br/>confirmation]
 ```
 
 A [=JourneyExecution=] identifies one logical trace. It is not required to enumerate its [=RuntimeEvent|RuntimeEvents=]. Runtime events are associated with an execution by `executionId`, which supports append-only event streams.
 
 A [=RuntimeEvent=] records one runtime moment and may reference its immediate predecessor via `previousId`; if `previousId` is omitted, the event is the [=Root Event=].
 
-A [=RuntimeEvent=] references exactly one [=Surface=] using `eventSurfaceRef`. The referenced [=Surface=] supplies the visible boundary where the event was observed.
+A [=RuntimeEvent=] references exactly one [=SurfaceInstance=] using `surfaceInstanceRef`. The referenced [=SurfaceInstance=] supplies the concrete visible occurrence where the event was observed.
 
-The core runtime address is `RuntimeEvent.eventSurfaceRef`. Consumers that need Graph meaning resolve the surface through `Surface.graphNodeRef`. Consumers that need repeated-occurrence scope MAY also follow `Surface.graphNodeInstanceRef`.
+The core runtime address is `RuntimeEvent.surfaceInstanceRef`. Consumers that need Graph meaning resolve the surface instance through `SurfaceInstance.surfaceRef` and then through `Surface.graphNodeRef`. Consumers that need repeated-occurrence scope MAY also follow `SurfaceInstance.graphNodeInstanceRef`.
 
 ## Runtime Event {data-cop-concept="runtime-event"}
 
 <spec-statement>
 
 1. A [=RuntimeEvent=] MUST reference exactly one [=JourneyExecution=] using `executionId`.
-2. A [=RuntimeEvent=] MUST reference exactly one [=Surface=] using `eventSurfaceRef`.
-3. `eventSurfaceRef` MUST resolve to a `Surface` in the current document set or imported documents.
-4. The referenced surface MUST be sufficient to identify the observed runtime occurrence.
+2. A [=RuntimeEvent=] MUST reference exactly one [=SurfaceInstance=] using `surfaceInstanceRef`.
+3. `surfaceInstanceRef` MUST resolve to a `SurfaceInstance` in the current document set or imported documents.
+4. The referenced surface instance MUST be sufficient to identify the observed runtime occurrence.
 5. A [=RuntimeEvent=] MAY reference its immediate predecessor using `previousId`.
 6. If `previousId` is omitted, the event is a [=Root Event=] in the execution chain.
 7. Runtime event order MUST be reconstructed using `previousId` links, not timestamps.
-8. The `payload` property, when present, is opaque runtime data and MUST NOT be required for resolving `eventSurfaceRef`.
+8. The `payload` property, when present, is opaque runtime data and MUST NOT be required for resolving `surfaceInstanceRef`.
 
 </spec-statement>
 
@@ -110,7 +113,7 @@ A Consumer reconstructing event order **MUST**:
 
 </spec-statement>
 
-A Consumer interpreting a runtime event's Graph meaning MUST resolve the event's `eventSurfaceRef` to a [=Surface=] and use that surface's `graphNodeRef` as the observed Graph node.
+A Consumer interpreting a runtime event's Graph meaning MUST resolve the event's `surfaceInstanceRef` to a [=SurfaceInstance=], follow that instance's `surfaceRef` to a [=Surface=], and use that surface's `graphNodeRef` as the observed Graph node.
 
 ---
 
@@ -147,10 +150,20 @@ A Consumer interpreting a runtime event's Graph meaning MUST resolve the event's
       "graphNodeRef": "urn:ujg:state:payment-card"
     },
     {
+      "@type": "SurfaceInstance",
+      "@id": "urn:ujg:surface-instance:shipping-form",
+      "surfaceRef": "urn:ujg:surface:shipping-form"
+    },
+    {
+      "@type": "SurfaceInstance",
+      "@id": "urn:ujg:surface-instance:payment-card",
+      "surfaceRef": "urn:ujg:surface:payment-card"
+    },
+    {
       "@type": "RuntimeEvent",
       "@id": "urn:ujg:event:12345:100",
       "executionId": "urn:ujg:execution:12345",
-      "eventSurfaceRef": "urn:ujg:surface:shipping-form",
+      "surfaceInstanceRef": "urn:ujg:surface-instance:shipping-form",
       "payload": { "action": "surface.enter" }
     },
     {
@@ -158,7 +171,7 @@ A Consumer interpreting a runtime event's Graph meaning MUST resolve the event's
       "@id": "urn:ujg:event:12345:200",
       "executionId": "urn:ujg:execution:12345",
       "previousId": "urn:ujg:event:12345:100",
-      "eventSurfaceRef": "urn:ujg:surface:payment-card",
+      "surfaceInstanceRef": "urn:ujg:surface-instance:payment-card",
       "payload": { "action": "field.complete", "field": "card-number" }
     }
   ]

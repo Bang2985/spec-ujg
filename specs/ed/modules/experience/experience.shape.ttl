@@ -1,5 +1,4 @@
 @prefix ujg: <https://ujg.specs.openuji.org/ed/ns/core#> .
-@prefix ujggraph: <https://ujg.specs.openuji.org/ed/ns/graph#> .
 @prefix ujgexperience: <https://ujg.specs.openuji.org/ed/ns/experience#> .
 @prefix ujgsurface: <https://ujg.specs.openuji.org/ed/ns/surface#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
@@ -10,13 +9,6 @@
 ujgexperienceshape:ExperienceStepShape a sh:NodeShape ;
   sh:targetClass ujgexperience:ExperienceStep ;
   sh:nodeKind sh:IRI ;
-
-  sh:property [
-    sh:path ujggraph:label ;
-    sh:datatype xsd:string ;
-    sh:minCount 1 ;
-    sh:maxCount 1 ;
-  ] ;
 
   sh:property [
     sh:path ujgexperience:surfaceRefs ;
@@ -30,23 +22,11 @@ ujgexperienceshape:ExperienceStepShape a sh:NodeShape ;
     sh:class ujgexperience:Phase ;
     sh:nodeKind sh:IRI ;
     sh:maxCount 1 ;
-  ] ;
-
-  sh:property [
-    sh:path ujggraph:tags ;
-    sh:datatype xsd:string ;
   ] .
 
 ujgexperienceshape:PhaseShape a sh:NodeShape ;
   sh:targetClass ujgexperience:Phase ;
   sh:nodeKind sh:IRI ;
-
-  sh:property [
-    sh:path ujggraph:label ;
-    sh:datatype xsd:string ;
-    sh:minCount 1 ;
-    sh:maxCount 1 ;
-  ] ;
 
   sh:property [
     sh:path ujgexperience:order ;
@@ -57,13 +37,6 @@ ujgexperienceshape:PhaseShape a sh:NodeShape ;
 ujgexperienceshape:PainPointShape a sh:NodeShape ;
   sh:targetClass ujgexperience:PainPoint ;
   sh:nodeKind sh:IRI ;
-
-  sh:property [
-    sh:path ujggraph:label ;
-    sh:datatype xsd:string ;
-    sh:minCount 1 ;
-    sh:maxCount 1 ;
-  ] ;
 
   sh:property [
     sh:path ujgexperience:experienceRefs ;
@@ -84,9 +57,4 @@ ujgexperienceshape:PainPointShape a sh:NodeShape ;
     sh:path ujgexperience:description ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
-  ] ;
-
-  sh:property [
-    sh:path ujggraph:tags ;
-    sh:datatype xsd:string ;
   ] .

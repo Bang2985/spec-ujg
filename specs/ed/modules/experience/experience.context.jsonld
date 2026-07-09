@@ -3,7 +3,6 @@
     "@version": 1.1,
 
     "ujgexperience": "https://ujg.specs.openuji.org/ed/ns/experience#",
-    "ujggraph": "https://ujg.specs.openuji.org/ed/ns/graph#",
     "ujgsurface": "https://ujg.specs.openuji.org/ed/ns/surface#",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
 
@@ -11,11 +10,6 @@
     "Phase": "ujgexperience:Phase",
     "PainPoint": "ujgexperience:PainPoint",
 
-    "label": "ujggraph:label",
-    "tags": {
-      "@id": "ujggraph:tags",
-      "@container": "@set"
-    },
     "surfaceRefs": {
       "@id": "ujgexperience:surfaceRefs",
       "@type": "@id",

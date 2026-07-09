@@ -29,8 +29,8 @@ ujgruntimeshape:RuntimeEventShape a sh:NodeShape ;
   ] ;
 
   sh:property [
-    sh:path ujgruntime:eventSurfaceRef ;
-    sh:class ujgsurface:Surface ;
+    sh:path ujgruntime:surfaceInstanceRef ;
+    sh:class ujgsurface:SurfaceInstance ;
     sh:nodeKind sh:IRI ;
     sh:minCount 1 ;
     sh:maxCount 1 ;

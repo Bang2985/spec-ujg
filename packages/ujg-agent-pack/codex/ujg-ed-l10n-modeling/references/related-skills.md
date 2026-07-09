@@ -14,7 +14,7 @@ Module scope: modules/l10n
 
 ## Downstream Spec Modules
 
-- None
+- modules/observability
 
 ## Usage
 
