@@ -5,9 +5,8 @@ producers declare how a visible surface can be recognized by synthetic checks, b
 native collectors, or other observation adapters without changing Graph traversal or Runtime
 ordering.
 
-Observability depends on [[UJG Surface]] and [[UJG Localization]]. A binding points to a `Surface`;
-
-
+Observability depends on [[UJG Surface]] and [[UJG Localization]]. A binding points to a `Surface`
+and uses localized message bundles when accessible names or descriptions are part of recognition.
 Concrete runtime occurrence identity is derived by the collector when Runtime data is emitted. When a
 binding has a `SurfaceInstanceResolver`, the resolver identifies the accessibility-exposed feature
 used to derive the concrete instance key.
