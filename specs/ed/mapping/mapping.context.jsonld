@@ -25,6 +25,10 @@
       "@id": "ujgmapping:mappedEventRef",
       "@type": "@id"
     },
+    "observedAffordanceEventRef": {
+      "@id": "ujgmapping:observedAffordanceEventRef",
+      "@type": "@id"
+    },
     "mappedStateRef": {
       "@id": "ujgmapping:mappedStateRef",
       "@type": "@id"

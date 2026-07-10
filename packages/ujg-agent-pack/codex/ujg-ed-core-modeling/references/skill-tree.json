@@ -258,7 +258,7 @@
       "moduleId": null,
       "name": "ujg-ed-modeling",
       "publicUrl": "https://ujg.specs.openuji.org/ed",
-      "scope": "whole UJG document modeling across Core, Graph, Runtime, Experience, Localization, and optional modules",
+      "scope": "whole UJG document modeling across Core, Graph, Surface, Runtime, Mapping, Metrics, and optional modules",
       "source": "sources/ed/skills/root/skill.md"
     },
     {

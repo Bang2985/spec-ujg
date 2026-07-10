@@ -1,6 +1,6 @@
 {
-  "artifactHash": "sha256:ce35eb4801c123e037df362abde602a23eefdf56a8504a40544f45f44d4b00dc",
-  "configHash": "sha256:6708c3cfaf71e22741fd44a1026b81d5e3ada182766c7e67e9dc9ba2f02e1bc6",
+  "artifactHash": "sha256:d891e86ceaa1e128d40df50f3578d260bfa2d14e0bd6797081782af3f33f5904",
+  "configHash": "sha256:357408384732cb55a27870aad246862f20f482f04d447a64c00c9e4edac4bf15",
   "package": {
     "id": "ujg-agent-pack",
     "name": "@openuji/ujg-agent-pack",
@@ -12,7 +12,7 @@
     "name": "ujg-ed-design-system-modeling"
   },
   "sourceHash": "sha256:8a10f2f59bd8c38da44beb64c526781370a0f4c3da56695bb24deda4b2608986",
-  "specHash": "sha256:1bbe161943652e83055c8b1fd7cdc08fb4252b05a772e83e4bc21b805d68ca6f",
+  "specHash": "sha256:54b742ade88828f6ac0a882aa5ce5b57ee1260be0628c3a802f91eb8f705709d",
   "target": {
     "id": "ed",
     "label": "Editor's Draft"

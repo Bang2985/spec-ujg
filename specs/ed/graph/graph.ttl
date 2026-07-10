@@ -52,7 +52,9 @@ ujggraph:OutgoingTransitionGroup a owl:Class ;
   rdfs:subClassOf ujg:Node .
 
 ujggraph:Actor a owl:Class ;
-  rdfs:subClassOf ujg:Node .
+  rdfs:subClassOf ujg:Node ;
+  rdfs:label "Actor" ;
+  rdfs:comment "An addressable participant, role-like entity, system, organization, or other party that a graph node can belong to." .
 
 ### Properties
 
@@ -143,32 +145,16 @@ ujggraph:subjectActorRef a owl:ObjectProperty ;
   rdfs:domain [
     a owl:Class ;
     owl:unionOf (
-      ujggraph:State
-      ujggraph:CompositeState
-    )
-  ] ;
-  rdfs:range ujggraph:Actor .
-
-ujggraph:responsibleActorRef a owl:ObjectProperty ;
-  rdfs:domain [
-    a owl:Class ;
-    owl:unionOf (
       ujggraph:Journey
+      ujggraph:JourneyEntry
       ujggraph:State
       ujggraph:CompositeState
       ujggraph:Transition
+      ujggraph:JourneyExit
       ujggraph:OutgoingTransition
       ujggraph:OutgoingTransitionGroup
     )
   ] ;
-  rdfs:range ujggraph:Actor .
-
-ujggraph:eligibleActorRefs a owl:ObjectProperty ;
-  rdfs:domain [
-    a owl:Class ;
-    owl:unionOf (
-      ujggraph:Transition
-      ujggraph:OutgoingTransition
-    )
-  ] ;
-  rdfs:range ujggraph:Actor .
+  rdfs:range ujggraph:Actor ;
+  rdfs:label "subject actor ref" ;
+  rdfs:comment "References the Actor whose journey perspective or ownership scope a graph node belongs to." .

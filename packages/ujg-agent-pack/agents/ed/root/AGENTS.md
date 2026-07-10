@@ -2,13 +2,13 @@
 
 # UJG ED Modeling Agent Instructions
 
-Use these instructions for whole UJG document modeling across Core, Graph, Runtime, Experience, Localization, and optional modules in Editor's Draft.
+Use these instructions for whole UJG document modeling across Core, Graph, Surface, Runtime, Mapping, Metrics, and optional modules in Editor's Draft.
 
 ## Skill tree context
 
 Target: Editor's Draft
 Public spec URL: https://ujg.specs.openuji.org/ed
-Scope: whole UJG document modeling across Core, Graph, Runtime, Experience, Localization, and optional modules
+Scope: whole UJG document modeling across Core, Graph, Surface, Runtime, Mapping, Metrics, and optional modules
 Module scope: whole target
 
 Related generated skills:
@@ -41,6 +41,8 @@ Core: document container and top-level nodes.
 Graph: journeys, states, transitions, composition, exits, outgoing navigation, indexes, actors, and actor references.
 Surface: materialized graph-subject surfaces, concrete surface instances, surface attachments, touchpoints, channels, origins.
 Runtime: observed events, values, clicks, URLs, timestamps, payloads.
+Mapping: state-observation steps resolved from Runtime through Surface to Graph, with optional immediately preceding affordance event references.
+Metrics: metric observations, especially Mapping-derived counts and rates over resolved journey mappings.
 Experience: journey-map annotations such as steps, phases, and pain points over surfaces.
 Localization: locale metadata, localized copy references, locale switch affordance metadata.
 Observability: accessible-object recognition contracts for surfaces, using localized message bundles
@@ -49,13 +51,13 @@ State Data: state-like data context or binding identity attached with `stateData
 Artifact: portable resources produced, consumed, exchanged, or referenced by UJG nodes.
 Distributed Journey: cross-touchpoint human-facing journeys composed from Graph actors, Surface, Action, and Artifact.
 
-Core is required for UJG documents. Include Graph when modeling topology or actor terms such as `Actor`, `subjectActorRef`, `responsibleActorRef`, and `eligibleActorRefs`. Include Surface when using `Surface`, `SurfaceInstance`, `Touchpoint`, `GraphNodeInstance`, `graphNodeRef`, `surfaceRef`, `graphNodeInstanceRef`, `touchpointRef`, `parentInstanceRef`, `channel`, or `origin`. Include Runtime only for observed behavior or traces. Include Experience only for journey-map annotations such as `ExperienceStep`, `surfaceRefs`, `Phase`, or `PainPoint`. Include Localization only when using l10n terms such as `l10n:targetLocale`, `copyRef`, `defaultLocale`, `fallbackLocales`, or `locales`. Include Observability only when modeling `ObservationBinding`, `observeSurfaceRef`, `SurfaceInstanceResolver`, `surfaceInstanceResolverRef`, `instanceKeyFeatureRef`, `AccessibleLocator`, `accessibleNameRef`, or `accessibleDescriptionRef`; Observability also requires Localization for name and description bundles.
+Core is required for UJG documents. Include Graph when modeling topology or actor terms such as `Actor` and `subjectActorRef`. Include Surface when using `Surface`, `SurfaceInstance`, `Touchpoint`, `GraphNodeInstance`, `graphNodeRef`, `surfaceRef`, `graphNodeInstanceRef`, `touchpointRef`, `parentInstanceRef`, `channel`, or `origin`. Include Runtime only for observed behavior or traces. Include Mapping when resolving Runtime state observations through Surface to Graph with `JourneyMapping`, `MappedStep`, `mappedEventRef`, `mappedStateRef`, `observedAffordanceEventRef`, or `explainedByTransitionRef`. Include Metrics when emitting `MetricObservation` records, Mapping-derived step counts, movement counts, rates, or aggregate metric values. Include Experience only for journey-map annotations such as `ExperienceStep`, `surfaceRefs`, `Phase`, or `PainPoint`. Include Localization only when using l10n terms such as `l10n:targetLocale`, `copyRef`, `defaultLocale`, `fallbackLocales`, or `locales`. Include Observability only when modeling `ObservationBinding`, `observeSurfaceRef`, `SurfaceInstanceResolver`, `surfaceInstanceResolverRef`, `instanceKeyFeatureRef`, `AccessibleLocator`, `accessibleNameRef`, or `accessibleDescriptionRef`; Observability also requires Localization for name and description bundles.
 
 Include State Data only when using `StateData` or `stateDataRef`. Do not use State Data for files,
 archives, reports, invites, media, protocol objects, tokens, or other portable resources; use
 Artifact for those.
 
-Do not include Runtime, Experience, or Localization merely because screenshots, links, typed values, or translated UI are present. Screenshots can inform Graph structure, but Graph describes intended topology, not observed runtime facts.
+Do not include Runtime, Mapping, Metrics, Experience, or Localization merely because screenshots, links, typed values, counts, or translated UI are present. Screenshots can inform Graph structure, but Graph describes intended topology, not observed runtime facts.
 
 ## Core JSON-LD rules
 
@@ -137,7 +139,7 @@ Do not split one page into multiple journeys merely because it has sections, a f
 
 Use `State` for a stable observable condition.
 
-Use Graph `subjectActorRef` on `State` or `CompositeState` when the state-like node represents one actor's journey perspective, such as "Alice sees share confirmed" or "Bob sees incoming share".
+Use Graph `subjectActorRef` on `Journey` to assign the journey to an actor. Entries, states, transitions, exits, outgoing groups, and child journeys inherit the effective actor unless they declare their own `subjectActorRef`.
 
 Same-journey states usually include page sections, form ready, input-present condition, validation error, submission success/failure, empty/populated result, loading complete, confirmation message, inline error panel, and simple same-page modal/dialog.
 
@@ -259,7 +261,7 @@ Keep runtime facts out of Graph, including typed query, input value, clicked ele
 
 For Runtime traces, a `RuntimeEvent` must identify the execution with `executionId` and the observed concrete occurrence with `surfaceInstanceRef`. Resolve Graph meaning through `SurfaceInstance.surfaceRef` and the referenced `Surface.graphNodeRef`. Use `previousId` only to reconstruct observed event order.
 
-To derive actor perspective for an observed state occurrence, resolve `RuntimeEvent.surfaceInstanceRef -> SurfaceInstance.surfaceRef -> Surface.graphNodeRef -> State|CompositeState.subjectActorRef`. Do not add collector or observer attribution fields to Runtime; keep collector/source metadata in `payload` or `extensions`.
+To derive actor perspective for an observed state occurrence, resolve `RuntimeEvent.surfaceInstanceRef -> SurfaceInstance.surfaceRef -> Surface.graphNodeRef`, then use the graph node's effective actor from `subjectActorRef` or inherited journey actor assignment. Do not add collector or observer attribution fields to Runtime; keep collector/source metadata in `payload` or `extensions`.
 
 Use Experience only for journey-map annotations. Experience annotations must not change Graph traversal or repair missing Graph topology.
 

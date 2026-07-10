@@ -35,10 +35,29 @@ ujggraphshape:IndexStateShape a sh:NodeShape ;
 
 ujggraphshape:ActorShape a sh:NodeShape ;
   sh:targetClass ujggraph:Actor ;
-  sh:nodeKind sh:IRI .
+  sh:nodeKind sh:IRI ;
+
+  sh:property [
+    sh:path ujggraph:label ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path ujggraph:tags ;
+    sh:datatype xsd:string ;
+  ] .
 
 ujggraphshape:SubjectActorHostShape a sh:NodeShape ;
-  sh:targetClass ujggraph:State, ujggraph:CompositeState ;
+  sh:targetClass
+    ujggraph:Journey,
+    ujggraph:JourneyEntry,
+    ujggraph:State,
+    ujggraph:CompositeState,
+    ujggraph:Transition,
+    ujggraph:JourneyExit,
+    ujggraph:OutgoingTransition,
+    ujggraph:OutgoingTransitionGroup ;
   sh:nodeKind sh:IRI ;
 
   sh:property [
@@ -51,53 +70,14 @@ ujggraphshape:SubjectActorHostShape a sh:NodeShape ;
 ujggraphshape:SubjectActorUsageShape a sh:NodeShape ;
   sh:targetSubjectsOf ujggraph:subjectActorRef ;
   sh:or (
-    [ sh:class ujggraph:State ]
-    [ sh:class ujggraph:CompositeState ]
-  ) .
-
-ujggraphshape:ResponsibleActorHostShape a sh:NodeShape ;
-  sh:targetClass
-    ujggraph:Journey,
-    ujggraph:State,
-    ujggraph:CompositeState,
-    ujggraph:Transition,
-    ujggraph:OutgoingTransition,
-    ujggraph:OutgoingTransitionGroup ;
-  sh:nodeKind sh:IRI ;
-
-  sh:property [
-    sh:path ujggraph:responsibleActorRef ;
-    sh:class ujggraph:Actor ;
-    sh:nodeKind sh:IRI ;
-    sh:maxCount 1 ;
-  ] .
-
-ujggraphshape:ResponsibleActorUsageShape a sh:NodeShape ;
-  sh:targetSubjectsOf ujggraph:responsibleActorRef ;
-  sh:or (
     [ sh:class ujggraph:Journey ]
+    [ sh:class ujggraph:JourneyEntry ]
     [ sh:class ujggraph:State ]
     [ sh:class ujggraph:CompositeState ]
     [ sh:class ujggraph:Transition ]
+    [ sh:class ujggraph:JourneyExit ]
     [ sh:class ujggraph:OutgoingTransition ]
     [ sh:class ujggraph:OutgoingTransitionGroup ]
-  ) .
-
-ujggraphshape:EligibleActorHostShape a sh:NodeShape ;
-  sh:targetClass ujggraph:Transition, ujggraph:OutgoingTransition ;
-  sh:nodeKind sh:IRI ;
-
-  sh:property [
-    sh:path ujggraph:eligibleActorRefs ;
-    sh:class ujggraph:Actor ;
-    sh:nodeKind sh:IRI ;
-  ] .
-
-ujggraphshape:EligibleActorUsageShape a sh:NodeShape ;
-  sh:targetSubjectsOf ujggraph:eligibleActorRefs ;
-  sh:or (
-    [ sh:class ujggraph:Transition ]
-    [ sh:class ujggraph:OutgoingTransition ]
   ) .
 
 ujggraphshape:JourneyShape a sh:NodeShape ;
@@ -141,6 +121,13 @@ ujggraphshape:JourneyShape a sh:NodeShape ;
     sh:path ujggraph:outgoingTransitionGroupRefs ;
     sh:class ujggraph:OutgoingTransitionGroup ;
     sh:nodeKind sh:IRI ;
+  ] ;
+
+  sh:property [
+    sh:path ujggraph:subjectActorRef ;
+    sh:class ujggraph:Actor ;
+    sh:nodeKind sh:IRI ;
+    sh:maxCount 1 ;
   ] ;
 
   sh:sparql [

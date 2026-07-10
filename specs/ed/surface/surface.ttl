@@ -41,7 +41,6 @@ ujgsurface:graphNodeRef a owl:ObjectProperty ;
       ujggraph:CompositeState
       ujggraph:Transition
       ujggraph:OutgoingTransition
-      ujggraph:OutgoingTransitionGroup
     )
   ] .
 

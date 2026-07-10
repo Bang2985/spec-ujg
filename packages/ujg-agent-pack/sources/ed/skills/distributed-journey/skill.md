@@ -15,7 +15,7 @@ Use it for federated sharing, cross-instance account migration, remote follow/su
 Do not use it for simple single-site forms, checkouts, dashboards, ordinary app flows, server-only integration flows, or artifact lifecycle diagrams.
 Distributed Journey does not define new journey classes, traversal semantics, runtime causality, protocol semantics, queue behavior, retry behavior, sync state, server truth, or database state.
 Multiple touchpoints do not automatically mean one distributed `Journey`. A distributed scenario may contain several related local journeys. Use `JourneyEntryIndex` to list related journey entries and Runtime to record observed order or interleaving.
-Use Graph `subjectActorRef` on states or composite states to identify whose local journey perspective a visible state represents.
+Use Graph `subjectActorRef` on journeys to identify whose local journey perspective the journey represents; contained graph nodes inherit that actor unless they declare their own actor.
 
 ## Contexts
 
@@ -114,8 +114,7 @@ Do not create a new `Surface` for every status if the same UI surface presents m
 ## Actors
 
 Use Graph `Actor` nodes for human participants, roles, systems, or organizations that need to be addressable.
-Use `subjectActorRef` on `State` and `CompositeState` for Alice/Bob/local actor perspective.
-Use `eligibleActorRefs` only on `Transition` or `OutgoingTransition`, not on states.
+Use `subjectActorRef` on `Journey` for Alice/Bob/local actor perspective. Contained states, transitions, exits, outgoing groups, and child journeys inherit unless they declare their own actor.
 
 ## Actions across touchpoints
 

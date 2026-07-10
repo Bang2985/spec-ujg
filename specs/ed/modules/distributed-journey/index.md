@@ -8,8 +8,8 @@ Protocol messages and API responses are evidence, not the primary journey.
 
 This module reuses existing UJG concepts instead of defining a separate distributed graph model:
 
-- Graph Actor terms identify participants, state perspectives, and eligible actors when the journey
-  needs actor metadata.
+- Graph Actor terms identify participants and journey perspective when the journey needs explicit
+  actor assignment.
 - Surface identifies the visible or operable boundary exposed at a touchpoint.
 - Action identifies side effects associated with Graph transitions or outgoing transitions.
 - Artifact identifies files, archives, reports, invites, media, or other resources involved in the
@@ -165,11 +165,13 @@ the SHACL shape.
     },
     {
       "@id": "urn:actor:alice",
-      "@type": "Actor"
+      "@type": "Actor",
+      "label": "Alice"
     },
     {
       "@id": "urn:actor:bob",
-      "@type": "Actor"
+      "@type": "Actor",
+      "label": "Bob"
     },
     {
       "@id": "urn:index:nextcloud-federated-sharing",
@@ -196,6 +198,7 @@ the SHACL shape.
       "@id": "urn:journey:alice-federated-sharing",
       "@type": "Journey",
       "label": "Alice federated sharing",
+      "subjectActorRef": "urn:actor:alice",
       "defaultEntryRef": "urn:entry:alice-federated-sharing-default",
       "entryRefs": [
         "urn:entry:alice-federated-sharing-default"
@@ -221,6 +224,7 @@ the SHACL shape.
       "@id": "urn:journey:bob-remote-share-acceptance",
       "@type": "Journey",
       "label": "Bob remote-share acceptance",
+      "subjectActorRef": "urn:actor:bob",
       "defaultEntryRef": "urn:entry:bob-remote-share-acceptance-default",
       "entryRefs": [
         "urn:entry:bob-remote-share-acceptance-default"
@@ -243,44 +247,37 @@ the SHACL shape.
     {
       "@id": "urn:state:alice-share-panel",
       "@type": "State",
-      "label": "Alice sees the share panel",
-      "subjectActorRef": "urn:actor:alice"
+      "label": "Alice sees the share panel"
     },
     {
       "@id": "urn:state:alice-recipient-recognized",
       "@type": "State",
-      "label": "Alice sees Bob recognized as a remote recipient",
-      "subjectActorRef": "urn:actor:alice"
+      "label": "Alice sees Bob recognized as a remote recipient"
     },
     {
       "@id": "urn:state:alice-share-confirmed",
       "@type": "State",
-      "label": "Alice sees shared with Bob",
-      "subjectActorRef": "urn:actor:alice"
+      "label": "Alice sees shared with Bob"
     },
     {
       "@id": "urn:state:alice-share-revoked",
       "@type": "State",
-      "label": "Alice sees the share revoked",
-      "subjectActorRef": "urn:actor:alice"
+      "label": "Alice sees the share revoked"
     },
     {
       "@id": "urn:state:bob-incoming-share",
       "@type": "State",
-      "label": "Bob sees an incoming remote share",
-      "subjectActorRef": "urn:actor:bob"
+      "label": "Bob sees an incoming remote share"
     },
     {
       "@id": "urn:state:bob-file-available",
       "@type": "State",
-      "label": "Bob can open the shared folder",
-      "subjectActorRef": "urn:actor:bob"
+      "label": "Bob can open the shared folder"
     },
     {
       "@id": "urn:state:bob-access-removed",
       "@type": "State",
-      "label": "Bob sees access removed",
-      "subjectActorRef": "urn:actor:bob"
+      "label": "Bob sees access removed"
     },
     {
       "@id": "urn:surface:alice-share-panel",

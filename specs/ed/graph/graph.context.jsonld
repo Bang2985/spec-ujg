@@ -87,15 +87,6 @@
     "subjectActorRef": {
       "@id": "ujggraph:subjectActorRef",
       "@type": "@id"
-    },
-    "responsibleActorRef": {
-      "@id": "ujggraph:responsibleActorRef",
-      "@type": "@id"
-    },
-    "eligibleActorRefs": {
-      "@id": "ujggraph:eligibleActorRefs",
-      "@type": "@id",
-      "@container": "@set"
     }
   }
 }

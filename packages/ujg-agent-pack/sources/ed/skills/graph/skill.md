@@ -26,13 +26,9 @@ Focus on intended topology:
 - `OutgoingTransitionGroup`
 - `Actor`
 
-Use `Actor` for addressable participants, role-like entities, systems, organizations, or other parties that need graph interpretation metadata.
+Use `Actor` for addressable participants, role-like entities, systems, organizations, or other parties that a graph node can belong to.
 
-Use `subjectActorRef` on `State` or `CompositeState` when the state-like node represents one actor's journey perspective.
-
-Use `responsibleActorRef` for ownership or stewardship of a Graph node.
-
-Use `eligibleActorRefs` only on `Transition` or `OutgoingTransition` for intended actor eligibility. Do not put `eligibleActorRefs` on `State`.
+Use `subjectActorRef` on `Journey` to assign that journey to an actor. Entries, states, transitions, exits, outgoing transition groups, and child journeys inherit the effective actor unless they declare their own `subjectActorRef`.
 
 Actor terms do not define authentication, authorization enforcement, accounts, provenance, runtime observer attribution, or legal accountability.
 

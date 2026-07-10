@@ -4,11 +4,11 @@ This core-family layer defines a graph-successor vocabulary for assigning an add
 to a Graph subject and, when needed, to the `Touchpoint` that presents that surface.
 
 A `Surface` identifies a design-system-agnostic materialized boundary for one graph subject. Supported
-graph subjects are `State`, `CompositeState`, `Transition`, `OutgoingTransition`, and
-`OutgoingTransitionGroup`. A surface may represent a page, screen, dialog, prompt, frame,
-application shell, transition affordance, action bar, reusable choice group, repeated card, repeated
-slide, or other user-facing boundary. A single `Surface` is stable surface identity, not one runtime
-occurrence. Concrete runtime-visible occurrences are represented by `SurfaceInstance`.
+graph subjects are `State`, `CompositeState`, `Transition`, and `OutgoingTransition`. A surface may
+represent a page, screen, dialog, prompt, frame, application shell, transition affordance, action
+bar, repeated card, repeated slide, or other user-facing boundary. A single `Surface` is stable
+surface identity, not one runtime occurrence. Concrete runtime-visible occurrences are represented
+by `SurfaceInstance`.
 
 A `Touchpoint` identifies the system, channel, origin, or service boundary through which a surface is
 presented to a human. Touchpoints are optional: a surface can be addressable without declaring its
@@ -75,7 +75,6 @@ Allowed graph subjects are:
 - `CompositeState`
 - `Transition`
 - `OutgoingTransition`
-- `OutgoingTransitionGroup`
 
 `graphNodeRef` is the canonical assignment form from Surface to Graph subject. To resolve surfaces
 for a graph subject, consumers find `Surface` nodes whose `graphNodeRef` value is that graph
@@ -110,14 +109,10 @@ Transition and outgoing-transition surfaces represent user-facing transition aff
 invocation boundaries. They MUST NOT imply transition execution, transition availability, traversal,
 state activation, ordering, or lifecycle semantics.
 
-An `OutgoingTransitionGroup` MAY have its own `Surface`. Each child `OutgoingTransition` MAY also
-have its own `Surface`. These surfaces are independent: the group surface represents the group-level
-presentation boundary, while each outgoing-transition surface represents that outgoing transition's
-own affordance. A group surface does not override, inherit into, or replace child outgoing-transition
-surfaces. If both are present, consumers MAY materialize the group surface as a container and child
-outgoing-transition surfaces as individual affordances, but this remains presentation only and MUST
-NOT change outgoing-transition injection, traversal, transition availability, state activation, or
-Graph validity.
+An `OutgoingTransitionGroup` MUST NOT have its own `Surface`. Each child `OutgoingTransition` MAY
+have its own `Surface`. Group membership remains Graph-only: consumers use
+`OutgoingTransitionGroup.outgoingTransitionRefs` to determine which child outgoing transitions are
+effectively available, while surfaces identify the individual child affordances.
 
 Multi-platform, multi-renderer, or multi-design-system output SHOULD NOT be represented by assigning
 multiple surfaces to the same graph subject merely to select implementations. Such alternatives
@@ -252,7 +247,7 @@ This example means:
 This example assigns a surface to the user-facing affordance for a transition. It does not execute
 the transition or change traversal semantics.
 
-## Outgoing Transition Group Surface Example
+## Outgoing Transition Surface Example
 
 ```json
 {
@@ -260,7 +255,7 @@ the transition or change traversal semantics.
     "https://ujg.specs.openuji.org/ed/ns/context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/surface.context.jsonld"
   ],
-  "@id": "https://example.com/ujg/surface/outgoing-group.jsonld",
+  "@id": "https://example.com/ujg/surface/outgoing.jsonld",
   "@type": "UJGDocument",
   "nodes": [
     {
@@ -279,11 +274,6 @@ the transition or change traversal semantics.
       "outgoingTransitionRefs": ["urn:outgoing:home", "urn:outgoing:profile"]
     },
     {
-      "@id": "urn:surface:global-nav",
-      "@type": "Surface",
-      "graphNodeRef": "urn:outgoing-group:global-nav"
-    },
-    {
       "@id": "urn:surface:home-action",
       "@type": "Surface",
       "graphNodeRef": "urn:outgoing:home"
@@ -292,8 +282,9 @@ the transition or change traversal semantics.
 }
 ```
 
-The group surface represents the shared navigation boundary. The child outgoing-transition surface
-represents that outgoing transition's own affordance. Neither surface overrides the other.
+The `OutgoingTransitionGroup` remains a Graph construct only. The child outgoing-transition surface
+represents that outgoing transition's own affordance and can be used for observation or design-system
+realization without surfacing the group itself.
 
 ## Graph Node Instance Example
 
