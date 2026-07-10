@@ -43,14 +43,15 @@ Use Graph `subjectActorRef` on journeys to identify whose local journey perspect
 
 ## Contexts
 
-Always include Core and Graph contexts.
+Include Core context for `UJGDocument` and top-level `nodes`.
+Include Graph context when using journeys, entries, states, transitions, actors, or `subjectActorRef`.
 Include Distributed Journey context when using Distributed Journey terms:
 
 ```json
 "https://ujg.specs.openuji.org/ed/ns/distributed-journey.context.jsonld"
 ```
 
-Include bridge-module contexts only when their terms are used:
+Include bridge-module contexts only when their terms are used. Include Surface when declaring `Touchpoint`, `Surface`, `touchpointRef`, or surface references. Include Action when attaching `sourceTouchpointRef` or `targetTouchpointRefs` to an `Action`. Include Artifact when using `DistributedArtifact`, `producedArtifactRefs`, `consumedArtifactRefs`, or other artifact terms.
 
 ```json
 [
@@ -63,7 +64,7 @@ Include bridge-module contexts only when their terms are used:
 ]
 ```
 
-Do not include Action, Artifact, Surface, Graph, or Runtime contexts unless their terms appear. Actor terms are Graph terms.
+Do not include Action, Artifact, Surface, Graph, Distributed Journey, or Runtime contexts unless their terms appear. Actor terms are Graph terms.
 
 ## Vocabulary
 
