@@ -2,4 +2,8 @@ packages:
   - apps/*
   - packages/*
   - specs
+allowBuilds:
+  esbuild: true
+  sharp: true
+
 #  - ../../speculator/packages/*

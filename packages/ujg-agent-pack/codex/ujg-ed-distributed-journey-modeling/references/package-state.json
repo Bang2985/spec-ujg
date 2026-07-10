@@ -1,6 +1,6 @@
 {
-  "artifactHash": "sha256:5bfb24a48f4bff8986c19df8a99533ef427e809b0690a3eed68181b03e07398d",
-  "configHash": "sha256:340584d9b72f407cb6b75a89d79945103706fe0375cc4725e3d48d0af966fd6c",
+  "artifactHash": "sha256:de8479c6a672714838e418da9ac69cd4d6f78d32751c5f2609dcbb909af4a2e3",
+  "configHash": "sha256:3b5ea1b06a3e16741e2e622b1890bde36c552f97e6c4e3ebd3377877bfd3f440",
   "package": {
     "id": "ujg-agent-pack",
     "name": "@openuji/ujg-agent-pack",
@@ -11,8 +11,8 @@
     "moduleId": "modules/distributed-journey",
     "name": "ujg-ed-distributed-journey-modeling"
   },
-  "sourceHash": "sha256:865eac3c272dd3a602e4223d604edf2b3ec031059fb65824a0517713dee8f2cc",
-  "specHash": "sha256:b49de9431ee5c089659d594c7cb1f98b3162b762ae70f346941ea1ba9dcc9cbc",
+  "sourceHash": "sha256:ce592132383f1e10ec42142e9149df5522944d39fdc2c27115f2d93a30d37a70",
+  "specHash": "sha256:7017511dae27e5e3901e9cad8d3919ad48309d37d443bc24aea383830fa2af51",
   "target": {
     "id": "ed",
     "label": "Editor's Draft"

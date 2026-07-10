@@ -60,8 +60,8 @@ A composed context is expressed as a JSON-LD `@context` array in which the Core 
   "@context": [
     "https://ujg.specs.openuji.org/ed/ns/core.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/graph.context.jsonld",
-    "https://ujg.specs.openuji.org/ed/ns/runtime.context.jsonld",
-    "https://ujg.specs.openuji.org/ed/ns/experience.context.jsonld"
+    "https://ujg.specs.openuji.org/ed/ns/surface.context.jsonld",
+    "https://ujg.specs.openuji.org/ed/ns/runtime.context.jsonld"
   ]
 }
 ```

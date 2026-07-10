@@ -1,9 +1,9 @@
 ## Overview
 
 This optional module defines a graph-native vocabulary for describing how design-system artifacts
-realize Surface module resources.
+realize Surface resources.
 
-The module is intentionally second-level. It depends on the Surface module as the bridge between
+The module is intentionally second-level. It depends on the Surface layer as the bridge between
 Graph topology and user-facing materialization. Graph nodes do not point to design-system artifacts,
 and Surface resources remain design-system-agnostic.
 
@@ -55,9 +55,10 @@ Non-goals:
 
 ## Realization Model
 
-A `Surface` is a design-system-agnostic materialized boundary for exactly one Graph subject. The
-Surface module defines the relation between supported Graph subjects and `Surface`. This module does
-not add properties to `Surface` and does not make `Surface` depend on design-system artifacts.
+A `Surface` is a design-system-agnostic materialized boundary for exactly one Graph subject. Surface
+defines the relation from `Surface` to supported Graph subjects. Graph subjects do not point to
+design-system artifacts or depend on Surface. This module does not add properties to `Surface` and
+does not make `Surface` depend on design-system artifacts.
 
 Design-system realization is expressed by `SurfaceRealization` nodes:
 
@@ -107,11 +108,11 @@ When a `SlotBinding` targets a `Surface`, the target surface is composed into th
 presentation purposes only. The binding MUST NOT imply graph traversal, state activation, transition
 validity, composite-state containment, execution order, or lifecycle semantics. A renderer, MCP
 server, skill, or design-system resolver MAY resolve the graph-level subject associated with a target
-surface through the Surface module.
+surface through the Surface layer.
 
-If a transition, outgoing transition, or outgoing-transition group affordance belongs in a slot, the
-Graph subject SHOULD reference its own `Surface` through the Surface module and the slot binding
-SHOULD target that surface with `targetSurfaceRef`.
+If a transition, outgoing transition, or outgoing-transition group affordance belongs in a slot,
+model a `Surface` that references that Graph subject through the Surface layer and target that
+surface with `targetSurfaceRef`.
 
 ## Ontology {data-cop-concept="ontology"}
 
@@ -127,9 +128,11 @@ The normative DesignSystem JSON-LD context is defined below and is published at
 `https://ujg.specs.openuji.org/ed/ns/design-system.context.jsonld`. It provides compact JSON-LD term
 mappings and coercions for DesignSystem-specific properties and classes.
 
-`surfaceRef` already exists in the Surface context for graph-subject attachment. To preserve that
-existing term, this module maps the realization-side `surfaceRef` through the type-scoped context of
-`SurfaceRealization`.
+Surface uses `graphNodeRef` for graph-node attachment. This module keeps a separate, type-scoped
+`surfaceRef` on `SurfaceRealization`, where it means realization-to-Surface. Surface also defines
+`surfaceRef` on `SurfaceInstance`, where it means surface-instance-to-Surface. Design System
+realization and slot-binding references continue to target stable `Surface` nodes, not
+`SurfaceInstance` nodes.
 
 :::include ./design-system.context.jsonld :::
 
@@ -181,12 +184,12 @@ the SHACL shape.
     {
       "@id": "urn:state:cart",
       "@type": "State",
-      "label": "Cart",
-      "surfaceRef": "urn:surface:cart"
+      "label": "Cart"
     },
     {
       "@id": "urn:surface:cart",
-      "@type": "Surface"
+      "@type": "Surface",
+      "graphNodeRef": "urn:state:cart"
     }
   ]
 }
@@ -210,12 +213,12 @@ This example assigns a state to a surface. It does not declare any design-system
     {
       "@id": "urn:state:cart",
       "@type": "State",
-      "label": "Cart",
-      "surfaceRef": "urn:surface:cart"
+      "label": "Cart"
     },
     {
       "@id": "urn:surface:cart",
-      "@type": "Surface"
+      "@type": "Surface",
+      "graphNodeRef": "urn:state:cart"
     },
     {
       "@id": "urn:ds:acme",
@@ -260,23 +263,23 @@ surface.
     {
       "@id": "urn:state:refund",
       "@type": "State",
-      "label": "Refund request",
-      "surfaceRef": "urn:surface:refund"
+      "label": "Refund request"
     },
     {
       "@id": "urn:surface:refund",
-      "@type": "Surface"
+      "@type": "Surface",
+      "graphNodeRef": "urn:state:refund"
     },
     {
       "@id": "urn:transition:submit-refund",
       "@type": "Transition",
       "from": "urn:state:refund",
-      "to": "urn:state:refund-submitted",
-      "surfaceRef": "urn:surface:submit-refund"
+      "to": "urn:state:refund-submitted"
     },
     {
       "@id": "urn:surface:submit-refund",
-      "@type": "Surface"
+      "@type": "Surface",
+      "graphNodeRef": "urn:transition:submit-refund"
     },
     {
       "@id": "urn:ds:acme",
@@ -356,8 +359,7 @@ The template declares slots. The realization binds those slots for this surface.
       "@id": "urn:state:product-discovery",
       "@type": "CompositeState",
       "label": "Product discovery",
-      "subjourneyId": "urn:journey:product-discovery",
-      "surfaceRef": "urn:surface:product-discovery"
+      "subjourneyId": "urn:journey:product-discovery"
     },
     {
       "@id": "urn:journey:product-discovery",
@@ -386,26 +388,22 @@ The template declares slots. The realization binds those slots for this surface.
     {
       "@id": "urn:state:search-query",
       "@type": "State",
-      "label": "Search query",
-      "surfaceRef": "urn:surface:search-query"
+      "label": "Search query"
     },
     {
       "@id": "urn:state:filters",
       "@type": "State",
-      "label": "Filters",
-      "surfaceRef": "urn:surface:filters"
+      "label": "Filters"
     },
     {
       "@id": "urn:state:results",
       "@type": "State",
-      "label": "Results",
-      "surfaceRef": "urn:surface:results"
+      "label": "Results"
     },
     {
       "@id": "urn:state:product-preview",
       "@type": "State",
-      "label": "Product preview",
-      "surfaceRef": "urn:surface:product-preview"
+      "label": "Product preview"
     },
     {
       "@id": "urn:transition:search-to-filters",
@@ -430,23 +428,28 @@ The template declares slots. The realization binds those slots for this surface.
     },
     {
       "@id": "urn:surface:product-discovery",
-      "@type": "Surface"
+      "@type": "Surface",
+      "graphNodeRef": "urn:state:product-discovery"
     },
     {
       "@id": "urn:surface:search-query",
-      "@type": "Surface"
+      "@type": "Surface",
+      "graphNodeRef": "urn:state:search-query"
     },
     {
       "@id": "urn:surface:filters",
-      "@type": "Surface"
+      "@type": "Surface",
+      "graphNodeRef": "urn:state:filters"
     },
     {
       "@id": "urn:surface:results",
-      "@type": "Surface"
+      "@type": "Surface",
+      "graphNodeRef": "urn:state:results"
     },
     {
       "@id": "urn:surface:product-preview",
-      "@type": "Surface"
+      "@type": "Surface",
+      "graphNodeRef": "urn:state:product-preview"
     },
     {
       "@id": "urn:template:ProductDiscovery",
@@ -544,12 +547,12 @@ remains the source of containment and traversal semantics.
     {
       "@id": "urn:state:checkout",
       "@type": "State",
-      "label": "Checkout",
-      "surfaceRef": "urn:surface:checkout"
+      "label": "Checkout"
     },
     {
       "@id": "urn:surface:checkout",
-      "@type": "Surface"
+      "@type": "Surface",
+      "graphNodeRef": "urn:state:checkout"
     },
     {
       "@id": "urn:component:WebCheckout",

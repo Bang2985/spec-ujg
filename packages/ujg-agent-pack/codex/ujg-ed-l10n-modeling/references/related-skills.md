@@ -8,13 +8,14 @@ Module scope: modules/l10n
 
 ## Sibling Skills
 
-- ujg-ed-modeling: whole UJG document modeling across Core, Graph, Runtime, Experience, Localization, and optional modules
+- ujg-ed-modeling: whole UJG document modeling across Core, Graph, Surface, Runtime, Mapping, Metrics, Experience, Localization, Observability, and optional modules
 - ujg-ed-core-modeling: Core module document containers, imports, top-level nodes, and extensions
 - ujg-ed-graph-modeling: Graph module topology, journeys, states, transitions, exits, outgoing navigation, and indexes
+- ujg-ed-observability-modeling: Observability module semantics for ObservationBinding, accessible-object locators, surface recognition contracts, and SurfaceInstanceResolver
 
 ## Downstream Spec Modules
 
-- None
+- modules/observability
 
 ## Usage
 

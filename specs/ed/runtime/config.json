@@ -4,7 +4,7 @@
     "maturityLevel": "draft",
     "baseUrl": "${SPEC_BASE_URL}/ed",
     "deps": [
-        "graph"
+        "surface"
     ],
     "custom": {
         "family": "spec",

@@ -12,9 +12,10 @@ Scope: Localization module semantics for MessageBundle copy metadata and locale-
 Module scope: modules/l10n
 
 Related generated skills:
-- ujg-ed-modeling: whole UJG document modeling across Core, Graph, Runtime, Experience, Localization, and optional modules
+- ujg-ed-modeling: whole UJG document modeling across Core, Graph, Surface, Runtime, Mapping, Metrics, Experience, Localization, Observability, and optional modules
 - ujg-ed-core-modeling: Core module document containers, imports, top-level nodes, and extensions
 - ujg-ed-graph-modeling: Graph module topology, journeys, states, transitions, exits, outgoing navigation, and indexes
+- ujg-ed-observability-modeling: Observability module semantics for ObservationBinding, accessible-object locators, surface recognition contracts, and SurfaceInstanceResolver
 
 When the task crosses module boundaries, read `references/related-skills.md` and `references/skill-tree.json` before continuing.
 
@@ -38,7 +39,8 @@ Localization attaches locale and copy metadata to UJG nodes.
 It does not define routes, traversal, locale negotiation, runtime translation loading, ICU behavior, imports, or graph identity.
 
 Graph defines topology.
-Localization annotates graph or experience resources with copy and locale metadata.
+Localization annotates UJG nodes with copy and locale metadata. It can be used with Experience
+resources only when the Experience optional module is explicitly composed.
 
 ## Required context
 

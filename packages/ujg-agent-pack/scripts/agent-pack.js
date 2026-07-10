@@ -321,6 +321,10 @@ function outputPathsForSkill(context, skill) {
 
 function generatedDescription(context, skill) {
   if (skill.key === 'root') {
+    if (context.target.kind === 'ed') {
+      return `Generate, review, correct, and reason about User Journey Graph JSON-LD for the ${context.target.label}. Use when modeling UJG documents, checking vocabulary discipline, selecting modules, or correcting Core/Graph/Surface/Runtime/Mapping/Metrics/Experience/Localization/Observability/module separation.`;
+    }
+
     return `Generate, review, correct, and reason about User Journey Graph JSON-LD for the ${context.target.label}. Use when modeling UJG documents, checking vocabulary discipline, selecting modules, or correcting Graph/Runtime/Experience/Localization/module separation.`;
   }
 

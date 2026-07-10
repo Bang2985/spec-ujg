@@ -1,0 +1,40 @@
+{
+  "@context": {
+    "@version": 1.1,
+
+    "ujgsurface": "https://ujg.specs.openuji.org/ed/ns/surface#",
+    "surface": "https://ujg.specs.openuji.org/ed/ns/surface#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "Surface": "ujgsurface:Surface",
+    "SurfaceInstance": "ujgsurface:SurfaceInstance",
+    "Touchpoint": "ujgsurface:Touchpoint",
+    "GraphNodeInstance": "ujgsurface:GraphNodeInstance",
+
+    "graphNodeRef": {
+      "@id": "ujgsurface:graphNodeRef",
+      "@type": "@id"
+    },
+    "touchpointRef": {
+      "@id": "ujgsurface:touchpointRef",
+      "@type": "@id"
+    },
+    "surfaceRef": {
+      "@id": "ujgsurface:surfaceRef",
+      "@type": "@id"
+    },
+    "graphNodeInstanceRef": {
+      "@id": "ujgsurface:graphNodeInstanceRef",
+      "@type": "@id"
+    },
+    "parentInstanceRef": {
+      "@id": "ujgsurface:parentInstanceRef",
+      "@type": "@id"
+    },
+    "channel": "ujgsurface:channel",
+    "origin": {
+      "@id": "ujgsurface:origin",
+      "@type": "@id"
+    }
+  }
+}

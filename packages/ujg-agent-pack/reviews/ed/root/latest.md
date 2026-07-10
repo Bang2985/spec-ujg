@@ -1,7 +1,7 @@
 # Skill Review: ujg-ed-modeling
 
 Target: Editor's Draft
-Skill scope: whole UJG document modeling across Core, Graph, Runtime, Experience, Localization, and optional modules
+Skill scope: whole UJG document modeling across Core, Graph, Surface, Runtime, Mapping, Metrics, Experience, Localization, Observability, and optional modules
 Source: sources/ed/skills/root/skill.md
 Spec URL: https://ujg.specs.openuji.org/ed
 
@@ -12,8 +12,8 @@ Spec URL: https://ujg.specs.openuji.org/ed
 
 ## Review Inputs
 
-- Source hash: sha256:8a3812e1bdeb6e11b527ad2c11758ccc0ad326424af567f9a7864d7022e0d476
-- Spec hash: sha256:3475570dfe11a2ac2265838530f81f02cf60c574b2d3bcd32b2822c907517500
+- Source hash: sha256:80077d565305800af4c4aeefeaa55573e5c45708d17c9cbd7c97d0a27ce8b7f7
+- Spec hash: sha256:58a8999b457297524838e51e1552164dc4383f70e1298bf8655e3ac4cb257401
 
 ## Source Headings Likely Affected
 

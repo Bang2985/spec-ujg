@@ -4,7 +4,7 @@
     "moduleId": null,
     "name": "ujg-ed-modeling",
     "publicUrl": "https://ujg.specs.openuji.org/ed",
-    "scope": "whole UJG document modeling across Core, Graph, Runtime, Experience, Localization, and optional modules"
+    "scope": "whole UJG document modeling across Core, Graph, Surface, Runtime, Mapping, Metrics, Experience, Localization, Observability, and optional modules"
   },
   "moduleGraph": {
     "architecture": {
@@ -14,14 +14,13 @@
         "graph",
         "modules/l10n",
         "modules/condition",
-        "modules/surface",
         "runtime",
         "modules/state-data",
         "modules/action",
-        "modules/actor",
+        "surface",
         "modules/artifact",
-        "modules/runtime-evidence",
-        "experience",
+        "modules/observability",
+        "modules/experience",
         "mapping",
         "modules/design-system",
         "modules/distributed-journey",
@@ -47,14 +46,13 @@
         "graph",
         "modules/l10n",
         "modules/condition",
-        "modules/surface",
         "runtime",
         "modules/state-data",
         "modules/action",
-        "modules/actor",
+        "surface",
         "modules/artifact",
-        "modules/runtime-evidence",
-        "experience",
+        "modules/observability",
+        "modules/experience",
         "mapping",
         "modules/design-system",
         "modules/distributed-journey",
@@ -68,26 +66,17 @@
       "generatedSkill": "ujg-ed-core-modeling",
       "title": "Core"
     },
-    "experience": {
-      "dependents": [],
-      "deps": [
-        "graph"
-      ],
-      "generatedSkill": null,
-      "title": "Experience"
-    },
     "graph": {
       "dependents": [
         "modules/routing",
         "modules/l10n",
         "modules/condition",
-        "modules/surface",
         "runtime",
         "modules/state-data",
         "modules/action",
-        "modules/actor",
-        "modules/runtime-evidence",
-        "experience",
+        "surface",
+        "modules/observability",
+        "modules/experience",
         "mapping",
         "modules/design-system",
         "modules/distributed-journey",
@@ -109,6 +98,7 @@
       ],
       "deps": [
         "runtime",
+        "surface",
         "graph"
       ],
       "generatedSkill": null,
@@ -135,17 +125,6 @@
       "generatedSkill": null,
       "title": "Action"
     },
-    "modules/actor": {
-      "dependents": [
-        "modules/runtime-evidence",
-        "modules/distributed-journey"
-      ],
-      "deps": [
-        "graph"
-      ],
-      "generatedSkill": null,
-      "title": "Actor"
-    },
     "modules/artifact": {
       "dependents": [
         "modules/distributed-journey"
@@ -168,7 +147,7 @@
       "dependents": [],
       "deps": [
         "graph",
-        "modules/surface"
+        "surface"
       ],
       "generatedSkill": "ujg-ed-design-system-modeling",
       "title": "Design System"
@@ -176,22 +155,40 @@
     "modules/distributed-journey": {
       "dependents": [],
       "deps": [
-        "modules/actor",
-        "modules/surface",
+        "graph",
+        "surface",
         "modules/action",
-        "modules/artifact",
-        "modules/runtime-evidence"
+        "modules/artifact"
       ],
       "generatedSkill": "ujg-ed-distributed-journey-modeling",
       "title": "Distributed Journey"
     },
-    "modules/l10n": {
+    "modules/experience": {
       "dependents": [],
+      "deps": [
+        "surface"
+      ],
+      "generatedSkill": null,
+      "title": "Experience"
+    },
+    "modules/l10n": {
+      "dependents": [
+        "modules/observability"
+      ],
       "deps": [
         "graph"
       ],
       "generatedSkill": "ujg-ed-l10n-modeling",
       "title": "Localization"
+    },
+    "modules/observability": {
+      "dependents": [],
+      "deps": [
+        "surface",
+        "modules/l10n"
+      ],
+      "generatedSkill": "ujg-ed-observability-modeling",
+      "title": "Observability"
     },
     "modules/routing": {
       "dependents": [],
@@ -201,17 +198,6 @@
       "generatedSkill": null,
       "title": "Routing"
     },
-    "modules/runtime-evidence": {
-      "dependents": [
-        "modules/distributed-journey"
-      ],
-      "deps": [
-        "runtime",
-        "modules/actor"
-      ],
-      "generatedSkill": null,
-      "title": "Runtime Evidence"
-    },
     "modules/state-data": {
       "dependents": [],
       "deps": [
@@ -219,17 +205,6 @@
       ],
       "generatedSkill": null,
       "title": "State Data"
-    },
-    "modules/surface": {
-      "dependents": [
-        "modules/design-system",
-        "modules/distributed-journey"
-      ],
-      "deps": [
-        "graph"
-      ],
-      "generatedSkill": null,
-      "title": "Surface"
     },
     "profiles": {
       "dependents": [
@@ -247,8 +222,24 @@
     },
     "runtime": {
       "dependents": [
-        "modules/runtime-evidence",
         "mapping",
+        "metrics",
+        "profiles",
+        "conformance"
+      ],
+      "deps": [
+        "surface"
+      ],
+      "generatedSkill": null,
+      "title": "Runtime"
+    },
+    "surface": {
+      "dependents": [
+        "runtime",
+        "modules/observability",
+        "modules/experience",
+        "mapping",
+        "modules/design-system",
         "modules/distributed-journey",
         "metrics",
         "profiles",
@@ -258,7 +249,7 @@
         "graph"
       ],
       "generatedSkill": null,
-      "title": "Runtime"
+      "title": "Surface"
     }
   },
   "skills": [
@@ -267,7 +258,7 @@
       "moduleId": null,
       "name": "ujg-ed-modeling",
       "publicUrl": "https://ujg.specs.openuji.org/ed",
-      "scope": "whole UJG document modeling across Core, Graph, Runtime, Experience, Localization, and optional modules",
+      "scope": "whole UJG document modeling across Core, Graph, Surface, Runtime, Mapping, Metrics, Experience, Localization, Observability, and optional modules",
       "source": "sources/ed/skills/root/skill.md"
     },
     {
@@ -303,11 +294,19 @@
       "source": "sources/ed/skills/localization/skill.md"
     },
     {
+      "key": "observability",
+      "moduleId": "modules/observability",
+      "name": "ujg-ed-observability-modeling",
+      "publicUrl": "https://ujg.specs.openuji.org/ed/modules/observability",
+      "scope": "Observability module semantics for ObservationBinding, accessible-object locators, surface recognition contracts, and SurfaceInstanceResolver",
+      "source": "sources/ed/skills/observability/skill.md"
+    },
+    {
       "key": "distributed-journey",
       "moduleId": "modules/distributed-journey",
       "name": "ujg-ed-distributed-journey-modeling",
       "publicUrl": "https://ujg.specs.openuji.org/ed/modules/distributed-journey",
-      "scope": "Distributed Journey module semantics for cross-authority human-facing journeys, authorities, distributed artifacts, and authority references",
+      "scope": "Distributed Journey module semantics for cross-touchpoint human-facing journeys, distributed artifacts, and touchpoint references",
       "source": "sources/ed/skills/distributed-journey/skill.md"
     }
   ],

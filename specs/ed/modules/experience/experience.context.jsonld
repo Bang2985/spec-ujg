@@ -1,0 +1,37 @@
+{
+  "@context": {
+    "@version": 1.1,
+
+    "ujgexperience": "https://ujg.specs.openuji.org/ed/ns/experience#",
+    "ujgsurface": "https://ujg.specs.openuji.org/ed/ns/surface#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "ExperienceStep": "ujgexperience:ExperienceStep",
+    "Phase": "ujgexperience:Phase",
+    "PainPoint": "ujgexperience:PainPoint",
+
+    "surfaceRefs": {
+      "@id": "ujgexperience:surfaceRefs",
+      "@type": "@id",
+      "@container": "@set"
+    },
+    "phaseRef": {
+      "@id": "ujgexperience:phaseRef",
+      "@type": "@id"
+    },
+    "order": {
+      "@id": "ujgexperience:order",
+      "@type": "xsd:integer"
+    },
+    "experienceRefs": {
+      "@id": "ujgexperience:experienceRefs",
+      "@type": "@id",
+      "@container": "@set"
+    },
+    "severity": {
+      "@id": "ujgexperience:severity",
+      "@type": "xsd:decimal"
+    },
+    "description": "ujgexperience:description"
+  }
+}

@@ -36,6 +36,10 @@ ujgmapping:mappedEventRef a owl:ObjectProperty ;
   rdfs:domain ujgmapping:MappedStep ;
   rdfs:range ujgruntime:RuntimeEvent .
 
+ujgmapping:observedAffordanceEventRef a owl:ObjectProperty ;
+  rdfs:domain ujgmapping:MappedStep ;
+  rdfs:range ujgruntime:RuntimeEvent .
+
 ujgmapping:mappedStateRef a owl:ObjectProperty ;
   rdfs:domain ujgmapping:MappedStep ;
   rdfs:range [

@@ -15,7 +15,7 @@ Scope: Design System module semantics and its relationship to Graph and Surface
 Module scope: modules/design-system
 
 Related generated skills:
-- ujg-ed-modeling: whole UJG document modeling across Core, Graph, Runtime, Experience, Localization, and optional modules
+- ujg-ed-modeling: whole UJG document modeling across Core, Graph, Surface, Runtime, Mapping, Metrics, Experience, Localization, Observability, and optional modules
 - ujg-ed-core-modeling: Core module document containers, imports, top-level nodes, and extensions
 - ujg-ed-graph-modeling: Graph module topology, journeys, states, transitions, exits, outgoing navigation, and indexes
 
@@ -37,13 +37,13 @@ Design System describes how design-system artifacts realize `Surface` resources.
 Correct layer order:
 
 ```text
-Graph subject -> surfaceRef -> Surface
+Surface -> graphNodeRef -> Graph subject
 SurfaceRealization -> surfaceRef + componentRef/templateRef
 DesignSystem -> componentRefs/templateRefs/tokenSourceRefs/surfaceRealizationRefs
 ```
 
 Graph defines topology.
-Surface defines materialization boundaries.
+Surface defines materialization boundaries and points back to Graph subjects.
 Design System realizes surfaces.
 
 ## Required contexts
@@ -89,6 +89,10 @@ targetSurfaceRef
 targetComponentRef
 ```
 
+When modeling `Surface` nodes themselves, use Surface `graphNodeRef` to point to the Graph node
+the surface exposes. Design System `surfaceRef` belongs to `SurfaceRealization` and points to stable
+`Surface`; Surface also uses `surfaceRef` on `SurfaceInstance` for runtime occurrences.
+
 Do not invent:
 
 ```text
@@ -118,16 +122,17 @@ Correct:
 {
   "@type": "State",
   "@id": "urn:example:state:registration-form",
-  "surfaceRef": "urn:example:surface:registration-form"
+  "label": "Registration form"
 }
 ```
 
-Then realize the surface:
+Then assign and realize the surface:
 
 ```json
 {
   "@type": "Surface",
-  "@id": "urn:example:surface:registration-form"
+  "@id": "urn:example:surface:registration-form",
+  "graphNodeRef": "urn:example:state:registration-form"
 },
 {
   "@type": "Component",

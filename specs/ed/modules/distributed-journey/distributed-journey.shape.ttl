@@ -4,42 +4,20 @@
 @prefix ujgsurface: <https://ujg.specs.openuji.org/ed/ns/surface#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ujgdistshape:AuthorityShape a sh:NodeShape ;
-  sh:targetClass ujgdist:Authority ;
-  sh:nodeKind sh:IRI ;
-
-  sh:property [
-    sh:path ujgdist:origin ;
-    sh:nodeKind sh:IRI ;
-    sh:minCount 1 ;
-    sh:maxCount 1 ;
-  ] .
-
-ujgdistshape:SurfaceAuthorityShape a sh:NodeShape ;
-  sh:targetClass ujgsurface:Surface ;
-  sh:nodeKind sh:IRI ;
-
-  sh:property [
-    sh:path ujgdist:presentedByAuthorityRef ;
-    sh:class ujgdist:Authority ;
-    sh:nodeKind sh:IRI ;
-    sh:maxCount 1 ;
-  ] .
-
-ujgdistshape:ActionAuthorityShape a sh:NodeShape ;
+ujgdistshape:ActionTouchpointShape a sh:NodeShape ;
   sh:targetClass ujgaction:Action ;
   sh:nodeKind sh:IRI ;
 
   sh:property [
-    sh:path ujgdist:sourceAuthorityRef ;
-    sh:class ujgdist:Authority ;
+    sh:path ujgdist:sourceTouchpointRef ;
+    sh:class ujgsurface:Touchpoint ;
     sh:nodeKind sh:IRI ;
     sh:maxCount 1 ;
   ] ;
 
   sh:property [
-    sh:path ujgdist:targetAuthorityRefs ;
-    sh:class ujgdist:Authority ;
+    sh:path ujgdist:targetTouchpointRefs ;
+    sh:class ujgsurface:Touchpoint ;
     sh:nodeKind sh:IRI ;
   ] .
 
@@ -48,14 +26,14 @@ ujgdistshape:DistributedArtifactShape a sh:NodeShape ;
   sh:nodeKind sh:IRI ;
 
   sh:property [
-    sh:path ujgdist:sourceAuthorityRef ;
-    sh:class ujgdist:Authority ;
+    sh:path ujgdist:sourceTouchpointRef ;
+    sh:class ujgsurface:Touchpoint ;
     sh:nodeKind sh:IRI ;
     sh:maxCount 1 ;
   ] ;
 
   sh:property [
-    sh:path ujgdist:targetAuthorityRefs ;
-    sh:class ujgdist:Authority ;
+    sh:path ujgdist:targetTouchpointRefs ;
+    sh:class ujgsurface:Touchpoint ;
     sh:nodeKind sh:IRI ;
   ] .

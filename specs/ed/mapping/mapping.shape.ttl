@@ -58,6 +58,13 @@ ujgmappingshape:MappedStepShape a sh:NodeShape ;
   ] ;
 
   sh:property [
+    sh:path ujgmapping:observedAffordanceEventRef ;
+    sh:class ujgruntime:RuntimeEvent ;
+    sh:nodeKind sh:IRI ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
     sh:path ujgmapping:mappedStateRef ;
     sh:node ujgmappingshape:StateLikeShape ;
     sh:minCount 1 ;

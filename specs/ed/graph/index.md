@@ -24,6 +24,10 @@ Examples in this page use explicit Core and Graph context arrays for module clar
 - <dfn>JourneyExit</dfn>: A terminal local graph vertex and exported completion contract declared by a [=Journey=].
 - <dfn>OutgoingTransition</dfn>: A navigational affordance pointing to a next possible [=State=] or [=CompositeState=].
 - <dfn>OutgoingTransitionGroup</dfn>: A reusable set of outgoing transitions that a Consumer can treat as present on multiple states (e.g., global nav).
+- <dfn>Actor</dfn>: An addressable participant, role-like entity, system, organization, or other
+  party that a graph node can belong to.
+- <dfn>Subject actor</dfn>: The actor whose journey perspective or ownership scope a graph node
+  belongs to.
 
 ---
 
@@ -156,24 +160,29 @@ Use [=Journey=] when the modeled object owns local traversal, progression, or st
 5. A [=Journey=] **MUST** declare at least one `stateRefs` value.
 6. A [=Journey=] **MAY** declare `transitionRefs`.
 7. A [=Journey=] **MAY** declare `exitRefs`.
-8. Each `entryRefs` value **MUST** reference a [=JourneyEntry=].
-9. Each `stateRefs` value **MUST** reference a [=State=] or a valid [=State=] subclass defined by this module.
-10. If present, each `transitionRefs` value **MUST** reference a [=Transition=].
-11. If present, each `exitRefs` value **MUST** reference a [=JourneyExit=].
-12. A [=Journey=] **MUST** contain one or more [=State|States=] and **MAY** connect local vertices with [=Transition|Transitions=].
-13. The derived local vertex set of a [=Journey=] is `stateRefs` union `exitRefs`.
-14. `stateRefs` contains experiential local vertices.
-15. `exitRefs` contains terminal exported local vertices that participate in local topology but do not represent UX states.
-16. Every `stateRefs` value of a [=Journey=] **SHOULD** belong to that journey's local experiential topology.
-17. A state belongs to a journey when it is referenced by a [=JourneyEntry=] listed in the journey's `entryRefs`, a `from` or state-valued `to` endpoint of a transition listed in that journey's `transitionRefs`, or a local observable segment or condition connected by the journey's structural order.
-18. A [=Journey=] **MUST NOT** list a linked destination page, surface, flow, or journey entry inside `stateRefs` merely because an [=OutgoingTransition=] can reach it.
+8. A [=Journey=] **MAY** declare at most one `subjectActorRef`.
+9. If present, `subjectActorRef` **MUST** reference an [=Actor=].
+10. Each `entryRefs` value **MUST** reference a [=JourneyEntry=].
+11. Each `stateRefs` value **MUST** reference a [=State=] or a valid [=State=] subclass defined by this module.
+12. If present, each `transitionRefs` value **MUST** reference a [=Transition=].
+13. If present, each `exitRefs` value **MUST** reference a [=JourneyExit=].
+14. A [=Journey=] **MUST** contain one or more [=State|States=] and **MAY** connect local vertices with [=Transition|Transitions=].
+15. The derived local vertex set of a [=Journey=] is `stateRefs` union `exitRefs`.
+16. `stateRefs` contains experiential local vertices.
+17. `exitRefs` contains terminal exported local vertices that participate in local topology but do not represent UX states.
+18. Every `stateRefs` value of a [=Journey=] **SHOULD** belong to that journey's local experiential topology.
+19. A state belongs to a journey when it is referenced by a [=JourneyEntry=] listed in the journey's `entryRefs`, a `from` or state-valued `to` endpoint of a transition listed in that journey's `transitionRefs`, or a local observable segment or condition connected by the journey's structural order.
+20. A [=Journey=] **MUST NOT** list a linked destination page, surface, flow, or journey entry inside `stateRefs` merely because an [=OutgoingTransition=] can reach it.
 </spec-statement>
 
 ```mermaid
 classDiagram
+  class Actor
+
   class Journey {
     id
     label
+    subjectActorRef
     defaultEntryRef
     entryRefs
     stateRefs
@@ -202,6 +211,7 @@ classDiagram
     to
   }
 
+  Journey --> Actor : subjectActorRef
   Journey --> JourneyEntry : defaultEntryRef
   Journey --> JourneyEntry : entryRefs
   JourneyEntry --> State : stateRef
@@ -584,25 +594,29 @@ Use `toEntryRef` when a parent transition must choose a specific child entry oth
 
 ```mermaid
 classDiagram
-  class Journey
   class CompositeState {
     subjourneyId
+  }
+  class Journey {
+    defaultEntryRef
+    entryRefs
+    exitRefs
   }
   class JourneyEntry
   class JourneyExit
   class Transition {
-    from
     to
     toEntryRef
+    from
     fromExitRef
   }
 
   CompositeState --> Journey : subjourneyId
+  Journey --> JourneyEntry : defaultEntryRef
   Journey --> JourneyEntry : entryRefs
   Journey --> JourneyExit : exitRefs
-  Transition --> CompositeState : to
+  Transition --> CompositeState : to/from
   Transition --> JourneyEntry : toEntryRef
-  Transition --> CompositeState : from
   Transition --> JourneyExit : fromExitRef
 ```
 
@@ -833,16 +847,16 @@ If the `to` target is a known page, surface, or flow entry, it should normally b
 ```mermaid
 classDiagram
   class OutgoingTransition {
-    id
-    label
     to
     toCurrentState
   }
   class State
   class CompositeState
 
-  OutgoingTransition --> State : effective target
-  OutgoingTransition --> CompositeState : effective target
+  OutgoingTransition --> State : fixed target
+  OutgoingTransition --> CompositeState : fixed target
+  OutgoingTransition --> State : current-state target
+  OutgoingTransition --> CompositeState : current-state target
   note for OutgoingTransition "target mechanism is either to or toCurrentState"
 ```
 
@@ -1039,6 +1053,97 @@ This example shows a search form state with a local "Back to home page" affordan
 
 ---
 
+## Actor {data-cop-concept="actor"}
+
+An [=Actor=] is a graph node for a participant, role-like entity, system, organization, or other
+party that a journey or graph node can belong to. Actor assignment is descriptive graph structure.
+It does not define authentication, authorization enforcement, accounts, identity providers,
+provenance, runtime observation, or legal accountability.
+
+<spec-statement>
+1. An [=Actor=] **MUST** be identified by an IRI.
+2. An [=Actor=] **MAY** declare one `label`.
+3. An [=Actor=] **MAY** declare one or more `tags`.
+4. `subjectActorRef` **MAY** appear on Graph nodes that belong to an actor, including [=Journey=],
+   [=JourneyEntry=], [=State=], [=CompositeState=], [=Transition=], [=JourneyExit=],
+   [=OutgoingTransition=], and [=OutgoingTransitionGroup=].
+5. `subjectActorRef` **MUST** reference an [=Actor=].
+6. `subjectActorRef` **MUST NOT** create hidden graph edges, change traversal behavior, define
+   runtime attribution, or change Runtime event ordering.
+</spec-statement>
+
+A [=Journey=] can be assigned to an actor with `subjectActorRef`. Graph nodes that belong to that
+journey inherit the journey's actor unless they declare their own `subjectActorRef`. This includes
+entries, local states, transitions, exits, and outgoing transition groups listed by the journey.
+
+When a [=CompositeState=] references a child [=Journey=] with `subjourneyId`, the child journey
+inherits the composite state's effective actor unless the child journey declares its own
+`subjectActorRef`. Nodes that belong to the child journey then inherit from the child journey unless
+they declare their own actor.
+
+```mermaid
+classDiagram
+  class Actor {
+    id
+    label
+    tags
+  }
+  class Journey {
+    subjectActorRef
+    stateRefs
+    transitionRefs
+  }
+  class State {
+    subjectActorRef
+  }
+  class CompositeState {
+    subjectActorRef
+  }
+  class Transition {
+    subjectActorRef
+  }
+  class OutgoingTransition {
+    subjectActorRef
+  }
+
+  Journey --> Actor : subjectActorRef
+  State --> Actor : subjectActorRef
+  CompositeState --> Actor : subjectActorRef
+  Transition --> Actor : subjectActorRef
+  OutgoingTransition --> Actor : subjectActorRef
+  Journey --> State : stateRefs
+  Journey --> CompositeState : stateRefs
+  Journey --> Transition : transitionRefs
+```
+
+Example JSON nodes:
+
+```json
+[
+  {
+    "@type": "Actor",
+    "@id": "urn:ujg:actor:customer",
+    "label": "Customer"
+  },
+  {
+    "@type": "Journey",
+    "@id": "urn:ujg:journey:customer-search",
+    "label": "Customer search",
+    "subjectActorRef": "urn:ujg:actor:customer",
+    "defaultEntryRef": "urn:ujg:entry:customer-search-default",
+    "entryRefs": [
+      "urn:ujg:entry:customer-search-default"
+    ],
+    "stateRefs": [
+      "urn:ujg:state:search-form"
+    ]
+  }
+]
+```
+
+---
+
+
 ## Ontology {data-cop-concept="ontology"}
 
 The normative Graph ontology is defined below and is published at `https://ujg.specs.openuji.org/ed/ns/graph`. It is the authoritative structural definition for Graph classes and properties, including `Journey`, `JourneyEntry`, `JourneyEntryIndex`, `LocalVertex`, `State`, `CompositeState`, `Transition`, `JourneyExit`, `OutgoingTransition`, `OutgoingTransitionGroup`, `defaultEntryRef`, `entryRefs`, `stateRef`, `exitRefs`, `toEntryRef`, `fromExitRef`, `toCurrentState`, and `outgoingTransitionRefs`.
@@ -1067,7 +1172,7 @@ The rules below define additional graph integrity and resolution behavior beyond
 
 <spec-statement>
 To ensure graph integrity, the following constraints **MUST** be met:
-1. **Reference Integrity:** All `defaultEntryRef`, `entryRefs`, `stateRef`, `stateRefs`, `transitionRefs`, `exitRefs`, `outgoingTransitionGroupRefs`, and `outgoingTransitionRefs` IDs **MUST** resolve to valid Nodes within the current scope or imported modules.
+1. **Reference Integrity:** All `defaultEntryRef`, `entryRefs`, `stateRef`, `stateRefs`, `transitionRefs`, `exitRefs`, `outgoingTransitionGroupRefs`, `outgoingTransitionRefs`, and `subjectActorRef` IDs **MUST** resolve to valid Nodes within the current scope or imported modules.
 2. **Transition Endpoint Resolution:** The `from` ID of a [=Transition=] **MUST** resolve to a [=State=] or [=CompositeState=] listed in the enclosing [=Journey=]'s `stateRefs`. The `to` ID of a [=Transition=] **MUST** resolve to a [=State=] or [=CompositeState=] listed in the enclosing [=Journey=]'s `stateRefs`, or a [=JourneyExit=] listed in the enclosing [=Journey=]'s `exitRefs`. A transition **MUST NOT** reference local vertices belonging to other journeys.
 3. **Entry Resolution:** Every ID in `entryRefs` **MUST** resolve to a [=JourneyEntry=], and each [=JourneyEntry=]'s `stateRef` **MUST** resolve to a [=State=] or [=CompositeState=] listed in the same [=Journey=]'s `stateRefs`.
 4. **Composition Safety:** `subjourneyId` **MUST** resolve to a valid [=Journey=].

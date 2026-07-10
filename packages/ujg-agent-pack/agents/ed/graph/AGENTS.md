@@ -12,11 +12,12 @@ Scope: Graph module topology, journeys, states, transitions, exits, outgoing nav
 Module scope: graph
 
 Related generated skills:
-- ujg-ed-modeling: whole UJG document modeling across Core, Graph, Runtime, Experience, Localization, and optional modules
+- ujg-ed-modeling: whole UJG document modeling across Core, Graph, Surface, Runtime, Mapping, Metrics, Experience, Localization, Observability, and optional modules
 - ujg-ed-core-modeling: Core module document containers, imports, top-level nodes, and extensions
 - ujg-ed-design-system-modeling: Design System module semantics and its relationship to Graph and Surface
 - ujg-ed-l10n-modeling: Localization module semantics for MessageBundle copy metadata and locale-switch metadata
-- ujg-ed-distributed-journey-modeling: Distributed Journey module semantics for cross-authority human-facing journeys, authorities, distributed artifacts, and authority references
+- ujg-ed-observability-modeling: Observability module semantics for ObservationBinding, accessible-object locators, surface recognition contracts, and SurfaceInstanceResolver
+- ujg-ed-distributed-journey-modeling: Distributed Journey module semantics for cross-touchpoint human-facing journeys, distributed artifacts, and touchpoint references
 
 When the task crosses module boundaries, read `references/related-skills.md` and `references/skill-tree.json` before continuing.
 
@@ -47,6 +48,13 @@ Focus on intended topology:
 - `JourneyExit`
 - `OutgoingTransition`
 - `OutgoingTransitionGroup`
+- `Actor`
+
+Use `Actor` for addressable participants, role-like entities, systems, organizations, or other parties that a graph node can belong to.
+
+Use `subjectActorRef` on `Journey` to assign that journey to an actor. Entries, states, transitions, exits, outgoing transition groups, and child journeys inherit the effective actor unless they declare their own `subjectActorRef`.
+
+Actor terms do not define authentication, authorization enforcement, accounts, provenance, runtime observer attribution, or legal accountability.
 
 Keep runtime observations, selectors, typed values, timestamps, payloads, and analytics outside Graph.
 

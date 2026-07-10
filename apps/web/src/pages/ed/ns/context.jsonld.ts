@@ -9,8 +9,8 @@ export const GET: APIRoute = async () => {
     '@context': [
       `${SPEC_BASE_URL}/ed/ns/core.context.jsonld`,
       `${SPEC_BASE_URL}/ed/ns/graph.context.jsonld`,
+      `${SPEC_BASE_URL}/ed/ns/surface.context.jsonld`,
       `${SPEC_BASE_URL}/ed/ns/runtime.context.jsonld`,
-      `${SPEC_BASE_URL}/ed/ns/experience.context.jsonld`,
     ],
   });
 };

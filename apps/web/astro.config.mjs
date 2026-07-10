@@ -10,7 +10,7 @@ export default defineConfig({
   site: 'https://ujg.specs.openuji.org',
   vite: {
     optimizeDeps: {
-      include: ['@radix-ui/react-select', 'lucide-react'],
+      include: ['@radix-ui/react-select', 'lucide-react', 'mermaid'],
     },
     plugins: [tailwindcss()],
     server: {

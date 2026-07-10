@@ -5,23 +5,14 @@
     "ujgdist": "https://ujg.specs.openuji.org/ed/ns/distributed-journey#",
     "dist": "https://ujg.specs.openuji.org/ed/ns/distributed-journey#",
 
-    "Authority": "ujgdist:Authority",
     "DistributedArtifact": "ujgdist:DistributedArtifact",
 
-    "origin": {
-      "@id": "ujgdist:origin",
+    "sourceTouchpointRef": {
+      "@id": "ujgdist:sourceTouchpointRef",
       "@type": "@id"
     },
-    "presentedByAuthorityRef": {
-      "@id": "ujgdist:presentedByAuthorityRef",
-      "@type": "@id"
-    },
-    "sourceAuthorityRef": {
-      "@id": "ujgdist:sourceAuthorityRef",
-      "@type": "@id"
-    },
-    "targetAuthorityRefs": {
-      "@id": "ujgdist:targetAuthorityRefs",
+    "targetTouchpointRefs": {
+      "@id": "ujgdist:targetTouchpointRefs",
       "@type": "@id",
       "@container": "@set"
     }

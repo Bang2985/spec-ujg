@@ -4,19 +4,20 @@ The **User Journey Graph (UJG)** standardizes user experience as **computable da
 
 ## Conceptual Stack
 
-The standard is organized into five logical layers:
+The main spec family is organized into five logical layers:
 
 1. **The Core (Transport):** The universal JSON-LD envelope. Ensures any tool—human or AI—can parse the file structure without ambiguity.
 2. **The Graph (Definition):** Defines the "Happy Path." It is the vocabulary for States, Transitions, and Composition (sub-journey referencing).
-3. **The Experience (Semantic):** Describes the journey in canonical human semantics (Steps, Touchpoints, Phases, Pain Points), enabling qualitative intent to be represented as data.
-4. **The Runtime (Execution):** Captures the "Actual Path." It records events as a causal chain.
-5. **The Mapping (Conformance):** Closes the loop. It overlays Reality(*Runtime*) onto Intent(*Graph*) to calculate conversion and detect friction.
+3. **The Surface (Materialization):** Exposes graph subjects as addressable human-facing surfaces,
+   optional touchpoints, and optional visible occurrence instances.
+4. **The Runtime (Execution):** Captures the "Actual Path." It records observed surface events as a causal chain.
+5. **The Mapping (Conformance):** Closes the loop. It resolves Reality(*Runtime*) through Surface onto Intent(*Graph*) to calculate conversion and detect friction.
 
 ## Guiding Principles
 
 1. **Graph First:** User experience is an automata, not a list of URLs.
 2. **Stable Identity:** Entities must be named with URIs to survive refactors.
-3. **Separation of Concerns:** A "Journey" (the plan) is immutable; a "Session" (the instance) is ephemeral.
+3. **Separation of Concerns:** A "Journey" (the plan) is immutable; observed surface events and occurrence scopes are runtime facts.
 4. **Vendor Neutrality:** The spec defines _data shapes_, not visualization rules.
 
 ## Optional Modules
@@ -37,15 +38,9 @@ thing to point at. Later modules can build on that thing and describe it in more
 new capabilities become precise without forcing the shared baseline, or this architecture page, to
 know every specialized vocabulary that may be added later.
 
-First-level optional modules are small bridges that attach directly to Core, Graph, or Runtime
-concepts, such as Surface, Actor, State Data, Action, Artifact, and Runtime Evidence. Second-level
-optional modules compose one or more first-level bridges. Design System builds on Surface;
-Distributed Journey composes Actor, Surface, Action, and Artifact without making those concerns part
-of Core, Graph, or Runtime.
-
-Runtime is the Editor's Draft observation channel. Runtime Evidence can add optional metadata that
-points back to Runtime executions and events, but it does not create a separate observation stream
-or change Runtime ordering, Mapping, or Metrics behavior.
+First-level optional modules are small bridges that attach directly to Core, Graph, Surface, or
+Runtime concepts. Second-level optional modules compose one or more shared
+layers or first-level bridges.
 
 ## Opaque Extensions
 

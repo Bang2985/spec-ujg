@@ -1,23 +1,26 @@
 ## Overview
 
-This module defines a vocabulary for human-facing journeys whose visible states,
-actions, artifacts, or outcomes depend on more than one independently operated authority.
+This module defines a vocabulary for human-facing journeys whose visible states, actions, artifacts,
+or outcomes depend on more than one independently operated touchpoint.
 
 Distributed Journey does not model internal server truth.
 Protocol messages and API responses are evidence, not the primary journey.
 
-This module is intentionally second-level. It composes first-level bridge modules instead of adding
-distributed systems semantics directly to Core, Graph, or Runtime:
+This module reuses existing UJG concepts instead of defining a separate distributed graph model:
 
-- Actor identifies responsible systems and eligible participants.
-- Surface identifies the machine-presented boundary a human sees or acts through.
+- Graph Actor terms identify participants and journey perspective when the journey needs explicit
+  actor assignment.
+- Surface identifies the visible or operable boundary exposed at a touchpoint.
 - Action identifies side effects associated with Graph transitions or outgoing transitions.
 - Artifact identifies files, archives, reports, invites, media, or other resources involved in the
   journey.
 
-State Data is not a dependency of this module unless a distributed-journey document also needs
-state-like data binding identity. Distributed Journey uses Artifact for portable resources that
-cross authority boundaries.
+State Data is not a dependency of this module unless a document also needs state-like data binding
+identity. Distributed Journey uses Surface touchpoints for the systems or channels where surfaces
+appear, and Artifact for portable resources that cross those boundaries.
+
+Companion Runtime documents can record observed interleaving between separate local journeys without
+defining extra Distributed Journey vocabulary.
 
 Simple single-site forms, checkouts, dashboards, and app flows do not need this module.
 
@@ -29,43 +32,40 @@ This module is published through the following artifacts:
 - `distributed-journey.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/ed/ns/distributed-journey.context.jsonld`
 - `distributed-journey.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/ed/ns/distributed-journey.shape`
 
-Examples in this page compose the Core, Graph, Actor, Surface, Action, Artifact, and
-Distributed Journey contexts as needed. Companion Runtime Evidence examples compose Core, Runtime,
-Actor, and Runtime Evidence contexts and import the distributed graph document they describe.
+Examples in this page compose the Core, Graph, Surface, Action, Artifact, and Distributed Journey
+contexts as needed. Companion Runtime examples compose Core, Surface, and Runtime contexts and
+import the distributed graph document they describe.
 
 ## Terminology
 
-- <dfn>Authority</dfn>: An independently operated machine or system boundary relevant to a
-  human-facing surface, action, artifact, or outcome. `Authority` specializes Actor.
 - <dfn>DistributedArtifact</dfn>: An [=Artifact=] that is visible to, handled by, produced by, or
-  consumed by a human-facing journey that crosses authorities.
-- <dfn>Presented authority</dfn>: The [=Authority=] that presents or controls a [=Surface=].
+  consumed by a human-facing journey that crosses touchpoints.
+- <dfn>Presented touchpoint</dfn>: The [=Touchpoint=] through which a [=Surface=] is presented.
 
 ## Model
 
-`Authority` identifies an independently operated boundary and declares one `origin`.
+Surface defines `Touchpoint` and `touchpointRef`. `touchpointRef` links a `Surface` to the
+touchpoint through which it is presented. This is the main boundary used by Distributed Journey: it
+lets one journey model refer to multiple systems or channels while keeping Graph states independent
+from Surface and Distributed Journey. Surface `graphNodeRef` points from each `Surface` back to its
+Graph subject.
 
-`presentedByAuthorityRef` links a `Surface` to the authority that presents or controls it. This is
-the module's main human-facing attachment: it lets a journey cross multiple systems while keeping
-the graph surface-oriented.
-
-An `Action` may identify source and target authorities when the action itself crosses authority
+An `Action` may identify source and target touchpoints when the action itself crosses touchpoint
 boundaries and no more specific produced or consumed artifact carries that relationship.
 
-`DistributedArtifact` specializes Artifact. It may identify source and target authorities when a
-file, archive, report, invite, media object, or similar resource crosses authority boundaries.
+`DistributedArtifact` specializes Artifact. It may identify source and target touchpoints when a
+file, archive, report, invite, media object, or similar resource crosses touchpoint boundaries.
 
-Examples use the most-specific distributed type. `Authority` and `DistributedArtifact` inherit their
-Actor and Artifact meaning through the ontology.
+Examples use the most-specific distributed type. `DistributedArtifact` inherits its Artifact meaning
+through the ontology. Touchpoints remain Surface nodes, not Actors.
 
 Pending, failed, partial, unavailable, accepted, revoked, and blocked are ordinary human-visible
 `State` nodes when a person sees or experiences them. This module does not define value objects for
 those statuses.
 
-Protocol messages, server logs, API responses, queues, and synchronization state are Runtime facts,
-Runtime Evidence metadata, artifacts, or private extension data unless they are directly exposed to
-a human as a visible status, confirmation, error, affordance, unavailable action, recovery path, or
-outcome.
+Protocol messages, server logs, API responses, queues, and synchronization state are Runtime
+payloads, artifacts, or private extension data unless they are directly exposed to a human as a
+visible status, confirmation, error, affordance, unavailable action, recovery path, or outcome.
 
 ## Non-Goals
 
@@ -92,6 +92,16 @@ The normative Distributed Journey ontology is defined below and is published at
 The normative Distributed Journey JSON-LD context is defined below and is published at
 `https://ujg.specs.openuji.org/ed/ns/distributed-journey.context.jsonld`.
 
+This context intentionally defines only Distributed Journey terms:
+
+- `DistributedArtifact`
+- `sourceTouchpointRef`
+- `targetTouchpointRefs`
+
+Terms such as `Actor`, `Touchpoint`, `touchpointRef`, `Surface`, `Action`, and `Artifact` come from
+Graph or their own module contexts and MUST be composed explicitly by documents that use them. The
+aggregate core-family context at `/ed/ns/context.jsonld` does not include optional module contexts.
+
 :::include ./distributed-journey.context.jsonld :::
 
 ## Validation {data-cop-concept="validation"}
@@ -104,21 +114,22 @@ The normative Distributed Journey SHACL shape is defined below and is published 
 The rules below define the remaining module semantics beyond the structural constraints captured by
 the SHACL shape.
 
-1. **Human-facing graph:** Distributed Journey terms MUST NOT replace the human-facing UJG Journey
-   graph. A UJG Journey remains a model of human interaction with machine-presented surfaces,
-   affordances, responses, statuses, errors, and outcomes.
-2. **Authority meaning:** `Authority` identifies a system boundary responsible for presenting or
-   controlling a human-facing surface, action, artifact, or outcome. It MUST NOT be interpreted as a
+1. **Human-facing graph:** Distributed Journey terms MUST NOT replace the UJG Journey graph. A UJG
+   Journey remains a model of human interaction with visible surfaces, affordances, responses,
+   statuses, errors, and outcomes.
+2. **Touchpoint meaning:** `Touchpoint` identifies a system, channel, origin, or service boundary
+   through which a surface is presented, or which appears as source/target metadata for an action or
+   artifact. It MUST NOT be interpreted as an Actor, runtime observer, authorization subject, or
    statement of what a server internally believes.
-3. **Action authority metadata:** `sourceAuthorityRef` and `targetAuthorityRefs` MAY be attached to
-   an `Action` when the human-facing action crosses authority boundaries directly. They MUST NOT be
+3. **Action touchpoint metadata:** `sourceTouchpointRef` and `targetTouchpointRefs` MAY be attached to
+   an `Action` when the human-facing action crosses touchpoint boundaries directly. They MUST NOT be
    interpreted as graph edges, runtime causality, or server-internal state.
 4. **Visible statuses:** Pending, failed, partial, unavailable, accepted, revoked, and blocked
    outcomes SHOULD be modeled as ordinary Graph states when they are visible or meaningful to a
    human.
 5. **Machine details stay outside graph:** Protocol messages, logs, API responses, queues, and sync
-   state SHOULD remain Runtime, Runtime Evidence, Artifact, or private extension data unless
-   directly exposed to a human.
+   state SHOULD remain Runtime payload, Artifact, or private extension data unless directly exposed
+   to a human.
 6. **No hidden graph behavior:** Distributed terms MUST NOT create hidden graph edges or change
    transition endpoint semantics.
 7. **Graceful degradation:** Consumers that do not implement this module MAY ignore Distributed
@@ -132,7 +143,6 @@ the SHACL shape.
   "@context": [
     "https://ujg.specs.openuji.org/ed/ns/core.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/graph.context.jsonld",
-    "https://ujg.specs.openuji.org/ed/ns/actor.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/surface.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/action.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/artifact.context.jsonld",
@@ -142,22 +152,26 @@ the SHACL shape.
   "@type": "UJGDocument",
   "nodes": [
     {
-      "@id": "urn:authority:cloud-a",
-      "@type": "Authority",
+      "@id": "urn:touchpoint:cloud-a",
+      "@type": "Touchpoint",
+      "label": "Cloud A",
       "origin": "https://cloud-a.example"
     },
     {
-      "@id": "urn:authority:cloud-b",
-      "@type": "Authority",
+      "@id": "urn:touchpoint:cloud-b",
+      "@type": "Touchpoint",
+      "label": "Cloud B",
       "origin": "https://cloud-b.example"
     },
     {
       "@id": "urn:actor:alice",
-      "@type": "Actor"
+      "@type": "Actor",
+      "label": "Alice"
     },
     {
       "@id": "urn:actor:bob",
-      "@type": "Actor"
+      "@type": "Actor",
+      "label": "Bob"
     },
     {
       "@id": "urn:index:nextcloud-federated-sharing",
@@ -184,6 +198,7 @@ the SHACL shape.
       "@id": "urn:journey:alice-federated-sharing",
       "@type": "Journey",
       "label": "Alice federated sharing",
+      "subjectActorRef": "urn:actor:alice",
       "defaultEntryRef": "urn:entry:alice-federated-sharing-default",
       "entryRefs": [
         "urn:entry:alice-federated-sharing-default"
@@ -209,6 +224,7 @@ the SHACL shape.
       "@id": "urn:journey:bob-remote-share-acceptance",
       "@type": "Journey",
       "label": "Bob remote-share acceptance",
+      "subjectActorRef": "urn:actor:bob",
       "defaultEntryRef": "urn:entry:bob-remote-share-acceptance-default",
       "entryRefs": [
         "urn:entry:bob-remote-share-acceptance-default"
@@ -231,107 +247,79 @@ the SHACL shape.
     {
       "@id": "urn:state:alice-share-panel",
       "@type": "State",
-      "label": "Alice sees the share panel",
-      "surfaceRef": "urn:surface:alice-share-panel",
-      "responsibleActorRef": "urn:authority:cloud-a",
-      "eligibleActorRefs": [
-        "urn:actor:alice"
-      ]
+      "label": "Alice sees the share panel"
     },
     {
       "@id": "urn:state:alice-recipient-recognized",
       "@type": "State",
-      "label": "Alice sees Bob recognized as a remote recipient",
-      "surfaceRef": "urn:surface:alice-recipient-recognized",
-      "responsibleActorRef": "urn:authority:cloud-a",
-      "eligibleActorRefs": [
-        "urn:actor:alice"
-      ]
+      "label": "Alice sees Bob recognized as a remote recipient"
     },
     {
       "@id": "urn:state:alice-share-confirmed",
       "@type": "State",
-      "label": "Alice sees shared with Bob",
-      "surfaceRef": "urn:surface:alice-share-confirmed",
-      "responsibleActorRef": "urn:authority:cloud-a",
-      "eligibleActorRefs": [
-        "urn:actor:alice"
-      ]
+      "label": "Alice sees shared with Bob"
     },
     {
       "@id": "urn:state:alice-share-revoked",
       "@type": "State",
-      "label": "Alice sees the share revoked",
-      "surfaceRef": "urn:surface:alice-share-revoked",
-      "responsibleActorRef": "urn:authority:cloud-a",
-      "eligibleActorRefs": [
-        "urn:actor:alice"
-      ]
+      "label": "Alice sees the share revoked"
     },
     {
       "@id": "urn:state:bob-incoming-share",
       "@type": "State",
-      "label": "Bob sees an incoming remote share",
-      "surfaceRef": "urn:surface:bob-incoming-share",
-      "responsibleActorRef": "urn:authority:cloud-b",
-      "eligibleActorRefs": [
-        "urn:actor:bob"
-      ]
+      "label": "Bob sees an incoming remote share"
     },
     {
       "@id": "urn:state:bob-file-available",
       "@type": "State",
-      "label": "Bob can open the shared folder",
-      "surfaceRef": "urn:surface:bob-file-available",
-      "responsibleActorRef": "urn:authority:cloud-b",
-      "eligibleActorRefs": [
-        "urn:actor:bob"
-      ]
+      "label": "Bob can open the shared folder"
     },
     {
       "@id": "urn:state:bob-access-removed",
       "@type": "State",
-      "label": "Bob sees access removed",
-      "surfaceRef": "urn:surface:bob-access-removed",
-      "responsibleActorRef": "urn:authority:cloud-b",
-      "eligibleActorRefs": [
-        "urn:actor:bob"
-      ]
+      "label": "Bob sees access removed"
     },
     {
       "@id": "urn:surface:alice-share-panel",
       "@type": "Surface",
-      "presentedByAuthorityRef": "urn:authority:cloud-a"
+      "graphNodeRef": "urn:state:alice-share-panel",
+      "touchpointRef": "urn:touchpoint:cloud-a"
     },
     {
       "@id": "urn:surface:alice-recipient-recognized",
       "@type": "Surface",
-      "presentedByAuthorityRef": "urn:authority:cloud-a"
+      "graphNodeRef": "urn:state:alice-recipient-recognized",
+      "touchpointRef": "urn:touchpoint:cloud-a"
     },
     {
       "@id": "urn:surface:alice-share-confirmed",
       "@type": "Surface",
-      "presentedByAuthorityRef": "urn:authority:cloud-a"
+      "graphNodeRef": "urn:state:alice-share-confirmed",
+      "touchpointRef": "urn:touchpoint:cloud-a"
     },
     {
       "@id": "urn:surface:alice-share-revoked",
       "@type": "Surface",
-      "presentedByAuthorityRef": "urn:authority:cloud-a"
+      "graphNodeRef": "urn:state:alice-share-revoked",
+      "touchpointRef": "urn:touchpoint:cloud-a"
     },
     {
       "@id": "urn:surface:bob-incoming-share",
       "@type": "Surface",
-      "presentedByAuthorityRef": "urn:authority:cloud-b"
+      "graphNodeRef": "urn:state:bob-incoming-share",
+      "touchpointRef": "urn:touchpoint:cloud-b"
     },
     {
       "@id": "urn:surface:bob-file-available",
       "@type": "Surface",
-      "presentedByAuthorityRef": "urn:authority:cloud-b"
+      "graphNodeRef": "urn:state:bob-file-available",
+      "touchpointRef": "urn:touchpoint:cloud-b"
     },
     {
       "@id": "urn:surface:bob-access-removed",
       "@type": "Surface",
-      "presentedByAuthorityRef": "urn:authority:cloud-b"
+      "graphNodeRef": "urn:state:bob-access-removed",
+      "touchpointRef": "urn:touchpoint:cloud-b"
     },
     {
       "@id": "urn:transition:alice-recognize-recipient",
@@ -372,9 +360,9 @@ the SHACL shape.
       "producedArtifactRefs": [
         "urn:artifact:remote-share"
       ],
-      "sourceAuthorityRef": "urn:authority:cloud-a",
-      "targetAuthorityRefs": [
-        "urn:authority:cloud-b"
+      "sourceTouchpointRef": "urn:touchpoint:cloud-a",
+      "targetTouchpointRefs": [
+        "urn:touchpoint:cloud-b"
       ]
     },
     {
@@ -390,17 +378,17 @@ the SHACL shape.
       "consumedArtifactRefs": [
         "urn:artifact:remote-share"
       ],
-      "sourceAuthorityRef": "urn:authority:cloud-a",
-      "targetAuthorityRefs": [
-        "urn:authority:cloud-b"
+      "sourceTouchpointRef": "urn:touchpoint:cloud-a",
+      "targetTouchpointRefs": [
+        "urn:touchpoint:cloud-b"
       ]
     },
     {
       "@id": "urn:artifact:remote-share",
       "@type": "DistributedArtifact",
-      "sourceAuthorityRef": "urn:authority:cloud-a",
-      "targetAuthorityRefs": [
-        "urn:authority:cloud-b"
+      "sourceTouchpointRef": "urn:touchpoint:cloud-a",
+      "targetTouchpointRefs": [
+        "urn:touchpoint:cloud-b"
       ]
     }
   ]
@@ -409,60 +397,66 @@ the SHACL shape.
 
 This example intentionally uses separate journeys for Alice and Bob. The distributed artifact links
 the journeys semantically, but it does not create Graph transitions between Alice's states and Bob's
-states. Runtime Evidence can record that one execution observed Alice sharing before Bob accepted,
-and Alice revoking before Bob observed removal.
+states. Runtime can record that one execution observed Alice sharing before Bob accepted, and Alice
+revoking before Bob observed removal.
 
 > **Note:** Do not use Distributed Journey to model an artifact lifecycle as a single Journey. If
 > the scenario involves multiple human actors on different surfaces, model each actor's local
-> journey separately and use Runtime Evidence to record execution interleaving.
+> journey separately and use Runtime to record observed interleaving.
 
-A companion Runtime Evidence document can record observed ordering across the separate journey
-instances without adding evidence nodes to the distributed graph itself:
+A companion Runtime document can record observed ordering across the separate journey instances
+without adding ordering edges to the distributed graph itself:
 
 ```json
 {
   "@context": [
     "https://ujg.specs.openuji.org/ed/ns/core.context.jsonld",
-    "https://ujg.specs.openuji.org/ed/ns/runtime.context.jsonld",
-    "https://ujg.specs.openuji.org/ed/ns/actor.context.jsonld",
-    "https://ujg.specs.openuji.org/ed/ns/runtime-evidence.context.jsonld"
+    "https://ujg.specs.openuji.org/ed/ns/surface.context.jsonld",
+    "https://ujg.specs.openuji.org/ed/ns/runtime.context.jsonld"
   ],
-  "@id": "https://example.com/ujg/runtime-evidence/execution-12345.jsonld",
+  "@id": "https://example.com/ujg/runtime/execution-12345.jsonld",
   "@type": "UJGDocument",
   "imports": [
     "https://example.com/ujg/distributed/nextcloud-share.jsonld"
   ],
   "nodes": [
     {
-      "@id": "urn:authority:cloud-a",
-      "@type": "Actor"
-    },
-    {
-      "@id": "urn:authority:cloud-b",
-      "@type": "Actor"
-    },
-    {
       "@id": "urn:execution:nextcloud-share-12345",
       "@type": "JourneyExecution"
     },
     {
-      "@id": "urn:journey-instance:alice-federated-sharing:12345",
-      "@type": "JourneyInstance",
-      "journeyRef": "urn:journey:alice-federated-sharing"
+      "@id": "urn:surface-instance:alice-share-confirmed",
+      "@type": "SurfaceInstance",
+      "surfaceRef": "urn:surface:alice-share-confirmed"
     },
     {
-      "@id": "urn:journey-instance:bob-remote-share-acceptance:12345",
-      "@type": "JourneyInstance",
-      "journeyRef": "urn:journey:bob-remote-share-acceptance"
+      "@id": "urn:surface-instance:bob-incoming-share",
+      "@type": "SurfaceInstance",
+      "surfaceRef": "urn:surface:bob-incoming-share"
+    },
+    {
+      "@id": "urn:surface-instance:bob-file-available",
+      "@type": "SurfaceInstance",
+      "surfaceRef": "urn:surface:bob-file-available"
+    },
+    {
+      "@id": "urn:surface-instance:alice-share-revoked",
+      "@type": "SurfaceInstance",
+      "surfaceRef": "urn:surface:alice-share-revoked"
+    },
+    {
+      "@id": "urn:surface-instance:bob-access-removed",
+      "@type": "SurfaceInstance",
+      "surfaceRef": "urn:surface:bob-access-removed"
     },
     {
       "@id": "urn:event:nextcloud-share-12345:alice-share-confirmed",
       "@type": "RuntimeEvent",
       "executionId": "urn:execution:nextcloud-share-12345",
-      "eventStateRef": "urn:state:alice-share-confirmed",
-      "journeyInstanceRef": "urn:journey-instance:alice-federated-sharing:12345",
+      "surfaceInstanceRef": "urn:surface-instance:alice-share-confirmed",
       "payload": {
-        "action": "surface.visible"
+        "action": "surface.visible",
+        "source": "cloud-a-runtime"
       }
     },
     {
@@ -470,10 +464,10 @@ instances without adding evidence nodes to the distributed graph itself:
       "@type": "RuntimeEvent",
       "executionId": "urn:execution:nextcloud-share-12345",
       "previousId": "urn:event:nextcloud-share-12345:alice-share-confirmed",
-      "eventStateRef": "urn:state:bob-incoming-share",
-      "journeyInstanceRef": "urn:journey-instance:bob-remote-share-acceptance:12345",
+      "surfaceInstanceRef": "urn:surface-instance:bob-incoming-share",
       "payload": {
-        "action": "surface.visible"
+        "action": "surface.visible",
+        "source": "cloud-b-runtime"
       }
     },
     {
@@ -481,10 +475,10 @@ instances without adding evidence nodes to the distributed graph itself:
       "@type": "RuntimeEvent",
       "executionId": "urn:execution:nextcloud-share-12345",
       "previousId": "urn:event:nextcloud-share-12345:bob-incoming-share",
-      "eventStateRef": "urn:state:bob-file-available",
-      "journeyInstanceRef": "urn:journey-instance:bob-remote-share-acceptance:12345",
+      "surfaceInstanceRef": "urn:surface-instance:bob-file-available",
       "payload": {
-        "action": "surface.visible"
+        "action": "surface.visible",
+        "source": "cloud-b-runtime"
       }
     },
     {
@@ -492,10 +486,10 @@ instances without adding evidence nodes to the distributed graph itself:
       "@type": "RuntimeEvent",
       "executionId": "urn:execution:nextcloud-share-12345",
       "previousId": "urn:event:nextcloud-share-12345:bob-file-available",
-      "eventStateRef": "urn:state:alice-share-revoked",
-      "journeyInstanceRef": "urn:journey-instance:alice-federated-sharing:12345",
+      "surfaceInstanceRef": "urn:surface-instance:alice-share-revoked",
       "payload": {
-        "action": "surface.visible"
+        "action": "surface.visible",
+        "source": "cloud-a-runtime"
       }
     },
     {
@@ -503,54 +497,10 @@ instances without adding evidence nodes to the distributed graph itself:
       "@type": "RuntimeEvent",
       "executionId": "urn:execution:nextcloud-share-12345",
       "previousId": "urn:event:nextcloud-share-12345:alice-share-revoked",
-      "eventStateRef": "urn:state:bob-access-removed",
-      "journeyInstanceRef": "urn:journey-instance:bob-remote-share-acceptance:12345",
+      "surfaceInstanceRef": "urn:surface-instance:bob-access-removed",
       "payload": {
-        "action": "surface.visible"
-      }
-    },
-    {
-      "@id": "urn:runtime-evidence:nextcloud-share:alice-share-confirmed",
-      "@type": "RuntimeEvidenceRecord",
-      "journeyExecutionRef": "urn:execution:nextcloud-share-12345",
-      "runtimeEventRef": "urn:event:nextcloud-share-12345:alice-share-confirmed",
-      "observedByActorRef": "urn:authority:cloud-a",
-      "evidencePayload": {
-        "source": "cloud-a-runtime",
-        "record": "state-observed"
-      }
-    },
-    {
-      "@id": "urn:runtime-evidence:nextcloud-share:bob-file-available",
-      "@type": "RuntimeEvidenceRecord",
-      "journeyExecutionRef": "urn:execution:nextcloud-share-12345",
-      "runtimeEventRef": "urn:event:nextcloud-share-12345:bob-file-available",
-      "observedByActorRef": "urn:authority:cloud-b",
-      "evidencePayload": {
-        "source": "cloud-b-runtime",
-        "record": "state-observed"
-      }
-    },
-    {
-      "@id": "urn:runtime-evidence:nextcloud-share:alice-share-revoked",
-      "@type": "RuntimeEvidenceRecord",
-      "journeyExecutionRef": "urn:execution:nextcloud-share-12345",
-      "runtimeEventRef": "urn:event:nextcloud-share-12345:alice-share-revoked",
-      "observedByActorRef": "urn:authority:cloud-a",
-      "evidencePayload": {
-        "source": "cloud-a-runtime",
-        "record": "state-observed"
-      }
-    },
-    {
-      "@id": "urn:runtime-evidence:nextcloud-share:bob-access-removed",
-      "@type": "RuntimeEvidenceRecord",
-      "journeyExecutionRef": "urn:execution:nextcloud-share-12345",
-      "runtimeEventRef": "urn:event:nextcloud-share-12345:bob-access-removed",
-      "observedByActorRef": "urn:authority:cloud-b",
-      "evidencePayload": {
-        "source": "cloud-b-runtime",
-        "record": "state-observed"
+        "action": "surface.visible",
+        "source": "cloud-b-runtime"
       }
     }
   ]
@@ -564,7 +514,6 @@ instances without adding evidence nodes to the distributed graph itself:
   "@context": [
     "https://ujg.specs.openuji.org/ed/ns/core.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/graph.context.jsonld",
-    "https://ujg.specs.openuji.org/ed/ns/actor.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/surface.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/action.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/artifact.context.jsonld",
@@ -574,13 +523,15 @@ instances without adding evidence nodes to the distributed graph itself:
   "@type": "UJGDocument",
   "nodes": [
     {
-      "@id": "urn:authority:old",
-      "@type": "Authority",
+      "@id": "urn:touchpoint:old",
+      "@type": "Touchpoint",
+      "label": "Old server",
       "origin": "https://old.example"
     },
     {
-      "@id": "urn:authority:new",
-      "@type": "Authority",
+      "@id": "urn:touchpoint:new",
+      "@type": "Touchpoint",
+      "label": "New server",
       "origin": "https://new.example"
     },
     {
@@ -613,62 +564,57 @@ instances without adding evidence nodes to the distributed graph itself:
     {
       "@id": "urn:state:export-settings",
       "@type": "State",
-      "label": "Alice sees export settings on the old server",
-      "surfaceRef": "urn:surface:export-settings",
-      "responsibleActorRef": "urn:authority:old"
+      "label": "Alice sees export settings on the old server"
     },
     {
       "@id": "urn:state:archive-ready",
       "@type": "State",
-      "label": "Alice sees export archive ready",
-      "surfaceRef": "urn:surface:archive-ready",
-      "responsibleActorRef": "urn:authority:old"
+      "label": "Alice sees export archive ready"
     },
     {
       "@id": "urn:state:import-settings",
       "@type": "State",
-      "label": "Alice sees import settings on the new server",
-      "surfaceRef": "urn:surface:import-settings",
-      "responsibleActorRef": "urn:authority:new"
+      "label": "Alice sees import settings on the new server"
     },
     {
       "@id": "urn:state:partial-import-confirmed",
       "@type": "State",
-      "label": "Alice sees partial import confirmation",
-      "surfaceRef": "urn:surface:partial-import-confirmed",
-      "responsibleActorRef": "urn:authority:new"
+      "label": "Alice sees partial import confirmation"
     },
     {
       "@id": "urn:state:non-portable-warning",
       "@type": "State",
-      "label": "Alice sees warnings about content that cannot be imported",
-      "surfaceRef": "urn:surface:non-portable-warning",
-      "responsibleActorRef": "urn:authority:new"
+      "label": "Alice sees warnings about content that cannot be imported"
     },
     {
       "@id": "urn:surface:export-settings",
       "@type": "Surface",
-      "presentedByAuthorityRef": "urn:authority:old"
+      "graphNodeRef": "urn:state:export-settings",
+      "touchpointRef": "urn:touchpoint:old"
     },
     {
       "@id": "urn:surface:archive-ready",
       "@type": "Surface",
-      "presentedByAuthorityRef": "urn:authority:old"
+      "graphNodeRef": "urn:state:archive-ready",
+      "touchpointRef": "urn:touchpoint:old"
     },
     {
       "@id": "urn:surface:import-settings",
       "@type": "Surface",
-      "presentedByAuthorityRef": "urn:authority:new"
+      "graphNodeRef": "urn:state:import-settings",
+      "touchpointRef": "urn:touchpoint:new"
     },
     {
       "@id": "urn:surface:partial-import-confirmed",
       "@type": "Surface",
-      "presentedByAuthorityRef": "urn:authority:new"
+      "graphNodeRef": "urn:state:partial-import-confirmed",
+      "touchpointRef": "urn:touchpoint:new"
     },
     {
       "@id": "urn:surface:non-portable-warning",
       "@type": "Surface",
-      "presentedByAuthorityRef": "urn:authority:new"
+      "graphNodeRef": "urn:state:non-portable-warning",
+      "touchpointRef": "urn:touchpoint:new"
     },
     {
       "@id": "urn:transition:request-export",
@@ -713,71 +659,54 @@ instances without adding evidence nodes to the distributed graph itself:
     {
       "@id": "urn:artifact:account-archive",
       "@type": "DistributedArtifact",
-      "sourceAuthorityRef": "urn:authority:old",
-      "targetAuthorityRefs": [
-        "urn:authority:new"
+      "sourceTouchpointRef": "urn:touchpoint:old",
+      "targetTouchpointRefs": [
+        "urn:touchpoint:new"
       ]
     }
   ]
 }
 ```
 
-This is one user's migration journey across two authorities, not an artifact-only lifecycle. The
+This is one user's migration journey across two touchpoints, not an artifact-only lifecycle. The
 same actor continues from the old server's export surface to the new server's import surface, and
-the exported archive connects the authorities semantically without becoming the journey path.
+the exported archive connects the touchpoints semantically without becoming the journey path.
 
 The non-portable content warning is an ordinary visible state. The module does not need a
 portability taxonomy to represent partial success.
 
-A companion Runtime Evidence document can describe the runtime observation of the partial import
-confirmation as metadata attached to a runtime event:
+A companion Runtime document can describe the runtime observation of the partial import confirmation:
 
 ```json
 {
   "@context": [
     "https://ujg.specs.openuji.org/ed/ns/core.context.jsonld",
-    "https://ujg.specs.openuji.org/ed/ns/runtime.context.jsonld",
-    "https://ujg.specs.openuji.org/ed/ns/actor.context.jsonld",
-    "https://ujg.specs.openuji.org/ed/ns/runtime-evidence.context.jsonld"
+    "https://ujg.specs.openuji.org/ed/ns/surface.context.jsonld",
+    "https://ujg.specs.openuji.org/ed/ns/runtime.context.jsonld"
   ],
-  "@id": "https://example.com/ujg/runtime-evidence/execution-23456.jsonld",
+  "@id": "https://example.com/ujg/runtime/execution-23456.jsonld",
   "@type": "UJGDocument",
   "imports": [
     "https://example.com/ujg/distributed/account-migration.jsonld"
   ],
   "nodes": [
     {
-      "@id": "urn:authority:new",
-      "@type": "Actor"
-    },
-    {
       "@id": "urn:execution:account-migration-23456",
       "@type": "JourneyExecution"
     },
     {
-      "@id": "urn:journey-instance:account-migration:23456",
-      "@type": "JourneyInstance",
-      "journeyRef": "urn:journey:account-migration"
+      "@id": "urn:surface-instance:partial-import-confirmed",
+      "@type": "SurfaceInstance",
+      "surfaceRef": "urn:surface:partial-import-confirmed"
     },
     {
       "@id": "urn:event:account-migration-23456:partial-import-confirmed",
       "@type": "RuntimeEvent",
       "executionId": "urn:execution:account-migration-23456",
-      "eventStateRef": "urn:state:partial-import-confirmed",
-      "journeyInstanceRef": "urn:journey-instance:account-migration:23456",
+      "surfaceInstanceRef": "urn:surface-instance:partial-import-confirmed",
       "payload": {
-        "action": "surface.visible"
-      }
-    },
-    {
-      "@id": "urn:runtime-evidence:account-migration:partial-import-confirmed",
-      "@type": "RuntimeEvidenceRecord",
-      "journeyExecutionRef": "urn:execution:account-migration-23456",
-      "runtimeEventRef": "urn:event:account-migration-23456:partial-import-confirmed",
-      "observedByActorRef": "urn:authority:new",
-      "evidencePayload": {
-        "source": "new-server-runtime",
-        "record": "state-observed"
+        "action": "surface.visible",
+        "source": "new-server-runtime"
       }
     }
   ]
@@ -791,7 +720,6 @@ confirmation as metadata attached to a runtime event:
   "@context": [
     "https://ujg.specs.openuji.org/ed/ns/core.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/graph.context.jsonld",
-    "https://ujg.specs.openuji.org/ed/ns/actor.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/surface.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/action.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/distributed-journey.context.jsonld"
@@ -800,13 +728,15 @@ confirmation as metadata attached to a runtime event:
   "@type": "UJGDocument",
   "nodes": [
     {
-      "@id": "urn:authority:local",
-      "@type": "Authority",
+      "@id": "urn:touchpoint:local",
+      "@type": "Touchpoint",
+      "label": "Local server",
       "origin": "https://local.example"
     },
     {
-      "@id": "urn:authority:remote",
-      "@type": "Authority",
+      "@id": "urn:touchpoint:remote",
+      "@type": "Touchpoint",
+      "label": "Remote server",
       "origin": "https://remote.example"
     },
     {
@@ -843,86 +773,79 @@ confirmation as metadata attached to a runtime event:
     {
       "@id": "urn:state:remote-search",
       "@type": "State",
-      "label": "Alice searches for a remote account",
-      "surfaceRef": "urn:surface:remote-search",
-      "responsibleActorRef": "urn:authority:local"
+      "label": "Alice searches for a remote account"
     },
     {
       "@id": "urn:state:remote-result-visible",
       "@type": "State",
-      "label": "Alice sees the remote account result",
-      "surfaceRef": "urn:surface:remote-result-visible",
-      "responsibleActorRef": "urn:authority:local"
+      "label": "Alice sees the remote account result"
     },
     {
       "@id": "urn:state:follow-pending",
       "@type": "State",
-      "label": "Alice sees follow request pending",
-      "surfaceRef": "urn:surface:follow-pending",
-      "responsibleActorRef": "urn:authority:local"
+      "label": "Alice sees follow request pending"
     },
     {
       "@id": "urn:state:following-visible",
       "@type": "State",
-      "label": "Alice sees following",
-      "surfaceRef": "urn:surface:following-visible",
-      "responsibleActorRef": "urn:authority:local"
+      "label": "Alice sees following"
     },
     {
       "@id": "urn:state:follow-rejected",
       "@type": "State",
-      "label": "Alice sees the follow request rejected",
-      "surfaceRef": "urn:surface:follow-rejected",
-      "responsibleActorRef": "urn:authority:local"
+      "label": "Alice sees the follow request rejected"
     },
     {
       "@id": "urn:state:remote-unavailable",
       "@type": "State",
-      "label": "Alice sees the remote account unavailable",
-      "surfaceRef": "urn:surface:remote-unavailable",
-      "responsibleActorRef": "urn:authority:local"
+      "label": "Alice sees the remote account unavailable"
     },
     {
       "@id": "urn:state:remote-feed-visible",
       "@type": "State",
-      "label": "Alice sees remote updates in her local feed",
-      "surfaceRef": "urn:surface:remote-feed-visible",
-      "responsibleActorRef": "urn:authority:local"
+      "label": "Alice sees remote updates in her local feed"
     },
     {
       "@id": "urn:surface:remote-search",
       "@type": "Surface",
-      "presentedByAuthorityRef": "urn:authority:local"
+      "graphNodeRef": "urn:state:remote-search",
+      "touchpointRef": "urn:touchpoint:local"
     },
     {
       "@id": "urn:surface:remote-result-visible",
       "@type": "Surface",
-      "presentedByAuthorityRef": "urn:authority:local"
+      "graphNodeRef": "urn:state:remote-result-visible",
+      "touchpointRef": "urn:touchpoint:local"
     },
     {
       "@id": "urn:surface:follow-pending",
       "@type": "Surface",
-      "presentedByAuthorityRef": "urn:authority:local"
+      "graphNodeRef": "urn:state:follow-pending",
+      "touchpointRef": "urn:touchpoint:local"
     },
     {
       "@id": "urn:surface:following-visible",
       "@type": "Surface",
-      "presentedByAuthorityRef": "urn:authority:local"
+      "graphNodeRef": "urn:state:following-visible",
+      "touchpointRef": "urn:touchpoint:local"
     },
     {
       "@id": "urn:surface:follow-rejected",
       "@type": "Surface",
-      "presentedByAuthorityRef": "urn:authority:local"
+      "graphNodeRef": "urn:state:follow-rejected",
+      "touchpointRef": "urn:touchpoint:local"
     },
     {
       "@id": "urn:surface:remote-unavailable",
       "@type": "Surface",
-      "presentedByAuthorityRef": "urn:authority:local"
+      "graphNodeRef": "urn:state:remote-unavailable",
+      "touchpointRef": "urn:touchpoint:local"
     },
     {
       "@id": "urn:surface:remote-feed-visible",
       "@type": "Surface",
-      "presentedByAuthorityRef": "urn:authority:local"
+      "graphNodeRef": "urn:state:remote-feed-visible",
+      "touchpointRef": "urn:touchpoint:local"
     },
     {
       "@id": "urn:transition:open-result",
@@ -964,9 +887,9 @@ confirmation as metadata attached to a runtime event:
     {
       "@id": "urn:action:click-follow",
       "@type": "Action",
-      "sourceAuthorityRef": "urn:authority:local",
-      "targetAuthorityRefs": [
-        "urn:authority:remote"
+      "sourceTouchpointRef": "urn:touchpoint:local",
+      "targetTouchpointRefs": [
+        "urn:touchpoint:remote"
       ]
     }
   ]
@@ -974,59 +897,43 @@ confirmation as metadata attached to a runtime event:
 ```
 
 The invisible federation request is not modeled as a journey state. The visible pending state and
-later feed visibility are Alice's local user-facing graph. Remote approval, delivery,
-moderation, queueing, or acceptance belongs in Runtime Evidence, or in a separate remote
-authority journey only when another actor sees and acts on those states through their own UI.
+later feed visibility are Alice's local user-facing graph. Remote approval, delivery, moderation,
+queueing, or acceptance belongs in Runtime payload/private extension data, or in a separate remote
+touchpoint journey only when another actor sees and acts on those states through their own UI.
 
-A companion Runtime Evidence document can describe the runtime observation of the remote feed
-becoming visible while leaving the invisible federation request outside the graph:
+A companion Runtime document can describe the runtime observation of the remote feed becoming
+visible while leaving the invisible federation request outside the graph:
 
 ```json
 {
   "@context": [
     "https://ujg.specs.openuji.org/ed/ns/core.context.jsonld",
-    "https://ujg.specs.openuji.org/ed/ns/runtime.context.jsonld",
-    "https://ujg.specs.openuji.org/ed/ns/actor.context.jsonld",
-    "https://ujg.specs.openuji.org/ed/ns/runtime-evidence.context.jsonld"
+    "https://ujg.specs.openuji.org/ed/ns/surface.context.jsonld",
+    "https://ujg.specs.openuji.org/ed/ns/runtime.context.jsonld"
   ],
-  "@id": "https://example.com/ujg/runtime-evidence/execution-34567.jsonld",
+  "@id": "https://example.com/ujg/runtime/execution-34567.jsonld",
   "@type": "UJGDocument",
   "imports": [
     "https://example.com/ujg/distributed/remote-follow.jsonld"
   ],
   "nodes": [
     {
-      "@id": "urn:authority:local",
-      "@type": "Actor"
-    },
-    {
       "@id": "urn:execution:remote-follow-34567",
       "@type": "JourneyExecution"
     },
     {
-      "@id": "urn:journey-instance:remote-follow:34567",
-      "@type": "JourneyInstance",
-      "journeyRef": "urn:journey:remote-follow"
+      "@id": "urn:surface-instance:remote-feed-visible",
+      "@type": "SurfaceInstance",
+      "surfaceRef": "urn:surface:remote-feed-visible"
     },
     {
       "@id": "urn:event:remote-follow-34567:remote-feed-visible",
       "@type": "RuntimeEvent",
       "executionId": "urn:execution:remote-follow-34567",
-      "eventStateRef": "urn:state:remote-feed-visible",
-      "journeyInstanceRef": "urn:journey-instance:remote-follow:34567",
+      "surfaceInstanceRef": "urn:surface-instance:remote-feed-visible",
       "payload": {
-        "action": "surface.visible"
-      }
-    },
-    {
-      "@id": "urn:runtime-evidence:remote-follow:remote-feed-visible",
-      "@type": "RuntimeEvidenceRecord",
-      "journeyExecutionRef": "urn:execution:remote-follow-34567",
-      "runtimeEventRef": "urn:event:remote-follow-34567:remote-feed-visible",
-      "observedByActorRef": "urn:authority:local",
-      "evidencePayload": {
-        "source": "local-runtime",
-        "record": "state-observed"
+        "action": "surface.visible",
+        "source": "local-runtime"
       }
     }
   ]

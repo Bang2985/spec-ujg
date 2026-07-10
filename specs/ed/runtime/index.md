@@ -1,8 +1,8 @@
 ## Overview
 
-This module defines the data model for recording actual user behavior as a **causally ordered event chain** within a bounded execution. Ordering is established by explicit linkage between events, not by timestamps. Runtime events also carry an explicit journey instance reference so the local state where an event occurred can be interpreted in nested journey contexts.
+This module defines the data model for recording actual user behavior as a **causally ordered event chain** within a bounded execution. Ordering is established by explicit linkage between events, not by timestamps. Runtime events reference the concrete `SurfaceInstance` where the runtime moment was observed.
 
-Runtime records observed execution facts. A Client does not need to receive or understand the whole UJG graph document in order to emit runtime events. Each event records enough local scope to make the observed state occurrence unambiguous, and Mapping can later resolve those facts against Graph intent.
+Runtime records observed execution facts. A Client does not need to receive or understand the whole UJG graph document in order to emit runtime events. Each event records the observed surface instance, and Mapping can later resolve that instance through `SurfaceInstance.surfaceRef`, `Surface.graphNodeRef`, and optional `GraphNodeInstance` occurrence data.
 
 ## Normative Artifacts
 
@@ -18,7 +18,6 @@ Examples in this page use an explicit context array composed from the published 
 
 - <dfn>JourneyExecution</dfn>: A bounded execution identifier for one logical trace.
 - <dfn>RuntimeEvent</dfn>: An atomic record of a single observed runtime moment.
-- <dfn>JourneyInstance</dfn>: A concrete runtime occurrence of a graph [=Journey=], not a [=JourneyEntryIndex=].
 - <dfn>Event Chain</dfn>: A sequence where each event references its immediate predecessor via `previousId`.
 - <dfn>Root Event</dfn>: The event in a [=JourneyExecution=] whose `previousId` is omitted.
 
@@ -35,69 +34,44 @@ graph TB
     E1[RuntimeEvent A<br/>id e1]
     E2[RuntimeEvent B<br/>e2 after e1]
     E3[RuntimeEvent C<br/>e3 after e2]
-    E2 -->|previousId| E1
-    E3 -->|previousId| E2
+  E2 -->|previousId| E1
+  E3 -->|previousId| E2
   end
-  E1 -->|journeyInstanceRef| J1[JourneyInstance<br/>checkout]
-  E2 -->|journeyInstanceRef| J2[JourneyInstance<br/>payment]
-  E3 -->|journeyInstanceRef| J2
-  J2 -->|parentInstanceRef| J1
+  E1 -->|surfaceInstanceRef| SI1[SurfaceInstance<br/>cart]
+  E2 -->|surfaceInstanceRef| SI2[SurfaceInstance<br/>payment]
+  E3 -->|surfaceInstanceRef| SI3[SurfaceInstance<br/>confirmation]
+  SI1 -->|surfaceRef| S1[Surface<br/>cart]
+  SI2 -->|surfaceRef| S2[Surface<br/>payment]
+  SI3 -->|surfaceRef| S3[Surface<br/>confirmation]
 ```
 
 A [=JourneyExecution=] identifies one logical trace. It is not required to enumerate its [=RuntimeEvent|RuntimeEvents=]. Runtime events are associated with an execution by `executionId`, which supports append-only event streams.
 
 A [=RuntimeEvent=] records one runtime moment and may reference its immediate predecessor via `previousId`; if `previousId` is omitted, the event is the [=Root Event=].
 
-A [=RuntimeEvent=] references exactly one [=JourneyInstance=] using `journeyInstanceRef`. The referenced [=JourneyInstance=] supplies the local graph [=Journey=] scope needed to interpret the event's `eventStateRef`, especially when the event occurred inside a subjourney reached through a [=CompositeState=].
+A [=RuntimeEvent=] references exactly one [=SurfaceInstance=] using `surfaceInstanceRef`. The referenced [=SurfaceInstance=] supplies the concrete visible occurrence where the event was observed.
 
-The core runtime-local address is the pair `RuntimeEvent.eventStateRef` plus `RuntimeEvent.journeyInstanceRef`. This pair identifies the concrete runtime-local occurrence of the referenced [=State=] or [=CompositeState=].
+The core runtime address is `RuntimeEvent.surfaceInstanceRef`. Consumers that need Graph meaning resolve the surface instance through `SurfaceInstance.surfaceRef` and then through `Surface.graphNodeRef`. Consumers that need repeated-occurrence scope MAY also follow `SurfaceInstance.graphNodeInstanceRef`.
+
 
 ## Runtime Event {data-cop-concept="runtime-event"}
 
 <spec-statement>
 
 1. A [=RuntimeEvent=] MUST reference exactly one [=JourneyExecution=] using `executionId`.
-2. A [=RuntimeEvent=] MUST reference exactly one graph [=State=] or [=CompositeState=] using `eventStateRef`.
-3. A [=RuntimeEvent=] MUST reference exactly one [=JourneyInstance=] using `journeyInstanceRef`.
-4. The pair `eventStateRef` and `journeyInstanceRef` MUST be sufficient to identify the runtime-local state occurrence.
+2. A [=RuntimeEvent=] MUST reference exactly one [=SurfaceInstance=] using `surfaceInstanceRef`.
+3. `surfaceInstanceRef` MUST resolve to a `SurfaceInstance` in the current document set or imported documents.
+4. The referenced surface instance MUST be sufficient to identify the observed runtime occurrence.
 5. A [=RuntimeEvent=] MAY reference its immediate predecessor using `previousId`.
 6. If `previousId` is omitted, the event is a [=Root Event=] in the execution chain.
 7. Runtime event order MUST be reconstructed using `previousId` links, not timestamps.
-8. The `payload` property, when present, is opaque runtime data and MUST NOT be required for resolving state or journey scope.
+8. The `payload` property, when present, is opaque runtime data and MUST NOT be required for resolving `surfaceInstanceRef`.
 
 </spec-statement>
-
-## Journey Instance {data-cop-concept="journey-instance"}
-
-A [=JourneyInstance=] is a concrete runtime occurrence of a graph [=Journey=]. It is a scope node: it describes journey instantiation and nesting, not membership in an event stream. A [=JourneyEntryIndex=] is not a runtime scope because it does not define traversal.
-
-<spec-statement>
-
-1. A [=JourneyInstance=] MUST reference exactly one graph [=Journey=] using `journeyRef`; it MUST NOT reference a [=JourneyEntryIndex=].
-2. A [=JourneyInstance=] MAY reference a parent [=JourneyInstance=] using `parentInstanceRef`.
-3. If a [=JourneyInstance=] represents a subjourney entered through a [=CompositeState=], it SHOULD provide `viaStateRef`.
-4. A [=JourneyInstance=] MUST NOT be required to reference a [=JourneyExecution=].
-5. The root [=JourneyInstance=] is the topmost ancestor reached by following `parentInstanceRef` until no parent exists.
-6. The local graph [=Journey=] scope for a [=RuntimeEvent=] is the `journeyRef` of the event's `journeyInstanceRef`.
-7. The derived journey instance stack for a [=RuntimeEvent=] is the ordered ancestor chain from the root [=JourneyInstance=] to the event's local [=JourneyInstance=].
-
-</spec-statement>
-
-The core Runtime model intentionally does not put `executionId`, `subjectRef`, `depth`, or `frameRefs` on [=JourneyInstance=]. `executionId` belongs to [=RuntimeEvent=] because events form the append-only observed runtime chain. Domain subjects, cases, records, users, and data bindings are application data or module-specific data. Depth and stack order are derivable by walking `parentInstanceRef`.
-
-## Derived Journey Instance Stack {data-cop-concept="derived-journey-instance-stack"}
-
-This section is non-normative.
-
-A Consumer can derive a journey instance stack by following `RuntimeEvent.journeyInstanceRef` to its [=JourneyInstance=], then following `parentInstanceRef` recursively until a root [=JourneyInstance=] is reached.
-
-The derived stack order is root instance to local instance. The final derived stack entry is always the [=RuntimeEvent=]'s `journeyInstanceRef`.
-
-Implementations can materialize this derived stack for indexing, caching, frontend rendering, or Mapping performance, but the materialized stack is not the normative runtime address.
 
 ## Ontology {data-cop-concept="ontology"}
 
-The normative Runtime ontology is defined below and is published at `https://ujg.specs.openuji.org/ed/ns/runtime`. It is the authoritative structural definition for `JourneyExecution`, `RuntimeEvent`, `JourneyInstance`, and the properties that connect them.
+The normative Runtime ontology is defined below and is published at `https://ujg.specs.openuji.org/ed/ns/runtime`. It is the authoritative structural definition for `JourneyExecution`, `RuntimeEvent`, and the properties that connect them.
 
 :::include ./runtime.ttl :::
 
@@ -140,7 +114,7 @@ A Consumer reconstructing event order **MUST**:
 
 </spec-statement>
 
-A Consumer interpreting a runtime event's journey context MUST resolve the event's `journeyInstanceRef` to a [=JourneyInstance=] and use that instance's `journeyRef` as the local graph [=Journey=] scope.
+A Consumer interpreting a runtime event's Graph meaning MUST resolve the event's `surfaceInstanceRef` to a [=SurfaceInstance=], follow that instance's `surfaceRef` to a [=Surface=], and use that surface's `graphNodeRef` as the observed Graph node.
 
 ---
 
@@ -157,23 +131,40 @@ A Consumer interpreting a runtime event's journey context MUST resolve the event
       "@id": "urn:ujg:execution:12345"
     },
     {
-      "@type": "JourneyInstance",
-      "@id": "urn:ujg:journey-instance:checkout:12345",
-      "journeyRef": "urn:ujg:journey:checkout"
+      "@type": "State",
+      "@id": "urn:ujg:state:shipping-form",
+      "label": "Shipping form"
     },
     {
-      "@type": "JourneyInstance",
-      "@id": "urn:ujg:journey-instance:checkout:12345:payment",
-      "journeyRef": "urn:ujg:journey:payment",
-      "parentInstanceRef": "urn:ujg:journey-instance:checkout:12345",
-      "viaStateRef": "urn:ujg:state:checkout-payment"
+      "@type": "State",
+      "@id": "urn:ujg:state:payment-card",
+      "label": "Payment card"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:ujg:surface:shipping-form",
+      "graphNodeRef": "urn:ujg:state:shipping-form"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:ujg:surface:payment-card",
+      "graphNodeRef": "urn:ujg:state:payment-card"
+    },
+    {
+      "@type": "SurfaceInstance",
+      "@id": "urn:ujg:surface-instance:shipping-form",
+      "surfaceRef": "urn:ujg:surface:shipping-form"
+    },
+    {
+      "@type": "SurfaceInstance",
+      "@id": "urn:ujg:surface-instance:payment-card",
+      "surfaceRef": "urn:ujg:surface:payment-card"
     },
     {
       "@type": "RuntimeEvent",
       "@id": "urn:ujg:event:12345:100",
       "executionId": "urn:ujg:execution:12345",
-      "eventStateRef": "urn:ujg:state:shipping-form",
-      "journeyInstanceRef": "urn:ujg:journey-instance:checkout:12345",
+      "surfaceInstanceRef": "urn:ujg:surface-instance:shipping-form",
       "payload": { "action": "surface.enter" }
     },
     {
@@ -181,8 +172,7 @@ A Consumer interpreting a runtime event's journey context MUST resolve the event
       "@id": "urn:ujg:event:12345:200",
       "executionId": "urn:ujg:execution:12345",
       "previousId": "urn:ujg:event:12345:100",
-      "eventStateRef": "urn:ujg:state:payment-card",
-      "journeyInstanceRef": "urn:ujg:journey-instance:checkout:12345:payment",
+      "surfaceInstanceRef": "urn:ujg:surface-instance:payment-card",
       "payload": { "action": "field.complete", "field": "card-number" }
     }
   ]

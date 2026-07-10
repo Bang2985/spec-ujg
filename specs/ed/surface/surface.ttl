@@ -1,0 +1,69 @@
+@prefix ujg: <https://ujg.specs.openuji.org/ed/ns/core#> .
+@prefix ujggraph: <https://ujg.specs.openuji.org/ed/ns/graph#> .
+@prefix ujgsurface: <https://ujg.specs.openuji.org/ed/ns/surface#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+
+<https://ujg.specs.openuji.org/ed/ns/surface#> a owl:Ontology ;
+  rdfs:label "UJG Surface Editor's Draft Vocabulary"@en ;
+  dct:description "UJG Surface ontology declaration" .
+
+### Classes
+
+ujgsurface:Surface a owl:Class ;
+  rdfs:subClassOf ujg:Node .
+
+ujgsurface:SurfaceInstance a owl:Class ;
+  rdfs:subClassOf ujg:Node .
+
+ujgsurface:Touchpoint a owl:Class ;
+  rdfs:subClassOf ujg:Node .
+
+ujgsurface:GraphNodeInstance a owl:Class ;
+  rdfs:subClassOf ujg:Node .
+
+### Properties
+
+ujgsurface:graphNodeRef a owl:ObjectProperty ;
+  rdfs:domain [
+    a owl:Class ;
+    owl:unionOf (
+      ujgsurface:Surface
+      ujgsurface:GraphNodeInstance
+    )
+  ] ;
+  rdfs:range [
+    a owl:Class ;
+    owl:unionOf (
+      ujggraph:State
+      ujggraph:CompositeState
+      ujggraph:Transition
+      ujggraph:OutgoingTransition
+    )
+  ] .
+
+ujgsurface:touchpointRef a owl:ObjectProperty ;
+  rdfs:domain ujgsurface:Surface ;
+  rdfs:range ujgsurface:Touchpoint .
+
+ujgsurface:surfaceRef a owl:ObjectProperty ;
+  rdfs:domain ujgsurface:SurfaceInstance ;
+  rdfs:range ujgsurface:Surface .
+
+ujgsurface:graphNodeInstanceRef a owl:ObjectProperty ;
+  rdfs:domain ujgsurface:SurfaceInstance ;
+  rdfs:range ujgsurface:GraphNodeInstance .
+
+ujgsurface:parentInstanceRef a owl:ObjectProperty ;
+  rdfs:domain ujgsurface:GraphNodeInstance ;
+  rdfs:range ujgsurface:GraphNodeInstance .
+
+ujgsurface:channel a owl:DatatypeProperty ;
+  rdfs:domain ujgsurface:Touchpoint ;
+  rdfs:range xsd:string .
+
+ujgsurface:origin a owl:ObjectProperty ;
+  rdfs:domain ujgsurface:Touchpoint ;
+  rdfs:range rdfs:Resource .

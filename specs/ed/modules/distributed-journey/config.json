@@ -4,19 +4,17 @@
     "maturityLevel": "draft",
     "baseUrl": "${SPEC_BASE_URL}/ed",
     "deps": [
-        "modules/actor",
-        "modules/surface",
+        "graph",
+        "surface",
         "modules/action",
-        "modules/artifact",
-        "modules/runtime-evidence"
+        "modules/artifact"
     ],
     "custom": {
         "family": "module",
         "order": 65,
-        "moduleLevel": 2,
+        "moduleLevel": 1,
         "bridgeModules": [
-            "modules/actor",
-            "modules/surface",
+            "surface",
             "modules/action",
             "modules/artifact"
         ]
@@ -40,9 +38,9 @@
                 "title": "UJG Core",
                 "url": "/ed/core"
             },
-            "UJG Actor": {
-                "title": "UJG Actor",
-                "url": "/ed/modules/actor"
+            "UJG Graph": {
+                "title": "UJG Graph",
+                "url": "/ed/graph"
             },
             "UJG Action": {
                 "title": "UJG Action",
@@ -50,15 +48,11 @@
             },
             "UJG Surface": {
                 "title": "UJG Surface",
-                "url": "/ed/modules/surface"
+                "url": "/ed/surface"
             },
             "UJG Artifact": {
                 "title": "UJG Artifact",
                 "url": "/ed/modules/artifact"
-            },
-            "UJG Runtime Evidence": {
-                "title": "UJG Runtime Evidence",
-                "url": "/ed/modules/runtime-evidence"
             }
         }
     }
