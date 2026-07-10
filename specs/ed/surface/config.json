@@ -1,6 +1,6 @@
 {
     "id": "surface",
-    "title": "Surface",
+    "title": "Surface and Experience",
     "maturityLevel": "draft",
     "baseUrl": "${SPEC_BASE_URL}/ed",
     "deps": [
@@ -32,6 +32,10 @@
             "UJG Graph": {
                 "title": "UJG Graph",
                 "url": "/ed/graph"
+            },
+            "UJG Mapping": {
+                "title": "UJG Mapping",
+                "url": "/ed/mapping"
             }
         }
     }

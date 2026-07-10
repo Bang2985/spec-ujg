@@ -11,7 +11,7 @@
         {
           "key": "root",
           "title": "Modeling",
-          "scope": "whole UJG document modeling across Core, Graph, Surface, Runtime, Mapping, Metrics, Experience, Localization, Observability, and optional modules",
+          "scope": "whole UJG document modeling across Core, Graph, Surface and Experience, Runtime, Mapping, Metrics, Localization, Observability, UX Research, and optional modules",
           "nameSuffix": "modeling",
           "moduleId": null
         },

@@ -1,6 +1,6 @@
 {
-  "artifactHash": "sha256:05168772f871928e089334cb43ce39ae4140e2303ce5128f174492ffdd242e30",
-  "configHash": "sha256:3b5ea1b06a3e16741e2e622b1890bde36c552f97e6c4e3ebd3377877bfd3f440",
+  "artifactHash": "sha256:4c319ee9c15e3607817ec911497438441ded7cb9bf881054b69eb8fd112e55ec",
+  "configHash": "sha256:9091bb9f93c3ecd52bede67493d829f3ed53665b3ea5cd58d168f69e1281329f",
   "package": {
     "id": "ujg-agent-pack",
     "name": "@openuji/ujg-agent-pack",
@@ -11,8 +11,8 @@
     "moduleId": "modules/l10n",
     "name": "ujg-ed-l10n-modeling"
   },
-  "sourceHash": "sha256:a8d53debe2f7a1e602163828728c306c97b35ee170880edcfd4389aafe3c8721",
-  "specHash": "sha256:bda7fe95eb43bf94dfb320d9eea4be03ffb7c3e8be67d459c922ea0ec4c91a80",
+  "sourceHash": "sha256:85673dcf940bace0a1e15d93a4c9061807f6740ebdccc7ae14cd740f04de401f",
+  "specHash": "sha256:8fabfa10044ff1e56ec85fc6fdbc740ea5fa285aa6e57a5a6094aa040f7f37d7",
   "target": {
     "id": "ed",
     "label": "Editor's Draft"

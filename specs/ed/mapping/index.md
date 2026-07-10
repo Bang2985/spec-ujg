@@ -46,6 +46,96 @@ with the Mapping context.
 - <dfn>Jump</dfn>: A non-root mapped step where no relevant effective transition explains the
   observed movement.
 
+## JourneyMapping {data-cop-concept="journey-mapping"}
+
+A [=JourneyMapping=] binds one Runtime execution chain to the root Graph Journey used to interpret
+it and to the set of MappedStep records derived from that chain.
+
+<spec-statement>
+1. A [=JourneyMapping=] **MUST** be identified by an IRI.
+2. A [=JourneyMapping=] **MUST** declare exactly one `mappedRuntimeRef` to a `JourneyExecution`.
+3. A [=JourneyMapping=] **MUST** declare exactly one `mappedJourneyRef` to a traversable `Journey`.
+4. `mappedJourneyRef` **MUST NOT** reference a `JourneyEntryIndex`.
+5. A [=JourneyMapping=] **MUST** declare one or more `mappedStepRef` values.
+6. The JSON order of `mappedStepRef` values **MUST NOT** define step order.
+</spec-statement>
+
+```mermaid
+classDiagram
+  class JourneyExecution
+  class Journey
+  class MappedStep
+  class JourneyMapping {
+    id
+    mappedRuntimeRef
+    mappedJourneyRef
+    mappedStepRef
+  }
+  JourneyMapping --> JourneyExecution : mappedRuntimeRef
+  JourneyMapping --> Journey : mappedJourneyRef
+  JourneyMapping --> "1..*" MappedStep : mappedStepRef
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "JourneyMapping",
+  "@id": "urn:mapping:checkout-1",
+  "mappedRuntimeRef": "urn:execution:checkout-1",
+  "mappedJourneyRef": "urn:journey:checkout",
+  "mappedStepRef": [
+    "urn:mapping:checkout-1:100",
+    "urn:mapping:checkout-1:200"
+  ]
+}
+```
+
+## MappedStep {data-cop-concept="mapped-step"}
+
+A [=MappedStep=] records the Graph state-like node resolved for one state-observation RuntimeEvent.
+Affordance events remain in the Runtime causal chain and may be referenced as evidence, but are not
+serialized as separate MappedStep records.
+
+<spec-statement>
+1. A [=MappedStep=] **MUST** be identified by an IRI.
+2. A [=MappedStep=] **MUST** declare exactly one `mappedEventRef` to a state-observation `RuntimeEvent`.
+3. A [=MappedStep=] **MUST** declare exactly one `mappedStateRef` to the resolved `State` or `CompositeState`.
+4. A [=MappedStep=] **MAY** declare at most one `observedAffordanceEventRef` to its immediate predecessor event.
+5. A [=MappedStep=] **MAY** declare at most one `explainedByTransitionRef` to a relevant effective transition.
+</spec-statement>
+
+```mermaid
+classDiagram
+  class RuntimeEvent
+  class State
+  class Transition
+  class MappedStep {
+    id
+    mappedEventRef
+    mappedStateRef
+    observedAffordanceEventRef
+    explainedByTransitionRef
+  }
+  MappedStep --> RuntimeEvent : mappedEventRef
+  MappedStep --> RuntimeEvent : observedAffordanceEventRef
+  MappedStep --> State : mappedStateRef
+  MappedStep --> Transition : explainedByTransitionRef
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "MappedStep",
+  "@id": "urn:mapping:checkout-1:200",
+  "mappedEventRef": "urn:event:checkout-1:200",
+  "observedAffordanceEventRef": "urn:event:checkout-1:150",
+  "mappedStateRef": "urn:state:payment",
+  "explainedByTransitionRef": "urn:transition:cart-to-payment"
+}
+```
+
 ## Mapping Model
 
 A `JourneyMapping` links:
@@ -153,6 +243,70 @@ the SHACL shape.
    vocabulary.
 16. **No intent assumption:** A derived jump reports that the observed movement is not explained by
    the mapped graph. It does not by itself decide whether the movement is legitimate or erroneous.
+
+## Experience Occurrence and Phase Start {data-cop-concept="experience-occurrence"}
+
+Mapping also derives when Surface [=ExperienceStep|ExperienceSteps=] occur and when their
+[=Phase|Phases=] start. These are processing results, not serialized Mapping vocabulary, and they do
+not change Runtime records, Graph traversal, or the `JourneyMapping` and `MappedStep` wire shapes.
+
+<spec-statement>
+1. A Consumer deriving experience occurrence **MUST** reconstruct Runtime event order from the causal chain.
+2. An [=ExperienceStep=] occurs at the earliest RuntimeEvent whose `surfaceInstanceRef` resolves through `SurfaceInstance.surfaceRef` to any Surface in that step's `surfaceRefs`.
+3. A [=Phase=] starts at the earliest occurrence of any ExperienceStep whose `phaseRef` resolves to that Phase.
+4. Repeated matching RuntimeEvents **MUST NOT** restart an already occurred ExperienceStep or Phase.
+5. An ExperienceStep without `phaseRef` may occur but **MUST NOT** start a Phase.
+6. A Phase with no occurring ExperienceStep **MUST NOT** be considered started.
+7. An affordance RuntimeEvent triggers an ExperienceStep only when the affordance's resolved Surface is explicitly listed in that step's `surfaceRefs`.
+8. Serialized node order, `mappedStepRef` order, and `Phase.order` **MUST NOT** determine occurrence or start time.
+</spec-statement>
+
+```mermaid
+flowchart LR
+  E[RuntimeEvent] -->|surfaceInstanceRef| SI[SurfaceInstance]
+  SI -->|surfaceRef| S[Surface]
+  S -->|member of surfaceRefs| ES[ExperienceStep occurs]
+  ES -->|phaseRef; earliest step| P[Phase starts]
+```
+
+In the following fragment, the shipping step and checkout phase both begin at event `:100`.
+The repeated event `:200` does not restart either result.
+
+```json
+{
+  "@context": [
+    "https://ujg.specs.openuji.org/ed/ns/context.jsonld",
+    "https://ujg.specs.openuji.org/ed/ns/surface.context.jsonld"
+  ],
+  "@type": "UJGDocument",
+  "nodes": [
+    { "@type": "State", "@id": "urn:state:shipping", "label": "Shipping" },
+    { "@type": "Phase", "@id": "urn:phase:checkout", "order": 2 },
+    {
+      "@type": "ExperienceStep",
+      "@id": "urn:step:shipping",
+      "surfaceRefs": ["urn:surface:shipping", "urn:surface:address-help"],
+      "phaseRef": "urn:phase:checkout"
+    },
+    { "@type": "Surface", "@id": "urn:surface:shipping", "graphNodeRef": "urn:state:shipping" },
+    { "@type": "SurfaceInstance", "@id": "urn:instance:shipping", "surfaceRef": "urn:surface:shipping" },
+    { "@type": "JourneyExecution", "@id": "urn:execution:checkout" },
+    {
+      "@type": "RuntimeEvent",
+      "@id": "urn:event:checkout:100",
+      "executionId": "urn:execution:checkout",
+      "surfaceInstanceRef": "urn:instance:shipping"
+    },
+    {
+      "@type": "RuntimeEvent",
+      "@id": "urn:event:checkout:200",
+      "executionId": "urn:execution:checkout",
+      "previousId": "urn:event:checkout:100",
+      "surfaceInstanceRef": "urn:instance:shipping"
+    }
+  ]
+}
+```
 
 ## Minimal Example
 

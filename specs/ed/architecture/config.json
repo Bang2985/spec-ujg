@@ -21,6 +21,12 @@
                 "w3cid": "169225"
             }
         ],
-        "license": "W3C-Software-and-Document"
+        "license": "W3C-Software-and-Document",
+        "localBiblio": {
+            "UJG UX Research": {
+                "title": "UJG UX Research",
+                "url": "/ed/modules/ux-research"
+            }
+        }
     }
 }

@@ -92,3 +92,31 @@ ujgsurfaceshape:TouchpointShape a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
     sh:maxCount 1 ;
   ] .
+
+ujgsurfaceshape:ExperienceStepShape a sh:NodeShape ;
+  sh:targetClass ujgsurface:ExperienceStep ;
+  sh:nodeKind sh:IRI ;
+
+  sh:property [
+    sh:path ujgsurface:surfaceRefs ;
+    sh:class ujgsurface:Surface ;
+    sh:nodeKind sh:IRI ;
+    sh:minCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path ujgsurface:phaseRef ;
+    sh:class ujgsurface:Phase ;
+    sh:nodeKind sh:IRI ;
+    sh:maxCount 1 ;
+  ] .
+
+ujgsurfaceshape:PhaseShape a sh:NodeShape ;
+  sh:targetClass ujgsurface:Phase ;
+  sh:nodeKind sh:IRI ;
+
+  sh:property [
+    sh:path ujgsurface:order ;
+    sh:datatype xsd:integer ;
+    sh:maxCount 1 ;
+  ] .
