@@ -3,35 +3,19 @@
 # Related Skills
 
 Target: Editor's Draft
-Current skill: ujg-ed-graph-modeling
-Module scope: graph
+Current skill: ujg-ed-observability-modeling
+Module scope: modules/observability
 
 ## Sibling Skills
 
 - ujg-ed-modeling: whole UJG document modeling across Core, Graph, Surface, Runtime, Mapping, Metrics, Experience, Localization, Observability, and optional modules
 - ujg-ed-core-modeling: Core module document containers, imports, top-level nodes, and extensions
-- ujg-ed-design-system-modeling: Design System module semantics and its relationship to Graph and Surface
+- ujg-ed-graph-modeling: Graph module topology, journeys, states, transitions, exits, outgoing navigation, and indexes
 - ujg-ed-l10n-modeling: Localization module semantics for MessageBundle copy metadata and locale-switch metadata
-- ujg-ed-observability-modeling: Observability module semantics for ObservationBinding, accessible-object locators, surface recognition contracts, and SurfaceInstanceResolver
-- ujg-ed-distributed-journey-modeling: Distributed Journey module semantics for cross-touchpoint human-facing journeys, distributed artifacts, and touchpoint references
 
 ## Downstream Spec Modules
 
-- modules/routing
-- modules/l10n
-- modules/condition
-- runtime
-- modules/state-data
-- modules/action
-- surface
-- modules/observability
-- modules/experience
-- mapping
-- modules/design-system
-- modules/distributed-journey
-- metrics
-- profiles
-- conformance
+- None
 
 ## Usage
 

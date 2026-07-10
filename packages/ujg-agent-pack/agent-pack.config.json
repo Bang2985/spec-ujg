@@ -11,7 +11,7 @@
         {
           "key": "root",
           "title": "Modeling",
-          "scope": "whole UJG document modeling across Core, Graph, Surface, Runtime, Mapping, Metrics, and optional modules",
+          "scope": "whole UJG document modeling across Core, Graph, Surface, Runtime, Mapping, Metrics, Experience, Localization, Observability, and optional modules",
           "nameSuffix": "modeling",
           "moduleId": null
         },
@@ -42,6 +42,13 @@
           "scope": "Localization module semantics for MessageBundle copy metadata and locale-switch metadata",
           "nameSuffix": "l10n-modeling",
           "moduleId": "modules/l10n"
+        },
+        {
+          "key": "observability",
+          "title": "Observability Modeling",
+          "scope": "Observability module semantics for ObservationBinding, accessible-object locators, surface recognition contracts, and SurfaceInstanceResolver",
+          "nameSuffix": "observability-modeling",
+          "moduleId": "modules/observability"
         },
         {
           "key": "distributed-journey",

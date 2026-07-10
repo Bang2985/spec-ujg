@@ -11,35 +11,42 @@
       "reportPath": "reviews/ed/design-system/latest.md",
       "skill": "design-system",
       "sourceHash": "sha256:8a10f2f59bd8c38da44beb64c526781370a0f4c3da56695bb24deda4b2608986",
-      "specHash": "sha256:54b742ade88828f6ac0a882aa5ce5b57ee1260be0628c3a802f91eb8f705709d",
+      "specHash": "sha256:9ba4703c25ef6ad43f5b331d16456282c35bf98c4a47af3366545daadb7a60d1",
       "target": "ed"
     },
     "ed/distributed-journey": {
       "reportPath": "reviews/ed/distributed-journey/latest.md",
       "skill": "distributed-journey",
       "sourceHash": "sha256:ce592132383f1e10ec42142e9149df5522944d39fdc2c27115f2d93a30d37a70",
-      "specHash": "sha256:989c38364210aba957a79a8e7122c4f174ddf9fc650265c1be17a112ebd8b220",
+      "specHash": "sha256:77943ee4a12e23a8caee913bd20108491fa383d6b51cd46a8c07e5a10b1d83b5",
       "target": "ed"
     },
     "ed/graph": {
       "reportPath": "reviews/ed/graph/latest.md",
       "skill": "graph",
       "sourceHash": "sha256:e32efe9776b9c4d6801e1a2912be58434ba246a977cfa599c3f2b0bd16382fc9",
-      "specHash": "sha256:9de2f4d2387ad8751443a01909c5423660c9a7ff09757eafb0b797c700d2b94e",
+      "specHash": "sha256:0efe5326651d2cbffaff2344a0df53508bcb8e9d294b163c1cfb7345ccfa0545",
       "target": "ed"
     },
     "ed/localization": {
       "reportPath": "reviews/ed/localization/latest.md",
       "skill": "localization",
       "sourceHash": "sha256:a8d53debe2f7a1e602163828728c306c97b35ee170880edcfd4389aafe3c8721",
-      "specHash": "sha256:051b3ae47dd1155f94c00c812e8c0d040f20afdc15936c23fb75eadaae49f88d",
+      "specHash": "sha256:bda7fe95eb43bf94dfb320d9eea4be03ffb7c3e8be67d459c922ea0ec4c91a80",
+      "target": "ed"
+    },
+    "ed/observability": {
+      "reportPath": "reviews/ed/observability/latest.md",
+      "skill": "observability",
+      "sourceHash": "sha256:9ef60063be5532e5fac8e4fece92e76f5b3b1ab18a8001052cdbb9271fe690f7",
+      "specHash": "sha256:cc3372af981142d7c11bd740721209703bcb14bcc16296d4b7c3e861bc4abd91",
       "target": "ed"
     },
     "ed/root": {
       "reportPath": "reviews/ed/root/latest.md",
       "skill": "root",
       "sourceHash": "sha256:80077d565305800af4c4aeefeaa55573e5c45708d17c9cbd7c97d0a27ce8b7f7",
-      "specHash": "sha256:29f01f6b35f7b3a541e8d55dd9349d86d402756e530c5312a6247d8bceff7f3c",
+      "specHash": "sha256:0b39d4a4081fb78c17612be7ebecb91a0a94fa95bd2606d93fc06b71b9e73733",
       "target": "ed"
     },
     "tr/2026.06/design-system": {

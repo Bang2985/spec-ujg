@@ -1,0 +1,20 @@
+{
+  "artifactHash": "sha256:7c64651031b141da6a623e63d9515e1ed469db6c559dd02c58cd01253b947b8e",
+  "configHash": "sha256:3b5ea1b06a3e16741e2e622b1890bde36c552f97e6c4e3ebd3377877bfd3f440",
+  "package": {
+    "id": "ujg-agent-pack",
+    "name": "@openuji/ujg-agent-pack",
+    "version": "0.0.1"
+  },
+  "skill": {
+    "key": "observability",
+    "moduleId": "modules/observability",
+    "name": "ujg-ed-observability-modeling"
+  },
+  "sourceHash": "sha256:9ef60063be5532e5fac8e4fece92e76f5b3b1ab18a8001052cdbb9271fe690f7",
+  "specHash": "sha256:cc3372af981142d7c11bd740721209703bcb14bcc16296d4b7c3e861bc4abd91",
+  "target": {
+    "id": "ed",
+    "label": "Editor's Draft"
+  }
+}

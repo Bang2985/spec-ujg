@@ -1,9 +1,9 @@
-# Skill Review: ujg-ed-graph-modeling
+# Skill Review: ujg-ed-observability-modeling
 
 Target: Editor's Draft
-Skill scope: Graph module topology, journeys, states, transitions, exits, outgoing navigation, and indexes
-Source: sources/ed/skills/graph/skill.md
-Spec URL: https://ujg.specs.openuji.org/ed/graph
+Skill scope: Observability module semantics for ObservationBinding, accessible-object locators, surface recognition contracts, and SurfaceInstanceResolver
+Source: sources/ed/skills/observability/skill.md
+Spec URL: https://ujg.specs.openuji.org/ed/modules/observability
 
 ## Status
 
@@ -12,12 +12,12 @@ Spec URL: https://ujg.specs.openuji.org/ed/graph
 
 ## Review Inputs
 
-- Source hash: sha256:e32efe9776b9c4d6801e1a2912be58434ba246a977cfa599c3f2b0bd16382fc9
-- Spec hash: sha256:0efe5326651d2cbffaff2344a0df53508bcb8e9d294b163c1cfb7345ccfa0545
+- Source hash: sha256:9ef60063be5532e5fac8e4fece92e76f5b3b1ab18a8001052cdbb9271fe690f7
+- Spec hash: sha256:cc3372af981142d7c11bd740721209703bcb14bcc16296d4b7c3e861bc4abd91
 
 ## Source Headings Likely Affected
 
-- UJG ED Graph Modeling Skill
+- UJG ED Observability Modeling
 
 ## Checklist
 
