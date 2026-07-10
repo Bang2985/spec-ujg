@@ -10,7 +10,7 @@
     "custom": {
         "family": "module",
         "order": 60,
-        "moduleLevel": 2,
+        "moduleLevel": 1,
         "bridgeSpec": "surface"
     },
     "respec": {

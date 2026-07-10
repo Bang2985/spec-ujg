@@ -1,7 +1,7 @@
 {
     "id": "modules/observability",
     "title": "Observability",
-    "maturityLevel": "incubating",
+    "maturityLevel": "draft",
     "baseUrl": "${SPEC_BASE_URL}/ed",
     "deps": [
         "surface",
@@ -10,7 +10,7 @@
     "custom": {
         "family": "module",
         "order": 49,
-        "moduleLevel": 2,
+        "moduleLevel": 1,
         "bridgeModules": [
             "surface",
             "modules/l10n"

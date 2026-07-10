@@ -12,7 +12,7 @@
     "custom": {
         "family": "module",
         "order": 65,
-        "moduleLevel": 2,
+        "moduleLevel": 1,
         "bridgeModules": [
             "surface",
             "modules/action",
