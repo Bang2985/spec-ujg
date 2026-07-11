@@ -9,7 +9,6 @@
     "Surface": "ujgsurface:Surface",
     "SurfaceInstance": "ujgsurface:SurfaceInstance",
     "Touchpoint": "ujgsurface:Touchpoint",
-    "GraphNodeInstance": "ujgsurface:GraphNodeInstance",
     "ExperienceStep": "ujgsurface:ExperienceStep",
     "Phase": "ujgsurface:Phase",
 
@@ -23,14 +22,6 @@
     },
     "surfaceRef": {
       "@id": "ujgsurface:surfaceRef",
-      "@type": "@id"
-    },
-    "graphNodeInstanceRef": {
-      "@id": "ujgsurface:graphNodeInstanceRef",
-      "@type": "@id"
-    },
-    "parentInstanceRef": {
-      "@id": "ujgsurface:parentInstanceRef",
       "@type": "@id"
     },
     "channel": "ujgsurface:channel",

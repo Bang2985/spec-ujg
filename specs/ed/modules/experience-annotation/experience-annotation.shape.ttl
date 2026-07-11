@@ -1,22 +1,22 @@
-@prefix ujguxr: <https://ujg.specs.openuji.org/ed/ns/ux-research#> .
+@prefix ujgexperienceannotation: <https://ujg.specs.openuji.org/ed/ns/experience-annotation#> .
 @prefix ujgsurface: <https://ujg.specs.openuji.org/ed/ns/surface#> .
-@prefix ujguxrshape: <https://ujg.specs.openuji.org/ed/ns/ux-research.shape#> .
+@prefix ujgexperienceannotationshape: <https://ujg.specs.openuji.org/ed/ns/experience-annotation.shape#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ujguxrshape:PainPointShape a sh:NodeShape ;
-  sh:targetClass ujguxr:PainPoint ;
+ujgexperienceannotationshape:PainPointShape a sh:NodeShape ;
+  sh:targetClass ujgexperienceannotation:PainPoint ;
   sh:nodeKind sh:IRI ;
 
   sh:property [
-    sh:path ujguxr:experienceRefs ;
+    sh:path ujgexperienceannotation:experienceRefs ;
     sh:class ujgsurface:ExperienceStep ;
     sh:nodeKind sh:IRI ;
     sh:minCount 1 ;
   ] ;
 
   sh:property [
-    sh:path ujguxr:severity ;
+    sh:path ujgexperienceannotation:severity ;
     sh:datatype xsd:decimal ;
     sh:minInclusive 0 ;
     sh:maxInclusive 1 ;
@@ -24,7 +24,7 @@ ujguxrshape:PainPointShape a sh:NodeShape ;
   ] ;
 
   sh:property [
-    sh:path ujguxr:description ;
+    sh:path ujgexperienceannotation:description ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
   ] .

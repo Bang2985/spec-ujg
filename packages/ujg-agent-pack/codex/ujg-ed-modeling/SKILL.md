@@ -11,7 +11,7 @@ description: "Generate, review, correct, and reason about User Journey Graph JSO
 
 Target: Editor's Draft
 Public spec URL: https://ujg.specs.openuji.org/ed
-Scope: whole UJG document modeling across Core, Graph, Surface and Experience, Runtime, Mapping, Metrics, Localization, Observability, UX Research, and optional modules
+Scope: whole UJG document modeling across Core, Graph, Surface and Experience, Runtime, Mapping, Metrics, Localization, Observability, Experience Annotation, and optional modules
 Module scope: whole target
 
 Related generated skills:
@@ -43,11 +43,11 @@ Select only required modules.
 
 Core: document container and top-level nodes.
 Graph: journeys, states, transitions, composition, exits, outgoing navigation, indexes, actors, and actor references.
-Surface: materialized graph-subject surfaces, concrete surface instances, surface attachments, touchpoints, channels, origins.
+Surface: materialized surfaces for supported Graph nodes, concrete surface instances, surface attachments, touchpoints, channels, origins.
 Runtime: observed events, values, clicks, URLs, timestamps, payloads.
 Mapping: state-observation steps resolved from Runtime through Surface to Graph, with optional immediately preceding affordance event references.
 Metrics: metric observations, especially Mapping-derived counts and rates over resolved journey mappings.
-Surface also owns journey-map `ExperienceStep` and `Phase` annotations over surfaces. UX Research optionally adds `PainPoint` annotations over those steps.
+Surface also owns journey-map `ExperienceStep` and `Phase` annotations over surfaces. Experience Annotation optionally adds `PainPoint` annotations over those steps.
 Localization: locale metadata, localized copy references, locale switch affordance metadata.
 Observability: accessible-object recognition contracts for surfaces, using localized message bundles
 for accessible names and descriptions.
@@ -59,7 +59,7 @@ State Data: state-like data context or binding identity attached with `stateData
 Artifact: portable resources produced, consumed, exchanged, or referenced by UJG nodes.
 Distributed Journey: cross-touchpoint human-facing journeys composed from Graph actors, Surface, Action, and Artifact.
 
-Core is required for UJG documents. Include Graph when modeling topology or actor terms such as `Actor` and `subjectActorRef`. Include Surface when using `Surface`, `SurfaceInstance`, `Touchpoint`, `GraphNodeInstance`, `ExperienceStep`, `Phase`, `graphNodeRef`, `surfaceRef`, `surfaceRefs`, `phaseRef`, `graphNodeInstanceRef`, `touchpointRef`, `parentInstanceRef`, `channel`, `origin`, or `order`. Include Runtime only for observed behavior or traces. Include Mapping when resolving Runtime state observations through Surface to Graph, or deriving ExperienceStep occurrence and Phase start, with `JourneyMapping`, `MappedStep`, `mappedEventRef`, `mappedStateRef`, `observedAffordanceEventRef`, or `explainedByTransitionRef`. Include Metrics when emitting `MetricObservation` records, Mapping-derived step counts, movement counts, rates, or aggregate metric values. Include UX Research only when using `PainPoint`, `experienceRefs`, `severity`, or `description`. Include Localization only when using l10n terms such as `l10n:targetLocale`, `copyRef`, `defaultLocale`, `fallbackLocales`, or `locales`. Include Observability only when modeling `ObservationBinding`, `observeSurfaceRef`, `SurfaceInstanceResolver`, `surfaceInstanceResolverRef`, `instanceKeyFeatureRef`, `AccessibleLocator`, `accessibleNameRef`, or `accessibleDescriptionRef`; Observability also requires Localization for name and description bundles.
+Core is required for UJG documents. Include Graph when modeling topology or actor terms such as `Actor` and `subjectActorRef`. Include Surface when using `Surface`, `SurfaceInstance`, `Touchpoint`, `ExperienceStep`, `Phase`, `graphNodeRef`, `surfaceRef`, `surfaceRefs`, `phaseRef`, `touchpointRef`, `channel`, `origin`, or `order`. Include Runtime only for observed behavior or traces. Include Mapping when resolving Runtime state observations through Surface to Graph, or deriving ExperienceStep occurrence and Phase start, with `JourneyMapping`, `MappedStep`, `mappedEventRef`, `mappedStateRef`, `observedAffordanceEventRef`, or `explainedByTransitionRef`. Include Metrics when emitting `MetricObservation` records, Mapping-derived step counts, movement counts, rates, or aggregate metric values. Include Experience Annotation only when using `PainPoint`, `experienceRefs`, `severity`, or `description`. Include Localization only when using l10n terms such as `l10n:targetLocale`, `copyRef`, `defaultLocale`, `fallbackLocales`, or `locales`. Include Observability only when modeling `ObservationBinding`, `observeSurfaceRef`, `SurfaceInstanceResolver`, `surfaceInstanceResolverRef`, `instanceKeyFeatureRef`, `AccessibleLocator`, `accessibleNameRef`, or `accessibleDescriptionRef`; Observability also requires Localization for name and description bundles.
 
 Include Design System only when using design-system terms such as `DesignSystem`, `TokenSource`, `Component`, `Template`, `Slot`, `SurfaceRealization`, `SlotBinding`, `componentRef`, `templateRef`, `slotRef`, `targetSurfaceRef`, or `targetComponentRef`. Include Action only when declaring an `Action` node or `actionRef` on a `Transition` or `OutgoingTransition`; do not use Action for Runtime payloads or implementation protocol details. Include Condition only when using `Condition`, `ConditionSet`, `conditionRef`, or `conditionTransitionRefs`; a `Condition` guards a Graph transition and must not replace the transition target. Include Routing only when using `Route`, `routeRef`, `fallbackNodeRef`, `routeName`, `path`, `deepLink`, `guards`, or `params`; Routing metadata must not create hidden traversal or repair Graph topology.
 
@@ -67,7 +67,7 @@ Include State Data only when using `StateData` or `stateDataRef`. Do not use Sta
 archives, reports, invites, media, protocol objects, tokens, or other portable resources; use
 Artifact for those.
 
-Do not include Runtime, Mapping, Metrics, UX Research, Localization, Design System, Action, Condition, Routing, State Data, Artifact, or Distributed Journey merely because screenshots, links, typed values, pain points, counts, translated UI, design components, form logic, URLs, files, or multiple touchpoints are present. Screenshots can inform Graph structure, but Graph describes intended topology, not observed runtime facts.
+Do not include Runtime, Mapping, Metrics, Experience Annotation, Localization, Design System, Action, Condition, Routing, State Data, Artifact, or Distributed Journey merely because screenshots, links, typed values, pain points, counts, translated UI, design components, form logic, URLs, files, or multiple touchpoints are present. Screenshots can inform Graph structure, but Graph describes intended topology, not observed runtime facts.
 
 ## Core JSON-LD rules
 
@@ -273,7 +273,7 @@ For Runtime traces, a `RuntimeEvent` must identify the execution with `execution
 
 To derive actor perspective for an observed state occurrence, resolve `RuntimeEvent.surfaceInstanceRef -> SurfaceInstance.surfaceRef -> Surface.graphNodeRef`, then use the graph node's effective actor from `subjectActorRef` or inherited journey actor assignment. Do not add collector or observer attribution fields to Runtime; keep collector/source metadata in `payload` or `extensions`.
 
-Use Surface `ExperienceStep` and `Phase` only for journey-map annotations. Use UX Research `PainPoint` only for qualitative friction annotations. These annotations must not change Graph traversal or repair missing Graph topology.
+Use Surface `ExperienceStep` and `Phase` only for journey-map annotations. Use Experience Annotation `PainPoint` only for qualitative friction annotations. These annotations must not change Graph traversal or repair missing Graph topology.
 
 ## Page and route modeling
 
@@ -317,7 +317,7 @@ When evidence is insufficient, say so instead of inventing structure.
 14. Use Action, Condition, Routing, State Data, Artifact, and Distributed Journey only as defined semantic attachments, not as hidden graph edges.
 15. Re-check that no parent lists child states directly.
 16. Re-check that no fake root journey connects observed screens.
-17. Re-check that Runtime, Surface experience annotations, UX Research, Localization, and optional modules were not confused with Graph topology.
+17. Re-check that Runtime, Surface experience annotations, Experience Annotation, Localization, and optional modules were not confused with Graph topology.
 
 ## Output workflow
 
@@ -328,7 +328,7 @@ When generating JSON-LD:
 3. Provide a short self-audit.
 4. State uncertainty explicitly.
 
-Before returning JSON-LD, check: only necessary contexts; all nodes top-level; defined terms only; `JourneyEntryIndex` not traversable; `Journey` only local topology; each `Journey` has `defaultEntryRef`, `entryRefs`, and `stateRefs`; each `JourneyEntry.stateRef` is in the same journey's `stateRefs`; transition endpoints local; `Transition.from` in `stateRefs`; `Transition.to` in `stateRefs` or `exitRefs`; no child states in parent transitions; each `CompositeState` has one `subjourneyId`; forms not child journeys by default; `toEntryRef` targets a child journey entry; child exits complete when used; `fromExitRef` parent-local; no fake root/parent exits; outgoing navigation uses `OutgoingTransition`; shared navigation uses `OutgoingTransitionGroup`; each outgoing transition has exactly one of `to` or `toCurrentState: true`; state-scoped `outgoingTransitionRefs` only on ordinary `State`; l10n terms only with Localization context; runtime facts not in Graph; Action, Condition, Routing, State Data, Artifact, and Distributed Journey do not create hidden graph edges; Surface experience and UX Research annotations do not affect traversal; graph is shallowest valid model.
+Before returning JSON-LD, check: only necessary contexts; all nodes top-level; defined terms only; `JourneyEntryIndex` not traversable; `Journey` only local topology; each `Journey` has `defaultEntryRef`, `entryRefs`, and `stateRefs`; each `JourneyEntry.stateRef` is in the same journey's `stateRefs`; transition endpoints local; `Transition.from` in `stateRefs`; `Transition.to` in `stateRefs` or `exitRefs`; no child states in parent transitions; each `CompositeState` has one `subjourneyId`; forms not child journeys by default; `toEntryRef` targets a child journey entry; child exits complete when used; `fromExitRef` parent-local; no fake root/parent exits; outgoing navigation uses `OutgoingTransition`; shared navigation uses `OutgoingTransitionGroup`; each outgoing transition has exactly one of `to` or `toCurrentState: true`; state-scoped `outgoingTransitionRefs` only on ordinary `State`; l10n terms only with Localization context; runtime facts not in Graph; Action, Condition, Routing, State Data, Artifact, and Distributed Journey do not create hidden graph edges; Surface experience and Experience Annotation annotations do not affect traversal; graph is shallowest valid model.
 
 ## Anti-overengineering and uncertainty
 

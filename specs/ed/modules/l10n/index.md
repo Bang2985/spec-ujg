@@ -8,6 +8,22 @@ nodes. It lets a producer bind any addressable node to a reusable `MessageBundle
 This module is optional. It annotates the shared graph with localization resources, but it does
 **not** change graph topology, traversal rules, or import resolution.
 
+## Terminology
+
+* <dfn>MessageBundle</dfn>: An addressable localization resource that carries message-key and locale payload metadata.
+
+---
+
+## Attachment Model
+
+The module introduces real JSON-LD terms and RDF edges for localization attachment:
+
+* `l10n:copyRef` links any UJG node to a `MessageBundle`.
+* `l10n:targetLocale` declares the requested locale associated with an [=OutgoingTransition=].
+
+The module also defines non-reference properties such as `l10n:namespace`, `l10n:messageKey`,
+`l10n:defaultLocale`, `l10n:fallbackLocales`, `l10n:rtl`, and JSON-valued `l10n:locales`.
+
 ## Normative Artifacts
 
 This module is published through the following artifacts:
@@ -25,23 +41,7 @@ with the Localization context.
 * This module does **not** introduce new traversal semantics beyond [[UJG Graph]].
 * This module does **not** replace opaque vendor-private hints carried in [[UJG Core]] `extensions`.
 
-## Terminology
-
-* <dfn>MessageBundle</dfn>: An addressable localization resource that carries message-key and locale payload metadata.
-
----
-
-## Attachment Model
-
-The module introduces real JSON-LD terms and RDF edges for localization attachment:
-
-* `l10n:copyRef` links any UJG node to a `MessageBundle`.
-* `l10n:targetLocale` declares the requested locale associated with an [=OutgoingTransition=].
-
-The module also defines non-reference properties such as `l10n:namespace`, `l10n:messageKey`,
-`l10n:defaultLocale`, `l10n:fallbackLocales`, `l10n:rtl`, and JSON-valued `l10n:locales`.
-
-## Ontology {data-cop-concept="ontology"}
+### Ontology {data-cop-concept="ontology"}
 
 The normative Localization ontology is defined below and is published at
 `https://ujg.specs.openuji.org/ed/ns/l10n`. It is the authoritative structural definition for
@@ -49,7 +49,7 @@ The normative Localization ontology is defined below and is published at
 
 :::include ./l10n.ttl :::
 
-## JSON-LD Context {data-cop-concept="jsonld-context"}
+### JSON-LD Context {data-cop-concept="jsonld-context"}
 
 The normative Localization JSON-LD context is defined below and is published at
 `https://ujg.specs.openuji.org/ed/ns/l10n.context.jsonld`. It provides the compact JSON-LD term
@@ -59,7 +59,7 @@ mappings and coercions for Localization-specific properties and classes.
 
 ---
 
-## Validation {data-cop-concept="validation"}
+### Validation {data-cop-concept="validation"}
 
 The normative Localization SHACL shape is defined below and is published at
 `https://ujg.specs.openuji.org/ed/ns/l10n.shape`. It is the authoritative validation artifact for
@@ -87,7 +87,9 @@ the SHACL shape.
 
 ---
 
-## Locale Switch Affordance Example {.unnumbered}
+## Examples
+
+### Locale Switch Affordance Example
 
 ```json
 {
@@ -104,7 +106,7 @@ the SHACL shape.
 }
 ```
 
-## Appendix: Combined JSON Example {.unnumbered}
+### Combined JSON Example
 
 ```json
 {
@@ -144,7 +146,7 @@ the SHACL shape.
 }
 ```
 
-## Appendix: Opaque Runtime Hints {.unnumbered}
+### Opaque Runtime Hints
 
 ```json
 {

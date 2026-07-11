@@ -1,6 +1,6 @@
 {
     "id": "surface",
-    "title": "Surface and Experience",
+    "title": "Surface",
     "maturityLevel": "draft",
     "baseUrl": "${SPEC_BASE_URL}/ed",
     "deps": [

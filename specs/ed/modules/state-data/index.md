@@ -15,17 +15,6 @@ directives, lifecycle status, authentication context, or realtime behavior.
 State Data is not the general resource primitive for UJG. Portable resources that are produced,
 consumed, or exchanged during a journey are modeled by the Artifact module.
 
-## Normative Artifacts
-
-This module is published through the following artifacts:
-
-- `state-data.ttl`: ontology, published at `https://ujg.specs.openuji.org/ed/ns/state-data`
-- `state-data.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/ed/ns/state-data.context.jsonld`
-- `state-data.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/ed/ns/state-data.shape`
-
-Examples in this page compose the shared baseline context `https://ujg.specs.openuji.org/ed/ns/context.jsonld`
-with the State Data context.
-
 ## Terminology
 
 - <dfn>StateData</dfn>: An addressable declaration of data context or binding identity for a Graph
@@ -49,21 +38,32 @@ exchanged. If the same external thing is both the context behind a state and a t
 model separate `StateData` and `Artifact` nodes unless a future module defines an explicit
 relationship between them.
 
-## Ontology {data-cop-concept="ontology"}
+## Normative Artifacts
+
+This module is published through the following artifacts:
+
+- `state-data.ttl`: ontology, published at `https://ujg.specs.openuji.org/ed/ns/state-data`
+- `state-data.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/ed/ns/state-data.context.jsonld`
+- `state-data.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/ed/ns/state-data.shape`
+
+Examples in this page compose the shared baseline context `https://ujg.specs.openuji.org/ed/ns/context.jsonld`
+with the State Data context.
+
+### Ontology {data-cop-concept="ontology"}
 
 The normative State Data ontology is defined below and is published at
 `https://ujg.specs.openuji.org/ed/ns/state-data`.
 
 :::include ./state-data.ttl :::
 
-## JSON-LD Context {data-cop-concept="jsonld-context"}
+### JSON-LD Context {data-cop-concept="jsonld-context"}
 
 The normative State Data JSON-LD context is defined below and is published at
 `https://ujg.specs.openuji.org/ed/ns/state-data.context.jsonld`.
 
 :::include ./state-data.context.jsonld :::
 
-## Validation {data-cop-concept="validation"}
+### Validation {data-cop-concept="validation"}
 
 The normative State Data SHACL shape is defined below and is published at
 `https://ujg.specs.openuji.org/ed/ns/state-data.shape`.
@@ -86,7 +86,9 @@ the SHACL shape.
    bindings SHOULD remain in Core `extensions` unless a future optional module defines them as
    interoperable vocabulary.
 
-## Minimal Example
+## Examples
+
+### Minimal Example
 
 ```json
 {

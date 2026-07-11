@@ -12,7 +12,7 @@ Scope: Localization module semantics for MessageBundle copy metadata and locale-
 Module scope: modules/l10n
 
 Related generated skills:
-- ujg-ed-modeling: whole UJG document modeling across Core, Graph, Surface and Experience, Runtime, Mapping, Metrics, Localization, Observability, UX Research, and optional modules
+- ujg-ed-modeling: whole UJG document modeling across Core, Graph, Surface and Experience, Runtime, Mapping, Metrics, Localization, Observability, Experience Annotation, and optional modules
 - ujg-ed-core-modeling: Core module document containers, imports, top-level nodes, and extensions
 - ujg-ed-graph-modeling: Graph module topology, journeys, states, transitions, exits, outgoing navigation, and indexes
 - ujg-ed-observability-modeling: Observability module semantics for ObservationBinding, accessible-object locators, surface recognition contracts, and SurfaceInstanceResolver
@@ -41,7 +41,7 @@ It does not define routes, traversal, locale negotiation, runtime translation lo
 Graph defines topology.
 Localization annotates UJG nodes with copy and locale metadata. It can be used with Surface
 ExperienceStep and Phase resources when the Surface context is composed, and with PainPoint only
-when the UX Research optional module is explicitly composed.
+when the Experience Annotation optional module is explicitly composed.
 
 ## Required context
 

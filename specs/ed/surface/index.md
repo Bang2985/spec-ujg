@@ -4,101 +4,26 @@ This core-family specification defines materialized user-facing [=Surface|Surfac
 runtime occurrences, their presenting touchpoints, and human journey-map semantics expressed as
 [=ExperienceStep|ExperienceSteps=] and [=Phase|Phases=].
 
-A `Surface` assigns stable visible identity to one Graph subject. A `SurfaceInstance` identifies one
-concrete runtime-visible occurrence. A `Touchpoint` identifies the system, channel, origin, or
-service boundary presenting a surface. A `GraphNodeInstance` identifies a concrete occurrence of a
-Graph node. An `ExperienceStep` groups one or more surfaces by human intent, and a `Phase` optionally
+A `Surface` assigns stable visible identity to one supported Graph node: `State`, `CompositeState`,
+`Transition`, or `OutgoingTransition`. A `SurfaceInstance` identifies one concrete runtime-visible
+occurrence. A `Touchpoint` identifies the system, channel, origin, or service boundary presenting a
+surface. An `ExperienceStep` groups one or more surfaces by human intent, and a `Phase` optionally
 groups steps at a higher level.
 
 Surface and experience annotations do not change Graph topology, traversal, Runtime ordering, or
-rendering behavior. Graph subjects remain valid without surfaces, and surfaces remain valid without
-runtime instances or experience annotations.
+rendering behavior. Supported Graph nodes remain valid without surfaces, and surfaces remain valid
+without runtime instances or experience annotations.
 
 Examples compose the shared baseline context with
 `https://ujg.specs.openuji.org/ed/ns/surface.context.jsonld`.
 
 ## Terminology
 
-- <dfn>Surface</dfn>: A stable, addressable, design-system-agnostic materialized boundary for one Graph subject.
+- <dfn>Surface</dfn>: A stable, addressable, design-system-agnostic materialized boundary for one supported Graph node.
 - <dfn>SurfaceInstance</dfn>: A concrete runtime-visible occurrence of one Surface.
 - <dfn>Touchpoint</dfn>: A system, channel, origin, or service boundary presenting a Surface.
-- <dfn>GraphNodeInstance</dfn>: A concrete occurrence of one supported Graph node.
 - <dfn>ExperienceStep</dfn>: A semantic journey-map step grouping one or more Surfaces.
 - <dfn>Phase</dfn>: A presentation-oriented high-level grouping of ExperienceSteps.
-
-## Surface {data-cop-concept="surface"}
-
-A [=Surface=] identifies one stable visible boundary and attaches it to one `State`,
-`CompositeState`, `Transition`, or `OutgoingTransition`. Multiple surfaces may expose the same Graph
-subject when they are distinct visible occurrences, not renderer variants.
-
-<spec-statement>
-1. A [=Surface=] **MUST** be identified by an IRI.
-2. A [=Surface=] **MUST** declare exactly one `graphNodeRef`.
-3. `graphNodeRef` **MUST** reference a `State`, `CompositeState`, `Transition`, or `OutgoingTransition`.
-4. A [=Surface=] **MAY** declare at most one `touchpointRef` referencing a [=Touchpoint=].
-5. A [=Surface=] **MUST NOT** change Graph traversal or assert that its Graph subject occurred.
-</spec-statement>
-
-```mermaid
-classDiagram
-  class GraphSubject
-  class Touchpoint
-  class Surface {
-    id
-    graphNodeRef
-    touchpointRef
-  }
-  Surface --> GraphSubject : graphNodeRef
-  Surface --> Touchpoint : touchpointRef
-```
-
-Example JSON node:
-
-```json
-{
-  "@type": "Surface",
-  "@id": "urn:ujg:surface:cart",
-  "graphNodeRef": "urn:ujg:state:cart",
-  "touchpointRef": "urn:ujg:touchpoint:web"
-}
-```
-
-## SurfaceInstance {data-cop-concept="surface-instance"}
-
-A [=SurfaceInstance=] identifies one concrete runtime-visible occurrence of a [=Surface=]. Runtime
-events use `surfaceInstanceRef` to identify where an observed moment occurred.
-
-<spec-statement>
-1. A [=SurfaceInstance=] **MUST** be identified by an IRI.
-2. A [=SurfaceInstance=] **MUST** declare exactly one `surfaceRef` referencing a [=Surface=].
-3. A [=SurfaceInstance=] **MAY** declare at most one `graphNodeInstanceRef` referencing a [=GraphNodeInstance=].
-4. When both attachments are present, producers **SHOULD** use matching Graph subjects on the referenced Surface and GraphNodeInstance.
-</spec-statement>
-
-```mermaid
-classDiagram
-  class Surface
-  class GraphNodeInstance
-  class SurfaceInstance {
-    id
-    surfaceRef
-    graphNodeInstanceRef
-  }
-  SurfaceInstance --> Surface : surfaceRef
-  SurfaceInstance --> GraphNodeInstance : graphNodeInstanceRef
-```
-
-Example JSON node:
-
-```json
-{
-  "@type": "SurfaceInstance",
-  "@id": "urn:ujg:surface-instance:cart:1",
-  "surfaceRef": "urn:ujg:surface:cart",
-  "graphNodeInstanceRef": "urn:ujg:graph-node-instance:cart:1"
-}
-```
 
 ## Touchpoint {data-cop-concept="touchpoint"}
 
@@ -133,37 +58,80 @@ Example JSON node:
 }
 ```
 
-## GraphNodeInstance {data-cop-concept="graph-node-instance"}
 
-A [=GraphNodeInstance=] identifies a concrete occurrence of a supported Graph node. Parent
-references allow consumers to derive occurrence trees for repeated content or nested scopes.
+
+## Surface {data-cop-concept="surface"}
+
+A [=Surface=] identifies one stable visible boundary and attaches it to one `State`,
+`CompositeState`, `Transition`, or `OutgoingTransition`. Multiple surfaces may expose the same Graph
+node when they are distinct visible occurrences, not renderer variants.
 
 <spec-statement>
-1. A [=GraphNodeInstance=] **MUST** be identified by an IRI.
-2. A [=GraphNodeInstance=] **MUST** declare exactly one `graphNodeRef` to a supported Graph subject.
-3. A [=GraphNodeInstance=] **MAY** declare at most one `parentInstanceRef` to another GraphNodeInstance.
+1. A [=Surface=] **MUST** be identified by an IRI.
+2. A [=Surface=] **MUST** declare exactly one `graphNodeRef`.
+3. `graphNodeRef` **MUST** reference a `State`, `CompositeState`, `Transition`, or `OutgoingTransition`.
+4. A [=Surface=] **MAY** declare at most one `touchpointRef` referencing a [=Touchpoint=].
+5. A [=Surface=] **MUST NOT** change Graph traversal or assert that its referenced Graph node occurred.
 </spec-statement>
 
 ```mermaid
 classDiagram
-  class GraphSubject
-  class GraphNodeInstance {
+  class State
+  class CompositeState
+  class Transition
+  class OutgoingTransition
+  class Touchpoint
+  class Surface {
     id
     graphNodeRef
-    parentInstanceRef
+    touchpointRef
   }
-  GraphNodeInstance --> GraphSubject : graphNodeRef
-  GraphNodeInstance --> GraphNodeInstance : parentInstanceRef
+  Surface --> State : graphNodeRef
+  Surface --> CompositeState : graphNodeRef
+  Surface --> Transition : graphNodeRef
+  Surface --> OutgoingTransition : graphNodeRef
+  Surface --> Touchpoint : touchpointRef
 ```
 
 Example JSON node:
 
 ```json
 {
-  "@type": "GraphNodeInstance",
-  "@id": "urn:ujg:graph-node-instance:slide:1",
-  "graphNodeRef": "urn:ujg:state:image-slide",
-  "parentInstanceRef": "urn:ujg:graph-node-instance:article:42"
+  "@type": "Surface",
+  "@id": "urn:ujg:surface:cart",
+  "graphNodeRef": "urn:ujg:state:cart",
+  "touchpointRef": "urn:ujg:touchpoint:web"
+}
+```
+
+## SurfaceInstance {data-cop-concept="surface-instance"}
+
+A [=SurfaceInstance=] identifies one concrete runtime-visible occurrence of a [=Surface=]. Runtime
+events use `surfaceInstanceRef` to identify where an observed moment occurred.
+
+<spec-statement>
+1. A [=SurfaceInstance=] **MUST** be identified by an IRI.
+2. A [=SurfaceInstance=] **MUST** declare exactly one `surfaceRef` referencing a [=Surface=].
+3. A [=SurfaceInstance=] **MUST NOT** declare Graph-node identity directly; Graph meaning is resolved through the referenced Surface.
+</spec-statement>
+
+```mermaid
+classDiagram
+  class Surface
+  class SurfaceInstance {
+    id
+    surfaceRef
+  }
+  SurfaceInstance --> Surface : surfaceRef
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "SurfaceInstance",
+  "@id": "urn:ujg:surface-instance:cart:1",
+  "surfaceRef": "urn:ujg:surface:cart"
 }
 ```
 
@@ -242,7 +210,7 @@ Example JSON node:
 
 ## Shared Semantics
 
-1. `graphNodeRef` is the canonical assignment direction from Surface or GraphNodeInstance to Graph.
+1. `graphNodeRef` is the canonical assignment direction from Surface to Graph.
 2. An `OutgoingTransitionGroup` does not have a Surface; its child `OutgoingTransition` nodes may.
 3. A consumer may ignore Surface semantics while preserving recognized JSON-LD data.
 4. Surface terms do not select components, templates, slots, tokens, or renderers.
@@ -268,7 +236,9 @@ The Surface SHACL shape is published at `https://ujg.specs.openuji.org/ed/ns/sur
 
 :::include ./surface.shape.ttl :::
 
-## Appendix: Combined Surface and Experience Example {.unnumbered}
+## Examples
+
+### Combined Surface and Experience Example
 
 ```json
 {
@@ -316,7 +286,7 @@ The Surface SHACL shape is published at `https://ujg.specs.openuji.org/ed/ns/sur
 }
 ```
 
-## Appendix: Private Extension Payloads {.unnumbered}
+### Private Extension Payloads
 
 Core `extensions` remains available for vendor-private Surface data.
 

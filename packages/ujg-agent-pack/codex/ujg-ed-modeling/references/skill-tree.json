@@ -4,7 +4,7 @@
     "moduleId": null,
     "name": "ujg-ed-modeling",
     "publicUrl": "https://ujg.specs.openuji.org/ed",
-    "scope": "whole UJG document modeling across Core, Graph, Surface and Experience, Runtime, Mapping, Metrics, Localization, Observability, UX Research, and optional modules"
+    "scope": "whole UJG document modeling across Core, Graph, Surface and Experience, Runtime, Mapping, Metrics, Localization, Observability, Experience Annotation, and optional modules"
   },
   "moduleGraph": {
     "architecture": {
@@ -20,7 +20,7 @@
         "surface",
         "modules/artifact",
         "modules/observability",
-        "modules/ux-research",
+        "modules/experience-annotation",
         "mapping",
         "modules/design-system",
         "modules/distributed-journey",
@@ -52,7 +52,7 @@
         "surface",
         "modules/artifact",
         "modules/observability",
-        "modules/ux-research",
+        "modules/experience-annotation",
         "mapping",
         "modules/design-system",
         "modules/distributed-journey",
@@ -76,7 +76,7 @@
         "modules/action",
         "surface",
         "modules/observability",
-        "modules/ux-research",
+        "modules/experience-annotation",
         "mapping",
         "modules/design-system",
         "modules/distributed-journey",
@@ -163,6 +163,14 @@
       "generatedSkill": "ujg-ed-distributed-journey-modeling",
       "title": "Distributed Journey"
     },
+    "modules/experience-annotation": {
+      "dependents": [],
+      "deps": [
+        "surface"
+      ],
+      "generatedSkill": null,
+      "title": "Experience Annotation"
+    },
     "modules/l10n": {
       "dependents": [
         "modules/observability"
@@ -198,14 +206,6 @@
       "generatedSkill": null,
       "title": "State Data"
     },
-    "modules/ux-research": {
-      "dependents": [],
-      "deps": [
-        "surface"
-      ],
-      "generatedSkill": null,
-      "title": "UX Research"
-    },
     "profiles": {
       "dependents": [
         "conformance"
@@ -237,7 +237,7 @@
       "dependents": [
         "runtime",
         "modules/observability",
-        "modules/ux-research",
+        "modules/experience-annotation",
         "mapping",
         "modules/design-system",
         "modules/distributed-journey",
@@ -249,7 +249,7 @@
         "graph"
       ],
       "generatedSkill": null,
-      "title": "Surface and Experience"
+      "title": "Surface"
     }
   },
   "skills": [
@@ -258,7 +258,7 @@
       "moduleId": null,
       "name": "ujg-ed-modeling",
       "publicUrl": "https://ujg.specs.openuji.org/ed",
-      "scope": "whole UJG document modeling across Core, Graph, Surface and Experience, Runtime, Mapping, Metrics, Localization, Observability, UX Research, and optional modules",
+      "scope": "whole UJG document modeling across Core, Graph, Surface and Experience, Runtime, Mapping, Metrics, Localization, Observability, Experience Annotation, and optional modules",
       "source": "sources/ed/skills/root/skill.md"
     },
     {

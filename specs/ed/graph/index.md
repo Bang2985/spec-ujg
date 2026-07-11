@@ -2,16 +2,6 @@
 
 This module defines the vocabulary for **intended** user flow. It extends [[UJG Core]] to support structured, interactive graphs with composition via sub-journey references, exported exits from nested journeys, organization tags, and reusable outgoing navigation patterns.
 
-## Normative Artifacts
-
-This module is published through the following artifacts:
-
-- `graph.ttl`: ontology, published at `https://ujg.specs.openuji.org/ed/ns/graph`
-- `graph.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/ed/ns/graph.context.jsonld`
-- `graph.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/ed/ns/graph.shape`
-
-Examples in this page use explicit Core and Graph context arrays for module clarity. The aggregate context `https://ujg.specs.openuji.org/ed/ns/context.jsonld` also preserves Graph's compact `stateRef` term for [=JourneyEntry=].
-
 ## Terminology
 
 - <dfn>Journey</dfn>: A named container for local traversable user flow topology.
@@ -1144,13 +1134,23 @@ Example JSON nodes:
 ---
 
 
-## Ontology {data-cop-concept="ontology"}
+## Normative Artifacts
+
+This module is published through the following artifacts:
+
+- `graph.ttl`: ontology, published at `https://ujg.specs.openuji.org/ed/ns/graph`
+- `graph.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/ed/ns/graph.context.jsonld`
+- `graph.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/ed/ns/graph.shape`
+
+Examples in this page use explicit Core and Graph context arrays for module clarity. The aggregate context `https://ujg.specs.openuji.org/ed/ns/context.jsonld` also preserves Graph's compact `stateRef` term for [=JourneyEntry=].
+
+### Ontology {data-cop-concept="ontology"}
 
 The normative Graph ontology is defined below and is published at `https://ujg.specs.openuji.org/ed/ns/graph`. It is the authoritative structural definition for Graph classes and properties, including `Journey`, `JourneyEntry`, `JourneyEntryIndex`, `LocalVertex`, `State`, `CompositeState`, `Transition`, `JourneyExit`, `OutgoingTransition`, `OutgoingTransitionGroup`, `defaultEntryRef`, `entryRefs`, `stateRef`, `exitRefs`, `toEntryRef`, `fromExitRef`, `toCurrentState`, and `outgoingTransitionRefs`.
 
 :::include ./graph.ttl :::
 
-## JSON-LD Context {data-cop-concept="jsonld-context"}
+### JSON-LD Context {data-cop-concept="jsonld-context"}
 
 The normative Graph JSON-LD context is defined below and is published at `https://ujg.specs.openuji.org/ed/ns/graph.context.jsonld`. It provides the compact JSON-LD term mappings for the Graph vocabulary used by the examples on this page.
 
@@ -1158,7 +1158,7 @@ The normative Graph JSON-LD context is defined below and is published at `https:
 
 ---
 
-## Validation {data-cop-concept="validation"}
+### Validation {data-cop-concept="validation"}
 
 The normative Graph SHACL shape is defined below and is published at `https://ujg.specs.openuji.org/ed/ns/graph.shape`. It is the authoritative validation artifact for Graph structural constraints.
 

@@ -46,7 +46,7 @@ Profiles MUST NOT treat those archived packages as active Editor's Draft capabil
 
 - [[UJG Core]] extension mechanics
 - [[UJG Graph]] explicit vs outgoing transitions
-- [[UJG Surface]] graph-node surface attachment and visible occurrence scopes
+- [[UJG Surface]] graph-node surface attachment and visible surface instances
 - [[UJG Runtime]] surface event tracing
 - [[UJG Mapping]] strategies to handle cross-journey jumps
 - [[UJG Metrics]] aggregation depth

@@ -12,7 +12,7 @@ Scope: Design System module semantics and its relationship to Graph and Surface
 Module scope: modules/design-system
 
 Related generated skills:
-- ujg-ed-modeling: whole UJG document modeling across Core, Graph, Surface and Experience, Runtime, Mapping, Metrics, Localization, Observability, UX Research, and optional modules
+- ujg-ed-modeling: whole UJG document modeling across Core, Graph, Surface and Experience, Runtime, Mapping, Metrics, Localization, Observability, Experience Annotation, and optional modules
 - ujg-ed-core-modeling: Core module document containers, imports, top-level nodes, and extensions
 - ujg-ed-graph-modeling: Graph module topology, journeys, states, transitions, exits, outgoing navigation, and indexes
 
@@ -34,13 +34,13 @@ Design System describes how design-system artifacts realize `Surface` resources.
 Correct layer order:
 
 ```text
-Surface -> graphNodeRef -> Graph subject
+Surface -> graphNodeRef -> supported Graph node
 SurfaceRealization -> surfaceRef + componentRef/templateRef
 DesignSystem -> componentRefs/templateRefs/tokenSourceRefs/surfaceRealizationRefs
 ```
 
 Graph defines topology.
-Surface defines materialization boundaries and points back to Graph subjects.
+Surface defines materialization boundaries and points back to supported Graph nodes.
 Design System realizes surfaces.
 
 ## Required contexts

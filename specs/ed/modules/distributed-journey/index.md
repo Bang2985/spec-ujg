@@ -24,18 +24,6 @@ defining extra Distributed Journey vocabulary.
 
 Simple single-site forms, checkouts, dashboards, and app flows do not need this module.
 
-## Normative Artifacts
-
-This module is published through the following artifacts:
-
-- `distributed-journey.ttl`: ontology, published at `https://ujg.specs.openuji.org/ed/ns/distributed-journey`
-- `distributed-journey.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/ed/ns/distributed-journey.context.jsonld`
-- `distributed-journey.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/ed/ns/distributed-journey.shape`
-
-Examples in this page compose the Core, Graph, Surface, Action, Artifact, and Distributed Journey
-contexts as needed. Companion Runtime examples compose Core, Surface, and Runtime contexts and
-import the distributed graph document they describe.
-
 ## Terminology
 
 - <dfn>DistributedArtifact</dfn>: An [=Artifact=] that is visible to, handled by, produced by, or
@@ -48,7 +36,7 @@ Surface defines `Touchpoint` and `touchpointRef`. `touchpointRef` links a `Surfa
 touchpoint through which it is presented. This is the main boundary used by Distributed Journey: it
 lets one journey model refer to multiple systems or channels while keeping Graph states independent
 from Surface and Distributed Journey. Surface `graphNodeRef` points from each `Surface` back to its
-Graph subject.
+supported Graph node.
 
 An `Action` may identify source and target touchpoints when the action itself crosses touchpoint
 boundaries and no more specific produced or consumed artifact carries that relationship.
@@ -80,14 +68,26 @@ Distributed Journey does not define:
 - status, claim, gap, propagation, portability, or consistency taxonomies
 - server truth, database state, or internal protocol state
 
-## Ontology {data-cop-concept="ontology"}
+## Normative Artifacts
+
+This module is published through the following artifacts:
+
+- `distributed-journey.ttl`: ontology, published at `https://ujg.specs.openuji.org/ed/ns/distributed-journey`
+- `distributed-journey.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/ed/ns/distributed-journey.context.jsonld`
+- `distributed-journey.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/ed/ns/distributed-journey.shape`
+
+Examples in this page compose the Core, Graph, Surface, Action, Artifact, and Distributed Journey
+contexts as needed. Companion Runtime examples compose Core, Surface, and Runtime contexts and
+import the distributed graph document they describe.
+
+### Ontology {data-cop-concept="ontology"}
 
 The normative Distributed Journey ontology is defined below and is published at
 `https://ujg.specs.openuji.org/ed/ns/distributed-journey`.
 
 :::include ./distributed-journey.ttl :::
 
-## JSON-LD Context {data-cop-concept="jsonld-context"}
+### JSON-LD Context {data-cop-concept="jsonld-context"}
 
 The normative Distributed Journey JSON-LD context is defined below and is published at
 `https://ujg.specs.openuji.org/ed/ns/distributed-journey.context.jsonld`.
@@ -104,7 +104,7 @@ aggregate core-family context at `/ed/ns/context.jsonld` does not include option
 
 :::include ./distributed-journey.context.jsonld :::
 
-## Validation {data-cop-concept="validation"}
+### Validation {data-cop-concept="validation"}
 
 The normative Distributed Journey SHACL shape is defined below and is published at
 `https://ujg.specs.openuji.org/ed/ns/distributed-journey.shape`.
@@ -136,7 +136,9 @@ the SHACL shape.
    Journey semantics, but SHOULD preserve recognized JSON-LD data during read-transform-write when
    possible.
 
-## Nextcloud Federated File Sharing Example
+## Examples
+
+### Nextcloud Federated File Sharing Example
 
 ```json
 {
@@ -507,7 +509,7 @@ without adding ordering edges to the distributed graph itself:
 }
 ```
 
-## Federated Account Migration Example
+### Federated Account Migration Example
 
 ```json
 {
@@ -713,7 +715,7 @@ A companion Runtime document can describe the runtime observation of the partial
 }
 ```
 
-## Remote Follow Or Subscription Example
+### Remote Follow Or Subscription Example
 
 ```json
 {

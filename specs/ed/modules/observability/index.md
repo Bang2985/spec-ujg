@@ -15,18 +15,6 @@ Observability has no direct dependency on Runtime. When Runtime data is present,
 correlate events to bindings by resolving `RuntimeEvent.surfaceInstanceRef` to a `SurfaceInstance`
 and matching that instance's `surfaceRef` to `ObservationBinding.observeSurfaceRef`.
 
-## Normative Artifacts
-
-This module is published through the following artifacts:
-
-- `observability.ttl`: ontology, published at `https://ujg.specs.openuji.org/ed/ns/observability`
-- `observability.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/ed/ns/observability.context.jsonld`
-- `observability.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/ed/ns/observability.shape`
-
-Examples in this page compose the shared baseline context `https://ujg.specs.openuji.org/ed/ns/context.jsonld`
-with the Surface, Localization, and Observability contexts. Runtime appears only in the informative
-correlation example.
-
 ## Terminology
 
 - <dfn>ObservationBinding</dfn>: An addressable recognition contract for one `Surface`.
@@ -70,9 +58,9 @@ One `ObservationBinding` can describe behavior for many repeated `SurfaceInstanc
 the same `Surface`. `SurfaceInstanceResolver` does not reference concrete `SurfaceInstance` nodes and
 MUST NOT require one binding per repeated occurrence.
 
-Observability does not define `touchpointRef`, `graphNodeRef`, `surfaceRef`,
-`graphNodeInstanceRef`, or `surfaceInstanceRef`. Those are Surface and Runtime terms. Observability
-does not define Runtime properties.
+Observability does not define `touchpointRef`, `graphNodeRef`, `surfaceRef`, or
+`surfaceInstanceRef`. Those are Surface and Runtime terms. Observability does not define Runtime
+properties.
 
 ## Standard Observation Events
 
@@ -152,21 +140,33 @@ If an instance key is not exposed through the accessibility API, adapters MUST u
 Core `extensions` for private resolver semantics. Runtime events MUST NOT be required to reference
 an `ObservationBinding`.
 
-## Ontology {data-cop-concept="ontology"}
+## Normative Artifacts
+
+This module is published through the following artifacts:
+
+- `observability.ttl`: ontology, published at `https://ujg.specs.openuji.org/ed/ns/observability`
+- `observability.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/ed/ns/observability.context.jsonld`
+- `observability.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/ed/ns/observability.shape`
+
+Examples in this page compose the shared baseline context `https://ujg.specs.openuji.org/ed/ns/context.jsonld`
+with the Surface, Localization, and Observability contexts. Runtime appears only in the informative
+correlation example.
+
+### Ontology {data-cop-concept="ontology"}
 
 The normative Observability ontology is defined below and is published at
 `https://ujg.specs.openuji.org/ed/ns/observability`.
 
 :::include ./observability.ttl :::
 
-## JSON-LD Context {data-cop-concept="jsonld-context"}
+### JSON-LD Context {data-cop-concept="jsonld-context"}
 
 The normative Observability JSON-LD context is defined below and is published at
 `https://ujg.specs.openuji.org/ed/ns/observability.context.jsonld`.
 
 :::include ./observability.context.jsonld :::
 
-## Validation {data-cop-concept="validation"}
+### Validation {data-cop-concept="validation"}
 
 The normative Observability SHACL shape is defined below and is published at
 `https://ujg.specs.openuji.org/ed/ns/observability.shape`.
@@ -204,7 +204,9 @@ the SHACL shape.
    Observability data, but SHOULD preserve recognized JSON-LD data during read-transform-write when
    possible.
 
-## Minimal Example
+## Examples
+
+### Minimal Example
 
 ```json
 {
@@ -315,7 +317,7 @@ the SHACL shape.
 }
 ```
 
-## Runtime Correlation Example
+### Runtime Correlation Example
 
 ```json
 {

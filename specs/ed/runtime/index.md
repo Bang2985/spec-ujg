@@ -2,17 +2,7 @@
 
 This module defines the data model for recording actual user behavior as a **causally ordered event chain** within a bounded execution. Ordering is established by explicit linkage between events, not by timestamps. Runtime events reference the concrete `SurfaceInstance` where the runtime moment was observed.
 
-Runtime records observed execution facts. A Client does not need to receive or understand the whole UJG graph document in order to emit runtime events. Each event records the observed surface instance, and Mapping can later resolve that instance through `SurfaceInstance.surfaceRef`, `Surface.graphNodeRef`, and optional `GraphNodeInstance` occurrence data.
-
-## Normative Artifacts
-
-This module is published through the following artifacts:
-
-- `runtime.ttl`: ontology, published at `https://ujg.specs.openuji.org/ed/ns/runtime`
-- `runtime.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/ed/ns/runtime.context.jsonld`
-- `runtime.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/ed/ns/runtime.shape`
-
-Examples in this page use an explicit context array composed from the published module contexts. The same composition is also published as the convenience context `https://ujg.specs.openuji.org/ed/ns/context.jsonld`.
+Runtime records observed execution facts. A Client does not need to receive or understand the whole UJG graph document in order to emit runtime events. Each event records the observed surface instance, and Mapping can later resolve that instance through `SurfaceInstance.surfaceRef` and `Surface.graphNodeRef`.
 
 ## Terminology
 
@@ -51,7 +41,7 @@ A [=RuntimeEvent=] records one runtime moment and may reference its immediate pr
 
 A [=RuntimeEvent=] references exactly one [=SurfaceInstance=] using `surfaceInstanceRef`. The referenced [=SurfaceInstance=] supplies the concrete visible occurrence where the event was observed.
 
-The core runtime address is `RuntimeEvent.surfaceInstanceRef`. Consumers that need Graph meaning resolve the surface instance through `SurfaceInstance.surfaceRef` and then through `Surface.graphNodeRef`. Consumers that need repeated-occurrence scope MAY also follow `SurfaceInstance.graphNodeInstanceRef`.
+The core runtime address is `RuntimeEvent.surfaceInstanceRef`. Consumers that need Graph meaning resolve the surface instance through `SurfaceInstance.surfaceRef` and then through `Surface.graphNodeRef`.
 
 
 ## Runtime Event {data-cop-concept="runtime-event"}
@@ -69,13 +59,23 @@ The core runtime address is `RuntimeEvent.surfaceInstanceRef`. Consumers that ne
 
 </spec-statement>
 
-## Ontology {data-cop-concept="ontology"}
+## Normative Artifacts
+
+This module is published through the following artifacts:
+
+- `runtime.ttl`: ontology, published at `https://ujg.specs.openuji.org/ed/ns/runtime`
+- `runtime.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/ed/ns/runtime.context.jsonld`
+- `runtime.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/ed/ns/runtime.shape`
+
+Examples in this page use an explicit context array composed from the published module contexts. The same composition is also published as the convenience context `https://ujg.specs.openuji.org/ed/ns/context.jsonld`.
+
+### Ontology {data-cop-concept="ontology"}
 
 The normative Runtime ontology is defined below and is published at `https://ujg.specs.openuji.org/ed/ns/runtime`. It is the authoritative structural definition for `JourneyExecution`, `RuntimeEvent`, and the properties that connect them.
 
 :::include ./runtime.ttl :::
 
-## JSON-LD Context {data-cop-concept="jsonld-context"}
+### JSON-LD Context {data-cop-concept="jsonld-context"}
 
 The normative Runtime JSON-LD context is defined below and is published at `https://ujg.specs.openuji.org/ed/ns/runtime.context.jsonld`. It provides the compact JSON-LD term mappings for Runtime examples, including IRI-valued references and opaque JSON `payload` values.
 
@@ -83,7 +83,7 @@ The normative Runtime JSON-LD context is defined below and is published at `http
 
 ---
 
-## Validation {data-cop-concept="validation"}
+### Validation {data-cop-concept="validation"}
 
 The normative Runtime SHACL shape is defined below and is published at `https://ujg.specs.openuji.org/ed/ns/runtime.shape`. It is the authoritative validation artifact for Runtime structural constraints.
 
@@ -118,7 +118,9 @@ A Consumer interpreting a runtime event's Graph meaning MUST resolve the event's
 
 ---
 
-## Appendix: Combined JSON Example {.unnumbered}
+## Examples
+
+### Combined JSON Example
 
 ```json
 {

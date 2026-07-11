@@ -1,15 +1,15 @@
 ## Overview
 
-This optional module defines qualitative UX research annotations over the intended experience. Its
-first standardized annotation is a [=PainPoint=]. UX Research does not add Graph traversal,
+This optional module defines qualitative annotations over the intended experience. Its
+first standardized annotation is a [=PainPoint=]. Experience Annotation does not add Graph traversal,
 Runtime ordering, or Mapping behavior.
 
 Documents using this module compose the Surface context with
-`https://ujg.specs.openuji.org/ed/ns/ux-research.context.jsonld`.
+`https://ujg.specs.openuji.org/ed/ns/experience-annotation.context.jsonld`.
 
-## Terminolgy
+## Terminology
 
-<dfn>PainPoint</dfn> is an experienced by user UX issue.
+<dfn>PainPoint</dfn> is a qualitative UX issue experienced by a user.
 
 ## PainPoint {data-cop-concept="pain-point"}
 
@@ -53,26 +53,28 @@ Example JSON node:
 
 ### Ontology {data-cop-concept="ontology"}
 
-:::include ./ux-research.ttl :::
+:::include ./experience-annotation.ttl :::
 
 ### JSON-LD Context {data-cop-concept="jsonld-context"}
 
-:::include ./ux-research.context.jsonld :::
+:::include ./experience-annotation.context.jsonld :::
 
 ### Validation {data-cop-concept="validation"}
 
-:::include ./ux-research.shape.ttl :::
+:::include ./experience-annotation.shape.ttl :::
 
-## Appendix: Combined Example {.unnumbered}
+## Examples
+
+### Combined Example
 
 ```json
 {
   "@context": [
     "https://ujg.specs.openuji.org/ed/ns/context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/surface.context.jsonld",
-    "https://ujg.specs.openuji.org/ed/ns/ux-research.context.jsonld"
+    "https://ujg.specs.openuji.org/ed/ns/experience-annotation.context.jsonld"
   ],
-  "@id": "https://example.com/ujg/ux-research/checkout.jsonld",
+  "@id": "https://example.com/ujg/experience-annotation/checkout.jsonld",
   "@type": "UJGDocument",
   "nodes": [
     {

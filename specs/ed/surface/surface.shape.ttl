@@ -4,7 +4,7 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ujgsurfaceshape:GraphSubjectShape a sh:NodeShape ;
+ujgsurfaceshape:GraphNodeRefTargetShape a sh:NodeShape ;
   sh:nodeKind sh:IRI ;
   sh:or (
     [ sh:class ujggraph:State ]
@@ -19,7 +19,7 @@ ujgsurfaceshape:SurfaceShape a sh:NodeShape ;
 
   sh:property [
     sh:path ujgsurface:graphNodeRef ;
-    sh:node ujgsurfaceshape:GraphSubjectShape ;
+    sh:node ujgsurfaceshape:GraphNodeRefTargetShape ;
     sh:nodeKind sh:IRI ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
@@ -41,32 +41,6 @@ ujgsurfaceshape:SurfaceInstanceShape a sh:NodeShape ;
     sh:class ujgsurface:Surface ;
     sh:nodeKind sh:IRI ;
     sh:minCount 1 ;
-    sh:maxCount 1 ;
-  ] ;
-
-  sh:property [
-    sh:path ujgsurface:graphNodeInstanceRef ;
-    sh:class ujgsurface:GraphNodeInstance ;
-    sh:nodeKind sh:IRI ;
-    sh:maxCount 1 ;
-  ] .
-
-ujgsurfaceshape:GraphNodeInstanceShape a sh:NodeShape ;
-  sh:targetClass ujgsurface:GraphNodeInstance ;
-  sh:nodeKind sh:IRI ;
-
-  sh:property [
-    sh:path ujgsurface:graphNodeRef ;
-    sh:node ujgsurfaceshape:GraphSubjectShape ;
-    sh:nodeKind sh:IRI ;
-    sh:minCount 1 ;
-    sh:maxCount 1 ;
-  ] ;
-
-  sh:property [
-    sh:path ujgsurface:parentInstanceRef ;
-    sh:class ujgsurface:GraphNodeInstance ;
-    sh:nodeKind sh:IRI ;
     sh:maxCount 1 ;
   ] .
 

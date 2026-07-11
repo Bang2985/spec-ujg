@@ -8,7 +8,7 @@ The main spec family is organized into five logical layers:
 
 1. **The Core (Transport):** The universal JSON-LD envelope. Ensures any tool—human or AI—can parse the file structure without ambiguity.
 2. **The Graph (Definition):** Defines the "Happy Path." It is the vocabulary for States, Transitions, and Composition (sub-journey referencing).
-3. **The Surface and Experience (Materialization):** Exposes graph subjects as addressable
+3. **The Surface and Experience (Materialization):** Exposes supported Graph nodes as addressable
    human-facing surfaces, optional touchpoints and visible occurrences, and journey-map steps and
    phases over those surfaces.
 4. **The Runtime (Execution):** Captures the "Actual Path." It records observed surface events as a causal chain.
@@ -18,7 +18,7 @@ The main spec family is organized into five logical layers:
 
 1. **Graph First:** User experience is an automata, not a list of URLs.
 2. **Stable Identity:** Entities must be named with URIs to survive refactors.
-3. **Separation of Concerns:** A "Journey" (the plan) is immutable; observed surface events and occurrence scopes are runtime facts.
+3. **Separation of Concerns:** A "Journey" (the plan) is immutable; observed surface events are runtime facts.
 4. **Vendor Neutrality:** The spec defines _data shapes_, not visualization rules.
 
 ## Optional Modules
@@ -39,8 +39,8 @@ thing to point at. Later modules can build on that thing and describe it in more
 new capabilities become precise without forcing the shared baseline, or this architecture page, to
 know every specialized vocabulary that may be added later.
 
-The optional [[UJG UX Research]] module currently defines qualitative `PainPoint` annotations over
-Surface `ExperienceStep` nodes.
+The optional [[UJG Experience Annotation]] module currently defines qualitative `PainPoint`
+annotations over Surface `ExperienceStep` nodes.
 
 First-level optional modules are small bridges that attach directly to Core, Graph, Surface, or
 Runtime concepts. Second-level optional modules compose one or more shared

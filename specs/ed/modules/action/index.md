@@ -11,17 +11,6 @@ This first version is intentionally small. It declares that an effective transit
 `Action`; it does not define transport protocols, API request formats, queues, form libraries,
 analytics payloads, backend workers, or framework event handlers.
 
-## Normative Artifacts
-
-This module is published through the following artifacts:
-
-- `action.ttl`: ontology, published at `https://ujg.specs.openuji.org/ed/ns/action`
-- `action.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/ed/ns/action.context.jsonld`
-- `action.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/ed/ns/action.shape`
-
-Examples in this page compose the shared baseline context `https://ujg.specs.openuji.org/ed/ns/context.jsonld`
-with the Action context.
-
 ## Terminology
 
 - <dfn>Action</dfn>: An addressable declaration of a side effect associated with a Graph transition
@@ -37,21 +26,32 @@ The module introduces one canonical interoperable attachment:
 A transition without `actionRef` remains fully valid and traversable. Consumers MAY ignore this
 module and still process the graph.
 
-## Ontology {data-cop-concept="ontology"}
+## Normative Artifacts
+
+This module is published through the following artifacts:
+
+- `action.ttl`: ontology, published at `https://ujg.specs.openuji.org/ed/ns/action`
+- `action.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/ed/ns/action.context.jsonld`
+- `action.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/ed/ns/action.shape`
+
+Examples in this page compose the shared baseline context `https://ujg.specs.openuji.org/ed/ns/context.jsonld`
+with the Action context.
+
+### Ontology {data-cop-concept="ontology"}
 
 The normative Action ontology is defined below and is published at
 `https://ujg.specs.openuji.org/ed/ns/action`.
 
 :::include ./action.ttl :::
 
-## JSON-LD Context {data-cop-concept="jsonld-context"}
+### JSON-LD Context {data-cop-concept="jsonld-context"}
 
 The normative Action JSON-LD context is defined below and is published at
 `https://ujg.specs.openuji.org/ed/ns/action.context.jsonld`.
 
 :::include ./action.context.jsonld :::
 
-## Validation {data-cop-concept="validation"}
+### Validation {data-cop-concept="validation"}
 
 The normative Action SHACL shape is defined below and is published at
 `https://ujg.specs.openuji.org/ed/ns/action.shape`.
@@ -71,7 +71,9 @@ the SHACL shape.
    details SHOULD remain in Core `extensions` unless a future optional module defines them as
    interoperable vocabulary.
 
-## Minimal Example
+## Examples
+
+### Minimal Example
 
 ```json
 {

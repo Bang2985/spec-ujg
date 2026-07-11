@@ -21,9 +21,6 @@ ujgsurface:SurfaceInstance a owl:Class ;
 ujgsurface:Touchpoint a owl:Class ;
   rdfs:subClassOf ujg:Node .
 
-ujgsurface:GraphNodeInstance a owl:Class ;
-  rdfs:subClassOf ujg:Node .
-
 ujgsurface:ExperienceStep a owl:Class ;
   rdfs:subClassOf ujg:Node .
 
@@ -33,13 +30,7 @@ ujgsurface:Phase a owl:Class ;
 ### Properties
 
 ujgsurface:graphNodeRef a owl:ObjectProperty ;
-  rdfs:domain [
-    a owl:Class ;
-    owl:unionOf (
-      ujgsurface:Surface
-      ujgsurface:GraphNodeInstance
-    )
-  ] ;
+  rdfs:domain ujgsurface:Surface ;
   rdfs:range [
     a owl:Class ;
     owl:unionOf (
@@ -57,14 +48,6 @@ ujgsurface:touchpointRef a owl:ObjectProperty ;
 ujgsurface:surfaceRef a owl:ObjectProperty ;
   rdfs:domain ujgsurface:SurfaceInstance ;
   rdfs:range ujgsurface:Surface .
-
-ujgsurface:graphNodeInstanceRef a owl:ObjectProperty ;
-  rdfs:domain ujgsurface:SurfaceInstance ;
-  rdfs:range ujgsurface:GraphNodeInstance .
-
-ujgsurface:parentInstanceRef a owl:ObjectProperty ;
-  rdfs:domain ujgsurface:GraphNodeInstance ;
-  rdfs:range ujgsurface:GraphNodeInstance .
 
 ujgsurface:channel a owl:DatatypeProperty ;
   rdfs:domain ujgsurface:Touchpoint ;

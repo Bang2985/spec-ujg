@@ -19,7 +19,7 @@ It does not define routes, traversal, locale negotiation, runtime translation lo
 Graph defines topology.
 Localization annotates UJG nodes with copy and locale metadata. It can be used with Surface
 ExperienceStep and Phase resources when the Surface context is composed, and with PainPoint only
-when the UX Research optional module is explicitly composed.
+when the Experience Annotation optional module is explicitly composed.
 
 ## Required context
 

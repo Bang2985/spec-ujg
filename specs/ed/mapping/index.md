@@ -16,14 +16,6 @@ entry states before mapping, but it is not a local traversal scope and is not th
 Mapping surfaces model drift, tracking gaps, deep links, menu jumps, and other out-of-model
 movement. It does not assume every jump is an error.
 
-## Normative Artifacts
-
-This module is published through the following artifacts:
-
-- `mapping.ttl`: ontology, published at `https://ujg.specs.openuji.org/ed/ns/mapping`
-- `mapping.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/ed/ns/mapping.context.jsonld`
-- `mapping.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/ed/ns/mapping.shape`
-
 Examples in this page compose the shared baseline context `https://ujg.specs.openuji.org/ed/ns/context.jsonld`
 with the Mapping context.
 
@@ -109,7 +101,9 @@ serialized as separate MappedStep records.
 classDiagram
   class RuntimeEvent
   class State
+  class CompositeState
   class Transition
+  class OutgoingTransition
   class MappedStep {
     id
     mappedEventRef
@@ -120,7 +114,9 @@ classDiagram
   MappedStep --> RuntimeEvent : mappedEventRef
   MappedStep --> RuntimeEvent : observedAffordanceEventRef
   MappedStep --> State : mappedStateRef
+  MappedStep --> CompositeState : mappedStateRef
   MappedStep --> Transition : explainedByTransitionRef
+  MappedStep --> OutgoingTransition : explainedByTransitionRef
 ```
 
 Example JSON node:
@@ -160,33 +156,13 @@ an affordance event appears immediately before a state-observation event, the fo
 can reference it with `observedAffordanceEventRef`.
 
 Mapping does not serialize a separate step scope. For each `MappedStep`, the local Graph `Journey`
-scope is derived from the mapped journey and, when present, from the referenced surface instance's
-`GraphNodeInstance` occurrence tree.
+scope is derived from the mapped journey.
 
 The Runtime event order remains defined by Runtime's causal chain: a root event followed by the
 unique successor sequence obtained through `previousId`. `mappedStepRef` is a set of step records;
 its JSON order is not normative.
 
-## Ontology {data-cop-concept="ontology"}
-
-The normative Mapping ontology is defined below and is published at
-`https://ujg.specs.openuji.org/ed/ns/mapping`.
-
-:::include ./mapping.ttl :::
-
-## JSON-LD Context {data-cop-concept="jsonld-context"}
-
-The normative Mapping JSON-LD context is defined below and is published at
-`https://ujg.specs.openuji.org/ed/ns/mapping.context.jsonld`.
-
-:::include ./mapping.context.jsonld :::
-
-## Validation {data-cop-concept="validation"}
-
-The normative Mapping SHACL shape is defined below and is published at
-`https://ujg.specs.openuji.org/ed/ns/mapping.shape`.
-
-:::include ./mapping.shape.ttl :::
+## Processing Rules {data-cop-concept="processing-rules"}
 
 The rules below define the remaining module semantics beyond the structural constraints captured by
 the SHACL shape.
@@ -230,18 +206,15 @@ the SHACL shape.
    child of an `OutgoingTransitionGroup` referenced by the mapped journey. Consumers use
    `OutgoingTransitionGroup.outgoingTransitionRefs` only to determine child outgoing-transition
    availability; an `OutgoingTransitionGroup` itself is not surfaced.
-12. **Occurrence scope:** If a resolved surface instance has `graphNodeInstanceRef`, Consumers MAY
-   follow `GraphNodeInstance.parentInstanceRef` to derive an occurrence tree for repeated graph-node
-   occurrences.
-13. **Boundary ambiguity:** If a movement crosses a journey boundary and the available surface and
-   occurrence data are insufficient to identify a relevant effective transition, the movement is a
+12. **Boundary ambiguity:** If a movement crosses a journey boundary and the available surface data
+   are insufficient to identify a relevant effective transition, the movement is a
    jump.
-14. **Condition eligibility:** If a consumer implements [[UJG Conditions]], a guarded transition only
+13. **Condition eligibility:** If a consumer implements [[UJG Conditions]], a guarded transition only
    explains a mapped step when the transition is eligible under Condition semantics.
-15. **Jump derivation:** A non-root mapped step is a jump when no relevant effective transition
+14. **Jump derivation:** A non-root mapped step is a jump when no relevant effective transition
    explains the observed movement. A jump is a derived processing result, not serialized Mapping
    vocabulary.
-16. **No intent assumption:** A derived jump reports that the observed movement is not explained by
+15. **No intent assumption:** A derived jump reports that the observed movement is not explained by
    the mapped graph. It does not by itself decide whether the movement is legitimate or erroneous.
 
 ## Experience Occurrence and Phase Start {data-cop-concept="experience-occurrence"}
@@ -308,7 +281,34 @@ The repeated event `:200` does not restart either result.
 }
 ```
 
-## Minimal Example
+## Normative Artifacts
+
+This module is published through the following artifacts.
+
+### Ontology {data-cop-concept="ontology"}
+
+The normative Mapping ontology is defined below and is published at
+`https://ujg.specs.openuji.org/ed/ns/mapping`.
+
+:::include ./mapping.ttl :::
+
+### JSON-LD Context {data-cop-concept="jsonld-context"}
+
+The normative Mapping JSON-LD context is defined below and is published at
+`https://ujg.specs.openuji.org/ed/ns/mapping.context.jsonld`.
+
+:::include ./mapping.context.jsonld :::
+
+### Validation {data-cop-concept="validation"}
+
+The normative Mapping SHACL shape is defined below and is published at
+`https://ujg.specs.openuji.org/ed/ns/mapping.shape`.
+
+:::include ./mapping.shape.ttl :::
+
+## Examples
+
+### Minimal Example
 
 ```json
 {
@@ -363,7 +363,7 @@ points to the `OutgoingTransition` resource. A movement explained by an effectiv
 `OutgoingTransition` from the mapped journey's `OutgoingTransitionGroup` is explained by the Graph
 model and does not need a serialized status value.
 
-## Affordance Event Example
+### Affordance Event Example
 
 ```json
 {
@@ -549,107 +549,3 @@ model and does not need a serialized status value.
 separate `MappedStep` records because their surfaces resolve to affordances rather than states. The
 second and third mapped steps point back to those immediate predecessor events. The help affordance
 is available through `urn:outgoing-group:global-nav`, but the group itself has no surface.
-
-## Occurrence Scope Example
-
-```json
-{
-  "@context": [
-    "https://ujg.specs.openuji.org/ed/ns/context.jsonld",
-    "https://ujg.specs.openuji.org/ed/ns/mapping.context.jsonld"
-  ],
-  "@id": "https://example.com/ujg/mapping/nested-execution.jsonld",
-  "@type": "UJGDocument",
-  "nodes": [
-    {
-      "@type": "JourneyExecution",
-      "@id": "urn:ujg:execution:nested-1"
-    },
-    {
-      "@type": "State",
-      "@id": "urn:ujg:state:cart",
-      "label": "Cart"
-    },
-    {
-      "@type": "State",
-      "@id": "urn:ujg:state:payment-card",
-      "label": "Payment card"
-    },
-    {
-      "@type": "GraphNodeInstance",
-      "@id": "urn:ujg:graph-node-instance:checkout:nested-1",
-      "graphNodeRef": "urn:ujg:state:cart"
-    },
-    {
-      "@type": "GraphNodeInstance",
-      "@id": "urn:ujg:graph-node-instance:checkout:nested-1:payment",
-      "graphNodeRef": "urn:ujg:state:payment-card",
-      "parentInstanceRef": "urn:ujg:graph-node-instance:checkout:nested-1"
-    },
-    {
-      "@type": "Surface",
-      "@id": "urn:ujg:surface:cart:nested-1",
-      "graphNodeRef": "urn:ujg:state:cart"
-    },
-    {
-      "@type": "Surface",
-      "@id": "urn:ujg:surface:payment-card:nested-1",
-      "graphNodeRef": "urn:ujg:state:payment-card"
-    },
-    {
-      "@type": "SurfaceInstance",
-      "@id": "urn:ujg:surface-instance:cart:nested-1",
-      "surfaceRef": "urn:ujg:surface:cart:nested-1",
-      "graphNodeInstanceRef": "urn:ujg:graph-node-instance:checkout:nested-1"
-    },
-    {
-      "@type": "SurfaceInstance",
-      "@id": "urn:ujg:surface-instance:payment-card:nested-1",
-      "surfaceRef": "urn:ujg:surface:payment-card:nested-1",
-      "graphNodeInstanceRef": "urn:ujg:graph-node-instance:checkout:nested-1:payment"
-    },
-    {
-      "@type": "RuntimeEvent",
-      "@id": "urn:ujg:event:nested-1:100",
-      "executionId": "urn:ujg:execution:nested-1",
-      "surfaceInstanceRef": "urn:ujg:surface-instance:cart:nested-1"
-    },
-    {
-      "@type": "RuntimeEvent",
-      "@id": "urn:ujg:event:nested-1:200",
-      "executionId": "urn:ujg:execution:nested-1",
-      "previousId": "urn:ujg:event:nested-1:100",
-      "surfaceInstanceRef": "urn:ujg:surface-instance:payment-card:nested-1"
-    },
-    {
-      "@id": "urn:mapping:nested-1",
-      "@type": "JourneyMapping",
-      "mappedRuntimeRef": "urn:ujg:execution:nested-1",
-      "mappedJourneyRef": "urn:ujg:journey:checkout",
-      "mappedStepRef": [
-        "urn:mapping:nested-1:100",
-        "urn:mapping:nested-1:200"
-      ]
-    },
-    {
-      "@id": "urn:mapping:nested-1:100",
-      "@type": "MappedStep",
-      "mappedEventRef": "urn:ujg:event:nested-1:100",
-      "mappedStateRef": "urn:ujg:state:cart"
-    },
-    {
-      "@id": "urn:mapping:nested-1:200",
-      "@type": "MappedStep",
-      "mappedEventRef": "urn:ujg:event:nested-1:200",
-      "mappedStateRef": "urn:ujg:state:payment-card",
-      "explainedByTransitionRef": "urn:ujg:transition:cart-to-checkout-payment"
-    }
-  ]
-}
-```
-
-The second mapped step resolves its observed Graph node by following
-`urn:ujg:event:nested-1:200` to `urn:ujg:surface-instance:payment-card:nested-1`, then following
-that instance's `surfaceRef` to `urn:ujg:surface:payment-card:nested-1` and that surface's
-`graphNodeRef` to `urn:ujg:state:payment-card`. The surface instance's `graphNodeInstanceRef`
-identifies the concrete payment-card occurrence and its parent occurrence.

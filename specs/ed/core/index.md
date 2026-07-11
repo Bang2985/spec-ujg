@@ -28,19 +28,21 @@ The Core module consists of:
 - <dfn>Second-level UJG module</dfn>: An optional module that depends on at least one first-level
   bridge module to describe a more specialized capability.
 
-## Ontology {data-cop-concept="ontology"}
+## Normative Artifacts
+
+### Ontology {data-cop-concept="ontology"}
 
 The normative Core ontology is defined in the Turtle document below and is published at `https://ujg.specs.openuji.org/ed/ns/core`. It declares the `UJGDocument` and `Node` classes together with the Core properties used by this module.
 
 :::include ./core.ttl :::
 
-## JSON-LD Context {data-cop-concept="jsonld-context"}
+### JSON-LD Context {data-cop-concept="jsonld-context"}
 
 The normative Core JSON-LD context is defined below and is published at `https://ujg.specs.openuji.org/ed/ns/core.context.jsonld`. Examples in this section use the compact terms from this context, including `@id`, `@type`, `imports`, `nodes`, and `extensions`.
 
 :::include ./core.context.jsonld :::
 
-### Context Composition
+#### Context Composition
 
 <spec-statement>A compact UJG JSON-LD document **MUST** include the Core JSON-LD context.</spec-statement>
 
@@ -54,7 +56,7 @@ The normative Core JSON-LD context is defined below and is published at `https:/
 
 A composed context is expressed as a JSON-LD `@context` array in which the Core context appears together with one or more additional contexts required by the document and published at `https://ujg.specs.openuji.org/ed/ns/context.jsonld`
 
-#### Composed Context Example
+##### Composed Context Example
 ```json
 {
   "@context": [
@@ -66,7 +68,7 @@ A composed context is expressed as a JSON-LD `@context` array in which the Core 
 }
 ```
 
-### Module Layering
+#### Module Layering
 
 <spec-statement>A [=UJG module=] that defines compact terms not defined by Core **MUST** publish a JSON-LD context for those terms.</spec-statement>
 
@@ -84,7 +86,7 @@ A composed context is expressed as a JSON-LD `@context` array in which the Core 
 
 <spec-statement>Consumers that do not implement an [=optional module=] **MAY** ignore that module's terms, provided they preserve JSON-LD identity and unknown extension data according to Core processing rules.</spec-statement>
 
-### Extensions
+#### Extensions
 
 <spec-statement>`extensions` **MAY** appear on any [=Node=].</spec-statement>
 
@@ -108,7 +110,7 @@ A composed context is expressed as a JSON-LD `@context` array in which the Core 
 
 <spec-statement>Identifiers that appear only inside `extensions` **MUST NOT** be treated as Core or Graph references for standardized UJG processing unless an implementation applies explicit namespace-specific processing outside module conformance.</spec-statement>
 
-### Import Resolution
+#### Import Resolution
 
 <spec-statement>`imports` values **MUST** be IRI references.</spec-statement>
 
@@ -126,13 +128,13 @@ A composed context is expressed as a JSON-LD `@context` array in which the Core 
 
 > Note: Authors **SHOULD** prefer relative import references for intra-package documents so the same document set can be moved between local development and deployed environments without changing import values, provided the relative directory layout is preserved.
 
-## Validation {data-cop-concept="validation"}
+### Validation {data-cop-concept="validation"}
 
 The normative Core SHACL shape is defined below and is published at `https://ujg.specs.openuji.org/ed/ns/core.shape`. It constrains [=UJGDocument=] and [=Node=] instances and is the validation artifact for Core semantics.
 
 :::include ./core.shape.ttl :::
 
-## Examples {.unnumbered}
+## Examples
 
 The examples below are informative. Each example uses `https://ujg.specs.openuji.org/ed/ns/core.context.jsonld` as its JSON-LD context and stays within the Core vocabulary. `extensions` appears only on node objects; document-level `extensions` is invalid in Core. Graph-native optional terms belong in composed module contexts, not inside `extensions`.
 

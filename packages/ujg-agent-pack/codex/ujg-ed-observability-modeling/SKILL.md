@@ -15,7 +15,7 @@ Scope: Observability module semantics for ObservationBinding, accessible-object 
 Module scope: modules/observability
 
 Related generated skills:
-- ujg-ed-modeling: whole UJG document modeling across Core, Graph, Surface and Experience, Runtime, Mapping, Metrics, Localization, Observability, UX Research, and optional modules
+- ujg-ed-modeling: whole UJG document modeling across Core, Graph, Surface and Experience, Runtime, Mapping, Metrics, Localization, Observability, Experience Annotation, and optional modules
 - ujg-ed-core-modeling: Core module document containers, imports, top-level nodes, and extensions
 - ujg-ed-graph-modeling: Graph module topology, journeys, states, transitions, exits, outgoing navigation, and indexes
 - ujg-ed-l10n-modeling: Localization module semantics for MessageBundle copy metadata and locale-switch metadata
@@ -173,7 +173,7 @@ Do not promote project-specific selectors or Playwright expressions into Observa
 
 ## Separation rules
 
-Observability does not define `touchpointRef`, `graphNodeRef`, `surfaceRef`, `graphNodeInstanceRef`, or `surfaceInstanceRef`. Those are Surface and Runtime terms.
+Observability does not define `touchpointRef`, `graphNodeRef`, `surfaceRef`, or `surfaceInstanceRef`. Those are Surface and Runtime terms.
 
 Observability has no direct dependency on Runtime. Runtime events do not need to reference `ObservationBinding`.
 
