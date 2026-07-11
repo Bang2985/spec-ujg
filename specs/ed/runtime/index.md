@@ -19,7 +19,7 @@ Runtime records observed execution facts. A Client does not need to receive or u
 
 ```mermaid
 graph TB
-  subgraph JourneyExecution [Execution]
+  subgraph JourneyExecution["Execution"]
     direction LR
     E1[RuntimeEvent A<br/>id e1]
     E2[RuntimeEvent B<br/>e2 after e1]
