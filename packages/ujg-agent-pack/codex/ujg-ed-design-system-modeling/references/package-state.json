@@ -1,5 +1,5 @@
 {
-  "artifactHash": "sha256:77dd483be31f496c45e4ba6c0dea6bbe347b1edbdecb15727fd84b1a905512d3",
+  "artifactHash": "sha256:e17486f6dc2308462b436d57308bae1a46b072ddb4f3b751258081d552b6169a",
   "configHash": "sha256:b9bc08f6afc1bae8b133223485e46073887f73708ddf42265e4aa90052d923b2",
   "package": {
     "id": "ujg-agent-pack",
@@ -12,7 +12,7 @@
     "name": "ujg-ed-design-system-modeling"
   },
   "sourceHash": "sha256:248600ed1312f8647b994d59da5f0df54b5de1854ee26dd4068ab5026cd16f26",
-  "specHash": "sha256:ba92ca20a7dce89329b98fb48e5bfb3691aa57e686c79436f485456f718a9dae",
+  "specHash": "sha256:09cd6bb381e0c81236aec973600aee63ea1a81224ec0d5deaa97ec10c8adb001",
   "target": {
     "id": "ed",
     "label": "Editor's Draft"

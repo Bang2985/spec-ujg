@@ -95,7 +95,7 @@ Observability does not define standard raw string fallback properties for access
 descriptions. Private adapter hints MAY appear in Core `extensions`, but such hints are not
 normative Observability terms.
 
-An `AccessibleLocator` SHOULD provide at least one of:
+An `AccessibleLocator` MUST provide at least one of:
 
 - `role`
 - `accessibleNameRef`

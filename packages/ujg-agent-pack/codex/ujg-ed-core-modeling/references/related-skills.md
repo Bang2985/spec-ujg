@@ -21,13 +21,13 @@ Module scope: core
 - graph
 - modules/l10n
 - modules/condition
-- runtime
 - modules/state-data
 - modules/action
 - surface
 - modules/artifact
 - modules/observability
 - modules/experience-annotation
+- runtime
 - mapping
 - modules/design-system
 - modules/distributed-journey

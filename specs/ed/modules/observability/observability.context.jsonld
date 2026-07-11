@@ -23,7 +23,8 @@
     },
     "locatorRefs": {
       "@id": "ujgobservability:locatorRefs",
-      "@type": "@id"
+      "@type": "@id",
+      "@container": "@set"
     },
     "surfaceInstanceResolverRef": {
       "@id": "ujgobservability:surfaceInstanceResolverRef",
@@ -44,15 +45,18 @@
     },
     "accessibleFeatureRefs": {
       "@id": "ujgobservability:accessibleFeatureRefs",
-      "@type": "@id"
+      "@type": "@id",
+      "@container": "@set"
     },
     "accessibleRelationRefs": {
       "@id": "ujgobservability:accessibleRelationRefs",
-      "@type": "@id"
+      "@type": "@id",
+      "@container": "@set"
     },
     "contextLocatorRefs": {
       "@id": "ujgobservability:contextLocatorRefs",
-      "@type": "@id"
+      "@type": "@id",
+      "@container": "@set"
     },
     "accessibleFeatureName": "ujgobservability:accessibleFeatureName",
     "accessibleFeatureValue": "ujgobservability:accessibleFeatureValue",
