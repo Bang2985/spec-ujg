@@ -13,13 +13,13 @@ Design System describes how design-system artifacts realize `Surface` resources.
 Correct layer order:
 
 ```text
-Surface -> graphNodeRef -> Graph subject
+Surface -> graphNodeRef -> supported Graph node
 SurfaceRealization -> surfaceRef + componentRef/templateRef
 DesignSystem -> componentRefs/templateRefs/tokenSourceRefs/surfaceRealizationRefs
 ```
 
 Graph defines topology.
-Surface defines materialization boundaries and points back to Graph subjects.
+Surface defines materialization boundaries and points back to supported Graph nodes.
 Design System realizes surfaces.
 
 ## Required contexts

@@ -12,16 +12,6 @@ semantics.
 Artifact is not the state-binding primitive for UJG. State-like data context or binding identity
 belongs in the State Data module.
 
-## Normative Artifacts
-
-This module is published through the following artifacts:
-
-- `artifact.ttl`: ontology, published at `https://ujg.specs.openuji.org/ed/ns/artifact`
-- `artifact.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/ed/ns/artifact.context.jsonld`
-- `artifact.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/ed/ns/artifact.shape`
-
-Examples in this page compose the Core context with the Artifact context.
-
 ## Terminology
 
 - <dfn>Artifact</dfn>: An addressable resource that may be produced, consumed, exchanged, or
@@ -30,6 +20,28 @@ Examples in this page compose the Core context with the Artifact context.
   available by a UJG node.
 - <dfn>Consumed artifact</dfn>: An artifact accepted, imported, read, redeemed, or otherwise used by
   a UJG node.
+
+## Artifact {data-cop-concept="artifact"}
+
+An [=Artifact=] is an addressable portable resource identity. It can be referenced by producing or
+consuming nodes, but it does not define transfer, storage, rendering, security, or lifecycle
+semantics.
+
+```mermaid
+classDiagram
+  class Artifact {
+    id
+  }
+```
+
+Example JSON node:
+
+```json
+{
+  "@id": "urn:artifact:account-archive",
+  "@type": "Artifact"
+}
+```
 
 ## Attachment Model
 
@@ -64,21 +76,31 @@ Artifact does not define:
 The archived artifact implementation extension remains useful for generator-specific upload and
 preview hints, but those hints are not part of this module.
 
-## Ontology {data-cop-concept="ontology"}
+## Normative Artifacts
+
+This module is published through the following artifacts:
+
+- `artifact.ttl`: ontology, published at `https://ujg.specs.openuji.org/ed/ns/artifact`
+- `artifact.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/ed/ns/artifact.context.jsonld`
+- `artifact.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/ed/ns/artifact.shape`
+
+Examples in this page compose the Core context with the Artifact context.
+
+### Ontology {data-cop-concept="ontology"}
 
 The normative Artifact ontology is defined below and is published at
 `https://ujg.specs.openuji.org/ed/ns/artifact`.
 
 :::include ./artifact.ttl :::
 
-## JSON-LD Context {data-cop-concept="jsonld-context"}
+### JSON-LD Context {data-cop-concept="jsonld-context"}
 
 The normative Artifact JSON-LD context is defined below and is published at
 `https://ujg.specs.openuji.org/ed/ns/artifact.context.jsonld`.
 
 :::include ./artifact.context.jsonld :::
 
-## Validation {data-cop-concept="validation"}
+### Validation {data-cop-concept="validation"}
 
 The normative Artifact SHACL shape is defined below and is published at
 `https://ujg.specs.openuji.org/ed/ns/artifact.shape`.
@@ -99,7 +121,9 @@ the SHACL shape.
 5. **Graceful degradation:** Consumers that do not implement this module MAY ignore Artifact
    semantics, but SHOULD preserve recognized JSON-LD data during read-transform-write when possible.
 
-## Minimal Example
+## Examples
+
+### Minimal Example
 
 ```json
 {

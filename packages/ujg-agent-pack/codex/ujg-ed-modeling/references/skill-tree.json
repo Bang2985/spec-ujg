@@ -4,7 +4,7 @@
     "moduleId": null,
     "name": "ujg-ed-modeling",
     "publicUrl": "https://ujg.specs.openuji.org/ed",
-    "scope": "whole UJG document modeling across Core, Graph, Surface, Runtime, Mapping, Metrics, Experience, Localization, Observability, and optional modules"
+    "scope": "whole UJG document modeling across Core, Graph, Surface and Experience, Runtime, Mapping, Metrics, Localization, Observability, Experience Annotation, and optional modules"
   },
   "moduleGraph": {
     "architecture": {
@@ -14,13 +14,13 @@
         "graph",
         "modules/l10n",
         "modules/condition",
-        "runtime",
         "modules/state-data",
         "modules/action",
         "surface",
         "modules/artifact",
         "modules/observability",
-        "modules/experience",
+        "modules/experience-annotation",
+        "runtime",
         "mapping",
         "modules/design-system",
         "modules/distributed-journey",
@@ -46,13 +46,13 @@
         "graph",
         "modules/l10n",
         "modules/condition",
-        "runtime",
         "modules/state-data",
         "modules/action",
         "surface",
         "modules/artifact",
         "modules/observability",
-        "modules/experience",
+        "modules/experience-annotation",
+        "runtime",
         "mapping",
         "modules/design-system",
         "modules/distributed-journey",
@@ -71,12 +71,12 @@
         "modules/routing",
         "modules/l10n",
         "modules/condition",
-        "runtime",
         "modules/state-data",
         "modules/action",
         "surface",
         "modules/observability",
-        "modules/experience",
+        "modules/experience-annotation",
+        "runtime",
         "mapping",
         "modules/design-system",
         "modules/distributed-journey",
@@ -163,13 +163,13 @@
       "generatedSkill": "ujg-ed-distributed-journey-modeling",
       "title": "Distributed Journey"
     },
-    "modules/experience": {
+    "modules/experience-annotation": {
       "dependents": [],
       "deps": [
         "surface"
       ],
       "generatedSkill": null,
-      "title": "Experience"
+      "title": "Experience Annotation"
     },
     "modules/l10n": {
       "dependents": [
@@ -235,9 +235,9 @@
     },
     "surface": {
       "dependents": [
-        "runtime",
         "modules/observability",
-        "modules/experience",
+        "modules/experience-annotation",
+        "runtime",
         "mapping",
         "modules/design-system",
         "modules/distributed-journey",
@@ -258,7 +258,7 @@
       "moduleId": null,
       "name": "ujg-ed-modeling",
       "publicUrl": "https://ujg.specs.openuji.org/ed",
-      "scope": "whole UJG document modeling across Core, Graph, Surface, Runtime, Mapping, Metrics, Experience, Localization, Observability, and optional modules",
+      "scope": "whole UJG document modeling across Core, Graph, Surface and Experience, Runtime, Mapping, Metrics, Localization, Observability, Experience Annotation, and optional modules",
       "source": "sources/ed/skills/root/skill.md"
     },
     {

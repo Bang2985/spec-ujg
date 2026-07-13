@@ -1,4 +1,4 @@
-## Normative artifacts
+## Normative Artifacts
 
 This specification defines conformance using the following normative artifacts:
 
@@ -108,7 +108,7 @@ This improves interoperability and helps users correlate JSON syntax with semant
 
 ---
 
-## Non-normative examples
+## Examples
 
 Example JSON-LD documents in this specification are informative unless explicitly marked normative. Conformance is determined by the normative artifacts (ontology, SHACL shapes, and JSON-LD context), not by example documents.
 

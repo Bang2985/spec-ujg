@@ -9,7 +9,8 @@
     "Surface": "ujgsurface:Surface",
     "SurfaceInstance": "ujgsurface:SurfaceInstance",
     "Touchpoint": "ujgsurface:Touchpoint",
-    "GraphNodeInstance": "ujgsurface:GraphNodeInstance",
+    "ExperienceStep": "ujgsurface:ExperienceStep",
+    "Phase": "ujgsurface:Phase",
 
     "graphNodeRef": {
       "@id": "ujgsurface:graphNodeRef",
@@ -23,18 +24,20 @@
       "@id": "ujgsurface:surfaceRef",
       "@type": "@id"
     },
-    "graphNodeInstanceRef": {
-      "@id": "ujgsurface:graphNodeInstanceRef",
-      "@type": "@id"
-    },
-    "parentInstanceRef": {
-      "@id": "ujgsurface:parentInstanceRef",
-      "@type": "@id"
-    },
     "channel": "ujgsurface:channel",
     "origin": {
       "@id": "ujgsurface:origin",
       "@type": "@id"
-    }
+    },
+    "surfaceRefs": {
+      "@id": "ujgsurface:surfaceRefs",
+      "@type": "@id",
+      "@container": "@set"
+    },
+    "phaseRef": {
+      "@id": "ujgsurface:phaseRef",
+      "@type": "@id"
+    },
+    "order": "ujgsurface:order"
   }
 }

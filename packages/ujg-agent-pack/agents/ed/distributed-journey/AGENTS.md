@@ -12,7 +12,7 @@ Scope: Distributed Journey module semantics for cross-touchpoint human-facing jo
 Module scope: modules/distributed-journey
 
 Related generated skills:
-- ujg-ed-modeling: whole UJG document modeling across Core, Graph, Surface, Runtime, Mapping, Metrics, Experience, Localization, Observability, and optional modules
+- ujg-ed-modeling: whole UJG document modeling across Core, Graph, Surface and Experience, Runtime, Mapping, Metrics, Localization, Observability, Experience Annotation, and optional modules
 - ujg-ed-core-modeling: Core module document containers, imports, top-level nodes, and extensions
 - ujg-ed-graph-modeling: Graph module topology, journeys, states, transitions, exits, outgoing navigation, and indexes
 
@@ -40,14 +40,15 @@ Use Graph `subjectActorRef` on journeys to identify whose local journey perspect
 
 ## Contexts
 
-Always include Core and Graph contexts.
+Include Core context for `UJGDocument` and top-level `nodes`.
+Include Graph context when using journeys, entries, states, transitions, actors, or `subjectActorRef`.
 Include Distributed Journey context when using Distributed Journey terms:
 
 ```json
 "https://ujg.specs.openuji.org/ed/ns/distributed-journey.context.jsonld"
 ```
 
-Include bridge-module contexts only when their terms are used:
+Include bridge-module contexts only when their terms are used. Include Surface when declaring `Touchpoint`, `Surface`, `touchpointRef`, or surface references. Include Action when attaching `sourceTouchpointRef` or `targetTouchpointRefs` to an `Action`. Include Artifact when using `DistributedArtifact`, `producedArtifactRefs`, `consumedArtifactRefs`, or other artifact terms.
 
 ```json
 [
@@ -60,7 +61,7 @@ Include bridge-module contexts only when their terms are used:
 ]
 ```
 
-Do not include Action, Artifact, Surface, Graph, or Runtime contexts unless their terms appear. Actor terms are Graph terms.
+Do not include Action, Artifact, Surface, Graph, Distributed Journey, or Runtime contexts unless their terms appear. Actor terms are Graph terms.
 
 ## Vocabulary
 
@@ -259,7 +260,8 @@ For decline paths, model the decline as the receiving actor's local journey. Do 
 
 ## Use with Automation or Design System modules
 
-Graph states may point to `Surface` nodes. Design System may realize those surfaces.
+Surface nodes point to supported Graph nodes with `graphNodeRef`. Design System may realize those
+surfaces.
 Automation, Playwright, API probes, selectors, screenshots, and runtime checks are not Distributed Journey terms.
 If automation bindings are needed, use a clearly namespaced private extension or a separate Automation Binding module. Do not pretend terms such as `uiAssert`, `apiProbe`, `playwrightAction`, or `fallbackApiAction` are Distributed Journey terms.
 

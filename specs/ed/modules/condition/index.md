@@ -24,24 +24,6 @@ conditions, but it does not replace Graph's topology model.
 * This module does **not** model user-choice branches that can already be represented by ordinary
   labeled transitions.
 
-## Normative Artifacts
-
-This module is published through the following artifacts:
-
-- `condition.ttl`: ontology, published at `https://ujg.specs.openuji.org/ed/ns/condition`
-- `condition.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/ed/ns/condition.context.jsonld`
-- `condition.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/ed/ns/condition.shape`
-
-Examples in this page compose the shared baseline context:
-
-```json
-[
-  "https://ujg.specs.openuji.org/ed/ns/core.context.jsonld",
-  "https://ujg.specs.openuji.org/ed/ns/graph.context.jsonld",
-  "https://ujg.specs.openuji.org/ed/ns/condition.context.jsonld"
-]
-```
-
 ## Terminology
 
 * <dfn>Condition</dfn>: An addressable predicate-like node that describes when a transition is
@@ -52,7 +34,54 @@ Examples in this page compose the shared baseline context:
 * <dfn>Condition branch</dfn>: A group of conditional transitions from the same source state where
   one path is intended to be taken.
 
----
+## Condition {data-cop-concept="condition"}
+
+A [=Condition=] is an addressable predicate-like node used to guard a Graph `Transition`. A condition
+does not point to a target state and does not create an implicit graph edge.
+
+```mermaid
+classDiagram
+  class Condition {
+    id
+  }
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "Condition",
+  "@id": "urn:ujg:condition:cart-has-items"
+}
+```
+
+## ConditionSet {data-cop-concept="condition-set"}
+
+A [=ConditionSet=] groups two or more guarded transitions that share one source state and form one
+conditional branch point.
+
+```mermaid
+classDiagram
+  class Transition
+  class ConditionSet {
+    id
+    conditionTransitionRefs
+  }
+  ConditionSet --> "2..*" Transition : conditionTransitionRefs
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "ConditionSet",
+  "@id": "urn:ujg:condition-set:checkout-eligibility",
+  "conditionTransitionRefs": [
+    "urn:ujg:transition:cart-to-checkout",
+    "urn:ujg:transition:cart-to-empty-cart"
+  ]
+}
+```
 
 ## Attachment Model
 
@@ -82,7 +111,25 @@ Opaque runtime bindings, expression syntax, platform-specific evaluators, and do
 references **SHOULD** remain in Core `extensions` unless a future optional module defines them as
 interoperable vocabulary.
 
-## Ontology {data-cop-concept="ontology"}
+## Normative Artifacts
+
+This module is published through the following artifacts:
+
+- `condition.ttl`: ontology, published at `https://ujg.specs.openuji.org/ed/ns/condition`
+- `condition.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/ed/ns/condition.context.jsonld`
+- `condition.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/ed/ns/condition.shape`
+
+Examples in this page compose the shared baseline context:
+
+```json
+[
+  "https://ujg.specs.openuji.org/ed/ns/core.context.jsonld",
+  "https://ujg.specs.openuji.org/ed/ns/graph.context.jsonld",
+  "https://ujg.specs.openuji.org/ed/ns/condition.context.jsonld"
+]
+```
+
+### Ontology {data-cop-concept="ontology"}
 
 The normative Conditions ontology is defined below and is published at
 `https://ujg.specs.openuji.org/ed/ns/condition`. It is the authoritative structural definition for
@@ -90,7 +137,7 @@ The normative Conditions ontology is defined below and is published at
 
 :::include ./condition.ttl :::
 
-## JSON-LD Context {data-cop-concept="jsonld-context"}
+### JSON-LD Context {data-cop-concept="jsonld-context"}
 
 The normative Conditions JSON-LD context is defined below and is published at
 `https://ujg.specs.openuji.org/ed/ns/condition.context.jsonld`. It provides the compact JSON-LD term
@@ -100,7 +147,7 @@ mappings and coercions for Conditions-specific properties and classes.
 
 ---
 
-## Validation {data-cop-concept="validation"}
+### Validation {data-cop-concept="validation"}
 
 The normative Conditions SHACL shape is defined below and is published at
 `https://ujg.specs.openuji.org/ed/ns/condition.shape`. It is the authoritative validation artifact
@@ -125,7 +172,9 @@ the SHACL shape.
 
 ---
 
-## Appendix: Combined JSON Example {.unnumbered}
+## Examples
+
+### Combined JSON Example
 
 Codex chat branch-check example:
 
@@ -251,7 +300,7 @@ Codex chat branch-check example:
 }
 ```
 
-## Appendix: Opaque Runtime Hints {.unnumbered}
+### Opaque Runtime Hints
 
 Runtime condition bindings are intentionally not standardized by this module. Implementations that
 need to bind a `Condition` to product-specific runtime state can use Core `extensions`.

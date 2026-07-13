@@ -11,6 +11,42 @@ This first version is intentionally small. It declares that an effective transit
 `Action`; it does not define transport protocols, API request formats, queues, form libraries,
 analytics payloads, backend workers, or framework event handlers.
 
+## Terminology
+
+- <dfn>Action</dfn>: An addressable declaration of a side effect associated with a Graph transition
+  edge.
+- <dfn>Action attachment</dfn>: The relation that assigns a transition to an action declaration.
+
+## Action {data-cop-concept="action"}
+
+An [=Action=] declares that a transition edge has an associated side effect. The action is
+addressable, but this module does not define how the side effect is invoked.
+
+```mermaid
+classDiagram
+  class Action {
+    id
+  }
+```
+
+Example JSON node:
+
+```json
+{
+  "@id": "urn:action:authorize-payment",
+  "@type": "Action"
+}
+```
+
+## Attachment Model
+
+The module introduces one canonical interoperable attachment:
+
+- `action:actionRef` links a Graph `Transition` or `OutgoingTransition` to an `Action`.
+
+A transition without `actionRef` remains fully valid and traversable. Consumers MAY ignore this
+module and still process the graph.
+
 ## Normative Artifacts
 
 This module is published through the following artifacts:
@@ -22,36 +58,21 @@ This module is published through the following artifacts:
 Examples in this page compose the shared baseline context `https://ujg.specs.openuji.org/ed/ns/context.jsonld`
 with the Action context.
 
-## Terminology
-
-- <dfn>Action</dfn>: An addressable declaration of a side effect associated with a Graph transition
-  edge.
-- <dfn>Action attachment</dfn>: The relation that assigns a transition to an action declaration.
-
-## Attachment Model
-
-The module introduces one canonical interoperable attachment:
-
-- `action:actionRef` links a Graph `Transition` or `OutgoingTransition` to an `Action`.
-
-A transition without `actionRef` remains fully valid and traversable. Consumers MAY ignore this
-module and still process the graph.
-
-## Ontology {data-cop-concept="ontology"}
+### Ontology {data-cop-concept="ontology"}
 
 The normative Action ontology is defined below and is published at
 `https://ujg.specs.openuji.org/ed/ns/action`.
 
 :::include ./action.ttl :::
 
-## JSON-LD Context {data-cop-concept="jsonld-context"}
+### JSON-LD Context {data-cop-concept="jsonld-context"}
 
 The normative Action JSON-LD context is defined below and is published at
 `https://ujg.specs.openuji.org/ed/ns/action.context.jsonld`.
 
 :::include ./action.context.jsonld :::
 
-## Validation {data-cop-concept="validation"}
+### Validation {data-cop-concept="validation"}
 
 The normative Action SHACL shape is defined below and is published at
 `https://ujg.specs.openuji.org/ed/ns/action.shape`.
@@ -71,7 +92,9 @@ the SHACL shape.
    details SHOULD remain in Core `extensions` unless a future optional module defines them as
    interoperable vocabulary.
 
-## Minimal Example
+## Examples
+
+### Minimal Example
 
 ```json
 {

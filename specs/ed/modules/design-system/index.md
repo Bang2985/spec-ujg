@@ -16,28 +16,6 @@ This module is optional. It annotates the shared graph with interoperable design
 resources, but it does not change graph topology, traversal rules, Surface attachment rules, import
 resolution, rendering behavior, or runtime semantics.
 
-## Normative Artifacts
-
-This module is published through the following artifacts:
-
-- `design-system.ttl`: ontology, published at `https://ujg.specs.openuji.org/ed/ns/design-system`
-- `design-system.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/ed/ns/design-system.context.jsonld`
-- `design-system.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/ed/ns/design-system.shape`
-
-Examples in this page compose the Core, Graph, Surface, and Design System contexts explicitly.
-
-Non-goals:
-
-- This module does not define component implementation APIs, component props, component variants, or
-  component lifecycle.
-- This module does not define layout algorithms, rendering engines, framework adapters, responsive
-  behavior, hydration behavior, or platform-specific UI behavior.
-- This module does not define design-token syntax, token inheritance, token value resolution, or
-  token path semantics.
-- This module does not define accessibility implementation rules.
-- This module does not introduce graph traversal, state activation, transition validity,
-  composite-state containment, execution order, or lifecycle semantics.
-
 ## Terminology
 
 - <dfn>DesignSystem</dfn>: A graph-native catalog or scope for design-system artifacts available to
@@ -53,12 +31,202 @@ Non-goals:
 - <dfn>SlotBinding</dfn>: A realization-local binding from a template slot to one presentation
   target.
 
+## TokenSource {data-cop-concept="token-source"}
+
+A [=TokenSource=] identifies a token source, token package, token manifest, or token set. The
+internal token format is external to UJG.
+
+```mermaid
+classDiagram
+  class TokenSource {
+    id
+  }
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "TokenSource",
+  "@id": "urn:ujg:tokens:brand"
+}
+```
+
+## Component {data-cop-concept="component"}
+
+A [=Component=] is an addressable design-system artifact that can directly realize a [=Surface=] or
+fill a template slot.
+
+```mermaid
+classDiagram
+  class Component {
+    id
+  }
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "Component",
+  "@id": "urn:ujg:component:CheckoutForm"
+}
+```
+
+## Slot {data-cop-concept="slot"}
+
+A [=Slot=] is an addressable slot declaration used by a [=Template=].
+
+```mermaid
+classDiagram
+  class Slot {
+    id
+  }
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "Slot",
+  "@id": "urn:ujg:slot:checkout-main"
+}
+```
+
+## Template {data-cop-concept="template"}
+
+A [=Template=] is a reusable design-system artifact that declares zero or more [=Slot|Slots=].
+
+```mermaid
+classDiagram
+  class Slot
+  class Template {
+    id
+    slotRefs
+  }
+  Template --> "0..*" Slot : slotRefs
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "Template",
+  "@id": "urn:ujg:template:checkout-layout",
+  "slotRefs": ["urn:ujg:slot:checkout-main"]
+}
+```
+
+## SlotBinding {data-cop-concept="slot-binding"}
+
+A [=SlotBinding=] fills one declared [=Slot=] with exactly one target: either a [=Surface=] or a
+[=Component=].
+
+```mermaid
+classDiagram
+  class Slot
+  class Surface
+  class Component
+  class SlotBinding {
+    id
+    slotRef
+    targetSurfaceRef
+    targetComponentRef
+  }
+  SlotBinding --> Slot : slotRef
+  SlotBinding --> Surface : targetSurfaceRef
+  SlotBinding --> Component : targetComponentRef
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "SlotBinding",
+  "@id": "urn:ujg:slot-binding:checkout-main",
+  "slotRef": "urn:ujg:slot:checkout-main",
+  "targetSurfaceRef": "urn:ujg:surface:checkout-form"
+}
+```
+
+## SurfaceRealization {data-cop-concept="surface-realization"}
+
+A [=SurfaceRealization=] links one [=Surface=] to its primary design-system realization, either a
+[=Component=] or a [=Template=]. Template-backed realizations may also reference [=SlotBinding|SlotBindings=].
+
+```mermaid
+classDiagram
+  class Surface
+  class Component
+  class Template
+  class SlotBinding
+  class SurfaceRealization {
+    id
+    surfaceRef
+    componentRef
+    templateRef
+    slotBindingRefs
+  }
+  SurfaceRealization --> Surface : surfaceRef
+  SurfaceRealization --> Component : componentRef
+  SurfaceRealization --> Template : templateRef
+  SurfaceRealization --> "0..*" SlotBinding : slotBindingRefs
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "SurfaceRealization",
+  "@id": "urn:ujg:realization:checkout-form",
+  "surfaceRef": "urn:ujg:surface:checkout-form",
+  "componentRef": "urn:ujg:component:CheckoutForm"
+}
+```
+
+## DesignSystem {data-cop-concept="design-system"}
+
+A [=DesignSystem=] is a catalog or scope for token sources, components, templates, and surface
+realizations.
+
+```mermaid
+classDiagram
+  class TokenSource
+  class Component
+  class Template
+  class SurfaceRealization
+  class DesignSystem {
+    id
+    tokenSourceRefs
+    componentRefs
+    templateRefs
+    surfaceRealizationRefs
+  }
+  DesignSystem --> "0..*" TokenSource : tokenSourceRefs
+  DesignSystem --> "0..*" Component : componentRefs
+  DesignSystem --> "0..*" Template : templateRefs
+  DesignSystem --> "0..*" SurfaceRealization : surfaceRealizationRefs
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "DesignSystem",
+  "@id": "urn:ujg:design-system:shop",
+  "tokenSourceRefs": ["urn:ujg:tokens:brand"],
+  "componentRefs": ["urn:ujg:component:CheckoutForm"],
+  "templateRefs": ["urn:ujg:template:checkout-layout"],
+  "surfaceRealizationRefs": ["urn:ujg:realization:checkout-form"]
+}
+```
+
 ## Realization Model
 
-A `Surface` is a design-system-agnostic materialized boundary for exactly one Graph subject. Surface
-defines the relation from `Surface` to supported Graph subjects. Graph subjects do not point to
-design-system artifacts or depend on Surface. This module does not add properties to `Surface` and
-does not make `Surface` depend on design-system artifacts.
+A `Surface` is a design-system-agnostic materialized boundary for exactly one supported Graph node.
+Surface defines the relation from `Surface` to that supported Graph node. Graph nodes do not point
+to design-system artifacts or depend on Surface. This module does not add properties to `Surface`
+and does not make `Surface` depend on design-system artifacts.
 
 Design-system realization is expressed by `SurfaceRealization` nodes:
 
@@ -72,7 +240,7 @@ Design-system realization is expressed by `SurfaceRealization` nodes:
 - A `SlotBinding` MUST reference exactly one `Slot` and exactly one target.
 
 This shape allows multiple design systems to realize the same surface independently without changing
-the surface or assigning multiple surfaces to the same graph subject.
+the surface or assigning multiple surfaces to the same supported Graph node.
 
 ## DesignSystem Catalog
 
@@ -111,10 +279,32 @@ server, skill, or design-system resolver MAY resolve the graph-level subject ass
 surface through the Surface layer.
 
 If a transition, outgoing transition, or outgoing-transition group affordance belongs in a slot,
-model a `Surface` that references that Graph subject through the Surface layer and target that
+model a `Surface` that references that Graph node through the Surface layer and target that
 surface with `targetSurfaceRef`.
 
-## Ontology {data-cop-concept="ontology"}
+## Normative Artifacts
+
+This module is published through the following artifacts:
+
+- `design-system.ttl`: ontology, published at `https://ujg.specs.openuji.org/ed/ns/design-system`
+- `design-system.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/ed/ns/design-system.context.jsonld`
+- `design-system.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/ed/ns/design-system.shape`
+
+Examples in this page compose the Core, Graph, Surface, and Design System contexts explicitly.
+
+Non-goals:
+
+- This module does not define component implementation APIs, component props, component variants, or
+  component lifecycle.
+- This module does not define layout algorithms, rendering engines, framework adapters, responsive
+  behavior, hydration behavior, or platform-specific UI behavior.
+- This module does not define design-token syntax, token inheritance, token value resolution, or
+  token path semantics.
+- This module does not define accessibility implementation rules.
+- This module does not introduce graph traversal, state activation, transition validity,
+  composite-state containment, execution order, or lifecycle semantics.
+
+### Ontology {data-cop-concept="ontology"}
 
 The normative DesignSystem ontology is defined below and is published at
 `https://ujg.specs.openuji.org/ed/ns/design-system`. It is the authoritative structural definition
@@ -122,7 +312,7 @@ for the classes and properties declared by this module.
 
 :::include ./design-system.ttl :::
 
-## JSON-LD Context {data-cop-concept="jsonld-context"}
+### JSON-LD Context {data-cop-concept="jsonld-context"}
 
 The normative DesignSystem JSON-LD context is defined below and is published at
 `https://ujg.specs.openuji.org/ed/ns/design-system.context.jsonld`. It provides compact JSON-LD term
@@ -136,7 +326,7 @@ realization and slot-binding references continue to target stable `Surface` node
 
 :::include ./design-system.context.jsonld :::
 
-## Validation {data-cop-concept="validation"}
+### Validation {data-cop-concept="validation"}
 
 The normative DesignSystem SHACL shape is defined below and is published at
 `https://ujg.specs.openuji.org/ed/ns/design-system.shape`. It is the authoritative validation
@@ -168,7 +358,23 @@ the SHACL shape.
    platform-specific behavior SHOULD remain outside this module unless a future module defines them
    as interoperable vocabulary.
 
+## MCP And Tooling Resolution
+
+MCP servers, skills, AI tooling, design-system resolvers, and renderers MAY use referenced node IDs
+plus active graph context to fetch implementation details. Those details can include framework
+components, source files, Storybook entries, token files, runtime render plans, or platform adapters.
+
+This module intentionally standardizes only the graph-native references needed for interoperability.
+It does not duplicate design-system implementation catalogs or renderer configuration.
+
+## Relationship To Core Extensions
+
+Core `extensions` remains available for vendor-private, non-interoperable payloads. Component,
+template, slot, slot-binding, surface-realization, and token-source relationships intended for
+interoperability SHOULD use this module instead of opaque extension payloads.
+
 ## Examples
+
 ### Example A: Surface Without Realization
 
 ```json
@@ -619,18 +825,3 @@ remains the source of containment and traversal semantics.
 ```
 
 The same surface can be realized by several design systems. The surface identity remains stable.
-
-## MCP And Tooling Resolution
-
-MCP servers, skills, AI tooling, design-system resolvers, and renderers MAY use referenced node IDs
-plus active graph context to fetch implementation details. Those details can include framework
-components, source files, Storybook entries, token files, runtime render plans, or platform adapters.
-
-This module intentionally standardizes only the graph-native references needed for interoperability.
-It does not duplicate design-system implementation catalogs or renderer configuration.
-
-## Relationship To Core Extensions
-
-Core `extensions` remains available for vendor-private, non-interoperable payloads. Component,
-template, slot, slot-binding, surface-realization, and token-source relationships intended for
-interoperability SHOULD use this module instead of opaque extension payloads.

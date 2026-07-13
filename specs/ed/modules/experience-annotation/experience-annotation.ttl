@@ -1,0 +1,26 @@
+@prefix ujg: <https://ujg.specs.openuji.org/ed/ns/core#> .
+@prefix ujgsurface: <https://ujg.specs.openuji.org/ed/ns/surface#> .
+@prefix ujgexperienceannotation: <https://ujg.specs.openuji.org/ed/ns/experience-annotation#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+
+<https://ujg.specs.openuji.org/ed/ns/experience-annotation#> a owl:Ontology ;
+  rdfs:label "UJG Experience Annotation Editor's Draft Vocabulary"@en ;
+  dct:description "UJG Experience Annotation ontology declaration" .
+
+ujgexperienceannotation:PainPoint a owl:Class ;
+  rdfs:subClassOf ujg:Node .
+
+ujgexperienceannotation:experienceRefs a owl:ObjectProperty ;
+  rdfs:domain ujgexperienceannotation:PainPoint ;
+  rdfs:range ujgsurface:ExperienceStep .
+
+ujgexperienceannotation:severity a owl:DatatypeProperty ;
+  rdfs:domain ujgexperienceannotation:PainPoint ;
+  rdfs:range xsd:decimal .
+
+ujgexperienceannotation:description a owl:DatatypeProperty ;
+  rdfs:domain ujgexperienceannotation:PainPoint ;
+  rdfs:range xsd:string .

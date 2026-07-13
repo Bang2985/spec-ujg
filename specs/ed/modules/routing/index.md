@@ -8,6 +8,58 @@ Core `extensions`.
 This module is optional. It annotates the shared graph with routing resources, but it does **not**
 change graph topology, traversal rules, or import resolution.
 
+## Terminology
+
+* <dfn>Route</dfn>: An addressable routing resource that carries path, deep-link, and fallback metadata.
+
+## Route {data-cop-concept="route"}
+
+A [=Route=] is an addressable routing resource that can be referenced by any UJG node. It carries
+route metadata but does not create traversal semantics.
+
+```mermaid
+classDiagram
+  class Node
+  class Route {
+    id
+    routeName
+    path
+    deepLink
+    guards
+    params
+    fallbackNodeRef
+  }
+  Route --> Node : fallbackNodeRef
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "routing:Route",
+  "@id": "urn:routing:route:checkout-shipping",
+  "routing:routeName": "checkout-shipping",
+  "routing:path": "/checkout/shipping",
+  "routing:deepLink": "myapp://checkout/shipping",
+  "routing:guards": ["cart-not-empty", "user-authenticated"],
+  "routing:params": {
+    "market": ":market",
+    "locale": ":locale"
+  },
+  "routing:fallbackNodeRef": "urn:ujg:state:cart"
+}
+```
+
+## Attachment Model
+
+The module introduces real JSON-LD terms and RDF edges for routing attachment:
+
+* `routing:routeRef` links any UJG node to a `Route`.
+* `routing:fallbackNodeRef` links a `Route` to a fallback UJG node.
+
+The module also defines non-reference properties such as `routing:routeName`, `routing:path`,
+`routing:deepLink`, `routing:guards`, and JSON-valued `routing:params`.
+
 ## Normative Artifacts
 
 This module is published through the following artifacts:
@@ -25,23 +77,7 @@ with the Routing context.
 * This module does **not** introduce new traversal semantics beyond [[UJG Graph]].
 * This module does **not** replace opaque vendor-private hints carried in [[UJG Core]] `extensions`.
 
-## Terminology
-
-* <dfn>Route</dfn>: An addressable routing resource that carries path, deep-link, and fallback metadata.
-
----
-
-## Attachment Model
-
-The module introduces real JSON-LD terms and RDF edges for routing attachment:
-
-* `routing:routeRef` links any UJG node to a `Route`.
-* `routing:fallbackNodeRef` links a `Route` to a fallback UJG node.
-
-The module also defines non-reference properties such as `routing:routeName`, `routing:path`,
-`routing:deepLink`, `routing:guards`, and JSON-valued `routing:params`.
-
-## Ontology {data-cop-concept="ontology"}
+### Ontology {data-cop-concept="ontology"}
 
 The normative Routing ontology is defined below and is published at
 `https://ujg.specs.openuji.org/ed/ns/routing`. It is the authoritative structural definition for
@@ -49,7 +85,7 @@ The normative Routing ontology is defined below and is published at
 
 :::include ./routing.ttl :::
 
-## JSON-LD Context {data-cop-concept="jsonld-context"}
+### JSON-LD Context {data-cop-concept="jsonld-context"}
 
 The normative Routing JSON-LD context is defined below and is published at
 `https://ujg.specs.openuji.org/ed/ns/routing.context.jsonld`. It provides the compact JSON-LD term
@@ -59,7 +95,7 @@ mappings and coercions for Routing-specific properties and classes.
 
 ---
 
-## Validation {data-cop-concept="validation"}
+### Validation {data-cop-concept="validation"}
 
 The normative Routing SHACL shape is defined below and is published at
 `https://ujg.specs.openuji.org/ed/ns/routing.shape`. It is the authoritative validation artifact for
@@ -82,7 +118,9 @@ the SHACL shape.
 
 ---
 
-## Appendix: Combined JSON Example {.unnumbered}
+## Examples
+
+### Combined JSON Example
 
 ```json
 {
@@ -121,7 +159,7 @@ the SHACL shape.
 }
 ```
 
-## Appendix: Opaque Runtime Hints {.unnumbered}
+### Opaque Runtime Hints
 
 ```json
 {

@@ -15,18 +15,6 @@ Observability has no direct dependency on Runtime. When Runtime data is present,
 correlate events to bindings by resolving `RuntimeEvent.surfaceInstanceRef` to a `SurfaceInstance`
 and matching that instance's `surfaceRef` to `ObservationBinding.observeSurfaceRef`.
 
-## Normative Artifacts
-
-This module is published through the following artifacts:
-
-- `observability.ttl`: ontology, published at `https://ujg.specs.openuji.org/ed/ns/observability`
-- `observability.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/ed/ns/observability.context.jsonld`
-- `observability.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/ed/ns/observability.shape`
-
-Examples in this page compose the shared baseline context `https://ujg.specs.openuji.org/ed/ns/context.jsonld`
-with the Surface, Localization, and Observability contexts. Runtime appears only in the informative
-correlation example.
-
 ## Terminology
 
 - <dfn>ObservationBinding</dfn>: An addressable recognition contract for one `Surface`.
@@ -49,6 +37,206 @@ correlation example.
   objects, match locators, and emit Runtime events, but its automation commands are not modeled as
   Graph traversal rules or Observability vocabulary.
 
+## ObservationEvent {data-cop-concept="observation-event"}
+
+An [=ObservationEvent=] identifies the semantic event contract a binding observes, such as presence
+or activation.
+
+```mermaid
+classDiagram
+  class ObservationEvent {
+    id
+  }
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "ObservationEvent",
+  "@id": "https://ujg.specs.openuji.org/ed/ns/observability#presence"
+}
+```
+
+## AccessibleFeature {data-cop-concept="accessible-feature"}
+
+An [=AccessibleFeature=] describes an accessibility state or property used by an
+[=AccessibleLocator=] or [=SurfaceInstanceResolver=].
+
+```mermaid
+classDiagram
+  class AccessibleFeature {
+    id
+    accessibleFeatureName
+    accessibleFeatureValue
+  }
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "AccessibleFeature",
+  "@id": "urn:ujg:accessible-feature:selected-true",
+  "accessibleFeatureName": "selected",
+  "accessibleFeatureValue": "true"
+}
+```
+
+## AccessibleRelation {data-cop-concept="accessible-relation"}
+
+An [=AccessibleRelation=] describes a relationship between accessible objects used by an
+[=AccessibleLocator=].
+
+```mermaid
+classDiagram
+  class AccessibleLocator
+  class AccessibleRelation {
+    id
+    accessibleRelationType
+    targetLocatorRef
+  }
+  AccessibleRelation --> AccessibleLocator : targetLocatorRef
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "AccessibleRelation",
+  "@id": "urn:ujg:accessible-relation:form-labelled-by-heading",
+  "accessibleRelationType": "labelled-by",
+  "targetLocatorRef": "urn:ujg:locator:checkout-heading"
+}
+```
+
+## AccessibleLocator {data-cop-concept="accessible-locator"}
+
+An [=AccessibleLocator=] describes an accessible object through role, localized name or description
+references, accessibility features, relations, and optional context locators.
+
+```mermaid
+classDiagram
+  class MessageBundle
+  class AccessibleFeature
+  class AccessibleRelation
+  class AccessibleLocator {
+    id
+    role
+    accessibleNameRef
+    accessibleDescriptionRef
+    accessibleFeatureRefs
+    accessibleRelationRefs
+    contextLocatorRefs
+  }
+  AccessibleLocator --> MessageBundle : accessibleNameRef
+  AccessibleLocator --> MessageBundle : accessibleDescriptionRef
+  AccessibleLocator --> "0..*" AccessibleFeature : accessibleFeatureRefs
+  AccessibleLocator --> "0..*" AccessibleRelation : accessibleRelationRefs
+  AccessibleLocator --> "0..*" AccessibleLocator : contextLocatorRefs
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "AccessibleLocator",
+  "@id": "urn:ujg:locator:checkout-submit",
+  "role": "button",
+  "accessibleNameRef": "urn:l10n:bundle:submit-order"
+}
+```
+
+## CustomLocator {data-cop-concept="custom-locator"}
+
+A [=CustomLocator=] is an opaque extension-backed locator for adapter-specific matching when
+interoperable accessible-object recognition is not enough.
+
+```mermaid
+classDiagram
+  class CustomLocator {
+    id
+    extensions
+  }
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "CustomLocator",
+  "@id": "urn:ujg:locator:checkout-submit-test-id",
+  "extensions": {
+    "com.acme.locator": {
+      "testId": "submit-order"
+    }
+  }
+}
+```
+
+## SurfaceInstanceResolver {data-cop-concept="surface-instance-resolver"}
+
+A [=SurfaceInstanceResolver=] declares which accessible feature supplies the instance key for
+repeated concrete occurrences of the same stable [=Surface=].
+
+```mermaid
+classDiagram
+  class AccessibleFeature
+  class SurfaceInstanceResolver {
+    id
+    instanceKeyFeatureRef
+  }
+  SurfaceInstanceResolver --> AccessibleFeature : instanceKeyFeatureRef
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "SurfaceInstanceResolver",
+  "@id": "urn:ujg:resolver:cart-line-item",
+  "instanceKeyFeatureRef": "urn:ujg:accessible-feature:line-item-sku"
+}
+```
+
+## ObservationBinding {data-cop-concept="observation-binding"}
+
+An [=ObservationBinding=] binds one [=Surface=] to one [=ObservationEvent=] and one or more locator
+nodes that define the recognition evidence.
+
+```mermaid
+classDiagram
+  class Surface
+  class ObservationEvent
+  class AccessibleLocator
+  class CustomLocator
+  class SurfaceInstanceResolver
+  class ObservationBinding {
+    id
+    observeSurfaceRef
+    observationEventRef
+    locatorRefs
+    surfaceInstanceResolverRef
+  }
+  ObservationBinding --> Surface : observeSurfaceRef
+  ObservationBinding --> ObservationEvent : observationEventRef
+  ObservationBinding --> AccessibleLocator : locatorRefs
+  ObservationBinding --> CustomLocator : locatorRefs
+  ObservationBinding --> SurfaceInstanceResolver : surfaceInstanceResolverRef
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "ObservationBinding",
+  "@id": "urn:ujg:observation-binding:checkout-submit-presence",
+  "observeSurfaceRef": "urn:ujg:surface:checkout-submit",
+  "observationEventRef": "https://ujg.specs.openuji.org/ed/ns/observability#presence",
+  "locatorRefs": ["urn:ujg:locator:checkout-submit"]
+}
+```
+
 ## Binding Model
 
 The module introduces one canonical interoperable attachment:
@@ -70,9 +258,9 @@ One `ObservationBinding` can describe behavior for many repeated `SurfaceInstanc
 the same `Surface`. `SurfaceInstanceResolver` does not reference concrete `SurfaceInstance` nodes and
 MUST NOT require one binding per repeated occurrence.
 
-Observability does not define `touchpointRef`, `graphNodeRef`, `surfaceRef`,
-`graphNodeInstanceRef`, or `surfaceInstanceRef`. Those are Surface and Runtime terms. Observability
-does not define Runtime properties.
+Observability does not define `touchpointRef`, `graphNodeRef`, `surfaceRef`, or
+`surfaceInstanceRef`. Those are Surface and Runtime terms. Observability does not define Runtime
+properties.
 
 ## Standard Observation Events
 
@@ -107,7 +295,7 @@ Observability does not define standard raw string fallback properties for access
 descriptions. Private adapter hints MAY appear in Core `extensions`, but such hints are not
 normative Observability terms.
 
-An `AccessibleLocator` SHOULD provide at least one of:
+An `AccessibleLocator` MUST provide at least one of:
 
 - `role`
 - `accessibleNameRef`
@@ -152,21 +340,33 @@ If an instance key is not exposed through the accessibility API, adapters MUST u
 Core `extensions` for private resolver semantics. Runtime events MUST NOT be required to reference
 an `ObservationBinding`.
 
-## Ontology {data-cop-concept="ontology"}
+## Normative Artifacts
+
+This module is published through the following artifacts:
+
+- `observability.ttl`: ontology, published at `https://ujg.specs.openuji.org/ed/ns/observability`
+- `observability.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/ed/ns/observability.context.jsonld`
+- `observability.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/ed/ns/observability.shape`
+
+Examples in this page compose the shared baseline context `https://ujg.specs.openuji.org/ed/ns/context.jsonld`
+with the Surface, Localization, and Observability contexts. Runtime appears only in the informative
+correlation example.
+
+### Ontology {data-cop-concept="ontology"}
 
 The normative Observability ontology is defined below and is published at
 `https://ujg.specs.openuji.org/ed/ns/observability`.
 
 :::include ./observability.ttl :::
 
-## JSON-LD Context {data-cop-concept="jsonld-context"}
+### JSON-LD Context {data-cop-concept="jsonld-context"}
 
 The normative Observability JSON-LD context is defined below and is published at
 `https://ujg.specs.openuji.org/ed/ns/observability.context.jsonld`.
 
 :::include ./observability.context.jsonld :::
 
-## Validation {data-cop-concept="validation"}
+### Validation {data-cop-concept="validation"}
 
 The normative Observability SHACL shape is defined below and is published at
 `https://ujg.specs.openuji.org/ed/ns/observability.shape`.
@@ -204,7 +404,9 @@ the SHACL shape.
    Observability data, but SHOULD preserve recognized JSON-LD data during read-transform-write when
    possible.
 
-## Minimal Example
+## Examples
+
+### Minimal Example
 
 ```json
 {
@@ -315,7 +517,7 @@ the SHACL shape.
 }
 ```
 
-## Runtime Correlation Example
+### Runtime Correlation Example
 
 ```json
 {

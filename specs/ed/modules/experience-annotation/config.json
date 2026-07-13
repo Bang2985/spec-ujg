@@ -1,0 +1,25 @@
+{
+  "id": "modules/experience-annotation",
+  "title": "Experience Annotation",
+  "maturityLevel": "draft",
+  "baseUrl": "${SPEC_BASE_URL}/ed",
+  "deps": ["surface"],
+  "custom": {
+    "family": "module",
+    "order": 50,
+    "moduleLevel": 1
+  },
+  "respec": {
+    "noConformance": true,
+    "group": {
+      "name": "User Journal Graph Community Group",
+      "url": "https://www.w3.org/community/ujg/"
+    },
+    "repository": "https://github.com/openuji/spec-ujg/blob/main/specs/ed/modules/experience-annotation/index.md",
+    "editors": [{ "name": "Seva Dolgopolov", "w3cid": "169225" }],
+    "license": "W3C-Software-and-Document",
+    "localBiblio": {
+      "UJG Surface": { "title": "UJG Surface", "url": "/ed/surface" }
+    }
+  }
+}

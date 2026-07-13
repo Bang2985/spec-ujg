@@ -111,7 +111,7 @@ https://ujg.specs.openuji.org/ed/ns/observability#activation
 
 Prefer `AccessibleLocator` for human-facing UI. Model accessible-object semantics, not DOM structure, CSS selectors, raw text, or tool-specific query syntax.
 
-An `AccessibleLocator` should provide at least one of:
+An `AccessibleLocator` must provide at least one of:
 
 ```text
 role
@@ -148,7 +148,7 @@ Do not promote project-specific selectors or Playwright expressions into Observa
 
 ## Separation rules
 
-Observability does not define `touchpointRef`, `graphNodeRef`, `surfaceRef`, `graphNodeInstanceRef`, or `surfaceInstanceRef`. Those are Surface and Runtime terms.
+Observability does not define `touchpointRef`, `graphNodeRef`, `surfaceRef`, or `surfaceInstanceRef`. Those are Surface and Runtime terms.
 
 Observability has no direct dependency on Runtime. Runtime events do not need to reference `ObservationBinding`.
 
