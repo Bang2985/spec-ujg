@@ -1,8 +1,8 @@
 ---
-import type { DocumentMetadata } from "@openuji/speculator";
-import CGLogo from "./CGLogo.astro";
-import StatusBoilerplate from "./StatusBoilerplate.astro";
-import SpecMetadata from "./SpecMetadata.astro";
+import type { DocumentMetadata } from '@openuji/speculator';
+import StatusBoilerplate from './StatusBoilerplate.astro';
+import SpecMetadata from './SpecMetadata.astro';
+import SkillsList from '../SkillsList.astro';
 
 interface Props {
   metadata: DocumentMetadata;
@@ -10,19 +10,15 @@ interface Props {
 
 const { metadata } = Astro.props;
 
-const isCG =
-  metadata.status?.startsWith("CG-") ||
-  metadata.custom?.specType === "cg-report";
-
+const isCG = metadata.status?.startsWith('CG-') || metadata.custom?.specType === 'cg-report';
 ---
 
-<header class={`spec-header ${isCG ? "pro-theme-cg" : ""}`}>
-
+<header class={`spec-header ${isCG ? 'pro-theme-cg' : ''}`}>
   <StatusBoilerplate metadata={metadata} />
 
   <SpecMetadata metadata={metadata} />
 
-  
+  <SkillsList />
 
   {
     metadata.abstract && (
@@ -83,8 +79,6 @@ const isCG =
     font-weight: 400;
   }
 
-
-
   .abstract {
     border-top: 1px solid var(--border, rgba(255, 255, 255, 0.1));
     padding-top: 2rem;
@@ -112,8 +106,6 @@ const isCG =
     padding-top: 1rem;
   }
 
-
-
   .cg-copyright {
     margin-top: 2rem;
     padding-top: 1.5rem;
@@ -126,14 +118,11 @@ const isCG =
   .cg-copyright a {
     color: var(--text-primary);
     text-decoration: none;
-    border-bottom: 1px solid
-      color-mix(in srgb, var(--text-primary) 30%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--text-primary) 30%, transparent);
   }
 
   .cg-copyright a:hover {
     border-bottom-color: var(--accent);
     color: var(--accent);
   }
-
-
 </style>

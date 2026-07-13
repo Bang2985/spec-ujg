@@ -169,15 +169,18 @@ Example JSON node:
 ## ExperienceStep {data-cop-concept="experience-step"}
 
 An [=ExperienceStep=] groups surfaces that express one human journey-map intent. It is not
-necessarily one-to-one with a Surface or Graph State and does not imply traversal order.
+necessarily one-to-one with a Surface or Graph State. `order` is display metadata; it does not
+determine Graph traversal or Runtime order.
 
 <spec-statement>
 1. An [=ExperienceStep=] **MUST** be identified by an IRI.
 2. An [=ExperienceStep=] **MUST** declare one or more `surfaceRefs` values.
 3. Every `surfaceRefs` value **MUST** reference a [=Surface=].
 4. An [=ExperienceStep=] **MAY** declare at most one `phaseRef` referencing a [=Phase=].
-5. Multiple steps **MAY** reference the same Surface, and one step **MAY** reference multiple Surfaces.
-6. An [=ExperienceStep=] **MUST NOT** define traversal order or assert Runtime occurrence.
+5. An [=ExperienceStep=] **MAY** declare at most one integer `order`.
+6. `order` **MUST NOT** be interpreted as Graph traversal or Runtime event order.
+7. Multiple steps **MAY** reference the same Surface, and one step **MAY** reference multiple Surfaces.
+8. An [=ExperienceStep=] **MUST NOT** define traversal order or assert Runtime occurrence.
 </spec-statement>
 
 ```mermaid
@@ -188,6 +191,7 @@ classDiagram
     id
     surfaceRefs
     phaseRef
+    order
   }
   ExperienceStep --> "1..*" Surface : surfaceRefs
   ExperienceStep --> Phase : phaseRef
@@ -203,7 +207,8 @@ Example JSON node:
     "urn:ujg:surface:shipping-form",
     "urn:ujg:surface:address-help"
   ],
-  "phaseRef": "urn:ujg:phase:checkout"
+  "phaseRef": "urn:ujg:phase:checkout",
+  "order": 1
 }
 ```
 
@@ -280,7 +285,8 @@ The Surface SHACL shape is published at `https://ujg.specs.openuji.org/ed/ns/sur
       "@type": "ExperienceStep",
       "@id": "urn:ujg:step:enter-shipping",
       "surfaceRefs": ["urn:ujg:surface:shipping-form"],
-      "phaseRef": "urn:ujg:phase:checkout"
+      "phaseRef": "urn:ujg:phase:checkout",
+      "order": 1
     }
   ]
 }

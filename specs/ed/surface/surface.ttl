@@ -66,5 +66,11 @@ ujgsurface:phaseRef a owl:ObjectProperty ;
   rdfs:range ujgsurface:Phase .
 
 ujgsurface:order a owl:DatatypeProperty ;
-  rdfs:domain ujgsurface:Phase ;
+  rdfs:domain [
+    a owl:Class ;
+    owl:unionOf (
+      ujgsurface:ExperienceStep
+      ujgsurface:Phase
+    )
+  ] ;
   rdfs:range xsd:integer .

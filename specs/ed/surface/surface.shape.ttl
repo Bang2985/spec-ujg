@@ -83,6 +83,12 @@ ujgsurfaceshape:ExperienceStepShape a sh:NodeShape ;
     sh:class ujgsurface:Phase ;
     sh:nodeKind sh:IRI ;
     sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path ujgsurface:order ;
+    sh:datatype xsd:integer ;
+    sh:maxCount 1 ;
   ] .
 
 ujgsurfaceshape:PhaseShape a sh:NodeShape ;

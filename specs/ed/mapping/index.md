@@ -231,7 +231,7 @@ not change Runtime records, Graph traversal, or the `JourneyMapping` and `Mapped
 5. An ExperienceStep without `phaseRef` may occur but **MUST NOT** start a Phase.
 6. A Phase with no occurring ExperienceStep **MUST NOT** be considered started.
 7. An affordance RuntimeEvent triggers an ExperienceStep only when the affordance's resolved Surface is explicitly listed in that step's `surfaceRefs`.
-8. Serialized node order, `mappedStepRef` order, and `Phase.order` **MUST NOT** determine occurrence or start time.
+8. Serialized node order, `mappedStepRef` order, `ExperienceStep.order`, and `Phase.order` **MUST NOT** determine occurrence or start time.
 </spec-statement>
 
 ```mermaid
