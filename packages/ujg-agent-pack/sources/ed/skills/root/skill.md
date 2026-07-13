@@ -20,7 +20,10 @@ Surface: materialized surfaces for supported Graph nodes, concrete surface insta
 Runtime: observed events, values, clicks, URLs, timestamps, payloads.
 Mapping: state-observation steps resolved from Runtime through Surface to Graph, with optional immediately preceding affordance event references.
 Metrics: metric observations, especially Mapping-derived counts and rates over resolved journey mappings.
-Surface also owns journey-map `ExperienceStep` and `Phase` annotations over surfaces. Experience Annotation optionally adds `PainPoint` annotations over those steps.
+Surface also owns journey-map `ExperienceStep` and `Phase` annotations over surfaces. Their optional
+`order` values are display metadata only and must not determine Graph traversal, Runtime event
+order, occurrence, or phase start. Experience Annotation optionally adds `PainPoint` annotations over
+those steps.
 Localization: locale metadata, localized copy references, locale switch affordance metadata.
 Observability: accessible-object recognition contracts for surfaces, using localized message bundles
 for accessible names and descriptions.
@@ -246,7 +249,10 @@ For Runtime traces, a `RuntimeEvent` must identify the execution with `execution
 
 To derive actor perspective for an observed state occurrence, resolve `RuntimeEvent.surfaceInstanceRef -> SurfaceInstance.surfaceRef -> Surface.graphNodeRef`, then use the graph node's effective actor from `subjectActorRef` or inherited journey actor assignment. Do not add collector or observer attribution fields to Runtime; keep collector/source metadata in `payload` or `extensions`.
 
-Use Surface `ExperienceStep` and `Phase` only for journey-map annotations. Use Experience Annotation `PainPoint` only for qualitative friction annotations. These annotations must not change Graph traversal or repair missing Graph topology.
+Use Surface `ExperienceStep` and `Phase` only for journey-map annotations. Treat their optional
+`order` values as display metadata, not traversal or Runtime occurrence. Use Experience Annotation
+`PainPoint` only for qualitative friction annotations. These annotations must not change Graph
+traversal or repair missing Graph topology.
 
 ## Page and route modeling
 

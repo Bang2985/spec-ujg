@@ -12,8 +12,8 @@ Spec URL: https://ujg.specs.openuji.org/ed/modules/distributed-journey
 
 ## Review Inputs
 
-- Source hash: sha256:4aeb60f2b48812e6692fec425e38b70aeb12e2595c7a94bbe45fae10a25c9679
-- Spec hash: sha256:151b8f3bac3a97e68087ae8983e63afe5bd8a79434050b1d96068ff01e65affc
+- Source hash: sha256:47236583217594d854c843f1a3c69c540da58d0d4c81785f681a9566003340d6
+- Spec hash: sha256:4c585767d6f271898abd628fcbe9612c1760af7508fdf31c40a82539c2627886
 
 ## Source Headings Likely Affected
 

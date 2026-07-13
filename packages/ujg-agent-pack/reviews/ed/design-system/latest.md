@@ -13,7 +13,7 @@ Spec URL: https://ujg.specs.openuji.org/ed/modules/design-system
 ## Review Inputs
 
 - Source hash: sha256:248600ed1312f8647b994d59da5f0df54b5de1854ee26dd4068ab5026cd16f26
-- Spec hash: sha256:09cd6bb381e0c81236aec973600aee63ea1a81224ec0d5deaa97ec10c8adb001
+- Spec hash: sha256:3cef1f14e30cb63b98090cea18a5146cbddc52550821e12a3f90472bd4182318
 
 ## Source Headings Likely Affected
 

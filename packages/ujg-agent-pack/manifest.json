@@ -68,13 +68,13 @@
       "publicUrl": "https://ujg.specs.openuji.org/ed",
       "skills": [
         {
-          "artifactHash": "sha256:e14ae442ba6a9c6c72637573ff6ab89cf05e9dd80581f88ea37e694c1af8cd2b",
+          "artifactHash": "sha256:abc33511d3731d06804549cea1362e4df8cc67b49e2cecb5c04054785203ee70",
           "key": "root",
           "moduleId": null,
           "name": "ujg-ed-modeling",
           "source": "sources/ed/skills/root/skill.md",
-          "sourceHash": "sha256:1d4a0585b25ebb4561363e5a6e02234ee98fec037dc5cc0f3aa73c8d32d270a2",
-          "specHash": "sha256:90b68bc42d561a642cb6214e95ac431711e4cd3130e1ce160c01197c5b4ee83a"
+          "sourceHash": "sha256:57538d9ed5f6ca2cd0f9872f188305072ab44a96db2e68bbbb11005a88bd0f9a",
+          "specHash": "sha256:82ddb1bd21f6ad8d160279b9a4a50ac0d9afc924ac49330d0cd35dea1deca262"
         },
         {
           "artifactHash": "sha256:d3442d9de79e878da6a69db2af7627e98f5cfa408ac5727ab5335a909aa11c75",
@@ -101,7 +101,7 @@
           "name": "ujg-ed-design-system-modeling",
           "source": "sources/ed/skills/design-system/skill.md",
           "sourceHash": "sha256:248600ed1312f8647b994d59da5f0df54b5de1854ee26dd4068ab5026cd16f26",
-          "specHash": "sha256:09cd6bb381e0c81236aec973600aee63ea1a81224ec0d5deaa97ec10c8adb001"
+          "specHash": "sha256:3cef1f14e30cb63b98090cea18a5146cbddc52550821e12a3f90472bd4182318"
         },
         {
           "artifactHash": "sha256:e54a4cf34bc24e3435e6d33cbed8197ef02be22d611225acac35da188ad8a068",
@@ -119,16 +119,16 @@
           "name": "ujg-ed-observability-modeling",
           "source": "sources/ed/skills/observability/skill.md",
           "sourceHash": "sha256:e2871e6e7f887d7fb8c728f41974a3d776035be873a0d49406efdac9318bb722",
-          "specHash": "sha256:8d2fd0e57acc583ca61c79c7bd78cb3cefc0df15cb18008b88429b9e1b2568b5"
+          "specHash": "sha256:b6226cd3af5cb86736708bfa2e4293fbfc97935757ffb94f0c4dfff925d30d75"
         },
         {
-          "artifactHash": "sha256:021e22b9f4a8b6e723008591427d4598242822043864a372ee1e5b7a2d04b9aa",
+          "artifactHash": "sha256:14dc73b8e389109f99e3baf3029e5f8e1cf1bfe0ca6433694efb351e3d010c7a",
           "key": "distributed-journey",
           "moduleId": "modules/distributed-journey",
           "name": "ujg-ed-distributed-journey-modeling",
           "source": "sources/ed/skills/distributed-journey/skill.md",
-          "sourceHash": "sha256:4aeb60f2b48812e6692fec425e38b70aeb12e2595c7a94bbe45fae10a25c9679",
-          "specHash": "sha256:151b8f3bac3a97e68087ae8983e63afe5bd8a79434050b1d96068ff01e65affc"
+          "sourceHash": "sha256:47236583217594d854c843f1a3c69c540da58d0d4c81785f681a9566003340d6",
+          "specHash": "sha256:4c585767d6f271898abd628fcbe9612c1760af7508fdf31c40a82539c2627886"
         }
       ],
       "specRoot": "specs/ed"

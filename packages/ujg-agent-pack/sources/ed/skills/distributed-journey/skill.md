@@ -239,7 +239,8 @@ For decline paths, model the decline as the receiving actor's local journey. Do 
 
 ## Use with Automation or Design System modules
 
-Graph states may point to `Surface` nodes. Design System may realize those surfaces.
+Surface nodes point to supported Graph nodes with `graphNodeRef`. Design System may realize those
+surfaces.
 Automation, Playwright, API probes, selectors, screenshots, and runtime checks are not Distributed Journey terms.
 If automation bindings are needed, use a clearly namespaced private extension or a separate Automation Binding module. Do not pretend terms such as `uiAssert`, `apiProbe`, `playwrightAction`, or `fallbackApiAction` are Distributed Journey terms.
 
