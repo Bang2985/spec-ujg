@@ -22,6 +22,27 @@ consumed, or exchanged during a journey are modeled by the Artifact module.
 - <dfn>State data attachment</dfn>: The relation that assigns a state-like node to a state data
   declaration.
 
+## StateData {data-cop-concept="state-data"}
+
+A [=StateData=] declares data context or binding identity for a state-like Graph node. It does not
+define loading, cache, lifecycle, authentication, or realtime behavior.
+
+```mermaid
+classDiagram
+  class StateData {
+    id
+  }
+```
+
+Example JSON node:
+
+```json
+{
+  "@id": "urn:statedata:checkout-draft",
+  "@type": "StateData"
+}
+```
+
 ## Attachment Model
 
 The module introduces one canonical interoperable attachment:

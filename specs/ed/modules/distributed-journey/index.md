@@ -30,6 +30,36 @@ Simple single-site forms, checkouts, dashboards, and app flows do not need this 
   consumed by a human-facing journey that crosses touchpoints.
 - <dfn>Presented touchpoint</dfn>: The [=Touchpoint=] through which a [=Surface=] is presented.
 
+## DistributedArtifact {data-cop-concept="distributed-artifact"}
+
+A [=DistributedArtifact=] specializes [=Artifact=] for a human-facing resource that crosses or is
+handled across touchpoint boundaries.
+
+```mermaid
+classDiagram
+  class Artifact
+  class Touchpoint
+  class DistributedArtifact {
+    id
+    sourceTouchpointRef
+    targetTouchpointRefs
+  }
+  DistributedArtifact --|> Artifact
+  DistributedArtifact --> Touchpoint : sourceTouchpointRef
+  DistributedArtifact --> "0..*" Touchpoint : targetTouchpointRefs
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "DistributedArtifact",
+  "@id": "urn:ujg:artifact:federated-share",
+  "sourceTouchpointRef": "urn:ujg:touchpoint:cloud-a",
+  "targetTouchpointRefs": ["urn:ujg:touchpoint:cloud-b"]
+}
+```
+
 ## Model
 
 Surface defines `Touchpoint` and `touchpointRef`. `touchpointRef` links a `Surface` to the

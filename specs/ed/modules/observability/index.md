@@ -37,6 +37,206 @@ and matching that instance's `surfaceRef` to `ObservationBinding.observeSurfaceR
   objects, match locators, and emit Runtime events, but its automation commands are not modeled as
   Graph traversal rules or Observability vocabulary.
 
+## ObservationEvent {data-cop-concept="observation-event"}
+
+An [=ObservationEvent=] identifies the semantic event contract a binding observes, such as presence
+or activation.
+
+```mermaid
+classDiagram
+  class ObservationEvent {
+    id
+  }
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "ObservationEvent",
+  "@id": "https://ujg.specs.openuji.org/ed/ns/observability#presence"
+}
+```
+
+## AccessibleFeature {data-cop-concept="accessible-feature"}
+
+An [=AccessibleFeature=] describes an accessibility state or property used by an
+[=AccessibleLocator=] or [=SurfaceInstanceResolver=].
+
+```mermaid
+classDiagram
+  class AccessibleFeature {
+    id
+    accessibleFeatureName
+    accessibleFeatureValue
+  }
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "AccessibleFeature",
+  "@id": "urn:ujg:accessible-feature:selected-true",
+  "accessibleFeatureName": "selected",
+  "accessibleFeatureValue": "true"
+}
+```
+
+## AccessibleRelation {data-cop-concept="accessible-relation"}
+
+An [=AccessibleRelation=] describes a relationship between accessible objects used by an
+[=AccessibleLocator=].
+
+```mermaid
+classDiagram
+  class AccessibleLocator
+  class AccessibleRelation {
+    id
+    accessibleRelationType
+    targetLocatorRef
+  }
+  AccessibleRelation --> AccessibleLocator : targetLocatorRef
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "AccessibleRelation",
+  "@id": "urn:ujg:accessible-relation:form-labelled-by-heading",
+  "accessibleRelationType": "labelled-by",
+  "targetLocatorRef": "urn:ujg:locator:checkout-heading"
+}
+```
+
+## AccessibleLocator {data-cop-concept="accessible-locator"}
+
+An [=AccessibleLocator=] describes an accessible object through role, localized name or description
+references, accessibility features, relations, and optional context locators.
+
+```mermaid
+classDiagram
+  class MessageBundle
+  class AccessibleFeature
+  class AccessibleRelation
+  class AccessibleLocator {
+    id
+    role
+    accessibleNameRef
+    accessibleDescriptionRef
+    accessibleFeatureRefs
+    accessibleRelationRefs
+    contextLocatorRefs
+  }
+  AccessibleLocator --> MessageBundle : accessibleNameRef
+  AccessibleLocator --> MessageBundle : accessibleDescriptionRef
+  AccessibleLocator --> "0..*" AccessibleFeature : accessibleFeatureRefs
+  AccessibleLocator --> "0..*" AccessibleRelation : accessibleRelationRefs
+  AccessibleLocator --> "0..*" AccessibleLocator : contextLocatorRefs
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "AccessibleLocator",
+  "@id": "urn:ujg:locator:checkout-submit",
+  "role": "button",
+  "accessibleNameRef": "urn:l10n:bundle:submit-order"
+}
+```
+
+## CustomLocator {data-cop-concept="custom-locator"}
+
+A [=CustomLocator=] is an opaque extension-backed locator for adapter-specific matching when
+interoperable accessible-object recognition is not enough.
+
+```mermaid
+classDiagram
+  class CustomLocator {
+    id
+    extensions
+  }
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "CustomLocator",
+  "@id": "urn:ujg:locator:checkout-submit-test-id",
+  "extensions": {
+    "com.acme.locator": {
+      "testId": "submit-order"
+    }
+  }
+}
+```
+
+## SurfaceInstanceResolver {data-cop-concept="surface-instance-resolver"}
+
+A [=SurfaceInstanceResolver=] declares which accessible feature supplies the instance key for
+repeated concrete occurrences of the same stable [=Surface=].
+
+```mermaid
+classDiagram
+  class AccessibleFeature
+  class SurfaceInstanceResolver {
+    id
+    instanceKeyFeatureRef
+  }
+  SurfaceInstanceResolver --> AccessibleFeature : instanceKeyFeatureRef
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "SurfaceInstanceResolver",
+  "@id": "urn:ujg:resolver:cart-line-item",
+  "instanceKeyFeatureRef": "urn:ujg:accessible-feature:line-item-sku"
+}
+```
+
+## ObservationBinding {data-cop-concept="observation-binding"}
+
+An [=ObservationBinding=] binds one [=Surface=] to one [=ObservationEvent=] and one or more locator
+nodes that define the recognition evidence.
+
+```mermaid
+classDiagram
+  class Surface
+  class ObservationEvent
+  class AccessibleLocator
+  class CustomLocator
+  class SurfaceInstanceResolver
+  class ObservationBinding {
+    id
+    observeSurfaceRef
+    observationEventRef
+    locatorRefs
+    surfaceInstanceResolverRef
+  }
+  ObservationBinding --> Surface : observeSurfaceRef
+  ObservationBinding --> ObservationEvent : observationEventRef
+  ObservationBinding --> AccessibleLocator : locatorRefs
+  ObservationBinding --> CustomLocator : locatorRefs
+  ObservationBinding --> SurfaceInstanceResolver : surfaceInstanceResolverRef
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "ObservationBinding",
+  "@id": "urn:ujg:observation-binding:checkout-submit-presence",
+  "observeSurfaceRef": "urn:ujg:surface:checkout-submit",
+  "observationEventRef": "https://ujg.specs.openuji.org/ed/ns/observability#presence",
+  "locatorRefs": ["urn:ujg:locator:checkout-submit"]
+}
+```
+
 ## Binding Model
 
 The module introduces one canonical interoperable attachment:

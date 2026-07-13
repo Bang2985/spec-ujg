@@ -21,6 +21,28 @@ belongs in the State Data module.
 - <dfn>Consumed artifact</dfn>: An artifact accepted, imported, read, redeemed, or otherwise used by
   a UJG node.
 
+## Artifact {data-cop-concept="artifact"}
+
+An [=Artifact=] is an addressable portable resource identity. It can be referenced by producing or
+consuming nodes, but it does not define transfer, storage, rendering, security, or lifecycle
+semantics.
+
+```mermaid
+classDiagram
+  class Artifact {
+    id
+  }
+```
+
+Example JSON node:
+
+```json
+{
+  "@id": "urn:artifact:account-archive",
+  "@type": "Artifact"
+}
+```
+
 ## Attachment Model
 
 The module introduces two interoperable references:

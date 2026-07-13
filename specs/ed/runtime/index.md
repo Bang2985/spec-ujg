@@ -15,7 +15,8 @@ Runtime records observed execution facts. A Client does not need to receive or u
 
 ## Runtime Model {data-cop-concept="runtime-model"}
 
-### Visual Model
+The Runtime model is a chain of [=RuntimeEvent|RuntimeEvents=] within one [=JourneyExecution=].
+Each event points at the concrete [=SurfaceInstance=] where the observed runtime moment occurred.
 
 ```mermaid
 graph TB
@@ -43,8 +44,28 @@ A [=RuntimeEvent=] references exactly one [=SurfaceInstance=] using `surfaceInst
 
 The core runtime address is `RuntimeEvent.surfaceInstanceRef`. Consumers that need Graph meaning resolve the surface instance through `SurfaceInstance.surfaceRef` and then through `Surface.graphNodeRef`.
 
+## JourneyExecution {data-cop-concept="journey-execution"}
 
-## Runtime Event {data-cop-concept="runtime-event"}
+A [=JourneyExecution=] identifies one bounded logical trace. It is referenced by events, but it does
+not enumerate or own those events.
+
+```mermaid
+classDiagram
+  class JourneyExecution {
+    id
+  }
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "JourneyExecution",
+  "@id": "urn:ujg:execution:12345"
+}
+```
+
+## RuntimeEvent {data-cop-concept="runtime-event"}
 
 <spec-statement>
 
@@ -58,6 +79,35 @@ The core runtime address is `RuntimeEvent.surfaceInstanceRef`. Consumers that ne
 8. The `payload` property, when present, is opaque runtime data and MUST NOT be required for resolving `surfaceInstanceRef`.
 
 </spec-statement>
+
+```mermaid
+classDiagram
+  class JourneyExecution
+  class SurfaceInstance
+  class RuntimeEvent {
+    id
+    executionId
+    previousId
+    surfaceInstanceRef
+    payload
+  }
+  RuntimeEvent --> JourneyExecution : executionId
+  RuntimeEvent --> RuntimeEvent : previousId
+  RuntimeEvent --> SurfaceInstance : surfaceInstanceRef
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "RuntimeEvent",
+  "@id": "urn:ujg:event:12345:200",
+  "executionId": "urn:ujg:execution:12345",
+  "previousId": "urn:ujg:event:12345:100",
+  "surfaceInstanceRef": "urn:ujg:surface-instance:payment-card",
+  "payload": { "action": "field.complete", "field": "card-number" }
+}
+```
 
 ## Normative Artifacts
 

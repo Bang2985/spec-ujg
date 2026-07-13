@@ -27,6 +27,46 @@ histograms, sketches, or event taxonomies. Those can be defined by profiles or f
 - <dfn>Source mapping</dfn>: The [=JourneyMapping=] used to compute a single-execution metric,
   identified by `sourceMappingRef` when applicable.
 
+## MetricObservation {data-cop-concept="metric-observation"}
+
+A [=MetricObservation=] records one metric value for one metric subject. Mapping-derived metric
+observations may reference the [=JourneyMapping=] used to compute the value.
+
+```mermaid
+classDiagram
+  class Node
+  class JourneyMapping
+  class MetricObservation {
+    id
+    metricSubjectRef
+    metricKey
+    metricValue
+    metricUnit
+    numeratorCount
+    denominatorCount
+    aggregationMethod
+    sourceMappingRef
+  }
+  MetricObservation --> Node : metricSubjectRef
+  MetricObservation --> JourneyMapping : sourceMappingRef
+```
+
+Example JSON node:
+
+```json
+{
+  "@id": "urn:ujg:metric:checkout:unexplained-rate",
+  "@type": "MetricObservation",
+  "metricSubjectRef": "urn:ujg:mapping:execution-12345",
+  "metricKey": "unexplainedMovementRate",
+  "metricValue": 0.25,
+  "metricUnit": "ratio",
+  "numeratorCount": 1,
+  "denominatorCount": 4,
+  "sourceMappingRef": "urn:ujg:mapping:execution-12345"
+}
+```
+
 ## Metric Model {data-cop-concept="metric-model"}
 
 A [=MetricObservation=] records a metric value using these fields:

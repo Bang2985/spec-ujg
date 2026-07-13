@@ -17,6 +17,27 @@ analytics payloads, backend workers, or framework event handlers.
   edge.
 - <dfn>Action attachment</dfn>: The relation that assigns a transition to an action declaration.
 
+## Action {data-cop-concept="action"}
+
+An [=Action=] declares that a transition edge has an associated side effect. The action is
+addressable, but this module does not define how the side effect is invoked.
+
+```mermaid
+classDiagram
+  class Action {
+    id
+  }
+```
+
+Example JSON node:
+
+```json
+{
+  "@id": "urn:action:authorize-payment",
+  "@type": "Action"
+}
+```
+
 ## Attachment Model
 
 The module introduces one canonical interoperable attachment:

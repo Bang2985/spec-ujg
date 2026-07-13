@@ -12,7 +12,41 @@ This module is optional. It annotates the shared graph with localization resourc
 
 * <dfn>MessageBundle</dfn>: An addressable localization resource that carries message-key and locale payload metadata.
 
----
+## MessageBundle {data-cop-concept="message-bundle"}
+
+A [=MessageBundle=] identifies a localized message payload by message key and optional locale
+metadata. UJG nodes reference a bundle with `l10n:copyRef`.
+
+```mermaid
+classDiagram
+  class MessageBundle {
+    id
+    namespace
+    messageKey
+    defaultLocale
+    fallbackLocales
+    rtl
+    locales
+  }
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "l10n:MessageBundle",
+  "@id": "urn:l10n:bundle:order-confirmation",
+  "l10n:namespace": "checkout.confirmation",
+  "l10n:messageKey": "order.confirmation.title",
+  "l10n:defaultLocale": "en",
+  "l10n:fallbackLocales": ["en", "de"],
+  "l10n:rtl": false,
+  "l10n:locales": {
+    "en": { "title": "Order confirmed" },
+    "de": { "title": "Bestellung bestaetigt" }
+  }
+}
+```
 
 ## Attachment Model
 
@@ -20,6 +54,43 @@ The module introduces real JSON-LD terms and RDF edges for localization attachme
 
 * `l10n:copyRef` links any UJG node to a `MessageBundle`.
 * `l10n:targetLocale` declares the requested locale associated with an [=OutgoingTransition=].
+
+```mermaid
+classDiagram
+  class Node {
+    copyRef
+  }
+  class MessageBundle
+  class OutgoingTransition {
+    targetLocale
+  }
+  Node --> MessageBundle : copyRef
+```
+
+Example JSON nodes:
+
+```json
+[
+  {
+    "@type": "State",
+    "@id": "urn:ujg:state:order-confirmation",
+    "label": "Order confirmation",
+    "l10n:copyRef": "urn:l10n:bundle:order-confirmation"
+  },
+  {
+    "@type": "l10n:MessageBundle",
+    "@id": "urn:l10n:bundle:order-confirmation",
+    "l10n:messageKey": "order.confirmation.title"
+  },
+  {
+    "@type": "OutgoingTransition",
+    "@id": "urn:example:ot:language-english",
+    "label": "English",
+    "toCurrentState": true,
+    "l10n:targetLocale": "en"
+  }
+]
+```
 
 The module also defines non-reference properties such as `l10n:namespace`, `l10n:messageKey`,
 `l10n:defaultLocale`, `l10n:fallbackLocales`, `l10n:rtl`, and JSON-valued `l10n:locales`.

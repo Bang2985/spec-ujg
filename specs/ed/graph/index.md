@@ -46,6 +46,9 @@ classDiagram
   LocalVertex <|-- JourneyExit
 ```
 
+[=LocalVertex=] is abstract. Documents use concrete [=State=], [=CompositeState=], or
+[=JourneyExit=] nodes rather than serializing ordinary `LocalVertex` nodes.
+
 ---
 
 ## State {data-cop-concept="state"}

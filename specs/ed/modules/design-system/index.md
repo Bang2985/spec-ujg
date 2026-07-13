@@ -31,6 +31,196 @@ resolution, rendering behavior, or runtime semantics.
 - <dfn>SlotBinding</dfn>: A realization-local binding from a template slot to one presentation
   target.
 
+## TokenSource {data-cop-concept="token-source"}
+
+A [=TokenSource=] identifies a token source, token package, token manifest, or token set. The
+internal token format is external to UJG.
+
+```mermaid
+classDiagram
+  class TokenSource {
+    id
+  }
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "TokenSource",
+  "@id": "urn:ujg:tokens:brand"
+}
+```
+
+## Component {data-cop-concept="component"}
+
+A [=Component=] is an addressable design-system artifact that can directly realize a [=Surface=] or
+fill a template slot.
+
+```mermaid
+classDiagram
+  class Component {
+    id
+  }
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "Component",
+  "@id": "urn:ujg:component:CheckoutForm"
+}
+```
+
+## Slot {data-cop-concept="slot"}
+
+A [=Slot=] is an addressable slot declaration used by a [=Template=].
+
+```mermaid
+classDiagram
+  class Slot {
+    id
+  }
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "Slot",
+  "@id": "urn:ujg:slot:checkout-main"
+}
+```
+
+## Template {data-cop-concept="template"}
+
+A [=Template=] is a reusable design-system artifact that declares zero or more [=Slot|Slots=].
+
+```mermaid
+classDiagram
+  class Slot
+  class Template {
+    id
+    slotRefs
+  }
+  Template --> "0..*" Slot : slotRefs
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "Template",
+  "@id": "urn:ujg:template:checkout-layout",
+  "slotRefs": ["urn:ujg:slot:checkout-main"]
+}
+```
+
+## SlotBinding {data-cop-concept="slot-binding"}
+
+A [=SlotBinding=] fills one declared [=Slot=] with exactly one target: either a [=Surface=] or a
+[=Component=].
+
+```mermaid
+classDiagram
+  class Slot
+  class Surface
+  class Component
+  class SlotBinding {
+    id
+    slotRef
+    targetSurfaceRef
+    targetComponentRef
+  }
+  SlotBinding --> Slot : slotRef
+  SlotBinding --> Surface : targetSurfaceRef
+  SlotBinding --> Component : targetComponentRef
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "SlotBinding",
+  "@id": "urn:ujg:slot-binding:checkout-main",
+  "slotRef": "urn:ujg:slot:checkout-main",
+  "targetSurfaceRef": "urn:ujg:surface:checkout-form"
+}
+```
+
+## SurfaceRealization {data-cop-concept="surface-realization"}
+
+A [=SurfaceRealization=] links one [=Surface=] to its primary design-system realization, either a
+[=Component=] or a [=Template=]. Template-backed realizations may also reference [=SlotBinding|SlotBindings=].
+
+```mermaid
+classDiagram
+  class Surface
+  class Component
+  class Template
+  class SlotBinding
+  class SurfaceRealization {
+    id
+    surfaceRef
+    componentRef
+    templateRef
+    slotBindingRefs
+  }
+  SurfaceRealization --> Surface : surfaceRef
+  SurfaceRealization --> Component : componentRef
+  SurfaceRealization --> Template : templateRef
+  SurfaceRealization --> "0..*" SlotBinding : slotBindingRefs
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "SurfaceRealization",
+  "@id": "urn:ujg:realization:checkout-form",
+  "surfaceRef": "urn:ujg:surface:checkout-form",
+  "componentRef": "urn:ujg:component:CheckoutForm"
+}
+```
+
+## DesignSystem {data-cop-concept="design-system"}
+
+A [=DesignSystem=] is a catalog or scope for token sources, components, templates, and surface
+realizations.
+
+```mermaid
+classDiagram
+  class TokenSource
+  class Component
+  class Template
+  class SurfaceRealization
+  class DesignSystem {
+    id
+    tokenSourceRefs
+    componentRefs
+    templateRefs
+    surfaceRealizationRefs
+  }
+  DesignSystem --> "0..*" TokenSource : tokenSourceRefs
+  DesignSystem --> "0..*" Component : componentRefs
+  DesignSystem --> "0..*" Template : templateRefs
+  DesignSystem --> "0..*" SurfaceRealization : surfaceRealizationRefs
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "DesignSystem",
+  "@id": "urn:ujg:design-system:shop",
+  "tokenSourceRefs": ["urn:ujg:tokens:brand"],
+  "componentRefs": ["urn:ujg:component:CheckoutForm"],
+  "templateRefs": ["urn:ujg:template:checkout-layout"],
+  "surfaceRealizationRefs": ["urn:ujg:realization:checkout-form"]
+}
+```
+
 ## Realization Model
 
 A `Surface` is a design-system-agnostic materialized boundary for exactly one supported Graph node.
@@ -635,4 +825,3 @@ remains the source of containment and traversal semantics.
 ```
 
 The same surface can be realized by several design systems. The surface identity remains stable.
-

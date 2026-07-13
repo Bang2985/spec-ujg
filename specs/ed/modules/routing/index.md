@@ -12,7 +12,43 @@ change graph topology, traversal rules, or import resolution.
 
 * <dfn>Route</dfn>: An addressable routing resource that carries path, deep-link, and fallback metadata.
 
----
+## Route {data-cop-concept="route"}
+
+A [=Route=] is an addressable routing resource that can be referenced by any UJG node. It carries
+route metadata but does not create traversal semantics.
+
+```mermaid
+classDiagram
+  class Node
+  class Route {
+    id
+    routeName
+    path
+    deepLink
+    guards
+    params
+    fallbackNodeRef
+  }
+  Route --> Node : fallbackNodeRef
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "routing:Route",
+  "@id": "urn:routing:route:checkout-shipping",
+  "routing:routeName": "checkout-shipping",
+  "routing:path": "/checkout/shipping",
+  "routing:deepLink": "myapp://checkout/shipping",
+  "routing:guards": ["cart-not-empty", "user-authenticated"],
+  "routing:params": {
+    "market": ":market",
+    "locale": ":locale"
+  },
+  "routing:fallbackNodeRef": "urn:ujg:state:cart"
+}
+```
 
 ## Attachment Model
 

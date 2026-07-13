@@ -12,7 +12,7 @@
     "name": "ujg-ed-design-system-modeling"
   },
   "sourceHash": "sha256:248600ed1312f8647b994d59da5f0df54b5de1854ee26dd4068ab5026cd16f26",
-  "specHash": "sha256:3cef1f14e30cb63b98090cea18a5146cbddc52550821e12a3f90472bd4182318",
+  "specHash": "sha256:e03edff1f33d51a67e3616bff913099bd33c322a9cb1a222b7324d7d01e5de92",
   "target": {
     "id": "ed",
     "label": "Editor's Draft"

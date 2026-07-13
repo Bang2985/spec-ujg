@@ -28,6 +28,70 @@ The Core module consists of:
 - <dfn>Second-level UJG module</dfn>: An optional module that depends on at least one first-level
   bridge module to describe a more specialized capability.
 
+## Node {data-cop-concept="node"}
+
+[=Node=] is the base Core class for addressable objects that may appear in a [=UJGDocument=]
+`nodes` collection. Most documents use concrete subclasses from Graph, Surface, Runtime, or optional
+modules rather than plain `Node`.
+
+```mermaid
+classDiagram
+  class Node {
+    id
+    extensions
+  }
+```
+
+Plain `Node` is useful for Core-only extension payloads. Interoperable graph, runtime, surface, or
+module semantics should use a defined concrete class.
+
+Example JSON node:
+
+```json
+{
+  "@id": "urn:ujg:node:vendor-private",
+  "@type": "Node",
+  "extensions": {
+    "com.acme.example": {
+      "note": "Private payload preserved by Core consumers."
+    }
+  }
+}
+```
+
+## UJGDocument {data-cop-concept="ujg-document"}
+
+A [=UJGDocument=] is the Core JSON-LD document container. It may import other UJG documents and list
+addressable [=Node=] instances in `nodes`.
+
+```mermaid
+classDiagram
+  class Node
+  class UJGDocument {
+    id
+    imports
+    nodes
+  }
+  UJGDocument --> "0..*" UJGDocument : imports
+  UJGDocument --> "0..*" Node : nodes
+```
+
+Example JSON document:
+
+```json
+{
+  "@context": "https://ujg.specs.openuji.org/ed/ns/core.context.jsonld",
+  "@id": "https://example.com/ujg/core/minimal.jsonld",
+  "@type": "UJGDocument",
+  "nodes": [
+    {
+      "@id": "urn:ujg:node:vendor-private",
+      "@type": "Node"
+    }
+  ]
+}
+```
+
 ## Normative Artifacts
 
 ### Ontology {data-cop-concept="ontology"}

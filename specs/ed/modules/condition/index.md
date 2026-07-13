@@ -34,7 +34,54 @@ conditions, but it does not replace Graph's topology model.
 * <dfn>Condition branch</dfn>: A group of conditional transitions from the same source state where
   one path is intended to be taken.
 
----
+## Condition {data-cop-concept="condition"}
+
+A [=Condition=] is an addressable predicate-like node used to guard a Graph `Transition`. A condition
+does not point to a target state and does not create an implicit graph edge.
+
+```mermaid
+classDiagram
+  class Condition {
+    id
+  }
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "Condition",
+  "@id": "urn:ujg:condition:cart-has-items"
+}
+```
+
+## ConditionSet {data-cop-concept="condition-set"}
+
+A [=ConditionSet=] groups two or more guarded transitions that share one source state and form one
+conditional branch point.
+
+```mermaid
+classDiagram
+  class Transition
+  class ConditionSet {
+    id
+    conditionTransitionRefs
+  }
+  ConditionSet --> "2..*" Transition : conditionTransitionRefs
+```
+
+Example JSON node:
+
+```json
+{
+  "@type": "ConditionSet",
+  "@id": "urn:ujg:condition-set:checkout-eligibility",
+  "conditionTransitionRefs": [
+    "urn:ujg:transition:cart-to-checkout",
+    "urn:ujg:transition:cart-to-empty-cart"
+  ]
+}
+```
 
 ## Attachment Model
 
