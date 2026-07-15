@@ -4,7 +4,7 @@ This optional module defines qualitative annotations over the intended experienc
 first standardized annotation is a [=PainPoint=]. Experience Annotation does not add Graph traversal,
 Runtime ordering, or Mapping behavior.
 
-Documents using this module compose the Surface context with
+Documents using this module compose the Phase context with
 `https://ujg.specs.openuji.org/ed/ns/experience-annotation.context.jsonld`.
 
 ## Terminology
@@ -13,13 +13,13 @@ Documents using this module compose the Surface context with
 
 ## PainPoint {data-cop-concept="pain-point"}
 
-A [=PainPoint=] is a named issue or friction hypothesis attached to one or more Surface
-[=ExperienceStep|ExperienceSteps=].
+A [=PainPoint=] is a named issue or friction hypothesis attached to one or more Phase
+[=Step|Steps=].
 
 <spec-statement>
 1. A [=PainPoint=] **MUST** be identified by an IRI.
-2. A [=PainPoint=] **MUST** declare one or more `experienceRefs` values.
-3. Every `experienceRefs` value **MUST** resolve to an [=ExperienceStep=].
+2. A [=PainPoint=] **MUST** declare one or more `painpointStepRefs` values.
+3. Every `painpointStepRefs` value **MUST** resolve to a [=Step=].
 4. A [=PainPoint=] **MAY** declare at most one `severity` in the inclusive range `0` through `1`.
 5. A [=PainPoint=] **MAY** declare at most one `description`.
 6. A [=PainPoint=] **MUST NOT** change Graph traversal or assert Runtime occurrence.
@@ -27,14 +27,14 @@ A [=PainPoint=] is a named issue or friction hypothesis attached to one or more 
 
 ```mermaid
 classDiagram
-  class ExperienceStep
+  class Step
   class PainPoint {
     id
-    experienceRefs
+    painpointStepRefs
     severity
     description
   }
-  PainPoint --> "1..*" ExperienceStep : experienceRefs
+  PainPoint --> "1..*" Step : painpointStepRefs
 ```
 
 Example JSON node:
@@ -43,7 +43,7 @@ Example JSON node:
 {
   "@type": "PainPoint",
   "@id": "urn:ujg:pain:address-validation",
-  "experienceRefs": ["urn:ujg:step:shipping"],
+  "painpointStepRefs": ["urn:ujg:step:shipping"],
   "severity": 0.7,
   "description": "Address correction interrupts checkout."
 }
@@ -71,31 +71,44 @@ Example JSON node:
 {
   "@context": [
     "https://ujg.specs.openuji.org/ed/ns/context.jsonld",
-    "https://ujg.specs.openuji.org/ed/ns/surface.context.jsonld",
+    "https://ujg.specs.openuji.org/ed/ns/phase.context.jsonld",
     "https://ujg.specs.openuji.org/ed/ns/experience-annotation.context.jsonld"
   ],
   "@id": "https://example.com/ujg/experience-annotation/checkout.jsonld",
   "@type": "UJGDocument",
   "nodes": [
     {
+      "@type": "CompositeState",
+      "@id": "urn:ujg:state:shipping-segment",
+      "label": "Shipping segment",
+      "subjourneyId": "urn:ujg:journey:shipping-segment"
+    },
+    {
+      "@type": "Journey",
+      "@id": "urn:ujg:journey:shipping-segment",
+      "defaultEntryRef": "urn:ujg:entry:shipping-default",
+      "entryRefs": ["urn:ujg:entry:shipping-default"],
+      "stateRefs": ["urn:ujg:state:shipping-form"]
+    },
+    {
+      "@type": "JourneyEntry",
+      "@id": "urn:ujg:entry:shipping-default",
+      "stateRef": "urn:ujg:state:shipping-form"
+    },
+    {
       "@type": "State",
-      "@id": "urn:ujg:state:shipping",
-      "label": "Shipping"
+      "@id": "urn:ujg:state:shipping-form",
+      "label": "Shipping form"
     },
     {
-      "@type": "Surface",
-      "@id": "urn:ujg:surface:shipping",
-      "graphNodeRef": "urn:ujg:state:shipping"
-    },
-    {
-      "@type": "ExperienceStep",
+      "@type": "Step",
       "@id": "urn:ujg:step:shipping",
-      "surfaceRefs": ["urn:ujg:surface:shipping"]
+      "compositeStateRef": "urn:ujg:state:shipping-segment"
     },
     {
       "@type": "PainPoint",
       "@id": "urn:ujg:pain:address-validation",
-      "experienceRefs": ["urn:ujg:step:shipping"],
+      "painpointStepRefs": ["urn:ujg:step:shipping"],
       "severity": 0.7,
       "description": "Address correction interrupts checkout."
     }

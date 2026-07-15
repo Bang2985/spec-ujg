@@ -12,8 +12,8 @@ Spec URL: https://ujg.specs.openuji.org/ed/modules/observability
 
 ## Review Inputs
 
-- Source hash: sha256:e2871e6e7f887d7fb8c728f41974a3d776035be873a0d49406efdac9318bb722
-- Spec hash: sha256:db46c08ac912a92656f185117027a6558e749ef2f6fcca55e70ea2a9ca95336d
+- Source hash: sha256:89699f01f18b7f60b9348dfb56adfd3cb36ab82a9cc0a68a22891e4d3c9ce949
+- Spec hash: sha256:ecb27b08996f7be23441fd1a6fac0b1e8ae781beef6a99f70fabb9ed6b8ff3a7
 
 ## Source Headings Likely Affected
 

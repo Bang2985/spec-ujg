@@ -1,9 +1,29 @@
 @prefix ujgartifact: <https://ujg.specs.openuji.org/ed/ns/artifact#> .
 @prefix ujgartifactshape: <https://ujg.specs.openuji.org/ed/ns/artifact.shape#> .
+@prefix ujgsurface: <https://ujg.specs.openuji.org/ed/ns/surface#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
 ujgartifactshape:ArtifactShape a sh:NodeShape ;
   sh:targetClass ujgartifact:Artifact ;
+  sh:nodeKind sh:IRI ;
+
+  sh:property [
+    sh:path ujgartifact:sourceTouchpointRef ;
+    sh:class ujgsurface:Touchpoint ;
+    sh:nodeKind sh:IRI ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path ujgartifact:targetTouchpointRefs ;
+    sh:class ujgsurface:Touchpoint ;
+    sh:nodeKind sh:IRI ;
+  ] .
+
+ujgartifactshape:ArtifactTouchpointUsageShape a sh:NodeShape ;
+  sh:targetSubjectsOf ujgartifact:sourceTouchpointRef ;
+  sh:targetSubjectsOf ujgartifact:targetTouchpointRefs ;
+  sh:class ujgartifact:Artifact ;
   sh:nodeKind sh:IRI .
 
 ujgartifactshape:ArtifactReferenceHostShape a sh:NodeShape ;

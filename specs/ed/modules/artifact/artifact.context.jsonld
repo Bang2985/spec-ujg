@@ -16,6 +16,15 @@
       "@id": "ujgartifact:consumedArtifactRefs",
       "@type": "@id",
       "@container": "@set"
+    },
+    "sourceTouchpointRef": {
+      "@id": "ujgartifact:sourceTouchpointRef",
+      "@type": "@id"
+    },
+    "targetTouchpointRefs": {
+      "@id": "ujgartifact:targetTouchpointRefs",
+      "@type": "@id",
+      "@container": "@set"
     }
   }
 }

@@ -4,7 +4,8 @@
     "maturityLevel": "incubating",
     "baseUrl": "${SPEC_BASE_URL}/ed",
     "deps": [
-        "core"
+        "core",
+        "surface"
     ],
     "custom": {
         "family": "module",
@@ -29,6 +30,10 @@
             "UJG Core": {
                 "title": "UJG Core",
                 "url": "/ed/core"
+            },
+            "UJG Surface": {
+                "title": "UJG Surface",
+                "url": "/ed/surface"
             }
         }
     }

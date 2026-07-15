@@ -13,7 +13,6 @@ Module scope: core
 - ujg-ed-design-system-modeling: Design System module semantics and its relationship to Graph and Surface
 - ujg-ed-l10n-modeling: Localization module semantics for MessageBundle copy metadata and locale-switch metadata
 - ujg-ed-observability-modeling: Observability module semantics for ObservationBinding, accessible-object locators, surface recognition contracts, and SurfaceInstanceResolver
-- ujg-ed-distributed-journey-modeling: Distributed Journey module semantics for cross-touchpoint human-facing journeys, distributed artifacts, and touchpoint references
 
 ## Downstream Spec Modules
 
@@ -26,11 +25,11 @@ Module scope: core
 - surface
 - modules/artifact
 - modules/observability
-- modules/experience-annotation
+- modules/phase
 - runtime
+- modules/experience-annotation
 - mapping
 - modules/design-system
-- modules/distributed-journey
 - metrics
 - profiles
 - conformance

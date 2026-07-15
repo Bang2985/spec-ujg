@@ -24,13 +24,6 @@ Focus on intended topology:
 - `JourneyExit`
 - `OutgoingTransition`
 - `OutgoingTransitionGroup`
-- `Actor`
-
-Use `Actor` for addressable participants, role-like entities, systems, organizations, or other parties that a graph node can belong to.
-
-Use `subjectActorRef` on `Journey` to assign that journey to an actor. Entries, states, transitions, exits, outgoing transition groups, and child journeys inherit the effective actor unless they declare their own `subjectActorRef`.
-
-Actor terms do not define authentication, authorization enforcement, accounts, provenance, runtime observer attribution, or legal accountability.
 
 Keep runtime observations, selectors, typed values, timestamps, payloads, and analytics outside Graph.
 
