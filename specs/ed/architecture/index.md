@@ -40,7 +40,7 @@ new capabilities become precise without forcing the shared baseline, or this arc
 know every specialized vocabulary that may be added later.
 
 
-First-level optional modules are small bridges that attach directly main spec concepts. Second-level optional modules compose one or more shared
+First-level optional modules are small bridges that attach directly to main spec concepts. Second-level optional modules compose one or more shared
 layers or first-level bridges.
 
 ## Opaque Extensions

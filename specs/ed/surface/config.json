@@ -32,14 +32,6 @@
             "UJG Graph": {
                 "title": "UJG Graph",
                 "url": "/ed/graph"
-            },
-            "UJG Phase": {
-                "title": "UJG Phase",
-                "url": "/ed/modules/phase"
-            },
-            "UJG Mapping": {
-                "title": "UJG Mapping",
-                "url": "/ed/mapping"
             }
         }
     }

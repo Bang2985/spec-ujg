@@ -236,7 +236,6 @@ Example JSON node:
 5. A consumer may ignore Surface semantics while preserving recognized JSON-LD data.
 6. Surface terms do not select components, templates, slots, tokens, or renderers.
 7. `userRef`, `touchpointRefs`, and `compositeStateRefs` describe human journey perspective and presenting boundaries, not Graph traversal.
-8. Journey-map grouping over Graph `CompositeState` nodes is defined by [[UJG Phase]], not by this specification.
 
 ## Normative Artifacts
 
