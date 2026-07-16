@@ -14,8 +14,7 @@
         "graph",
         "modules/l10n",
         "modules/condition",
-        "modules/state-data",
-        "modules/action",
+        "modules/effect",
         "surface",
         "modules/artifact",
         "modules/observability",
@@ -46,8 +45,7 @@
         "graph",
         "modules/l10n",
         "modules/condition",
-        "modules/state-data",
-        "modules/action",
+        "modules/effect",
         "surface",
         "modules/artifact",
         "modules/observability",
@@ -71,8 +69,7 @@
         "modules/routing",
         "modules/l10n",
         "modules/condition",
-        "modules/state-data",
-        "modules/action",
+        "modules/effect",
         "surface",
         "modules/artifact",
         "modules/observability",
@@ -117,18 +114,11 @@
       "generatedSkill": null,
       "title": "Metrics"
     },
-    "modules/action": {
-      "dependents": [],
-      "deps": [
-        "graph"
-      ],
-      "generatedSkill": null,
-      "title": "Action"
-    },
     "modules/artifact": {
       "dependents": [],
       "deps": [
         "core",
+        "modules/effect",
         "surface"
       ],
       "generatedSkill": null,
@@ -150,6 +140,16 @@
       ],
       "generatedSkill": "ujg-ed-design-system-modeling",
       "title": "Design System"
+    },
+    "modules/effect": {
+      "dependents": [
+        "modules/artifact"
+      ],
+      "deps": [
+        "graph"
+      ],
+      "generatedSkill": null,
+      "title": "Effect"
     },
     "modules/experience-annotation": {
       "dependents": [],
@@ -199,14 +199,6 @@
       ],
       "generatedSkill": null,
       "title": "Routing"
-    },
-    "modules/state-data": {
-      "dependents": [],
-      "deps": [
-        "graph"
-      ],
-      "generatedSkill": null,
-      "title": "State Data"
     },
     "profiles": {
       "dependents": [

@@ -7,16 +7,6 @@
 
     "Artifact": "ujgartifact:Artifact",
 
-    "producedArtifactRefs": {
-      "@id": "ujgartifact:producedArtifactRefs",
-      "@type": "@id",
-      "@container": "@set"
-    },
-    "consumedArtifactRefs": {
-      "@id": "ujgartifact:consumedArtifactRefs",
-      "@type": "@id",
-      "@container": "@set"
-    },
     "sourceTouchpointRef": {
       "@id": "ujgartifact:sourceTouchpointRef",
       "@type": "@id"

@@ -20,8 +20,7 @@ Module scope: core
 - graph
 - modules/l10n
 - modules/condition
-- modules/state-data
-- modules/action
+- modules/effect
 - surface
 - modules/artifact
 - modules/observability

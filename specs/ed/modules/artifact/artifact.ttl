@@ -1,5 +1,6 @@
 @prefix ujg: <https://ujg.specs.openuji.org/ed/ns/core#> .
 @prefix ujgartifact: <https://ujg.specs.openuji.org/ed/ns/artifact#> .
+@prefix ujgeffect: <https://ujg.specs.openuji.org/ed/ns/effect#> .
 @prefix ujgsurface: <https://ujg.specs.openuji.org/ed/ns/surface#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -12,17 +13,9 @@
 ### Classes
 
 ujgartifact:Artifact a owl:Class ;
-  rdfs:subClassOf ujg:Node .
+  rdfs:subClassOf ujg:Node, ujgeffect:EffectResource .
 
 ### Properties
-
-ujgartifact:producedArtifactRefs a owl:ObjectProperty ;
-  rdfs:domain ujg:Node ;
-  rdfs:range ujgartifact:Artifact .
-
-ujgartifact:consumedArtifactRefs a owl:ObjectProperty ;
-  rdfs:domain ujg:Node ;
-  rdfs:range ujgartifact:Artifact .
 
 ujgartifact:sourceTouchpointRef a owl:ObjectProperty ;
   rdfs:domain ujgartifact:Artifact ;
