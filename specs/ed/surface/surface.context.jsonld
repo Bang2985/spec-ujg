@@ -4,40 +4,33 @@
 
     "ujgsurface": "https://ujg.specs.openuji.org/ed/ns/surface#",
     "surface": "https://ujg.specs.openuji.org/ed/ns/surface#",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-
     "Surface": "ujgsurface:Surface",
     "SurfaceInstance": "ujgsurface:SurfaceInstance",
     "Touchpoint": "ujgsurface:Touchpoint",
-    "ExperienceStep": "ujgsurface:ExperienceStep",
-    "Phase": "ujgsurface:Phase",
+    "User": "ujgsurface:User",
 
     "graphNodeRef": {
       "@id": "ujgsurface:graphNodeRef",
-      "@type": "@id"
-    },
-    "touchpointRef": {
-      "@id": "ujgsurface:touchpointRef",
       "@type": "@id"
     },
     "surfaceRef": {
       "@id": "ujgsurface:surfaceRef",
       "@type": "@id"
     },
-    "channel": "ujgsurface:channel",
-    "origin": {
-      "@id": "ujgsurface:origin",
+    "userRef": {
+      "@id": "ujgsurface:userRef",
       "@type": "@id"
     },
-    "surfaceRefs": {
-      "@id": "ujgsurface:surfaceRefs",
+    "touchpointRefs": {
+      "@id": "ujgsurface:touchpointRefs",
       "@type": "@id",
       "@container": "@set"
     },
-    "phaseRef": {
-      "@id": "ujgsurface:phaseRef",
-      "@type": "@id"
+    "compositeStateRefs": {
+      "@id": "ujgsurface:compositeStateRefs",
+      "@type": "@id",
+      "@container": "@set"
     },
-    "order": "ujgsurface:order"
+    "channel": "ujgsurface:channel"
   }
 }

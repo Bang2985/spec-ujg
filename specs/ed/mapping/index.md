@@ -217,51 +217,76 @@ the SHACL shape.
 15. **No intent assumption:** A derived jump reports that the observed movement is not explained by
    the mapped graph. It does not by itself decide whether the movement is legitimate or erroneous.
 
-## Experience Occurrence and Phase Start {data-cop-concept="experience-occurrence"}
+## Step Occurrence and Phase Start {data-cop-concept="step-occurrence"}
 
-Mapping also derives when Surface [=ExperienceStep|ExperienceSteps=] occur and when their
-[=Phase|Phases=] start. These are processing results, not serialized Mapping vocabulary, and they do
-not change Runtime records, Graph traversal, or the `JourneyMapping` and `MappedStep` wire shapes.
+For documents that use [[UJG Phase]], Mapping also derives when [=Step|Steps=]
+occur and when their [=Phase|Phases=] start. These are processing results, not serialized Mapping
+vocabulary, and they do not change Runtime records, Graph traversal, or the `JourneyMapping` and
+`MappedStep` wire shapes.
 
 <spec-statement>
-1. A Consumer deriving experience occurrence **MUST** reconstruct Runtime event order from the causal chain.
-2. An [=ExperienceStep=] occurs at the earliest RuntimeEvent whose `surfaceInstanceRef` resolves through `SurfaceInstance.surfaceRef` to any Surface in that step's `surfaceRefs`.
-3. A [=Phase=] starts at the earliest occurrence of any ExperienceStep whose `phaseRef` resolves to that Phase.
-4. Repeated matching RuntimeEvents **MUST NOT** restart an already occurred ExperienceStep or Phase.
-5. An ExperienceStep without `phaseRef` may occur but **MUST NOT** start a Phase.
-6. A Phase with no occurring ExperienceStep **MUST NOT** be considered started.
-7. An affordance RuntimeEvent triggers an ExperienceStep only when the affordance's resolved Surface is explicitly listed in that step's `surfaceRefs`.
-8. Serialized node order, `mappedStepRef` order, `ExperienceStep.order`, and `Phase.order` **MUST NOT** determine occurrence or start time.
+1. A Consumer deriving experience occurrence **MUST** order [=MappedStep|MappedSteps=] by applying
+   Runtime chain reconstruction to each step's `mappedEventRef`.
+2. A [=Step=] occurs at the earliest ordered [=MappedStep=] whose `mappedStateRef` equals
+   that Step's `compositeStateRef`.
+3. A [=Phase=] starts at the earliest occurrence of any Step whose `phaseRef` resolves to that Phase.
+4. Repeated matching RuntimeEvents **MUST NOT** restart an already occurred Step or Phase.
+5. A Step without `phaseRef` may occur but **MUST NOT** start a Phase.
+6. A Phase with no occurring Step **MUST NOT** be considered started.
+7. RuntimeEvents whose surfaces resolve to `Transition` or `OutgoingTransition` **MUST NOT** trigger
+   a Step directly; only ordered [=MappedStep=] state observations are considered.
+8. Serialized node order, `mappedStepRef` order, `Step.order`, and `Phase.order` **MUST NOT** determine occurrence or start time.
 </spec-statement>
 
 ```mermaid
 flowchart LR
   E[RuntimeEvent] -->|surfaceInstanceRef| SI[SurfaceInstance]
   SI -->|surfaceRef| S[Surface]
-  S -->|member of surfaceRefs| ES[ExperienceStep occurs]
+  S -->|graphNodeRef| G[Graph State or CompositeState]
+  G -->|mappedStateRef| MS[MappedStep]
+  MS -->|equals compositeStateRef| ES[Step occurs]
   ES -->|phaseRef; earliest step| P[Phase starts]
 ```
 
 In the following fragment, the shipping step and checkout phase both begin at event `:100`.
-The repeated event `:200` does not restart either result.
+The repeated mapped step for the same composite state at event `:200` does not restart either result.
 
 ```json
 {
   "@context": [
     "https://ujg.specs.openuji.org/ed/ns/context.jsonld",
-    "https://ujg.specs.openuji.org/ed/ns/surface.context.jsonld"
+    "https://ujg.specs.openuji.org/ed/ns/phase.context.jsonld",
+    "https://ujg.specs.openuji.org/ed/ns/mapping.context.jsonld"
   ],
   "@type": "UJGDocument",
   "nodes": [
-    { "@type": "State", "@id": "urn:state:shipping", "label": "Shipping" },
+    {
+      "@type": "CompositeState",
+      "@id": "urn:state:shipping-segment",
+      "label": "Shipping segment",
+      "subjourneyId": "urn:journey:shipping-segment"
+    },
+    {
+      "@type": "Journey",
+      "@id": "urn:journey:shipping-segment",
+      "defaultEntryRef": "urn:entry:shipping-default",
+      "entryRefs": ["urn:entry:shipping-default"],
+      "stateRefs": ["urn:state:shipping-form"]
+    },
+    {
+      "@type": "JourneyEntry",
+      "@id": "urn:entry:shipping-default",
+      "stateRef": "urn:state:shipping-form"
+    },
+    { "@type": "State", "@id": "urn:state:shipping-form", "label": "Shipping form" },
     { "@type": "Phase", "@id": "urn:phase:checkout", "order": 2 },
     {
-      "@type": "ExperienceStep",
+      "@type": "Step",
       "@id": "urn:step:shipping",
-      "surfaceRefs": ["urn:surface:shipping", "urn:surface:address-help"],
+      "compositeStateRef": "urn:state:shipping-segment",
       "phaseRef": "urn:phase:checkout"
     },
-    { "@type": "Surface", "@id": "urn:surface:shipping", "graphNodeRef": "urn:state:shipping" },
+    { "@type": "Surface", "@id": "urn:surface:shipping", "graphNodeRef": "urn:state:shipping-segment" },
     { "@type": "SurfaceInstance", "@id": "urn:instance:shipping", "surfaceRef": "urn:surface:shipping" },
     { "@type": "JourneyExecution", "@id": "urn:execution:checkout" },
     {
@@ -276,6 +301,18 @@ The repeated event `:200` does not restart either result.
       "executionId": "urn:execution:checkout",
       "previousId": "urn:event:checkout:100",
       "surfaceInstanceRef": "urn:instance:shipping"
+    },
+    {
+      "@type": "MappedStep",
+      "@id": "urn:mapping:checkout:100",
+      "mappedEventRef": "urn:event:checkout:100",
+      "mappedStateRef": "urn:state:shipping-segment"
+    },
+    {
+      "@type": "MappedStep",
+      "@id": "urn:mapping:checkout:200",
+      "mappedEventRef": "urn:event:checkout:200",
+      "mappedStateRef": "urn:state:shipping-segment"
     }
   ]
 }

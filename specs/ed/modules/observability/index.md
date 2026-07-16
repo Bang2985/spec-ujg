@@ -258,9 +258,9 @@ One `ObservationBinding` can describe behavior for many repeated `SurfaceInstanc
 the same `Surface`. `SurfaceInstanceResolver` does not reference concrete `SurfaceInstance` nodes and
 MUST NOT require one binding per repeated occurrence.
 
-Observability does not define `touchpointRef`, `graphNodeRef`, `surfaceRef`, or
-`surfaceInstanceRef`. Those are Surface and Runtime terms. Observability does not define Runtime
-properties.
+Observability does not define `graphNodeRef`, `surfaceRef`, `surfaceInstanceRef`, or touchpoint
+boundary assignment such as `compositeStateRefs`. Those are Surface and Runtime terms.
+Observability does not define Runtime properties.
 
 ## Standard Observation Events
 
@@ -420,13 +420,6 @@ the SHACL shape.
   "@type": "UJGDocument",
   "nodes": [
     {
-      "@type": "Touchpoint",
-      "@id": "urn:touchpoint:nextcloud-web",
-      "label": "Nextcloud web client",
-      "channel": "web",
-      "origin": "https://cloud.example"
-    },
-    {
       "@type": "State",
       "@id": "urn:state:bob-pending-federated-share",
       "label": "Bob pending federated share"
@@ -434,8 +427,7 @@ the SHACL shape.
     {
       "@type": "Surface",
       "@id": "urn:surface:bob-pending-share",
-      "graphNodeRef": "urn:state:bob-pending-federated-share",
-      "touchpointRef": "urn:touchpoint:nextcloud-web"
+      "graphNodeRef": "urn:state:bob-pending-federated-share"
     },
     {
       "@type": "ObservationEvent",

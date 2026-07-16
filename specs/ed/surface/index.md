@@ -1,18 +1,17 @@
 ## Overview
 
 This core-family specification defines materialized user-facing [=Surface|Surfaces=], their concrete
-runtime occurrences, their presenting touchpoints, and human journey-map semantics expressed as
-[=ExperienceStep|ExperienceSteps=] and [=Phase|Phases=].
+runtime occurrences, their presenting touchpoints, and human users whose journeys are modeled.
 
 A `Surface` assigns stable visible identity to one supported Graph node: `State`, `CompositeState`,
 `Transition`, or `OutgoingTransition`. A `SurfaceInstance` identifies one concrete runtime-visible
-occurrence. A `Touchpoint` identifies the system, channel, origin, or service boundary presenting a
-surface. An `ExperienceStep` groups one or more surfaces by human intent, and a `Phase` optionally
-groups steps at a higher level.
+occurrence. A `Touchpoint` identifies the system, channel, or service boundary that can present
+meaningful `CompositeState` segments. A `User` identifies a human participant, persona, or role whose journey
+perspective a Graph node can belong to.
 
-Surface and experience annotations do not change Graph topology, traversal, Runtime ordering, or
-rendering behavior. Supported Graph nodes remain valid without surfaces, and surfaces remain valid
-without runtime instances or experience annotations.
+Surface annotations do not change Graph topology, traversal, Runtime ordering, or rendering
+behavior. Supported Graph nodes remain valid without surfaces, and surfaces remain valid without
+runtime instances.
 
 Examples compose the shared baseline context with
 `https://ujg.specs.openuji.org/ed/ns/surface.context.jsonld`.
@@ -21,19 +20,24 @@ Examples compose the shared baseline context with
 
 - <dfn>Surface</dfn>: A stable, addressable, design-system-agnostic materialized boundary for one supported Graph node.
 - <dfn>SurfaceInstance</dfn>: A concrete runtime-visible occurrence of one Surface.
-- <dfn>Touchpoint</dfn>: A system, channel, origin, or service boundary presenting a Surface.
-- <dfn>ExperienceStep</dfn>: A semantic journey-map step grouping one or more Surfaces.
-- <dfn>Phase</dfn>: A presentation-oriented high-level grouping of ExperienceSteps.
+- <dfn>Touchpoint</dfn>: A system, channel, or service boundary that can present one or more `CompositeState` segments.
+- <dfn>User</dfn>: A human participant, persona, or human role whose journey perspective or ownership scope a Graph node can belong to.
+- <dfn>User reference</dfn>: A `userRef` from a supported Graph node to a [=User=].
 
 ## Touchpoint {data-cop-concept="touchpoint"}
 
-A [=Touchpoint=] identifies the presenting boundary for surfaces. It does not state actor ownership,
-authorization, Runtime attribution, or protocol state.
+A [=Touchpoint=] identifies a presenting boundary for meaningful Graph segments. It can reference
+[=CompositeState=] nodes so touchpoint switches align with intentional journey boundaries, not
+arbitrary individual [=State=] surfaces. It does not by itself identify a [=User=],
+authorization subject, Runtime observer, or protocol state.
 
 <spec-statement>
 1. A [=Touchpoint=] **MUST** be identified by an IRI and declare exactly one `label`.
 2. A [=Touchpoint=] **MAY** declare at most one `channel`.
-3. A [=Touchpoint=] **MAY** declare at most one `origin` IRI.
+3. A [=Touchpoint=] **MAY** declare one or more `compositeStateRefs`.
+4. Every `compositeStateRefs` value **MUST** reference a [=CompositeState=].
+5. `compositeStateRefs` **MUST NOT** create hidden Graph edges, change traversal behavior, assert
+   occurrence, or change Runtime event ordering.
 </spec-statement>
 
 ```mermaid
@@ -42,8 +46,10 @@ classDiagram
     id
     label
     channel
-    origin
+    compositeStateRefs
   }
+  class CompositeState
+  Touchpoint --> "0..*" CompositeState : compositeStateRefs
 ```
 
 Example JSON node:
@@ -54,10 +60,100 @@ Example JSON node:
   "@id": "urn:ujg:touchpoint:web",
   "label": "Web shop",
   "channel": "web",
-  "origin": "https://shop.example"
+  "compositeStateRefs": ["urn:ujg:composite:web-shop"]
 }
 ```
 
+
+## User {data-cop-concept="user"}
+
+A [=User=] identifies a human participant, persona, or human role in a journey. User assignment is
+descriptive Surface structure for human journey perspective. It does not define accounts,
+authentication, authorization enforcement, identity providers, provenance, Runtime observation, legal
+accountability, systems, organizations, or [=Touchpoint|Touchpoints=].
+
+<spec-statement>
+1. A [=User=] **MUST** be identified by an IRI.
+2. A [=User=] **MAY** declare one `label`.
+3. A [=User=] **MAY** declare one or more `tags`.
+4. A [=User=] **MAY** declare one or more `touchpointRefs`.
+5. Every `touchpointRefs` value **MUST** reference a [=Touchpoint=].
+6. `userRef` **MAY** appear on Graph nodes that belong to a user, including [=Journey=],
+   [=JourneyEntry=], [=State=], [=CompositeState=], [=Transition=], [=JourneyExit=],
+   [=OutgoingTransition=], and [=OutgoingTransitionGroup=].
+7. A Graph node **MUST NOT** declare more than one `userRef`.
+8. Every `userRef` value **MUST** reference a [=User=].
+9. `userRef` and `touchpointRefs` **MUST NOT** create hidden Graph edges, change traversal behavior,
+   assert occurrence, define authorization, define Runtime attribution, or change Runtime event
+   ordering.
+</spec-statement>
+
+A [=Journey=] can be assigned to a user with `userRef`. Graph nodes that belong to that journey
+inherit the journey's user unless they declare their own `userRef`. This includes entries, local
+states, transitions, exits, and outgoing transition groups listed by the journey.
+
+When a [=CompositeState=] references a child [=Journey=] with `subjourneyId`, the child journey
+inherits the composite state's effective user unless the child journey declares its own `userRef`.
+Nodes that belong to the child journey then inherit from the child journey unless they declare their
+own user.
+
+```mermaid
+classDiagram
+  class User {
+    id
+    label
+    tags
+    touchpointRefs
+  }
+  class Touchpoint
+  class Journey {
+    userRef
+  }
+  class State {
+    userRef
+  }
+  class CompositeState {
+    userRef
+  }
+  class Transition {
+    userRef
+  }
+  class OutgoingTransition {
+    userRef
+  }
+
+  User --> "0..*" Touchpoint : touchpointRefs
+  Journey --> User : userRef
+  State --> User : userRef
+  CompositeState --> User : userRef
+  Transition --> User : userRef
+  OutgoingTransition --> User : userRef
+```
+
+Example JSON nodes:
+
+```json
+[
+  {
+    "@type": "Touchpoint",
+    "@id": "urn:ujg:touchpoint:web",
+    "label": "Web shop",
+    "channel": "web"
+  },
+  {
+    "@type": "User",
+    "@id": "urn:ujg:user:customer",
+    "label": "Customer",
+    "touchpointRefs": ["urn:ujg:touchpoint:web"]
+  },
+  {
+    "@type": "State",
+    "@id": "urn:ujg:state:cart",
+    "label": "Cart",
+    "userRef": "urn:ujg:user:customer"
+  }
+]
+```
 
 
 ## Surface {data-cop-concept="surface"}
@@ -70,7 +166,7 @@ node when they are distinct visible occurrences, not renderer variants.
 1. A [=Surface=] **MUST** be identified by an IRI.
 2. A [=Surface=] **MUST** declare exactly one `graphNodeRef`.
 3. `graphNodeRef` **MUST** reference a `State`, `CompositeState`, `Transition`, or `OutgoingTransition`.
-4. A [=Surface=] **MAY** declare at most one `touchpointRef` referencing a [=Touchpoint=].
+4. A [=Surface=] **MUST NOT** declare touchpoint identity directly.
 5. A [=Surface=] **MUST NOT** change Graph traversal or assert that its referenced Graph node occurred.
 </spec-statement>
 
@@ -80,17 +176,14 @@ classDiagram
   class CompositeState
   class Transition
   class OutgoingTransition
-  class Touchpoint
   class Surface {
     id
     graphNodeRef
-    touchpointRef
   }
   Surface --> State : graphNodeRef
   Surface --> CompositeState : graphNodeRef
   Surface --> Transition : graphNodeRef
   Surface --> OutgoingTransition : graphNodeRef
-  Surface --> Touchpoint : touchpointRef
 ```
 
 Example JSON node:
@@ -99,8 +192,7 @@ Example JSON node:
 {
   "@type": "Surface",
   "@id": "urn:ujg:surface:cart",
-  "graphNodeRef": "urn:ujg:state:cart",
-  "touchpointRef": "urn:ujg:touchpoint:web"
+  "graphNodeRef": "urn:ujg:state:cart"
 }
 ```
 
@@ -135,91 +227,15 @@ Example JSON node:
 }
 ```
 
-## Phase {data-cop-concept="phase"}
-
-A [=Phase=] is a high-level presentation grouping for ExperienceSteps. `order` is display metadata;
-it does not determine Graph traversal or Runtime order.
-
-<spec-statement>
-1. A [=Phase=] **MUST** be identified by an IRI.
-2. A [=Phase=] **MAY** declare at most one integer `order`.
-3. `order` **MUST NOT** be interpreted as Graph traversal or Runtime event order.
-4. A phase groups the ExperienceSteps whose `phaseRef` resolves to it; it does not list or own them.
-</spec-statement>
-
-```mermaid
-classDiagram
-  class Phase {
-    id
-    order
-  }
-```
-
-Example JSON node:
-
-```json
-{
-  "@type": "Phase",
-  "@id": "urn:ujg:phase:checkout",
-  "order": 2
-}
-```
-
-
-## ExperienceStep {data-cop-concept="experience-step"}
-
-An [=ExperienceStep=] groups surfaces that express one human journey-map intent. It is not
-necessarily one-to-one with a Surface or Graph State. `order` is display metadata; it does not
-determine Graph traversal or Runtime order.
-
-<spec-statement>
-1. An [=ExperienceStep=] **MUST** be identified by an IRI.
-2. An [=ExperienceStep=] **MUST** declare one or more `surfaceRefs` values.
-3. Every `surfaceRefs` value **MUST** reference a [=Surface=].
-4. An [=ExperienceStep=] **MAY** declare at most one `phaseRef` referencing a [=Phase=].
-5. An [=ExperienceStep=] **MAY** declare at most one integer `order`.
-6. `order` **MUST NOT** be interpreted as Graph traversal or Runtime event order.
-7. Multiple steps **MAY** reference the same Surface, and one step **MAY** reference multiple Surfaces.
-8. An [=ExperienceStep=] **MUST NOT** define traversal order or assert Runtime occurrence.
-</spec-statement>
-
-```mermaid
-classDiagram
-  class Surface
-  class Phase
-  class ExperienceStep {
-    id
-    surfaceRefs
-    phaseRef
-    order
-  }
-  ExperienceStep --> "1..*" Surface : surfaceRefs
-  ExperienceStep --> Phase : phaseRef
-```
-
-Example JSON node:
-
-```json
-{
-  "@type": "ExperienceStep",
-  "@id": "urn:ujg:step:enter-shipping",
-  "surfaceRefs": [
-    "urn:ujg:surface:shipping-form",
-    "urn:ujg:surface:address-help"
-  ],
-  "phaseRef": "urn:ujg:phase:checkout",
-  "order": 1
-}
-```
-
-
 ## Shared Semantics
 
 1. `graphNodeRef` is the canonical assignment direction from Surface to Graph.
 2. An `OutgoingTransitionGroup` does not have a Surface; its child `OutgoingTransition` nodes may.
-3. A consumer may ignore Surface semantics while preserving recognized JSON-LD data.
-4. Surface terms do not select components, templates, slots, tokens, or renderers.
-5. Runtime occurrence and phase-start interpretation are defined by [[UJG Mapping]], not by this specification.
+3. Touchpoint assignment, when modeled, is declared from [=Touchpoint=] to meaningful [=CompositeState=] boundaries with `compositeStateRefs`.
+4. A Consumer resolving an individual [=Surface=]'s effective touchpoint follows the surface's `graphNodeRef` to the Graph node and then finds the nearest enclosing [=CompositeState=] referenced by a [=Touchpoint=].
+5. A consumer may ignore Surface semantics while preserving recognized JSON-LD data.
+6. Surface terms do not select components, templates, slots, tokens, or renderers.
+7. `userRef`, `touchpointRefs`, and `compositeStateRefs` describe human journey perspective and presenting boundaries, not Graph traversal.
 
 ## Normative Artifacts
 
@@ -243,7 +259,7 @@ The Surface SHACL shape is published at `https://ujg.specs.openuji.org/ed/ns/sur
 
 ## Examples
 
-### Combined Surface and Experience Example
+### Combined Surface Example
 
 ```json
 {
@@ -255,38 +271,51 @@ The Surface SHACL shape is published at `https://ujg.specs.openuji.org/ed/ns/sur
   "@type": "UJGDocument",
   "nodes": [
     {
+      "@type": "CompositeState",
+      "@id": "urn:ujg:composite:checkout-web",
+      "label": "Checkout web segment",
+      "subjourneyId": "urn:ujg:journey:checkout-web"
+    },
+    {
+      "@type": "Journey",
+      "@id": "urn:ujg:journey:checkout-web",
+      "defaultEntryRef": "urn:ujg:entry:checkout-web-default",
+      "entryRefs": ["urn:ujg:entry:checkout-web-default"],
+      "stateRefs": ["urn:ujg:state:shipping"]
+    },
+    {
+      "@type": "JourneyEntry",
+      "@id": "urn:ujg:entry:checkout-web-default",
+      "stateRef": "urn:ujg:state:shipping"
+    },
+    {
       "@type": "State",
       "@id": "urn:ujg:state:shipping",
-      "label": "Shipping"
+      "label": "Shipping",
+      "userRef": "urn:ujg:user:customer"
     },
     {
       "@type": "Touchpoint",
       "@id": "urn:ujg:touchpoint:web",
       "label": "Web shop",
-      "channel": "web"
+      "channel": "web",
+      "compositeStateRefs": ["urn:ujg:composite:checkout-web"]
+    },
+    {
+      "@type": "User",
+      "@id": "urn:ujg:user:customer",
+      "label": "Customer",
+      "touchpointRefs": ["urn:ujg:touchpoint:web"]
     },
     {
       "@type": "Surface",
       "@id": "urn:ujg:surface:shipping-form",
-      "graphNodeRef": "urn:ujg:state:shipping",
-      "touchpointRef": "urn:ujg:touchpoint:web"
+      "graphNodeRef": "urn:ujg:state:shipping"
     },
     {
       "@type": "SurfaceInstance",
       "@id": "urn:ujg:surface-instance:shipping-form:1",
       "surfaceRef": "urn:ujg:surface:shipping-form"
-    },
-    {
-      "@type": "Phase",
-      "@id": "urn:ujg:phase:checkout",
-      "order": 2
-    },
-    {
-      "@type": "ExperienceStep",
-      "@id": "urn:ujg:step:enter-shipping",
-      "surfaceRefs": ["urn:ujg:surface:shipping-form"],
-      "phaseRef": "urn:ujg:phase:checkout",
-      "order": 1
     }
   ]
 }

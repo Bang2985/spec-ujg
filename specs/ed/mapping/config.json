@@ -6,7 +6,8 @@
     "deps": [
         "runtime",
         "surface",
-        "graph"
+        "graph",
+        "modules/phase"
     ],
     "custom": {
         "family": "spec",
@@ -42,6 +43,10 @@
             "UJG Surface": {
                 "title": "UJG Surface",
                 "url": "/ed/surface"
+            },
+            "UJG Phase": {
+                "title": "UJG Phase",
+                "url": "/ed/modules/phase"
             },
             "UJG Conditions": {
                 "title": "UJG Conditions",

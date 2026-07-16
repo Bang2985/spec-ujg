@@ -21,11 +21,10 @@ ujgsurface:SurfaceInstance a owl:Class ;
 ujgsurface:Touchpoint a owl:Class ;
   rdfs:subClassOf ujg:Node .
 
-ujgsurface:ExperienceStep a owl:Class ;
-  rdfs:subClassOf ujg:Node .
-
-ujgsurface:Phase a owl:Class ;
-  rdfs:subClassOf ujg:Node .
+ujgsurface:User a owl:Class ;
+  rdfs:subClassOf ujg:Node ;
+  rdfs:label "User" ;
+  rdfs:comment "A human participant, persona, or human role whose journey perspective or ownership scope graph nodes can belong to." .
 
 ### Properties
 
@@ -41,36 +40,38 @@ ujgsurface:graphNodeRef a owl:ObjectProperty ;
     )
   ] .
 
-ujgsurface:touchpointRef a owl:ObjectProperty ;
-  rdfs:domain ujgsurface:Surface ;
-  rdfs:range ujgsurface:Touchpoint .
-
 ujgsurface:surfaceRef a owl:ObjectProperty ;
   rdfs:domain ujgsurface:SurfaceInstance ;
   rdfs:range ujgsurface:Surface .
 
-ujgsurface:channel a owl:DatatypeProperty ;
-  rdfs:domain ujgsurface:Touchpoint ;
-  rdfs:range xsd:string .
-
-ujgsurface:origin a owl:ObjectProperty ;
-  rdfs:domain ujgsurface:Touchpoint ;
-  rdfs:range rdfs:Resource .
-
-ujgsurface:surfaceRefs a owl:ObjectProperty ;
-  rdfs:domain ujgsurface:ExperienceStep ;
-  rdfs:range ujgsurface:Surface .
-
-ujgsurface:phaseRef a owl:ObjectProperty ;
-  rdfs:domain ujgsurface:ExperienceStep ;
-  rdfs:range ujgsurface:Phase .
-
-ujgsurface:order a owl:DatatypeProperty ;
+ujgsurface:userRef a owl:ObjectProperty ;
   rdfs:domain [
     a owl:Class ;
     owl:unionOf (
-      ujgsurface:ExperienceStep
-      ujgsurface:Phase
+      ujggraph:Journey
+      ujggraph:JourneyEntry
+      ujggraph:State
+      ujggraph:CompositeState
+      ujggraph:Transition
+      ujggraph:JourneyExit
+      ujggraph:OutgoingTransition
+      ujggraph:OutgoingTransitionGroup
     )
   ] ;
-  rdfs:range xsd:integer .
+  rdfs:range ujgsurface:User ;
+  rdfs:label "user ref" ;
+  rdfs:comment "References the User whose journey perspective or ownership scope a graph node belongs to." .
+
+ujgsurface:touchpointRefs a owl:ObjectProperty ;
+  rdfs:domain ujgsurface:User ;
+  rdfs:range ujgsurface:Touchpoint .
+
+ujgsurface:compositeStateRefs a owl:ObjectProperty ;
+  rdfs:domain ujgsurface:Touchpoint ;
+  rdfs:range ujggraph:CompositeState ;
+  rdfs:label "composite state refs" ;
+  rdfs:comment "References meaningful CompositeState boundaries presented through this Touchpoint." .
+
+ujgsurface:channel a owl:DatatypeProperty ;
+  rdfs:domain ujgsurface:Touchpoint ;
+  rdfs:range xsd:string .

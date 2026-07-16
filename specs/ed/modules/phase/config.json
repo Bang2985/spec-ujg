@@ -1,23 +1,16 @@
 {
-    "id": "modules/distributed-journey",
-    "title": "Distributed Journey",
+    "id": "modules/phase",
+    "title": "Phase",
     "maturityLevel": "draft",
     "baseUrl": "${SPEC_BASE_URL}/ed",
     "deps": [
-        "graph",
-        "surface",
-        "modules/action",
-        "modules/artifact"
+        "graph"
     ],
     "custom": {
         "family": "module",
-        "order": 65,
+        "order": 50,
         "moduleLevel": 1,
-        "bridgeModules": [
-            "surface",
-            "modules/action",
-            "modules/artifact"
-        ]
+        "bridgeSpec": "graph"
     },
     "respec": {
         "noConformance": true,
@@ -25,7 +18,7 @@
             "name": "User Journal Graph Community Group",
             "url": "https://www.w3.org/community/ujg/"
         },
-        "repository": "https://github.com/openuji/spec-ujg/blob/main/specs/ed/modules/distributed-journey/index.md",
+        "repository": "https://github.com/openuji/spec-ujg/blob/main/specs/ed/modules/phase/index.md",
         "editors": [
             {
                 "name": "Seva Dolgopolov",
@@ -42,17 +35,9 @@
                 "title": "UJG Graph",
                 "url": "/ed/graph"
             },
-            "UJG Action": {
-                "title": "UJG Action",
-                "url": "/ed/modules/action"
-            },
-            "UJG Surface": {
-                "title": "UJG Surface",
-                "url": "/ed/surface"
-            },
-            "UJG Artifact": {
-                "title": "UJG Artifact",
-                "url": "/ed/modules/artifact"
+            "UJG Mapping": {
+                "title": "UJG Mapping",
+                "url": "/ed/mapping"
             }
         }
     }

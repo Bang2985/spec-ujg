@@ -1,5 +1,5 @@
 @prefix ujgexperienceannotation: <https://ujg.specs.openuji.org/ed/ns/experience-annotation#> .
-@prefix ujgsurface: <https://ujg.specs.openuji.org/ed/ns/surface#> .
+@prefix ujgphase: <https://ujg.specs.openuji.org/ed/ns/phase#> .
 @prefix ujgexperienceannotationshape: <https://ujg.specs.openuji.org/ed/ns/experience-annotation.shape#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -9,8 +9,8 @@ ujgexperienceannotationshape:PainPointShape a sh:NodeShape ;
   sh:nodeKind sh:IRI ;
 
   sh:property [
-    sh:path ujgexperienceannotation:experienceRefs ;
-    sh:class ujgsurface:ExperienceStep ;
+    sh:path ujgexperienceannotation:painpointStepRefs ;
+    sh:class ujgphase:Step ;
     sh:nodeKind sh:IRI ;
     sh:minCount 1 ;
   ] ;

@@ -3,11 +3,12 @@
   "title": "Experience Annotation",
   "maturityLevel": "draft",
   "baseUrl": "${SPEC_BASE_URL}/ed",
-  "deps": ["surface"],
+  "deps": ["modules/phase"],
   "custom": {
     "family": "module",
-    "order": 50,
-    "moduleLevel": 1
+    "order": 55,
+    "moduleLevel": 2,
+    "bridgeModule": "modules/phase"
   },
   "respec": {
     "noConformance": true,
@@ -19,7 +20,7 @@
     "editors": [{ "name": "Seva Dolgopolov", "w3cid": "169225" }],
     "license": "W3C-Software-and-Document",
     "localBiblio": {
-      "UJG Surface": { "title": "UJG Surface", "url": "/ed/surface" }
+      "UJG Phase": { "title": "UJG Phase", "url": "/ed/modules/phase" }
     }
   }
 }

@@ -49,13 +49,6 @@
           "scope": "Observability module semantics for ObservationBinding, accessible-object locators, surface recognition contracts, and SurfaceInstanceResolver",
           "nameSuffix": "observability-modeling",
           "moduleId": "modules/observability"
-        },
-        {
-          "key": "distributed-journey",
-          "title": "Distributed Journey Modeling",
-          "scope": "Distributed Journey module semantics for cross-touchpoint human-facing journeys, distributed artifacts, and touchpoint references",
-          "nameSuffix": "distributed-journey-modeling",
-          "moduleId": "modules/distributed-journey"
         }
       ]
     },

@@ -14,16 +14,15 @@
         "graph",
         "modules/l10n",
         "modules/condition",
-        "modules/state-data",
-        "modules/action",
+        "modules/effect",
         "surface",
         "modules/artifact",
         "modules/observability",
-        "modules/experience-annotation",
+        "modules/phase",
         "runtime",
+        "modules/experience-annotation",
         "mapping",
         "modules/design-system",
-        "modules/distributed-journey",
         "metrics",
         "profiles",
         "conformance"
@@ -46,16 +45,15 @@
         "graph",
         "modules/l10n",
         "modules/condition",
-        "modules/state-data",
-        "modules/action",
+        "modules/effect",
         "surface",
         "modules/artifact",
         "modules/observability",
-        "modules/experience-annotation",
+        "modules/phase",
         "runtime",
+        "modules/experience-annotation",
         "mapping",
         "modules/design-system",
-        "modules/distributed-journey",
         "metrics",
         "profiles",
         "conformance"
@@ -71,15 +69,15 @@
         "modules/routing",
         "modules/l10n",
         "modules/condition",
-        "modules/state-data",
-        "modules/action",
+        "modules/effect",
         "surface",
+        "modules/artifact",
         "modules/observability",
-        "modules/experience-annotation",
+        "modules/phase",
         "runtime",
+        "modules/experience-annotation",
         "mapping",
         "modules/design-system",
-        "modules/distributed-journey",
         "metrics",
         "profiles",
         "conformance"
@@ -99,7 +97,8 @@
       "deps": [
         "runtime",
         "surface",
-        "graph"
+        "graph",
+        "modules/phase"
       ],
       "generatedSkill": null,
       "title": "Mapping"
@@ -115,22 +114,12 @@
       "generatedSkill": null,
       "title": "Metrics"
     },
-    "modules/action": {
-      "dependents": [
-        "modules/distributed-journey"
-      ],
-      "deps": [
-        "graph"
-      ],
-      "generatedSkill": null,
-      "title": "Action"
-    },
     "modules/artifact": {
-      "dependents": [
-        "modules/distributed-journey"
-      ],
+      "dependents": [],
       "deps": [
-        "core"
+        "core",
+        "modules/effect",
+        "surface"
       ],
       "generatedSkill": null,
       "title": "Artifact"
@@ -152,21 +141,20 @@
       "generatedSkill": "ujg-ed-design-system-modeling",
       "title": "Design System"
     },
-    "modules/distributed-journey": {
-      "dependents": [],
-      "deps": [
-        "graph",
-        "surface",
-        "modules/action",
+    "modules/effect": {
+      "dependents": [
         "modules/artifact"
       ],
-      "generatedSkill": "ujg-ed-distributed-journey-modeling",
-      "title": "Distributed Journey"
+      "deps": [
+        "graph"
+      ],
+      "generatedSkill": null,
+      "title": "Effect"
     },
     "modules/experience-annotation": {
       "dependents": [],
       "deps": [
-        "surface"
+        "modules/phase"
       ],
       "generatedSkill": null,
       "title": "Experience Annotation"
@@ -190,6 +178,20 @@
       "generatedSkill": "ujg-ed-observability-modeling",
       "title": "Observability"
     },
+    "modules/phase": {
+      "dependents": [
+        "modules/experience-annotation",
+        "mapping",
+        "metrics",
+        "profiles",
+        "conformance"
+      ],
+      "deps": [
+        "graph"
+      ],
+      "generatedSkill": null,
+      "title": "Phase"
+    },
     "modules/routing": {
       "dependents": [],
       "deps": [
@@ -197,14 +199,6 @@
       ],
       "generatedSkill": null,
       "title": "Routing"
-    },
-    "modules/state-data": {
-      "dependents": [],
-      "deps": [
-        "graph"
-      ],
-      "generatedSkill": null,
-      "title": "State Data"
     },
     "profiles": {
       "dependents": [
@@ -235,12 +229,11 @@
     },
     "surface": {
       "dependents": [
+        "modules/artifact",
         "modules/observability",
-        "modules/experience-annotation",
         "runtime",
         "mapping",
         "modules/design-system",
-        "modules/distributed-journey",
         "metrics",
         "profiles",
         "conformance"
@@ -300,14 +293,6 @@
       "publicUrl": "https://ujg.specs.openuji.org/ed/modules/observability",
       "scope": "Observability module semantics for ObservationBinding, accessible-object locators, surface recognition contracts, and SurfaceInstanceResolver",
       "source": "sources/ed/skills/observability/skill.md"
-    },
-    {
-      "key": "distributed-journey",
-      "moduleId": "modules/distributed-journey",
-      "name": "ujg-ed-distributed-journey-modeling",
-      "publicUrl": "https://ujg.specs.openuji.org/ed/modules/distributed-journey",
-      "scope": "Distributed Journey module semantics for cross-touchpoint human-facing journeys, distributed artifacts, and touchpoint references",
-      "source": "sources/ed/skills/distributed-journey/skill.md"
     }
   ],
   "target": {
