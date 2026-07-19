@@ -15,10 +15,17 @@ Observability has no direct dependency on Runtime. When Runtime data is present,
 correlate events to bindings by resolving `RuntimeEvent.surfaceInstanceRef` to a `SurfaceInstance`
 and matching that instance's `surfaceRef` to `ObservationBinding.observeSurfaceRef`.
 
+Observation events can also reference input-modality profiles. This lets a producer describe
+affordance recognition across independently evaluated, owner-defined input strategies while keeping
+the Graph transition model unchanged.
+
 ## Terminology
 
 - <dfn>ObservationBinding</dfn>: An addressable recognition contract for one `Surface`.
-- <dfn>ObservationEvent</dfn>: An addressable semantic event contract such as presence or activation.
+- <dfn>ObservationEvent</dfn>: An addressable, owner-defined semantic event contract.
+- <dfn>InputModality</dfn>: An addressable, owner-defined input modality.
+- <dfn>InputModalityProfile</dfn>: An addressable interaction strategy defined by one or more input
+  modalities.
 - <dfn>AccessibleLocator</dfn>: A locator that describes an accessible object using accessibility
   role, localized computed name or description references, state/property features, relations, and
   context.
@@ -39,22 +46,95 @@ and matching that instance's `surfaceRef` to `ObservationBinding.observeSurfaceR
 
 ## ObservationEvent {data-cop-concept="observation-event"}
 
-An [=ObservationEvent=] identifies the semantic event contract a binding observes, such as presence
-or activation.
+An [=ObservationEvent=] identifies the semantic event contract a binding observes. Event identifiers
+are producer-defined; this module does not reserve standard event IRIs.
+
+An event can optionally reference one or more [=InputModalityProfile|InputModalityProfiles=].
 
 ```mermaid
 classDiagram
+  class InputModalityProfile
   class ObservationEvent {
     id
+    requiredInputModalityProfileRefs
   }
+  ObservationEvent --> "0..*" InputModalityProfile : requiredInputModalityProfileRefs
+```
+
+Example JSON nodes:
+
+```json
+[
+  {
+    "@type": "ObservationEvent",
+    "@id": "urn:observation-event:presence",
+    "label": "Presence"
+  },
+  {
+    "@type": "ObservationEvent",
+    "@id": "urn:observation-event:activation",
+    "label": "Activation",
+    "requiredInputModalityProfileRefs": [
+      "urn:ujg:input-modality-profile:keyboard"
+    ]
+  }
+]
+```
+
+## InputModality {data-cop-concept="input-modality"}
+
+An [=InputModality=] identifies one input modality that can participate in an interaction strategy.
+Modality identifiers are producer-defined; this module does not reserve standard modality IRIs.
+
+```mermaid
+classDiagram
+  class InputModality {
+    id
+  }
+```
+
+Example JSON nodes:
+
+```json
+[
+  {
+    "@type": "InputModality",
+    "@id": "urn:input-modality:keyboard",
+    "label": "Keyboard"
+  },
+  {
+    "@type": "InputModality",
+    "@id": "urn:input-modality:pointer",
+    "label": "Pointer"
+  }
+]
+```
+
+## InputModalityProfile {data-cop-concept="input-modality-profile"}
+
+An [=InputModalityProfile=] identifies one independently evaluable interaction strategy. Its
+`inputModalityRefs` values identify the modalities that participate in that strategy.
+
+```mermaid
+classDiagram
+  class InputModality
+  class InputModalityProfile {
+    id
+    inputModalityRefs
+  }
+  InputModalityProfile --> "1..*" InputModality : inputModalityRefs
 ```
 
 Example JSON node:
 
 ```json
 {
-  "@type": "ObservationEvent",
-  "@id": "https://ujg.specs.openuji.org/ed/ns/observability#presence"
+  "@type": "InputModalityProfile",
+  "@id": "urn:ujg:input-modality-profile:keyboard",
+  "label": "Keyboard",
+  "inputModalityRefs": [
+    "urn:input-modality:keyboard"
+  ]
 }
 ```
 
@@ -232,7 +312,7 @@ Example JSON node:
   "@type": "ObservationBinding",
   "@id": "urn:ujg:observation-binding:checkout-submit-presence",
   "observeSurfaceRef": "urn:ujg:surface:checkout-submit",
-  "observationEventRef": "https://ujg.specs.openuji.org/ed/ns/observability#presence",
+  "observationEventRef": "urn:ujg:observation-event:presence",
   "locatorRefs": ["urn:ujg:locator:checkout-submit"]
 }
 ```
@@ -258,25 +338,14 @@ One `ObservationBinding` can describe behavior for many repeated `SurfaceInstanc
 the same `Surface`. `SurfaceInstanceResolver` does not reference concrete `SurfaceInstance` nodes and
 MUST NOT require one binding per repeated occurrence.
 
+Input-modality profile references belong to the referenced `ObservationEvent`, not to
+`ObservationBinding`. A binding that references an event with `requiredInputModalityProfileRefs`
+uses those event-level profile references without changing its own surface, locator, or instance
+resolver contract.
+
 Observability does not define `graphNodeRef`, `surfaceRef`, `surfaceInstanceRef`, or touchpoint
 boundary assignment such as `compositeStateRefs`. Those are Surface and Runtime terms.
 Observability does not define Runtime properties.
-
-## Standard Observation Events
-
-This draft defines two standard event IRIs:
-
-- `https://ujg.specs.openuji.org/ed/ns/observability#presence`
-- `https://ujg.specs.openuji.org/ed/ns/observability#activation`
-
-Presence means the referenced locators are currently perceivable or matched in the observed surface.
-It is typically used for state or composite-state surfaces.
-
-Activation means a user or synthetic runner activates a user-operable accessible object represented
-by the observed surface. It is typically used for transition or outgoing-transition affordance
-surfaces.
-
-Additional event IRIs can be defined later without changing the MVP vocabulary.
 
 ## Locator Model
 
@@ -386,21 +455,28 @@ the SHACL shape.
    `RuntimeEvent.surfaceInstanceRef -> SurfaceInstance.surfaceRef` to
    `ObservationBinding.observeSurfaceRef`.
 5. **Conjunctive locators:** `locatorRefs` inside one `ObservationBinding` are conjunctive.
-6. **Instance resolver:** `SurfaceInstanceResolver.instanceKeyFeatureRef` MUST identify one
+6. **Event-level modality profiles:** Input-modality profile references MUST be declared on
+   `ObservationEvent` with `requiredInputModalityProfileRefs`, not on `ObservationBinding` or Graph
+   `Transition` nodes.
+7. **Profile modality references:** `InputModalityProfile.inputModalityRefs` values identify
+   `InputModality` nodes. Consumers MUST NOT infer interaction order from the order of values.
+8. **Owner-defined event and modality IRIs:** Observability defines the classes and properties for
+   events, modalities, and profiles; producers define the concrete event and modality identifiers.
+9. **Instance resolver:** `SurfaceInstanceResolver.instanceKeyFeatureRef` MUST identify one
    `AccessibleFeature` that supplies the instance key source. A resolver MUST NOT reference concrete
    `SurfaceInstance` nodes.
-7. **Accessible-object semantics:** `AccessibleLocator` identifies an accessible object, not an
+10. **Accessible-object semantics:** `AccessibleLocator` identifies an accessible object, not an
    implementation node or selector expression.
-8. **Localized name and description matching:** `accessibleNameRef` and
+11. **Localized name and description matching:** `accessibleNameRef` and
    `accessibleDescriptionRef` MUST resolve to `MessageBundle` nodes. In web DOM environments,
    adapters SHOULD compute accessible names and descriptions according to [[ACCNAME-1.2]], then
    match the computed values against the locale-appropriate values of those message bundles.
-9. **Accessibility API orientation:** Role, feature, and relation names SHOULD describe
+12. **Accessibility API orientation:** Role, feature, and relation names SHOULD describe
    accessibility API concepts rather than DOM or tool-specific implementation details
    [[WAI-ARIA-1.2]].
-10. **Opaque custom locators:** `CustomLocator` semantics live in Core `extensions`; consumers that
+13. **Opaque custom locators:** `CustomLocator` semantics live in Core `extensions`; consumers that
    do not understand the extension MAY ignore the locator semantics.
-11. **Graceful degradation:** Consumers that do not implement Observability semantics MAY ignore
+14. **Graceful degradation:** Consumers that do not implement Observability semantics MAY ignore
    Observability data, but SHOULD preserve recognized JSON-LD data during read-transform-write when
    possible.
 
@@ -431,7 +507,7 @@ the SHACL shape.
     },
     {
       "@type": "ObservationEvent",
-      "@id": "https://ujg.specs.openuji.org/ed/ns/observability#presence",
+      "@id": "urn:observation-event:presence",
       "label": "Presence"
     },
     {
@@ -498,11 +574,114 @@ the SHACL shape.
       "@id": "urn:binding:bob-pending-share-present",
       "label": "Bob sees pending federated share",
       "observeSurfaceRef": "urn:surface:bob-pending-share",
-      "observationEventRef": "https://ujg.specs.openuji.org/ed/ns/observability#presence",
+      "observationEventRef": "urn:observation-event:presence",
       "surfaceInstanceResolverRef": "urn:resolver:bob-pending-share-file-id",
       "locatorRefs": [
         "urn:locator:files-heading",
         "urn:locator:shared-with-you-tab-selected"
+      ]
+    }
+  ]
+}
+```
+
+### Input Modality Requirement Example
+
+This example shows a producer-defined activation event for a transition affordance surface. The event
+references two producer-defined modality profiles.
+
+```json
+{
+  "@context": [
+    "https://ujg.specs.openuji.org/ed/ns/context.jsonld",
+    "https://ujg.specs.openuji.org/ed/ns/surface.context.jsonld",
+    "https://ujg.specs.openuji.org/ed/ns/l10n.context.jsonld",
+    "https://ujg.specs.openuji.org/ed/ns/observability.context.jsonld"
+  ],
+  "@id": "https://example.com/ujg/observability/activation-modalities.jsonld",
+  "@type": "UJGDocument",
+  "nodes": [
+    {
+      "@type": "State",
+      "@id": "urn:state:checkout-ready",
+      "label": "Checkout ready"
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:checkout-submitted",
+      "label": "Checkout submitted"
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:submit-checkout",
+      "label": "Submit checkout",
+      "from": "urn:state:checkout-ready",
+      "to": "urn:state:checkout-submitted"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:submit-checkout",
+      "graphNodeRef": "urn:transition:submit-checkout"
+    },
+    {
+      "@type": "InputModality",
+      "@id": "urn:input-modality:keyboard",
+      "label": "Keyboard"
+    },
+    {
+      "@type": "InputModality",
+      "@id": "urn:input-modality:pointer",
+      "label": "Pointer"
+    },
+    {
+      "@type": "InputModalityProfile",
+      "@id": "urn:input-modality-profile:keyboard",
+      "label": "Keyboard",
+      "inputModalityRefs": [
+        "urn:input-modality:keyboard"
+      ]
+    },
+    {
+      "@type": "InputModalityProfile",
+      "@id": "urn:input-modality-profile:pointer",
+      "label": "Pointer",
+      "inputModalityRefs": [
+        "urn:input-modality:pointer"
+      ]
+    },
+    {
+      "@type": "ObservationEvent",
+      "@id": "urn:observation-event:submit-checkout-activation",
+      "label": "Submit checkout activation",
+      "requiredInputModalityProfileRefs": [
+        "urn:input-modality-profile:keyboard",
+        "urn:input-modality-profile:pointer"
+      ]
+    },
+    {
+      "@type": "MessageBundle",
+      "@id": "urn:message:submit-checkout",
+      "messageKey": "checkout.submit",
+      "defaultLocale": "en",
+      "locales": {
+        "en": {
+          "value": "Submit checkout"
+        }
+      }
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:submit-checkout",
+      "role": "button",
+      "accessibleNameRef": "urn:message:submit-checkout"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:binding:submit-checkout-activation",
+      "observeSurfaceRef": "urn:surface:submit-checkout",
+      "observationEventRef": "urn:observation-event:submit-checkout-activation",
+      "locatorRefs": [
+        "urn:locator:submit-checkout"
       ]
     }
   ]
@@ -540,7 +719,7 @@ the SHACL shape.
     },
     {
       "@type": "ObservationEvent",
-      "@id": "https://ujg.specs.openuji.org/ed/ns/observability#presence",
+      "@id": "urn:observation-event:presence",
       "label": "Presence"
     },
     {
@@ -575,7 +754,7 @@ the SHACL shape.
       "@type": "ObservationBinding",
       "@id": "urn:binding:bob-pending-share-present",
       "observeSurfaceRef": "urn:surface:bob-pending-share",
-      "observationEventRef": "https://ujg.specs.openuji.org/ed/ns/observability#presence",
+      "observationEventRef": "urn:observation-event:presence",
       "surfaceInstanceResolverRef": "urn:resolver:bob-pending-share-file-id",
       "locatorRefs": [
         "urn:locator:files-heading"

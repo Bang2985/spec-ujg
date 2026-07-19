@@ -18,6 +18,7 @@ Use Observability for:
 
 - `ObservationBinding` nodes that bind recognition evidence to one `Surface`.
 - `ObservationEvent` contracts such as presence or activation.
+- `InputModality` and `InputModalityProfile` requirements declared by `ObservationEvent` nodes.
 - `AccessibleLocator`, `AccessibleFeature`, and `AccessibleRelation` definitions.
 - `SurfaceInstanceResolver` rules that identify repeated surface instances from accessible features.
 - `CustomLocator` escape hatches with Core `extensions`.
@@ -46,6 +47,8 @@ Use only these Observability classes:
 ```text
 ObservationBinding
 ObservationEvent
+InputModality
+InputModalityProfile
 AccessibleLocator
 AccessibleFeature
 AccessibleRelation
@@ -58,6 +61,8 @@ Use only these Observability properties:
 ```text
 observeSurfaceRef
 observationEventRef
+requiredInputModalityProfileRefs
+inputModalityRefs
 locatorRefs
 surfaceInstanceResolverRef
 instanceKeyFeatureRef
@@ -100,12 +105,13 @@ It must identify one `ObservationEvent` with `observationEventRef`.
 
 It must list one or more locators with `locatorRefs`. Locators inside one binding are conjunctive; model alternatives as separate bindings pointing to the same surface.
 
-Use the standard event IRIs when they fit:
+Input-modality profile references belong to the referenced `ObservationEvent`, not to `ObservationBinding` or Graph `Transition`.
 
-```text
-https://ujg.specs.openuji.org/ed/ns/observability#presence
-https://ujg.specs.openuji.org/ed/ns/observability#activation
-```
+An `ObservationEvent` may list input-modality profiles with `requiredInputModalityProfileRefs`.
+
+An `InputModalityProfile` must list one or more modalities with `inputModalityRefs`. All referenced modalities participate in that independently evaluable profile. Do not infer ordering from array order.
+
+Use producer-defined IRIs for concrete `ObservationEvent` and `InputModality` nodes. Observability defines classes and properties for events, modalities, and profiles; it does not reserve standard event or modality IRIs.
 
 ## Accessible locators
 
@@ -154,12 +160,17 @@ Observability has no direct dependency on Runtime. Runtime events do not need to
 
 Do not model automation commands, screenshots, API probes, timestamps, execution order, payloads, or click facts as Observability terms. Use Runtime for observed events and private extensions for adapter details.
 
+For journey transition modality profile references, model the Graph topology with Graph, attach a `Surface` to the `Transition` or `OutgoingTransition`, bind recognition with `ObservationBinding`, and put input-modality profile references on the referenced `ObservationEvent`.
+
 ## Checks before answering
 
 * Did I include Observability context only when Observability terms are used?
 * Does every `ObservationBinding` identify one `Surface`?
 * Does every binding identify one `ObservationEvent`?
 * Does every binding list at least one locator?
+* Are input-modality profile references declared on `ObservationEvent`, not on `ObservationBinding` or Graph nodes?
+* Does every `InputModalityProfile` list at least one `InputModality`?
+* Did I use producer-defined concrete event and modality IRIs rather than reserved Observability IRIs?
 * Are alternative locator strategies separate bindings rather than one disjunctive binding?
 * Do accessible names and descriptions point to `MessageBundle` nodes?
 * Are role, feature, and relation names accessibility-model oriented?

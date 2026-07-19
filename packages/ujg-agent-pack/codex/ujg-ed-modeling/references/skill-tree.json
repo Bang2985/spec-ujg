@@ -291,7 +291,7 @@
       "moduleId": "modules/observability",
       "name": "ujg-ed-observability-modeling",
       "publicUrl": "https://ujg.specs.openuji.org/ed/modules/observability",
-      "scope": "Observability module semantics for ObservationBinding, accessible-object locators, surface recognition contracts, and SurfaceInstanceResolver",
+      "scope": "Observability module semantics for ObservationBinding, ObservationEvent input modality requirements, accessible-object locators, surface recognition contracts, and SurfaceInstanceResolver",
       "source": "sources/ed/skills/observability/skill.md"
     }
   ],

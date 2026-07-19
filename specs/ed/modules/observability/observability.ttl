@@ -19,6 +19,12 @@ ujgobservability:ObservationBinding a owl:Class ;
 ujgobservability:ObservationEvent a owl:Class ;
   rdfs:subClassOf ujg:Node .
 
+ujgobservability:InputModality a owl:Class ;
+  rdfs:subClassOf ujg:Node .
+
+ujgobservability:InputModalityProfile a owl:Class ;
+  rdfs:subClassOf ujg:Node .
+
 ujgobservability:AccessibleLocator a owl:Class ;
   rdfs:subClassOf ujg:Node .
 
@@ -43,6 +49,14 @@ ujgobservability:observeSurfaceRef a owl:ObjectProperty ;
 ujgobservability:observationEventRef a owl:ObjectProperty ;
   rdfs:domain ujgobservability:ObservationBinding ;
   rdfs:range ujgobservability:ObservationEvent .
+
+ujgobservability:requiredInputModalityProfileRefs a owl:ObjectProperty ;
+  rdfs:domain ujgobservability:ObservationEvent ;
+  rdfs:range ujgobservability:InputModalityProfile .
+
+ujgobservability:inputModalityRefs a owl:ObjectProperty ;
+  rdfs:domain ujgobservability:InputModalityProfile ;
+  rdfs:range ujgobservability:InputModality .
 
 ujgobservability:locatorRefs a owl:ObjectProperty ;
   rdfs:domain ujgobservability:ObservationBinding ;

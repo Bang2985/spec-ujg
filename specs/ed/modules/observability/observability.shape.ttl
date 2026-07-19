@@ -50,7 +50,28 @@ ujgobservabilityshape:ObservationBindingShape a sh:NodeShape ;
 
 ujgobservabilityshape:ObservationEventShape a sh:NodeShape ;
   sh:targetClass ujgobservability:ObservationEvent ;
+  sh:nodeKind sh:IRI ;
+
+  sh:property [
+    sh:path ujgobservability:requiredInputModalityProfileRefs ;
+    sh:class ujgobservability:InputModalityProfile ;
+    sh:nodeKind sh:IRI ;
+  ] .
+
+ujgobservabilityshape:InputModalityShape a sh:NodeShape ;
+  sh:targetClass ujgobservability:InputModality ;
   sh:nodeKind sh:IRI .
+
+ujgobservabilityshape:InputModalityProfileShape a sh:NodeShape ;
+  sh:targetClass ujgobservability:InputModalityProfile ;
+  sh:nodeKind sh:IRI ;
+
+  sh:property [
+    sh:path ujgobservability:inputModalityRefs ;
+    sh:class ujgobservability:InputModality ;
+    sh:nodeKind sh:IRI ;
+    sh:minCount 1 ;
+  ] .
 
 ujgobservabilityshape:SurfaceInstanceResolverShape a sh:NodeShape ;
   sh:targetClass ujgobservability:SurfaceInstanceResolver ;
