@@ -1,7 +1,7 @@
 # Skill Review: ujg-ed-observability-modeling
 
 Target: Editor's Draft
-Skill scope: Observability module semantics for ObservationBinding, accessible-object locators, surface recognition contracts, and SurfaceInstanceResolver
+Skill scope: Observability module semantics for ObservationBinding, ObservationEvent input modality requirements, accessible-object locators, surface recognition contracts, and SurfaceInstanceResolver
 Source: sources/ed/skills/observability/skill.md
 Spec URL: https://ujg.specs.openuji.org/ed/modules/observability
 
@@ -12,8 +12,8 @@ Spec URL: https://ujg.specs.openuji.org/ed/modules/observability
 
 ## Review Inputs
 
-- Source hash: sha256:89699f01f18b7f60b9348dfb56adfd3cb36ab82a9cc0a68a22891e4d3c9ce949
-- Spec hash: sha256:38373e4c8f9c4dacd054c22921a410aa4de7b8fca611fc22d367498144916285
+- Source hash: sha256:99ce130a64fa51878f82f30d976b10cfcefc6d97c4a34ab28c266f3750cff98f
+- Spec hash: sha256:e6362111ab9c597cb551a6560c9ceb4a02a4257151d3ce727526f770897b026b
 
 ## Source Headings Likely Affected
 

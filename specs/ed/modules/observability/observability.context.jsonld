@@ -7,6 +7,8 @@
 
     "ObservationBinding": "ujgobservability:ObservationBinding",
     "ObservationEvent": "ujgobservability:ObservationEvent",
+    "InputModality": "ujgobservability:InputModality",
+    "InputModalityProfile": "ujgobservability:InputModalityProfile",
     "AccessibleLocator": "ujgobservability:AccessibleLocator",
     "AccessibleFeature": "ujgobservability:AccessibleFeature",
     "AccessibleRelation": "ujgobservability:AccessibleRelation",
@@ -20,6 +22,16 @@
     "observationEventRef": {
       "@id": "ujgobservability:observationEventRef",
       "@type": "@id"
+    },
+    "requiredInputModalityProfileRefs": {
+      "@id": "ujgobservability:requiredInputModalityProfileRefs",
+      "@type": "@id",
+      "@container": "@set"
+    },
+    "inputModalityRefs": {
+      "@id": "ujgobservability:inputModalityRefs",
+      "@type": "@id",
+      "@container": "@set"
     },
     "locatorRefs": {
       "@id": "ujgobservability:locatorRefs",

@@ -46,7 +46,7 @@
         {
           "key": "observability",
           "title": "Observability Modeling",
-          "scope": "Observability module semantics for ObservationBinding, accessible-object locators, surface recognition contracts, and SurfaceInstanceResolver",
+          "scope": "Observability module semantics for ObservationBinding, ObservationEvent input modality requirements, accessible-object locators, surface recognition contracts, and SurfaceInstanceResolver",
           "nameSuffix": "observability-modeling",
           "moduleId": "modules/observability"
         }

@@ -31,15 +31,15 @@
     "ed/observability": {
       "reportPath": "reviews/ed/observability/latest.md",
       "skill": "observability",
-      "sourceHash": "sha256:89699f01f18b7f60b9348dfb56adfd3cb36ab82a9cc0a68a22891e4d3c9ce949",
-      "specHash": "sha256:38373e4c8f9c4dacd054c22921a410aa4de7b8fca611fc22d367498144916285",
+      "sourceHash": "sha256:99ce130a64fa51878f82f30d976b10cfcefc6d97c4a34ab28c266f3750cff98f",
+      "specHash": "sha256:e6362111ab9c597cb551a6560c9ceb4a02a4257151d3ce727526f770897b026b",
       "target": "ed"
     },
     "ed/root": {
       "reportPath": "reviews/ed/root/latest.md",
       "skill": "root",
-      "sourceHash": "sha256:c98ad6fba225d33dc570500792b950b63c7e188fff6c14a2ee65e9beeb3234ec",
-      "specHash": "sha256:18eb29b6eb35508e1d38b10b31f238bb2dc32a094bc5aa84c1a1de66713699b8",
+      "sourceHash": "sha256:2c429defeee84fb489938873dd71276661b8814947bbc465c8978841eee8fa46",
+      "specHash": "sha256:72fa4de7388c2b1174d1d0ed572228adc64f006c5d0c3220ad009726c59945c7",
       "target": "ed"
     },
     "tr/2026.06/design-system": {
