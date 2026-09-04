@@ -14,12 +14,14 @@ interface Props {
   toc?: TocEntry[];
   breadcrumb?: { title: string; href: string }[];
   workspace?: SpecWorkspaceKey;
+  documentSelect?: boolean;
 }
 
-const { title, breadcrumb = [], toc, workspace = 'ed' } = Astro.props;
+const { title, breadcrumb = [], toc, workspace = 'ed', documentSelect } = Astro.props;
+const showDocumentSelect = documentSelect ?? breadcrumb.length > 0;
 const workspaceConfig = getWorkspaceConfig(workspace);
 
-const docs = await getDocuments(workspace);
+const docs = showDocumentSelect ? await getDocuments(workspace) : [];
 
 const options = docs
   .filter((doc: Document) => doc.metadata?.title !== undefined)
@@ -60,7 +62,7 @@ const currentHref = Astro.url.pathname.replace(/\.html$/, '');
       }
       <span class="text-secondary-foreground">/</span>
       {
-        breadcrumb.length === 0 ? (
+        breadcrumb.length === 0 || !showDocumentSelect ? (
           <span class="text-secondary-foreground">{title}</span>
         ) : (
           <BreadcrumbSelect valueHref={currentHref} options={options} client:load />

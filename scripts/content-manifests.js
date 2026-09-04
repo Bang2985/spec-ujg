@@ -9,6 +9,7 @@ const MANIFEST_VERSION = 1;
 const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const ED_ROOT = join(REPO_ROOT, 'specs/ed');
 const TR_ROOT = join(REPO_ROOT, 'specs/tr');
+const CASE_STUDIES_ROOT = join(REPO_ROOT, 'specs/case-studies');
 const SPEC_ROOTS = [ED_ROOT, TR_ROOT];
 
 function findDocumentDirectories(directory) {
@@ -28,8 +29,19 @@ function findDocumentDirectories(directory) {
 }
 
 function findAllDocumentDirectories() {
-  return SPEC_ROOTS.filter(existsSync)
-    .flatMap((directory) => findDocumentDirectories(directory))
+  return [
+    ...SPEC_ROOTS.filter(existsSync).flatMap((directory) => findDocumentDirectories(directory)),
+    ...findCaseStudyDirectories(),
+  ].sort();
+}
+
+function findCaseStudyDirectories() {
+  if (!existsSync(CASE_STUDIES_ROOT)) return [];
+
+  return readdirSync(CASE_STUDIES_ROOT, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory() && !entry.name.startsWith('_'))
+    .map((entry) => join(CASE_STUDIES_ROOT, entry.name))
+    .filter((directory) => existsSync(join(directory, 'index.md')))
     .sort();
 }
 

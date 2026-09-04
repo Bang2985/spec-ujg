@@ -1,0 +1,70 @@
+---
+import Header from '@/components/astro/Header.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getCaseStudies } from '@/lib/case-studies';
+
+const caseStudies = await getCaseStudies();
+
+function formatDate(value: string): string {
+  return new Date(value).toISOString().slice(0, 10);
+}
+---
+
+<BaseLayout title="Case Studies" bodyClass="case-studies-page">
+  <Header title="Case Studies" documentSelect={false} />
+  <main class="case-studies page">
+    <section class="case-studies-intro">
+      <div>
+        <p class="case-study-eyebrow">UJG in Practice</p>
+        <h1>Case Studies</h1>
+      </div>
+      <p>
+        Applied examples showing how User Journey Graph models connect product intent,
+        implementation, and observed behavior.
+      </p>
+    </section>
+
+    {
+      caseStudies.length > 0 ? (
+        <section class="case-study-grid" aria-label="Case studies">
+          {caseStudies.map((study) => {
+            const visual = study.cardImage ?? study.heroImage;
+
+            return (
+              <a class="case-study-card" href={`/case-studies/${study.slug}`}>
+                <span class:list={['case-study-card__visual', visual && 'has-image']}>
+                  {visual && <img src={visual} alt="" loading="lazy" />}
+                </span>
+                <span class="case-study-card__body">
+                  <span class="case-study-card__meta">
+                    <time datetime={formatDate(study.publishedAt)}>
+                      Created {formatDate(study.publishedAt)}
+                    </time>
+                    <time datetime={formatDate(study.updatedAt)}>
+                      Updated {formatDate(study.updatedAt)}
+                    </time>
+                  </span>
+                  <span class="case-study-card__title">{study.title}</span>
+                  <span class="case-study-card__summary">{study.summary}</span>
+                  {study.tags.length > 0 && (
+                    <span class="case-study-card__tags" aria-label="Case study tags">
+                      {study.tags.map((tag) => (
+                        <span>{tag}</span>
+                      ))}
+                    </span>
+                  )}
+                  <span class="case-study-card__link">Read case study &rarr;</span>
+                </span>
+              </a>
+            );
+          })}
+        </section>
+      ) : (
+        <section class="case-studies-empty">
+          <h2>No published case studies yet</h2>
+          <p>Published case studies will appear here.</p>
+        </section>
+      )
+    }
+  </main>
+</BaseLayout>

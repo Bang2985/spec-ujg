@@ -1,0 +1,125 @@
+---
+import Header from '@/components/astro/Header.astro';
+import StaticMarkdownEnhancer from '@/components/astro/StaticMarkdownEnhancer.astro';
+import { Toc } from '@/components/react/toc/Toc';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import type { TocEntry } from '@openuji/speculator';
+
+interface Props {
+  title: string;
+  summary: string;
+  teaser?: string;
+  tags?: string[];
+  heroImage?: string;
+  publishedAt: string;
+  updatedAt: string;
+  toc?: TocEntry[];
+}
+
+const {
+  title,
+  summary,
+  teaser,
+  tags = [],
+  heroImage,
+  publishedAt,
+  updatedAt,
+  toc = [],
+} = Astro.props;
+const hasToc = toc.length > 0;
+const heroStyle = heroImage ? `--case-study-hero-image: url("${heroImage}")` : undefined;
+const publishedDate = new Date(publishedAt).toISOString().slice(0, 10);
+const updatedDate = new Date(updatedAt).toISOString().slice(0, 10);
+---
+
+<BaseLayout title={`${title} - Case Study`} bodyClass="static-page case-study-page bg-spec">
+  <Header
+    title={title}
+    toc={hasToc ? toc : undefined}
+    breadcrumb={[{ title: 'Case Studies', href: '/case-studies' }]}
+    documentSelect={false}
+  />
+
+  <section class:list={['case-study-hero', heroImage && 'has-image']} style={heroStyle}>
+    <div class="case-study-hero__inner">
+      <div class="case-study-hero__content">
+        <p class="case-study-eyebrow">Case Study</p>
+        <h1>{title}</h1>
+        <p class="case-study-summary">{teaser ?? summary}</p>
+        <dl class="case-study-meta">
+          <div>
+            <dt>Created</dt>
+            <dd><time datetime={publishedDate}>{publishedDate}</time></dd>
+          </div>
+          <div>
+            <dt>Updated</dt>
+            <dd><time datetime={updatedDate}>{updatedDate}</time></dd>
+          </div>
+        </dl>
+        {
+          tags.length > 0 && (
+            <div class="case-study-tags" aria-label="Case study tags">
+              {tags.map((tag) => (
+                <span>{tag}</span>
+              ))}
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  {
+    hasToc ? (
+      <div class="sidebar-container is-initializing flex px-lg" transition:animate="fade">
+        <aside class="sidebar w-sidebar border-r border-border shrink-0">
+          <div class="sidebar-content sticky top-[var(--height-header)] -ml-3">
+            <Toc toc={toc} client:load />
+          </div>
+        </aside>
+
+        <main class="max-w-spec min-w-0 mx-auto py-md md:p-md text-base leading-relaxed">
+          <article class="spec case-study-body">
+            <slot />
+          </article>
+        </main>
+      </div>
+    ) : (
+      <main class="max-w-spec min-w-0 mx-auto p-md text-base leading-relaxed">
+        <article class="spec case-study-body">
+          <slot />
+        </article>
+      </main>
+    )
+  }
+
+  <StaticMarkdownEnhancer />
+
+  <script>
+    import { tocCollapsed } from '@/stores/tocSidebar';
+
+    let unbind: (() => void) | undefined;
+
+    function init() {
+      if (unbind) unbind();
+
+      const container = document.querySelector('.sidebar-container') as HTMLElement;
+      if (!container) return;
+
+      container.setAttribute('data-toc-toggled', tocCollapsed.get().toString());
+
+      unbind = tocCollapsed.subscribe((collapsed: boolean) => {
+        container.setAttribute('data-toc-toggled', collapsed.toString());
+      });
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          container.classList.remove('is-initializing');
+        });
+      });
+    }
+
+    document.addEventListener('astro:page-load', init);
+    init();
+  </script>
+</BaseLayout>

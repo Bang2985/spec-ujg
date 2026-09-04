@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 
+import { getCaseStudies } from '@/lib/case-studies';
 import { getDocuments } from '@/lib/load';
 import { CANONICAL_SPEC_BASE_URL } from '@/lib/spec-artifacts';
 import { TOP_LEVEL_CONTENT_PAGES } from '@/lib/static-pages';
@@ -45,6 +46,7 @@ function sortPaths(paths: string[]): string[] {
 }
 
 export const GET: APIRoute = async () => {
+  const caseStudies = await getCaseStudies();
   const documents = await getDocuments('ed');
   const reportPaths = (
     await Promise.all(
@@ -65,6 +67,7 @@ export const GET: APIRoute = async () => {
     uniquePaths([
       ...staticAstroPaths,
       ...topLevelContentPaths,
+      ...caseStudies.map((study) => `/case-studies/${study.slug}`),
       ...documents.map((document) => `/ed/${document.id}`),
       ...reportPaths,
     ])
