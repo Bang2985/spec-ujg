@@ -16,19 +16,9 @@ interface Props {
   toc?: TocEntry[];
 }
 
-const {
-  title,
-  summary,
-  teaser,
-  tags = [],
-  heroImage,
-  publishedAt,
-  updatedAt,
-  toc = [],
-} = Astro.props;
+const { title, summary, teaser, tags = [], heroImage, updatedAt, toc = [] } = Astro.props;
 const hasToc = toc.length > 0;
 const heroStyle = heroImage ? `--case-study-hero-image: url("${heroImage}")` : undefined;
-const publishedDate = new Date(publishedAt).toISOString().slice(0, 10);
 const updatedDate = new Date(updatedAt).toISOString().slice(0, 10);
 ---
 
@@ -46,13 +36,9 @@ const updatedDate = new Date(updatedAt).toISOString().slice(0, 10);
         <p class="case-study-eyebrow">Case Study</p>
         <h1>{title}</h1>
         <p class="case-study-summary">{teaser ?? summary}</p>
-        <dl class="case-study-meta">
+        <dl class="case-study-meta" aria-label="Case study dates">
           <div>
-            <dt>Created</dt>
-            <dd><time datetime={publishedDate}>{publishedDate}</time></dd>
-          </div>
-          <div>
-            <dt>Updated</dt>
+            <dt>Last modified</dt>
             <dd><time datetime={updatedDate}>{updatedDate}</time></dd>
           </div>
         </dl>

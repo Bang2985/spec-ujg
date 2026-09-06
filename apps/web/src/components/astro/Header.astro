@@ -35,41 +35,43 @@ const currentHref = Astro.url.pathname.replace(/\.html$/, '');
 ---
 
 <header class="bg-panel backdrop-blur-md sticky top-0 z-header border-b border-border">
-  <div class="h-header px-lg flex items-center gap-2 sm:justify-between">
+  <div class="h-header px-lg flex min-w-0 items-center gap-2 sm:justify-between">
     {
       toc && (
-        <div class="flex sm:hidden">
+        <div class="flex shrink-0 sm:hidden">
           <MobilePanel client:load />
         </div>
       )
     }
-    <div class="flex items-center justify-between gap-2">
-      <a href="/" class="flex text-primary font-bold hover:text-accent">
+    <div class="flex min-w-0 flex-1 items-center gap-2 overflow-hidden whitespace-nowrap">
+      <a href="/" class="flex shrink-0 text-primary font-bold hover:text-accent">
         <span>UJG</span>
       </a>
       {
         breadcrumb.map((item) => (
           <>
-            <span class="text-secondary-foreground">/</span>
+            <span class="shrink-0 text-secondary-foreground">/</span>
             <a
               href={item.href}
-              class="text-primary font-bold  hover:text-accent transition-colors duration-200"
+              class="shrink-0 text-primary font-bold hover:text-accent transition-colors duration-200"
             >
               {item.title}
             </a>
           </>
         ))
       }
-      <span class="text-secondary-foreground">/</span>
+      <span class="shrink-0 text-secondary-foreground">/</span>
       {
         breadcrumb.length === 0 || !showDocumentSelect ? (
-          <span class="text-secondary-foreground">{title}</span>
+          <span class="min-w-0 truncate text-secondary-foreground" title={title}>
+            {title}
+          </span>
         ) : (
           <BreadcrumbSelect valueHref={currentHref} options={options} client:load />
         )
       }
     </div>
-    <nav class="hidden sm:flex">
+    <nav class="hidden shrink-0 sm:flex">
       <a
         href="https://github.com/openuji/spec-ujg"
         class="inline-flex items-center justify-center text-secondary-foreground hover:text-accent transition-colors duration-200"

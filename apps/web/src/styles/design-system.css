@@ -1011,7 +1011,7 @@ a.pill {
 }
 
 .case-study-hero__content {
-  max-width: 820px;
+  max-width: 960px;
 }
 
 .case-study-eyebrow {
@@ -1030,11 +1030,13 @@ a.pill {
 
 .case-study-hero h1 {
   margin: 0;
-  max-width: 12ch;
+  max-width: 22ch;
+  font-size: clamp(2.8rem, 4.2vw, 4.9rem);
+  line-height: 1.06;
 }
 
 .case-study-summary {
-  max-width: 720px;
+  max-width: 780px;
   margin: var(--spacing-md) 0 0;
   color: var(--secondary-foreground);
   font-size: 1.2rem;
@@ -1053,7 +1055,7 @@ a.pill {
 }
 
 .case-study-meta div {
-  min-width: 120px;
+  min-width: 170px;
   padding: 0.7rem 0.85rem;
   border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
   border-radius: var(--radius-md);
@@ -1107,6 +1109,7 @@ a.pill {
 
   .case-study-hero h1 {
     max-width: none;
+    font-size: clamp(2.4rem, 10vw, 4.2rem);
   }
 }
 

@@ -37,11 +37,8 @@ function formatDate(value: string): string {
                 </span>
                 <span class="case-study-card__body">
                   <span class="case-study-card__meta">
-                    <time datetime={formatDate(study.publishedAt)}>
-                      Created {formatDate(study.publishedAt)}
-                    </time>
                     <time datetime={formatDate(study.updatedAt)}>
-                      Updated {formatDate(study.updatedAt)}
+                      Last modified {formatDate(study.updatedAt)}
                     </time>
                   </span>
                   <span class="case-study-card__title">{study.title}</span>
