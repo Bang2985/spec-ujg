@@ -73,7 +73,7 @@ const familySections: Array<{
           <h2 class="font-bold pb-2">{section.title}</h2>
           <p>{section.description}</p>
         </div>
-        <div class="flow__grid report-grid">
+        <div class="spec-card-grid">
           {section.documents.map((doc: Document) => (
             <a
               href={`${report.basePath}/${doc.id}`}
@@ -89,9 +89,3 @@ const familySections: Array<{
     ))
   }
 </EditorDraftLayout>
-
-<style>
-  .report-grid {
-    grid-template-columns: repeat(auto-fill, minmax(var(--min-width-card), 1fr));
-  }
-</style>
