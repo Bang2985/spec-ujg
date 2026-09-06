@@ -16,6 +16,7 @@
         "modules/condition",
         "modules/effect",
         "surface",
+        "modules/data-contract",
         "modules/artifact",
         "modules/observability",
         "modules/phase",
@@ -50,6 +51,7 @@
         "modules/condition",
         "modules/effect",
         "surface",
+        "modules/data-contract",
         "modules/artifact",
         "modules/observability",
         "modules/phase",
@@ -94,6 +96,7 @@
         "modules/condition",
         "modules/effect",
         "surface",
+        "modules/data-contract",
         "modules/artifact",
         "modules/observability",
         "modules/phase",
@@ -168,6 +171,20 @@
       "generatedSkill": null,
       "generatedSkills": [],
       "title": "Conditions"
+    },
+    "modules/data-contract": {
+      "dependents": [
+        "profiles",
+        "conformance"
+      ],
+      "deps": [
+        "core",
+        "graph",
+        "surface"
+      ],
+      "generatedSkill": null,
+      "generatedSkills": [],
+      "title": "Data Contract"
     },
     "modules/design-system": {
       "dependents": [
@@ -277,6 +294,7 @@
         "mapping",
         "metrics",
         "surface",
+        "modules/data-contract",
         "modules/l10n",
         "modules/observability",
         "modules/design-system",
@@ -305,6 +323,7 @@
     },
     "surface": {
       "dependents": [
+        "modules/data-contract",
         "modules/artifact",
         "modules/observability",
         "runtime",
