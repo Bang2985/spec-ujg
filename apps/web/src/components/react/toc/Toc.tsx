@@ -159,12 +159,20 @@ export const Toc: React.FC<TocProps> = ({ toc, className, onItemClick }) => {
   const isToggled = useStore(tocCollapsed);
   const displayToggled = isMounted ? isToggled : false;
 
+  const handleItemClick = () => {
+    if (typeof window !== 'undefined' && !window.matchMedia('(min-width: 48rem)').matches) {
+      setTocCollapsed(false);
+    }
+
+    onItemClick?.();
+  };
+
   const restoreButton =
     isMounted && displayToggled && typeof document !== 'undefined'
       ? createPortal(
           <button
             onClick={() => setTocCollapsed(false)}
-            className="hidden sm:flex sidebar-restore-btn fixed left-4 top-[calc(var(--height-header)+1rem)] z-50 p-2 bg-card border border-border shadow-panel rounded-md text-muted-foreground hover:bg-accent-soft/50 hover:text-foreground transition-[background-color,color,box-shadow,transform] duration-300"
+            className="hidden md:flex sidebar-restore-btn fixed left-4 top-[calc(var(--height-header)+1rem)] z-50 p-2 bg-card border border-border shadow-panel rounded-md text-muted-foreground hover:bg-accent-soft/50 hover:text-foreground transition-[background-color,color,box-shadow,transform] duration-300"
             title="Expand sidebar"
           >
             <PanelRight className="w-5 h-5" />
@@ -184,7 +192,7 @@ export const Toc: React.FC<TocProps> = ({ toc, className, onItemClick }) => {
           <span>Table of Contents</span>
           <button
             onClick={toggleTocCollapsed}
-            className="hidden sm:flex text-muted-foreground hover:text-foreground transition-[background-color,color] p-1 rounded-md hover:bg-accent-soft/50"
+            className="hidden md:flex text-muted-foreground hover:text-foreground transition-[background-color,color] p-1 rounded-md hover:bg-accent-soft/50"
             title={displayToggled ? 'Expand sidebar' : 'Collapse sidebar'}
             aria-label={displayToggled ? 'Expand sidebar' : 'Collapse sidebar'}
           >
@@ -201,7 +209,7 @@ export const Toc: React.FC<TocProps> = ({ toc, className, onItemClick }) => {
               <TocItem
                 key={entry.id || index}
                 entry={entry}
-                onItemClick={onItemClick}
+                onItemClick={handleItemClick}
                 activeId={activeId}
               />
             ))}

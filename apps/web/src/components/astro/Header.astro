@@ -33,10 +33,10 @@ const currentHref = Astro.url.pathname.replace(/\.html$/, '');
 ---
 
 <header class="bg-panel backdrop-blur-md sticky top-0 z-header border-b border-border">
-  <div class="h-header px-lg flex items-center gap-2 sm:justify-between">
+  <div class="h-header px-lg flex items-center gap-2 md:justify-between">
     {
       toc && (
-        <div class="flex sm:hidden">
+        <div class="flex md:hidden">
           <MobilePanel client:load />
         </div>
       )
@@ -67,7 +67,7 @@ const currentHref = Astro.url.pathname.replace(/\.html$/, '');
         )
       }
     </div>
-    <nav class="hidden sm:flex">
+    <nav class="hidden md:flex">
       <a
         href="https://github.com/openuji/spec-ujg"
         class="inline-flex items-center justify-center text-secondary-foreground hover:text-accent transition-colors duration-200"

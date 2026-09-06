@@ -70,7 +70,7 @@ const familySections: Array<{
           <h2 class="font-bold pb-2">{section.title}</h2>
           <p>{section.description}</p>
         </div>
-        <div class="flow__grid">
+        <div class="spec-card-grid">
           {section.documents.map((doc: Document) => (
             <a
               href={`/ed/${doc.id}`}
