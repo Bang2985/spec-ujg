@@ -10,7 +10,7 @@
     "custom": {
         "family": "module",
         "order": 49,
-        "moduleLevel": 1,
+        "moduleLevel": 2,
         "bridgeModules": [
             "surface",
             "modules/l10n"
