@@ -97,8 +97,7 @@ Example JSON node:
 
 ## Attachment Model
 
-The module attaches data contracts only to [=Surface=] nodes. It does not attach schemas directly to
-[=State=], [=CompositeState=], [=Command=], [=Transition=], `Condition`, or `Effect`.
+The module attaches data contracts only to [=Surface=] nodes.
 
 Consumers MUST derive the semantic role of a [=DataBinding=] by following:
 
@@ -108,8 +107,7 @@ DataBinding.dataSurfaceRef
 -> State | CompositeState | Command
 ```
 
-[=DataBinding=] MUST NOT duplicate `graphNodeRef` or introduce `kind`, `direction`,
-`inputSchemaRef`, `outputSchemaRef`, `commandRef`, or `stateRef`.
+[=DataBinding=] MUST NOT duplicate `graphNodeRef`.
 
 ## State And CompositeState Surface Contracts {data-cop-concept="state-surface-contracts"}
 
