@@ -1,18 +1,18 @@
 {
-    "id": "modules/artifact",
-    "title": "Artifact",
+    "id": "modules/data-contract",
+    "title": "Data Contract",
     "maturityLevel": "draft",
     "baseUrl": "${SPEC_BASE_URL}/ed",
     "deps": [
         "core",
-        "modules/effect",
-        "modules/l10n",
+        "graph",
         "surface"
     ],
     "custom": {
         "family": "module",
-        "order": 47,
-        "moduleLevel": 2
+        "order": 46,
+        "moduleLevel": 1,
+        "bridgeSpec": "surface"
     },
     "respec": {
         "noConformance": true,
@@ -20,7 +20,7 @@
             "name": "User Journal Graph Community Group",
             "url": "https://www.w3.org/community/ujg/"
         },
-        "repository": "https://github.com/openuji/spec-ujg/blob/main/specs/ed/modules/artifact/index.md",
+        "repository": "https://github.com/openuji/spec-ujg/blob/main/specs/ed/modules/data-contract/index.md",
         "editors": [
             {
                 "name": "Seva Dolgopolov",
@@ -33,17 +33,13 @@
                 "title": "UJG Core",
                 "url": "/ed/core"
             },
+            "UJG Graph": {
+                "title": "UJG Graph",
+                "url": "/ed/graph"
+            },
             "UJG Surface": {
                 "title": "UJG Surface",
                 "url": "/ed/surface"
-            },
-            "UJG Effect": {
-                "title": "UJG Effect",
-                "url": "/ed/modules/effect"
-            },
-            "UJG Localization": {
-                "title": "UJG Localization",
-                "url": "/ed/modules/l10n"
             }
         }
     }

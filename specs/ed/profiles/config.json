@@ -9,6 +9,7 @@
         "mapping",
         "metrics",
         "surface",
+        "modules/data-contract",
         "modules/l10n",
         "modules/observability",
         "modules/design-system",

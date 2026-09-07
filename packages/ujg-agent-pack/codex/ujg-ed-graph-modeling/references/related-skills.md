@@ -23,6 +23,7 @@ Module scope: graph
 - modules/condition
 - modules/effect
 - surface
+- modules/data-contract
 - modules/artifact
 - modules/observability
 - modules/phase

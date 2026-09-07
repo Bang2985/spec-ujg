@@ -3,9 +3,9 @@
 This optional module defines a graph-native vocabulary for describing how design-system artifacts
 realize Surface resources.
 
-The module is intentionally second-level. It depends on the Surface layer as the bridge between
-Graph topology and user-facing materialization. Graph nodes do not point to design-system artifacts,
-and Surface resources remain design-system-agnostic.
+The module is intentionally first-level. It depends only on Graph and Surface. Surface is the bridge
+between Graph topology and user-facing materialization. Graph nodes do not point to design-system
+artifacts, and Surface resources remain design-system-agnostic.
 
 The Design System module introduces `SurfaceRealization` as the design-system-side bridge. A
 `SurfaceRealization` references exactly one `Surface` and then identifies either a `Component` or a

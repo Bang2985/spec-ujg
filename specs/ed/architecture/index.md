@@ -34,14 +34,16 @@ meaning on top of the main spec family, but they should leave the older layers i
 becomes common enough that most compliant tools need it, it belongs in the main spec family instead
 of staying optional.
 
-Optional modules can grow in steps. A small module can first give the shared UJG layers a simple
-thing to point at. Later modules can build on that thing and describe it in more detail. This lets
-new capabilities become precise without forcing the shared baseline, or this architecture page, to
-know every specialized vocabulary that may be added later.
+Optional modules can grow in steps. First-level optional modules depend only on the main spec
+family, so they stay independent from each other and give the shared UJG layers simple concepts or
+attachment points to reference directly. Later modules can depend on first-level optional modules
+and describe those bridge domains in more detail. This lets new capabilities become precise without
+forcing the shared baseline, or this architecture page, to know every specialized vocabulary that
+may be added later.
 
-
-First-level optional modules are small bridges that attach directly to main spec concepts. Second-level optional modules compose one or more shared
-layers or first-level bridges.
+Second-level optional modules depend on at least one first-level optional module. They may also
+depend on any needed main spec family modules, but cross-module optional composition belongs at this
+level rather than between first-level modules.
 
 ## Opaque Extensions
 

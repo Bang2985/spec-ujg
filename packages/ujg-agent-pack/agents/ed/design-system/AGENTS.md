@@ -40,7 +40,7 @@ specs/ed/modules/design-system/design-system.ttl
 specs/ed/modules/design-system/design-system.context.jsonld
 specs/ed/modules/design-system/design-system.shape.ttl
 ```
-When reasoning depends on Graph, Surface, Conditions, Command, Localization, Runtime, Observability, or another module, consult that module's current ED source or skill.
+When reasoning depends on Graph, Surface, Conditions, Command, Localization, Data Contract, Runtime, Observability, or another module, consult that module's current ED source or skill.
 Generate only active-ED terms unless the user explicitly requests an extension.
 
 ## Layer ownership
@@ -311,6 +311,7 @@ Do not create a separate Template merely because one realization binds an additi
 
 ## Forms and editable states
 Apply the general Command, Localization, presentation-identity, and required-composition rules to forms.
+When a surface represents structured data or a Command-backed surface submits explicit structured data, consult Data Contract rather than modeling schemas, payloads, props, loaders, or queries as Design System semantics.
 Typing, editing, correcting, validation feedback, or retained values do not automatically require new Components, Templates, Commands, or Surfaces.
 A distinct form-error State or Surface MAY remain when the error-visible experience is behaviorally or observably meaningful.
 Do not collapse normal/error Graph States merely because they reuse the same presentation artifacts.

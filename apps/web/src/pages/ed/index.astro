@@ -26,14 +26,14 @@ const familySections: Array<{
     id: 'optional-modules',
     title: 'First-Level Optional Modules',
     description:
-      'Optional bridge modules that attach directly to Core or Graph concepts and publish their own ontology, JSON-LD context, and SHACL artifacts.',
+      'Optional modules whose dependencies are limited to the main spec family. They publish their own ontology, JSON-LD context, and SHACL artifacts without depending on other optional modules.',
     documents: moduleDocuments.filter((doc) => getDocumentModuleLevel(doc) === 1),
   },
   {
     id: 'second-level-optional-modules',
     title: 'Second-Level Optional Modules',
     description:
-      'Optional modules that compose one or more first-level bridges, keeping specialized concerns out of Core and Graph.',
+      'Optional modules that depend on one or more first-level optional modules, plus any needed main spec family modules.',
     documents: moduleDocuments.filter((doc) => getDocumentModuleLevel(doc) > 1),
   },
   {
@@ -70,7 +70,7 @@ const familySections: Array<{
           <h2 class="font-bold pb-2">{section.title}</h2>
           <p>{section.description}</p>
         </div>
-        <div class="flow__grid">
+        <div class="spec-card-grid">
           {section.documents.map((doc: Document) => (
             <a
               href={`/ed/${doc.id}`}

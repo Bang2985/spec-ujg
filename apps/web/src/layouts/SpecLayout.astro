@@ -34,34 +34,8 @@ const { toc = [], title = '', parent, workspace = 'ed' } = Astro.props;
   </div>
 
   <script>
-    import { tocCollapsed } from '@/stores/tocSidebar';
+    import { setupTocSidebar } from '@/lib/toc-sidebar-client';
 
-    let unbind: (() => void) | undefined;
-
-    function init() {
-      if (unbind) unbind();
-
-      const container = document.querySelector('.sidebar-container') as HTMLElement;
-      if (container) {
-        // Sync state immediately
-        container.setAttribute('data-toc-toggled', tocCollapsed.get().toString());
-
-        unbind = tocCollapsed.subscribe((collapsed: boolean) => {
-          container.setAttribute('data-toc-toggled', collapsed.toString());
-        });
-
-        // Remove initializing class after the first frame to enable transitions for clicks
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            container.classList.remove('is-initializing');
-          });
-        });
-      }
-    }
-
-    // Initialize on both initial load and after Astro view transitions
-    document.addEventListener('astro:page-load', init);
-    // Fallback for non-transition loads if needed
-    init();
+    setupTocSidebar();
   </script>
 </BaseLayout>

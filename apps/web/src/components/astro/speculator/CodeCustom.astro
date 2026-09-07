@@ -1,7 +1,7 @@
 ---
 import type { CodeLanguage } from 'astro';
 import { Code } from 'astro:components';
-import { ChevronDown, Copy } from 'lucide-react';
+import { Check, ChevronDown, Copy } from 'lucide-react';
 
 interface Props {
   code: string;
@@ -21,10 +21,12 @@ const wrapperClass = collapsible
     <span class="code-language">
       {lang}
     </span>
-    <button class="copy-btn" aria-label="Copy code" data-code={code}>
-      <div class="copy-btn-icon">
-        <Copy className="copy-icon" />
-      </div>
+    <button class="copy-btn" type="button" aria-label="Copy code" data-code={code}>
+      <span class="copy-btn-status" aria-live="polite"></span>
+      <span class="copy-btn-icon" aria-hidden="true">
+        <Copy className="copy-icon copy-icon--copy" />
+        <Check className="copy-icon copy-icon--check" />
+      </span>
     </button>
   </div>
   <div class="code-content">
@@ -58,12 +60,23 @@ const wrapperClass = collapsible
       // Remove old listener if present (in case of re-runs)
       const newBtn = btn.cloneNode(true) as HTMLButtonElement;
       btn.parentNode?.replaceChild(newBtn, btn);
+      let copyFeedbackTimeout: number | undefined;
 
       newBtn.addEventListener('click', async () => {
         const code = newBtn.getAttribute('data-code') || '';
+        const status = newBtn.querySelector('.copy-btn-status');
 
         try {
           await navigator.clipboard.writeText(code);
+          window.clearTimeout(copyFeedbackTimeout);
+          newBtn.classList.add('is-copied');
+          newBtn.setAttribute('aria-label', 'Code copied');
+          if (status) status.textContent = 'Copied';
+          copyFeedbackTimeout = window.setTimeout(() => {
+            newBtn.classList.remove('is-copied');
+            newBtn.setAttribute('aria-label', 'Copy code');
+            if (status) status.textContent = '';
+          }, 1800);
         } catch (err) {
           console.error('Failed to copy code:', err);
         }

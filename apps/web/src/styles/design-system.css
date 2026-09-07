@@ -343,6 +343,21 @@
     transition: none !important;
   }
 
+  .sidebar-container::before {
+    content: '';
+    position: fixed;
+    inset: var(--height-header) 0 0 0;
+    z-index: 30;
+    background: rgba(5, 8, 20, 0.64);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .sidebar-container.is-initializing::before {
+    transition: none !important;
+  }
+
   /* Default Mobile: Collapsed */
   .sidebar {
     margin-left: calc(-1 * var(--width-sidebar)); /* Fixed width for slide */
@@ -375,9 +390,17 @@
   [data-toc-toggled='true'] .sidebar-content {
     visibility: visible;
   }
+  [data-toc-toggled='true']::before {
+    opacity: 1;
+    pointer-events: auto;
+  }
 
   /* Default Desktop: Expanded */
   @variant md {
+    .sidebar-container::before {
+      content: none;
+    }
+
     .sidebar {
       margin-left: 0;
       opacity: 1;
@@ -526,6 +549,25 @@
   @apply auto-grid;
 }
 
+.spec-card-grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+
+  @apply gap-5;
+}
+
+@media (min-width: 40rem) {
+  .spec-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 64rem) {
+  .spec-card-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
 .flow__cta {
   @apply justify-self-end text-accent font-mono font-semibold text-sm no-underline transition-colors duration-200 hover:underline;
 }
@@ -671,7 +713,7 @@ a.pill {
   }
 
   .hero {
-    @apply grid gap-lg p-xl shadow-hero;
+    @apply grid gap-lg p-md sm:p-xl shadow-hero;
     background: var(--gradient-hero);
     border-radius: var(--radius-4xl);
 
@@ -1388,6 +1430,7 @@ a.pill {
   }
 
   .spec .copy-btn {
+    position: relative;
     width: 1.875rem;
     height: 1.875rem;
     padding: 0;
@@ -1404,6 +1447,11 @@ a.pill {
       color 0.2s ease;
   }
 
+  .spec .copy-btn.is-copied {
+    background: color-mix(in oklab, var(--accent) 16%, transparent);
+    color: var(--accent);
+  }
+
   .spec .copy-btn:hover {
     background: color-mix(in oklab, var(--muted) 76%, transparent);
     color: var(--foreground);
@@ -1418,6 +1466,62 @@ a.pill {
   .spec .copy-icon {
     width: 1rem;
     height: 1rem;
+  }
+
+  .spec .copy-btn-icon {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .spec .copy-icon {
+    transition:
+      opacity 0.16s ease,
+      transform 0.16s ease;
+  }
+
+  .spec .copy-icon--check {
+    position: absolute;
+    opacity: 0;
+    transform: scale(0.72);
+  }
+
+  .spec .copy-btn.is-copied .copy-icon--copy {
+    opacity: 0;
+    transform: scale(0.72);
+  }
+
+  .spec .copy-btn.is-copied .copy-icon--check {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .spec .copy-btn-status {
+    position: absolute;
+    right: calc(100% + 0.5rem);
+    top: 50%;
+    transform: translateY(-50%) translateX(0.25rem);
+    opacity: 0;
+    pointer-events: none;
+    padding: 0.25rem 0.45rem;
+    border: 1px solid color-mix(in oklab, var(--accent) 24%, transparent);
+    border-radius: 0.45rem;
+    background: color-mix(in oklab, var(--card) 92%, var(--background));
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    line-height: 1;
+    font-weight: 700;
+    white-space: nowrap;
+    transition:
+      opacity 0.16s ease,
+      transform 0.16s ease;
+  }
+
+  .spec .copy-btn.is-copied .copy-btn-status {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
   }
 
   .spec .code-content {
