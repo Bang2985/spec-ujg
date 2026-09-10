@@ -52,11 +52,11 @@ structured invocation fields, or execution rule.
 
 This module is published through the following artifacts:
 
-- `entry-binding.ttl`: ontology, published at `https://ujg.specs.openuji.org/tr/1.0/ns/entry-binding`
-- `entry-binding.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/tr/1.0/ns/entry-binding.context.jsonld`
-- `entry-binding.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/tr/1.0/ns/entry-binding.shape`
+- `entry-binding.ttl`: ontology, published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/entry-binding`
+- `entry-binding.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/entry-binding.context.jsonld`
+- `entry-binding.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/entry-binding.shape`
 
-Examples in this page compose the shared baseline context `https://ujg.specs.openuji.org/tr/1.0/ns/context.jsonld`
+Examples in this page compose the shared baseline context `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/context.jsonld`
 with the Entry Binding context.
 
 **Non-goals:**
@@ -69,7 +69,7 @@ with the Entry Binding context.
 ### Ontology {data-cop-concept="ontology"}
 
 The normative Entry Binding ontology is defined below and is published at
-`https://ujg.specs.openuji.org/tr/1.0/ns/entry-binding`. It is the authoritative structural definition
+`https://ujg.specs.openuji.org/tr/1.0-rc1/ns/entry-binding`. It is the authoritative structural definition
 for `EntryBinding` and the properties declared by this module.
 
 :::include ./entry-binding.ttl :::
@@ -77,7 +77,7 @@ for `EntryBinding` and the properties declared by this module.
 ### JSON-LD Context {data-cop-concept="jsonld-context"}
 
 The normative Entry Binding JSON-LD context is defined below and is published at
-`https://ujg.specs.openuji.org/tr/1.0/ns/entry-binding.context.jsonld`. It provides the compact JSON-LD
+`https://ujg.specs.openuji.org/tr/1.0-rc1/ns/entry-binding.context.jsonld`. It provides the compact JSON-LD
 term mappings and coercions for Entry Binding-specific properties and classes.
 
 :::include ./entry-binding.context.jsonld :::
@@ -87,7 +87,7 @@ term mappings and coercions for Entry Binding-specific properties and classes.
 ### Validation {data-cop-concept="validation"}
 
 The normative Entry Binding SHACL shape is defined below and is published at
-`https://ujg.specs.openuji.org/tr/1.0/ns/entry-binding.shape`. It is the authoritative validation
+`https://ujg.specs.openuji.org/tr/1.0-rc1/ns/entry-binding.shape`. It is the authoritative validation
 artifact for Entry Binding structural constraints.
 
 :::include ./entry-binding.shape.ttl :::
@@ -114,8 +114,8 @@ the SHACL shape.
 ```json
 {
   "@context": [
-    "https://ujg.specs.openuji.org/tr/1.0/ns/context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/entry-binding.context.jsonld"
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/entry-binding.context.jsonld"
   ],
   "@id": "https://example.com/ujg/entry-binding/checkout.jsonld",
   "@type": "UJGDocument",

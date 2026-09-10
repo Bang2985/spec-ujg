@@ -471,8 +471,8 @@ Example JSON graph:
 ```json
 {
   "@context": [
-    "https://ujg.specs.openuji.org/tr/1.0/ns/core.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/graph.context.jsonld"
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/core.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/graph.context.jsonld"
   ],
   "@id": "https://example.com/ujg/checkout-exit.jsonld",
   "@type": "UJGDocument",
@@ -605,8 +605,8 @@ Example JSON graph:
 ```json
 {
   "@context": [
-    "https://ujg.specs.openuji.org/tr/1.0/ns/core.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/graph.context.jsonld"
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/core.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/graph.context.jsonld"
   ],
   "@id": "https://example.com/ujg/checkout-with-exit.jsonld",
   "@type": "UJGDocument",
@@ -715,8 +715,8 @@ Example JSON graph with an explicit child entry selection:
 ```json
 {
   "@context": [
-    "https://ujg.specs.openuji.org/tr/1.0/ns/core.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/graph.context.jsonld"
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/core.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/graph.context.jsonld"
   ],
   "@id": "https://example.com/ujg/mfa-entry.jsonld",
   "@type": "UJGDocument",
@@ -1045,21 +1045,21 @@ This example shows a search form state with a local "Back to home page" affordan
 
 This module is published through the following artifacts:
 
-- `graph.ttl`: ontology, published at `https://ujg.specs.openuji.org/tr/1.0/ns/graph`
-- `graph.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/tr/1.0/ns/graph.context.jsonld`
-- `graph.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/tr/1.0/ns/graph.shape`
+- `graph.ttl`: ontology, published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/graph`
+- `graph.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/graph.context.jsonld`
+- `graph.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/graph.shape`
 
-Examples in this page use explicit Core and Graph context arrays for module clarity. The aggregate context `https://ujg.specs.openuji.org/tr/1.0/ns/context.jsonld` also preserves Graph's compact `stateRef` term for [=JourneyEntry=].
+Examples in this page use explicit Core and Graph context arrays for module clarity. The aggregate context `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/context.jsonld` also preserves Graph's compact `stateRef` term for [=JourneyEntry=].
 
 ### Ontology {data-cop-concept="ontology"}
 
-The normative Graph ontology is defined below and is published at `https://ujg.specs.openuji.org/tr/1.0/ns/graph`. It is the authoritative structural definition for Graph classes and properties, including `Journey`, `JourneyEntry`, `JourneyEntryIndex`, `LocalVertex`, `State`, `CompositeState`, `Transition`, `JourneyExit`, `OutgoingTransition`, `OutgoingTransitionGroup`, `defaultEntryRef`, `entryRefs`, `stateRef`, `exitRefs`, `toEntryRef`, `fromExitRef`, `toCurrentState`, and `outgoingTransitionRefs`.
+The normative Graph ontology is defined below and is published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/graph`. It is the authoritative structural definition for Graph classes and properties, including `Journey`, `JourneyEntry`, `JourneyEntryIndex`, `LocalVertex`, `State`, `CompositeState`, `Transition`, `JourneyExit`, `OutgoingTransition`, `OutgoingTransitionGroup`, `defaultEntryRef`, `entryRefs`, `stateRef`, `exitRefs`, `toEntryRef`, `fromExitRef`, `toCurrentState`, and `outgoingTransitionRefs`.
 
 :::include ./graph.ttl :::
 
 ### JSON-LD Context {data-cop-concept="jsonld-context"}
 
-The normative Graph JSON-LD context is defined below and is published at `https://ujg.specs.openuji.org/tr/1.0/ns/graph.context.jsonld`. It provides the compact JSON-LD term mappings for the Graph vocabulary used by the examples on this page.
+The normative Graph JSON-LD context is defined below and is published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/graph.context.jsonld`. It provides the compact JSON-LD term mappings for the Graph vocabulary used by the examples on this page.
 
 :::include ./graph.context.jsonld :::
 
@@ -1067,7 +1067,7 @@ The normative Graph JSON-LD context is defined below and is published at `https:
 
 ### Validation {data-cop-concept="validation"}
 
-The normative Graph SHACL shape is defined below and is published at `https://ujg.specs.openuji.org/tr/1.0/ns/graph.shape`. It is the authoritative validation artifact for Graph structural constraints.
+The normative Graph SHACL shape is defined below and is published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/graph.shape`. It is the authoritative validation artifact for Graph structural constraints.
 
 :::include ./graph.shape.ttl :::
 
@@ -1099,8 +1099,8 @@ This example lists known page entries in a [=JourneyEntryIndex=]. The search pag
 ```json
 {
   "@context": [
-    "https://ujg.specs.openuji.org/tr/1.0/ns/core.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/graph.context.jsonld"
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/core.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/graph.context.jsonld"
   ],
   "@id": "https://example.com/ujg/graph/page-index.jsonld",
   "@type": "UJGDocument",
@@ -1206,8 +1206,8 @@ This example models a form as a child journey. The form exports `submitted` thro
 ```json
 {
   "@context": [
-    "https://ujg.specs.openuji.org/tr/1.0/ns/core.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/graph.context.jsonld"
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/core.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/graph.context.jsonld"
   ],
   "@id": "https://example.com/ujg/graph/form-continuation.jsonld",
   "@type": "UJGDocument",
@@ -1370,8 +1370,8 @@ The following source journey incorrectly lists `urn:ujg:state:profile-page` in `
 ```json
 {
   "@context": [
-    "https://ujg.specs.openuji.org/tr/1.0/ns/core.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/graph.context.jsonld"
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/core.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/graph.context.jsonld"
   ],
   "@id": "https://example.com/ujg/graph/main-site.jsonld",
   "@type": "UJGDocument",

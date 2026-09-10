@@ -2,15 +2,15 @@
 
 This module defines the shared Core artifacts for UJG documents.
 
-The Core module is published under `https://ujg.specs.openuji.org/tr/1.0/ns/`. Implementations should use these canonical URLs when referencing the Core vocabulary, JSON-LD context, and SHACL validation shape.
+The Core module is published under `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/`. Implementations should use these canonical URLs when referencing the Core vocabulary, JSON-LD context, and SHACL validation shape.
 
-The `https://ujg.specs.openuji.org/tr/1.0/ns/` namespace identifies the UJG 1.0 vocabulary line. Until UJG 1.0 Final is published, release-candidate snapshots may update artifacts in this namespace. After UJG 1.0 Final, incompatible vocabulary changes require a new major-version namespace.
+The `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/` namespace identifies the UJG 1.0 vocabulary line. Until UJG 1.0 Final is published, release-candidate snapshots may update artifacts in this namespace. After UJG 1.0 Final, incompatible vocabulary changes require a new major-version namespace.
 
 The Core module consists of:
 
-- `core.ttl`: the ontology for Core classes and properties, published at `https://ujg.specs.openuji.org/tr/1.0/ns/core`
-- `core.context.jsonld`: the JSON-LD context for compact JSON-LD documents, published at `https://ujg.specs.openuji.org/tr/1.0/ns/core.context.jsonld`
-- `core.shape.ttl`: the SHACL shape used for Core validation, published at `https://ujg.specs.openuji.org/tr/1.0/ns/core.shape`
+- `core.ttl`: the ontology for Core classes and properties, published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/core`
+- `core.context.jsonld`: the JSON-LD context for compact JSON-LD documents, published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/core.context.jsonld`
+- `core.shape.ttl`: the SHACL shape used for Core validation, published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/core.shape`
 
 ## Terminology
 
@@ -82,7 +82,7 @@ Example JSON document:
 
 ```json
 {
-  "@context": "https://ujg.specs.openuji.org/tr/1.0/ns/core.context.jsonld",
+  "@context": "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/core.context.jsonld",
   "@id": "https://example.com/ujg/core/minimal.jsonld",
   "@type": "UJGDocument",
   "nodes": [
@@ -98,13 +98,13 @@ Example JSON document:
 
 ### Ontology {data-cop-concept="ontology"}
 
-The normative Core ontology is defined in the Turtle document below and is published at `https://ujg.specs.openuji.org/tr/1.0/ns/core`. It declares the `UJGDocument` and `Node` classes together with the Core properties used by this module.
+The normative Core ontology is defined in the Turtle document below and is published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/core`. It declares the `UJGDocument` and `Node` classes together with the Core properties used by this module.
 
 :::include ./core.ttl :::
 
 ### JSON-LD Context {data-cop-concept="jsonld-context"}
 
-The normative Core JSON-LD context is defined below and is published at `https://ujg.specs.openuji.org/tr/1.0/ns/core.context.jsonld`. Examples in this section use the compact terms from this context, including `@id`, `@type`, `imports`, `nodes`, and `extensions`.
+The normative Core JSON-LD context is defined below and is published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/core.context.jsonld`. Examples in this section use the compact terms from this context, including `@id`, `@type`, `imports`, `nodes`, and `extensions`.
 
 :::include ./core.context.jsonld :::
 
@@ -120,16 +120,16 @@ The normative Core JSON-LD context is defined below and is published at `https:/
 
 <spec-statement>Specifications or deployments **MAY** publish convenience aggregate contexts that compose the Core context with additional contexts, but such aggregate contexts are outside the scope of Core.</spec-statement>
 
-A composed context is expressed as a JSON-LD `@context` array in which the Core context appears together with one or more additional contexts required by the document and published at `https://ujg.specs.openuji.org/tr/1.0/ns/context.jsonld`
+A composed context is expressed as a JSON-LD `@context` array in which the Core context appears together with one or more additional contexts required by the document and published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/context.jsonld`
 
 ##### Composed Context Example
 ```json
 {
   "@context": [
-    "https://ujg.specs.openuji.org/tr/1.0/ns/core.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/graph.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/surface.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/runtime.context.jsonld"
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/core.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/graph.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/surface.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/runtime.context.jsonld"
   ]
 }
 ```
@@ -196,19 +196,19 @@ A composed context is expressed as a JSON-LD `@context` array in which the Core 
 
 ### Validation {data-cop-concept="validation"}
 
-The normative Core SHACL shape is defined below and is published at `https://ujg.specs.openuji.org/tr/1.0/ns/core.shape`. It constrains [=UJGDocument=] and [=Node=] instances and is the validation artifact for Core semantics.
+The normative Core SHACL shape is defined below and is published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/core.shape`. It constrains [=UJGDocument=] and [=Node=] instances and is the validation artifact for Core semantics.
 
 :::include ./core.shape.ttl :::
 
 ## Examples
 
-The examples below are informative. Each example uses `https://ujg.specs.openuji.org/tr/1.0/ns/core.context.jsonld` as its JSON-LD context and stays within the Core vocabulary. `extensions` appears only on node objects; document-level `extensions` is invalid in Core. Graph-native optional terms belong in composed module contexts, not inside `extensions`.
+The examples below are informative. Each example uses `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/core.context.jsonld` as its JSON-LD context and stays within the Core vocabulary. `extensions` appears only on node objects; document-level `extensions` is invalid in Core. Graph-native optional terms belong in composed module contexts, not inside `extensions`.
 
 ### Minimal Document
 
 ```json
 {
-  "@context": "https://ujg.specs.openuji.org/tr/1.0/ns/core.context.jsonld",
+  "@context": "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/core.context.jsonld",
   "@id": "https://example.com/ujg/core/minimal.jsonld",
   "@type": "UJGDocument"
 }
@@ -218,7 +218,7 @@ The examples below are informative. Each example uses `https://ujg.specs.openuji
 
 ```json
 {
-  "@context": "https://ujg.specs.openuji.org/tr/1.0/ns/core.context.jsonld",
+  "@context": "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/core.context.jsonld",
   "@id": "https://example.com/ujg/flows/order/main.jsonld",
   "@type": "UJGDocument",
   "imports": [
@@ -241,7 +241,7 @@ This follows [[RFC3986]] relative-reference resolution and the [[JSON-LD 1.1.]] 
 
 ```json
 {
-  "@context": "https://ujg.specs.openuji.org/tr/1.0/ns/core.context.jsonld",
+  "@context": "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/core.context.jsonld",
   "@id": "https://example.com/ujg/core/nodes.jsonld",
   "@type": "UJGDocument",
   "nodes": [

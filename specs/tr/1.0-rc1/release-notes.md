@@ -8,16 +8,16 @@ Compared with the previous public snapshot, [`2026.06`](../2026.06/), RC1 expand
 
 - Release tag: `v1.0-rc1`
 - Snapshot path: `/tr/1.0-rc1/`
-- Vocabulary namespace line: `/tr/1.0/ns/`
+- Vocabulary namespace line: `/tr/1.0-rc1/ns/`
 - Release maturity: release candidate
 - Intended status: pre-release until UJG 1.0 Final is published
 
-The `https://ujg.specs.openuji.org/tr/1.0/ns/` namespace identifies the UJG 1.0 vocabulary line. Until UJG 1.0 Final is published, release-candidate snapshots may update artifacts in this namespace. After UJG 1.0 Final, incompatible vocabulary changes require a new major-version namespace.
+The `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/` namespace identifies the UJG 1.0 vocabulary line. Until UJG 1.0 Final is published, release-candidate snapshots may update artifacts in this namespace. After UJG 1.0 Final, incompatible vocabulary changes require a new major-version namespace.
 
 ## Highlights Since 2026.06
 
 - Added the `/tr/1.0-rc1/` release-candidate snapshot.
-- Published UJG 1.0 vocabulary artifacts under `/tr/1.0/ns/`.
+- Published UJG 1.0 vocabulary artifacts under `/tr/1.0-rc1/ns/`.
 - Promoted all ED and RC1 specifications to at least Draft maturity.
 - Added the top-level Surface specification.
 - Added the Profiles specification as a Draft-quality conformance model.

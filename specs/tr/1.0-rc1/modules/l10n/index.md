@@ -163,11 +163,11 @@ The module also defines non-reference properties `l10n:localeCode`, `l10n:argume
 
 This module is published through the following artifacts:
 
-- `l10n.ttl`: ontology, published at `https://ujg.specs.openuji.org/tr/1.0/ns/l10n`
-- `l10n.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/tr/1.0/ns/l10n.context.jsonld`
-- `l10n.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/tr/1.0/ns/l10n.shape`
+- `l10n.ttl`: ontology, published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/l10n`
+- `l10n.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/l10n.context.jsonld`
+- `l10n.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/l10n.shape`
 
-Examples in this page compose the shared baseline context `https://ujg.specs.openuji.org/tr/1.0/ns/context.jsonld`
+Examples in this page compose the shared baseline context `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/context.jsonld`
 with the Localization context.
 
 **Non-goals:**
@@ -180,7 +180,7 @@ with the Localization context.
 ### Ontology {data-cop-concept="ontology"}
 
 The normative Localization ontology is defined below and is published at
-`https://ujg.specs.openuji.org/tr/1.0/ns/l10n`. It is the authoritative structural definition for
+`https://ujg.specs.openuji.org/tr/1.0-rc1/ns/l10n`. It is the authoritative structural definition for
 `Locale`, `MessageMeta`, `Message`, and the properties declared by this module.
 
 :::include ./l10n.ttl :::
@@ -188,7 +188,7 @@ The normative Localization ontology is defined below and is published at
 ### JSON-LD Context {data-cop-concept="jsonld-context"}
 
 The normative Localization JSON-LD context is defined below and is published at
-`https://ujg.specs.openuji.org/tr/1.0/ns/l10n.context.jsonld`. It provides the compact JSON-LD term
+`https://ujg.specs.openuji.org/tr/1.0-rc1/ns/l10n.context.jsonld`. It provides the compact JSON-LD term
 mappings and coercions for Localization-specific properties and classes.
 
 :::include ./l10n.context.jsonld :::
@@ -198,7 +198,7 @@ mappings and coercions for Localization-specific properties and classes.
 ### Validation {data-cop-concept="validation"}
 
 The normative Localization SHACL shape is defined below and is published at
-`https://ujg.specs.openuji.org/tr/1.0/ns/l10n.shape`. It is the authoritative validation artifact for
+`https://ujg.specs.openuji.org/tr/1.0-rc1/ns/l10n.shape`. It is the authoritative validation artifact for
 Localization structural constraints.
 
 :::include ./l10n.shape.ttl :::
@@ -235,9 +235,9 @@ the SHACL shape.
 ```json
 {
   "@context": [
-    "https://ujg.specs.openuji.org/tr/1.0/ns/core.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/graph.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/l10n.context.jsonld"
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/core.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/graph.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/l10n.context.jsonld"
   ],
   "@type": "UJGDocument",
   "@id": "https://example.com/ujg/l10n/locale-switch.jsonld",
@@ -263,8 +263,8 @@ the SHACL shape.
 ```json
 {
   "@context": [
-    "https://ujg.specs.openuji.org/tr/1.0/ns/context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/l10n.context.jsonld"
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/l10n.context.jsonld"
   ],
   "@id": "https://example.com/ujg/l10n/checkout.jsonld",
   "@type": "UJGDocument",

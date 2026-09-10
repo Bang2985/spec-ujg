@@ -14,7 +14,7 @@ behavior. Supported Graph nodes remain valid without surfaces, and surfaces rema
 runtime instances.
 
 Examples compose the shared baseline context with
-`https://ujg.specs.openuji.org/tr/1.0/ns/surface.context.jsonld`.
+`https://ujg.specs.openuji.org/tr/1.0-rc1/ns/surface.context.jsonld`.
 
 ## Terminology
 
@@ -241,19 +241,19 @@ Example JSON node:
 
 ### Ontology {data-cop-concept="ontology"}
 
-The Surface ontology is published at `https://ujg.specs.openuji.org/tr/1.0/ns/surface`.
+The Surface ontology is published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/surface`.
 
 :::include ./surface.ttl :::
 
 ### JSON-LD Context {data-cop-concept="jsonld-context"}
 
-The Surface context is published at `https://ujg.specs.openuji.org/tr/1.0/ns/surface.context.jsonld`.
+The Surface context is published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/surface.context.jsonld`.
 
 :::include ./surface.context.jsonld :::
 
 ### Validation {data-cop-concept="validation"}
 
-The Surface SHACL shape is published at `https://ujg.specs.openuji.org/tr/1.0/ns/surface.shape`.
+The Surface SHACL shape is published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/surface.shape`.
 
 :::include ./surface.shape.ttl :::
 
@@ -264,8 +264,8 @@ The Surface SHACL shape is published at `https://ujg.specs.openuji.org/tr/1.0/ns
 ```json
 {
   "@context": [
-    "https://ujg.specs.openuji.org/tr/1.0/ns/context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/surface.context.jsonld"
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/surface.context.jsonld"
   ],
   "@id": "https://example.com/ujg/surface/checkout.jsonld",
   "@type": "UJGDocument",

@@ -14,6 +14,7 @@
     "agent-pack:install:codex": "pnpm --filter @openuji/ujg-agent-pack run install:codex",
     "agent-pack:test": "pnpm --filter @openuji/ujg-agent-pack run test:install",
     "agent-pack:pack": "pnpm --filter @openuji/ujg-agent-pack run pack:artifact",
+    "tr-snapshots:freeze": "node scripts/freeze-tr-snapshots.js",
     "content-manifests:check": "node scripts/content-manifests.js check",
     "content-manifests:update": "node scripts/content-manifests.js update",
     "prepare": "husky"

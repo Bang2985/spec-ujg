@@ -27,8 +27,8 @@ When using Localization terms, include the Localization context:
 
 ```json
 [
-  "https://ujg.specs.openuji.org/tr/1.0/ns/context.jsonld",
-  "https://ujg.specs.openuji.org/tr/1.0/ns/l10n.context.jsonld"
+  "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/context.jsonld",
+  "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/l10n.context.jsonld"
 ]
 ```
 

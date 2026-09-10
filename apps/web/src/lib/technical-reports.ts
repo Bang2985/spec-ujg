@@ -18,7 +18,6 @@ export const TECHNICAL_REPORTS = [
     published: '2026-07-27',
     workspace: 'tr-1-0-rc1',
     basePath: '/tr/1.0-rc1',
-    namespaceSlug: '1.0',
   },
   {
     slug: '2026.06',
@@ -36,6 +35,10 @@ export const BASELINE_CONTEXT_ARTIFACTS = [
   'runtime.context.jsonld',
   'experience.context.jsonld',
 ] as const;
+
+export function shouldRenderTechnicalReportRoutes(): boolean {
+  return process.env.UJG_RENDER_TR_ROUTES === '1';
+}
 
 export function getTechnicalReport(slug: string): TechnicalReport | undefined {
   return TECHNICAL_REPORTS.find((report) => report.slug === slug);

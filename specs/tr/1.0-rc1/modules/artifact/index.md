@@ -119,9 +119,9 @@ preview hints, but those hints are not part of this module.
 
 This module is published through the following artifacts:
 
-- `artifact.ttl`: ontology, published at `https://ujg.specs.openuji.org/tr/1.0/ns/artifact`
-- `artifact.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/tr/1.0/ns/artifact.context.jsonld`
-- `artifact.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/tr/1.0/ns/artifact.shape`
+- `artifact.ttl`: ontology, published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/artifact`
+- `artifact.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/artifact.context.jsonld`
+- `artifact.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/artifact.shape`
 
 Examples in this page compose the Core context with the Artifact context. Examples that use effects
 also compose the Effect context; examples that use touchpoint metadata also compose the Surface
@@ -130,21 +130,21 @@ context; examples that use `nameRef` also compose the Localization context.
 ### Ontology {data-cop-concept="ontology"}
 
 The normative Artifact ontology is defined below and is published at
-`https://ujg.specs.openuji.org/tr/1.0/ns/artifact`.
+`https://ujg.specs.openuji.org/tr/1.0-rc1/ns/artifact`.
 
 :::include ./artifact.ttl :::
 
 ### JSON-LD Context {data-cop-concept="jsonld-context"}
 
 The normative Artifact JSON-LD context is defined below and is published at
-`https://ujg.specs.openuji.org/tr/1.0/ns/artifact.context.jsonld`.
+`https://ujg.specs.openuji.org/tr/1.0-rc1/ns/artifact.context.jsonld`.
 
 :::include ./artifact.context.jsonld :::
 
 ### Validation {data-cop-concept="validation"}
 
 The normative Artifact SHACL shape is defined below and is published at
-`https://ujg.specs.openuji.org/tr/1.0/ns/artifact.shape`.
+`https://ujg.specs.openuji.org/tr/1.0-rc1/ns/artifact.shape`.
 
 :::include ./artifact.shape.ttl :::
 
@@ -172,9 +172,9 @@ the SHACL shape.
 ```json
 {
   "@context": [
-    "https://ujg.specs.openuji.org/tr/1.0/ns/core.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/effect.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/artifact.context.jsonld"
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/core.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/effect.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/artifact.context.jsonld"
   ],
   "@id": "https://example.com/ujg/artifact/export.jsonld",
   "@type": "UJGDocument",
@@ -197,10 +197,10 @@ the SHACL shape.
 ```json
 {
   "@context": [
-    "https://ujg.specs.openuji.org/tr/1.0/ns/core.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/l10n.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/effect.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/artifact.context.jsonld"
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/core.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/l10n.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/effect.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/artifact.context.jsonld"
   ],
   "@id": "https://example.com/ujg/artifact/named-report.jsonld",
   "@type": "UJGDocument",
@@ -240,10 +240,10 @@ whether they produce or consume that resource.
 ```json
 {
   "@context": [
-    "https://ujg.specs.openuji.org/tr/1.0/ns/core.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/surface.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/effect.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/artifact.context.jsonld"
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/core.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/surface.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/effect.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/artifact.context.jsonld"
   ],
   "@id": "https://example.com/ujg/artifact/federated-share.jsonld",
   "@type": "UJGDocument",

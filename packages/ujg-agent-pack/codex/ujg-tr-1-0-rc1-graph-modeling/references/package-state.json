@@ -12,7 +12,7 @@
     "name": "ujg-tr-1-0-rc1-graph-modeling"
   },
   "sourceHash": "sha256:9ff95a5729e483c47f3936628b606f1047315eeebc2e10d40ec41b2b96293002",
-  "specHash": "sha256:bdf9b4372426540a3a2caf463cb6ddc7af2413d6fcb5a4e10cee38ce637bff01",
+  "specHash": "sha256:e2386aabe9f134d263571b3075875d706130454c65296c86fe9ccb2708db5882",
   "target": {
     "id": "tr/1.0-rc1",
     "label": "Technical Report 1.0 RC1"

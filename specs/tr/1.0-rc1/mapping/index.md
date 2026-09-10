@@ -16,7 +16,7 @@ Mapping roots are traversable Graph [=Journey|Journeys=]. A [=JourneyEntryIndex=
 Mapping surfaces model drift, tracking gaps, direct invocations, menu jumps, and other out-of-model
 movement. It does not assume every jump is an error.
 
-Examples in this page compose the shared baseline context `https://ujg.specs.openuji.org/tr/1.0/ns/context.jsonld`
+Examples in this page compose the shared baseline context `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/context.jsonld`
 with the Mapping context.
 
 ## Terminology
@@ -254,9 +254,9 @@ The repeated mapped step for the same composite state at event `:200` does not r
 ```json
 {
   "@context": [
-    "https://ujg.specs.openuji.org/tr/1.0/ns/context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/phase.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/mapping.context.jsonld"
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/phase.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/mapping.context.jsonld"
   ],
   "@type": "UJGDocument",
   "nodes": [
@@ -325,21 +325,21 @@ This module is published through the following artifacts.
 ### Ontology {data-cop-concept="ontology"}
 
 The normative Mapping ontology is defined below and is published at
-`https://ujg.specs.openuji.org/tr/1.0/ns/mapping`.
+`https://ujg.specs.openuji.org/tr/1.0-rc1/ns/mapping`.
 
 :::include ./mapping.ttl :::
 
 ### JSON-LD Context {data-cop-concept="jsonld-context"}
 
 The normative Mapping JSON-LD context is defined below and is published at
-`https://ujg.specs.openuji.org/tr/1.0/ns/mapping.context.jsonld`.
+`https://ujg.specs.openuji.org/tr/1.0-rc1/ns/mapping.context.jsonld`.
 
 :::include ./mapping.context.jsonld :::
 
 ### Validation {data-cop-concept="validation"}
 
 The normative Mapping SHACL shape is defined below and is published at
-`https://ujg.specs.openuji.org/tr/1.0/ns/mapping.shape`.
+`https://ujg.specs.openuji.org/tr/1.0-rc1/ns/mapping.shape`.
 
 :::include ./mapping.shape.ttl :::
 
@@ -350,8 +350,8 @@ The normative Mapping SHACL shape is defined below and is published at
 ```json
 {
   "@context": [
-    "https://ujg.specs.openuji.org/tr/1.0/ns/context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/mapping.context.jsonld"
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/mapping.context.jsonld"
   ],
   "@id": "https://example.com/ujg/mapping/execution-12345.jsonld",
   "@type": "UJGDocument",
@@ -405,8 +405,8 @@ model and does not need a serialized status value.
 ```json
 {
   "@context": [
-    "https://ujg.specs.openuji.org/tr/1.0/ns/context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/mapping.context.jsonld"
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/mapping.context.jsonld"
   ],
   "@id": "https://example.com/ujg/mapping/affordance-events.jsonld",
   "@type": "UJGDocument",

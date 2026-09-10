@@ -451,32 +451,32 @@ an `ObservationBinding`.
 
 This module is published through the following artifacts:
 
-- `observability.ttl`: ontology, published at `https://ujg.specs.openuji.org/tr/1.0/ns/observability`
-- `observability.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/tr/1.0/ns/observability.context.jsonld`
-- `observability.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/tr/1.0/ns/observability.shape`
+- `observability.ttl`: ontology, published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/observability`
+- `observability.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/observability.context.jsonld`
+- `observability.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/observability.shape`
 
-Examples in this page compose the shared baseline context `https://ujg.specs.openuji.org/tr/1.0/ns/context.jsonld`
+Examples in this page compose the shared baseline context `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/context.jsonld`
 with the Surface, Localization, and Observability contexts. Runtime appears only in the informative
 correlation example.
 
 ### Ontology {data-cop-concept="ontology"}
 
 The normative Observability ontology is defined below and is published at
-`https://ujg.specs.openuji.org/tr/1.0/ns/observability`.
+`https://ujg.specs.openuji.org/tr/1.0-rc1/ns/observability`.
 
 :::include ./observability.ttl :::
 
 ### JSON-LD Context {data-cop-concept="jsonld-context"}
 
 The normative Observability JSON-LD context is defined below and is published at
-`https://ujg.specs.openuji.org/tr/1.0/ns/observability.context.jsonld`.
+`https://ujg.specs.openuji.org/tr/1.0-rc1/ns/observability.context.jsonld`.
 
 :::include ./observability.context.jsonld :::
 
 ### Validation {data-cop-concept="validation"}
 
 The normative Observability SHACL shape is defined below and is published at
-`https://ujg.specs.openuji.org/tr/1.0/ns/observability.shape`.
+`https://ujg.specs.openuji.org/tr/1.0-rc1/ns/observability.shape`.
 
 :::include ./observability.shape.ttl :::
 
@@ -531,10 +531,10 @@ the SHACL shape.
 ```json
 {
   "@context": [
-    "https://ujg.specs.openuji.org/tr/1.0/ns/context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/surface.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/l10n.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/observability.context.jsonld"
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/surface.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/l10n.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/observability.context.jsonld"
   ],
   "@id": "https://example.com/ujg/observability/share.jsonld",
   "@type": "UJGDocument",
@@ -645,10 +645,10 @@ identifiers.
 ```json
 {
   "@context": [
-    "https://ujg.specs.openuji.org/tr/1.0/ns/context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/surface.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/l10n.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/observability.context.jsonld"
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/surface.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/l10n.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/observability.context.jsonld"
   ],
   "@id": "https://example.com/ujg/observability/activation-modalities.jsonld",
   "@type": "UJGDocument",
@@ -741,11 +741,11 @@ identifiers.
 ```json
 {
   "@context": [
-    "https://ujg.specs.openuji.org/tr/1.0/ns/context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/surface.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/l10n.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/runtime.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/observability.context.jsonld"
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/surface.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/l10n.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/runtime.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/observability.context.jsonld"
   ],
   "@id": "https://example.com/ujg/observability/runtime-correlation.jsonld",
   "@type": "UJGDocument",

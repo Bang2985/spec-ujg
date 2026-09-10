@@ -8,6 +8,8 @@ import react from '@astrojs/react';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://ujg.specs.openuji.org',
+  outDir: process.env.UJG_ASTRO_OUT_DIR || 'dist',
+  publicDir: process.env.UJG_ASTRO_PUBLIC_DIR || 'public',
   vite: {
     optimizeDeps: {
       include: ['@radix-ui/react-select', 'lucide-react', 'mermaid'],

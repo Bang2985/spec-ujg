@@ -6,10 +6,16 @@ import Header from '@/components/astro/speculator/w3c-cg/Header.astro';
 import MaturityPill from '@/components/astro/speculator/w3c-cg/MaturityPill.astro';
 import SpecLayout from '@/layouts/SpecLayout.astro';
 import { getDocuments, loadDocument } from '@/lib/load';
-import { TECHNICAL_REPORTS, type TechnicalReport } from '@/lib/technical-reports';
+import {
+  TECHNICAL_REPORTS,
+  shouldRenderTechnicalReportRoutes,
+  type TechnicalReport,
+} from '@/lib/technical-reports';
 import { type Document } from '@openuji/speculator';
 
 export async function getStaticPaths() {
+  if (!shouldRenderTechnicalReportRoutes()) return [];
+
   const paths = [];
 
   for (const report of TECHNICAL_REPORTS) {

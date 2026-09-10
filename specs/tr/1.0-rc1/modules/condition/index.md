@@ -115,24 +115,24 @@ interoperable vocabulary.
 
 This module is published through the following artifacts:
 
-- `condition.ttl`: ontology, published at `https://ujg.specs.openuji.org/tr/1.0/ns/condition`
-- `condition.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/tr/1.0/ns/condition.context.jsonld`
-- `condition.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/tr/1.0/ns/condition.shape`
+- `condition.ttl`: ontology, published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/condition`
+- `condition.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/condition.context.jsonld`
+- `condition.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/condition.shape`
 
 Examples in this page compose the shared baseline context:
 
 ```json
 [
-  "https://ujg.specs.openuji.org/tr/1.0/ns/core.context.jsonld",
-  "https://ujg.specs.openuji.org/tr/1.0/ns/graph.context.jsonld",
-  "https://ujg.specs.openuji.org/tr/1.0/ns/condition.context.jsonld"
+  "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/core.context.jsonld",
+  "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/graph.context.jsonld",
+  "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/condition.context.jsonld"
 ]
 ```
 
 ### Ontology {data-cop-concept="ontology"}
 
 The normative Conditions ontology is defined below and is published at
-`https://ujg.specs.openuji.org/tr/1.0/ns/condition`. It is the authoritative structural definition for
+`https://ujg.specs.openuji.org/tr/1.0-rc1/ns/condition`. It is the authoritative structural definition for
 `Condition`, `ConditionSet`, and the properties declared by this module.
 
 :::include ./condition.ttl :::
@@ -140,7 +140,7 @@ The normative Conditions ontology is defined below and is published at
 ### JSON-LD Context {data-cop-concept="jsonld-context"}
 
 The normative Conditions JSON-LD context is defined below and is published at
-`https://ujg.specs.openuji.org/tr/1.0/ns/condition.context.jsonld`. It provides the compact JSON-LD term
+`https://ujg.specs.openuji.org/tr/1.0-rc1/ns/condition.context.jsonld`. It provides the compact JSON-LD term
 mappings and coercions for Conditions-specific properties and classes.
 
 :::include ./condition.context.jsonld :::
@@ -150,7 +150,7 @@ mappings and coercions for Conditions-specific properties and classes.
 ### Validation {data-cop-concept="validation"}
 
 The normative Conditions SHACL shape is defined below and is published at
-`https://ujg.specs.openuji.org/tr/1.0/ns/condition.shape`. It is the authoritative validation artifact
+`https://ujg.specs.openuji.org/tr/1.0-rc1/ns/condition.shape`. It is the authoritative validation artifact
 for Conditions structural constraints.
 
 :::include ./condition.shape.ttl :::
@@ -181,9 +181,9 @@ Codex chat branch-check example:
 ```json
 {
   "@context": [
-    "https://ujg.specs.openuji.org/tr/1.0/ns/core.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/graph.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/condition.context.jsonld"
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/core.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/graph.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/condition.context.jsonld"
   ],
   "@id": "https://example.com/ujg/codex/branch-condition.jsonld",
   "@type": "UJGDocument",

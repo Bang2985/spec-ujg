@@ -1,0 +1,67 @@
+/tr/*/ns/*.jsonld
+  Content-Type: application/ld+json; charset=utf-8
+  Cache-Control: public, max-age=3600
+
+/tr/*/ns/*.shape
+  Content-Type: text/turtle; charset=utf-8
+  Cache-Control: public, max-age=3600
+
+/tr/*/ns/artifact
+  Content-Type: text/turtle; charset=utf-8
+  Cache-Control: public, max-age=3600
+
+/tr/*/ns/condition
+  Content-Type: text/turtle; charset=utf-8
+  Cache-Control: public, max-age=3600
+
+/tr/*/ns/core
+  Content-Type: text/turtle; charset=utf-8
+  Cache-Control: public, max-age=3600
+
+/tr/*/ns/design-system
+  Content-Type: text/turtle; charset=utf-8
+  Cache-Control: public, max-age=3600
+
+/tr/*/ns/effect
+  Content-Type: text/turtle; charset=utf-8
+  Cache-Control: public, max-age=3600
+
+/tr/*/ns/entry-binding
+  Content-Type: text/turtle; charset=utf-8
+  Cache-Control: public, max-age=3600
+
+/tr/*/ns/experience
+  Content-Type: text/turtle; charset=utf-8
+  Cache-Control: public, max-age=3600
+
+/tr/*/ns/experience-annotation
+  Content-Type: text/turtle; charset=utf-8
+  Cache-Control: public, max-age=3600
+
+/tr/*/ns/graph
+  Content-Type: text/turtle; charset=utf-8
+  Cache-Control: public, max-age=3600
+
+/tr/*/ns/l10n
+  Content-Type: text/turtle; charset=utf-8
+  Cache-Control: public, max-age=3600
+
+/tr/*/ns/mapping
+  Content-Type: text/turtle; charset=utf-8
+  Cache-Control: public, max-age=3600
+
+/tr/*/ns/observability
+  Content-Type: text/turtle; charset=utf-8
+  Cache-Control: public, max-age=3600
+
+/tr/*/ns/phase
+  Content-Type: text/turtle; charset=utf-8
+  Cache-Control: public, max-age=3600
+
+/tr/*/ns/runtime
+  Content-Type: text/turtle; charset=utf-8
+  Cache-Control: public, max-age=3600
+
+/tr/*/ns/surface
+  Content-Type: text/turtle; charset=utf-8
+  Cache-Control: public, max-age=3600

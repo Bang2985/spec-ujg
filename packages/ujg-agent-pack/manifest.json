@@ -222,16 +222,16 @@
           "name": "ujg-tr-1-0-rc1-modeling",
           "source": "sources/tr/1.0-rc1/skills/root/skill.md",
           "sourceHash": "sha256:413081758fec679af723f9de8f61859256aecd0c2dd3a294e607e17324876cd3",
-          "specHash": "sha256:fedb6ddf4ac159e9152a8b5122aafa43a90b40d0691b7f31f3f9feea00f4b30a"
+          "specHash": "sha256:6bc59946cb23733341ca62efec1dcd6fd4146c576383b4f764e4128d8db3612c"
         },
         {
-          "artifactHash": "sha256:5eabe3122708804b0d972b85753720b8b3fe0ad0798e387f9bd26062566df403",
+          "artifactHash": "sha256:65d3fc0a939c2c2d936035288c7968f89e8b68c5a856684bab33cb4ef7f4b0e3",
           "key": "core",
           "moduleId": "core",
           "name": "ujg-tr-1-0-rc1-core-modeling",
           "source": "sources/tr/1.0-rc1/skills/core/skill.md",
-          "sourceHash": "sha256:eccd352123934673ae763976a7f8d9239b5eda70ee30365b7ba3ce10034500a0",
-          "specHash": "sha256:44a67c1c8a7ea87a2748a13036a4560a7e313a107617e5fdd06e796db3f7182e"
+          "sourceHash": "sha256:2ec34bba425957125b61f19f846da0383f04d950e7a89d6d28678829c8098ea0",
+          "specHash": "sha256:2faa81029947eb25eececea52f713826145217225cf3ef56185288a5116d6a14"
         },
         {
           "artifactHash": "sha256:d37d4cf2287826e79bb88107ae73f4f51266a5d327b96f09fb5b5c4936a9379b",
@@ -240,34 +240,34 @@
           "name": "ujg-tr-1-0-rc1-graph-modeling",
           "source": "sources/tr/1.0-rc1/skills/graph/skill.md",
           "sourceHash": "sha256:9ff95a5729e483c47f3936628b606f1047315eeebc2e10d40ec41b2b96293002",
-          "specHash": "sha256:bdf9b4372426540a3a2caf463cb6ddc7af2413d6fcb5a4e10cee38ce637bff01"
+          "specHash": "sha256:e2386aabe9f134d263571b3075875d706130454c65296c86fe9ccb2708db5882"
         },
         {
-          "artifactHash": "sha256:6fe8e751689e2201c6d7753fc6c6cefcd9130f40e5a08f73853be29fae92d38d",
+          "artifactHash": "sha256:aba7e1eaf1473594d88f317b9e1594588d2adb1a09251f8edd72d5857fc7c8d4",
           "key": "design-system",
           "moduleId": "modules/design-system",
           "name": "ujg-tr-1-0-rc1-design-system-modeling",
           "source": "sources/tr/1.0-rc1/skills/design-system/skill.md",
-          "sourceHash": "sha256:7490ab54278af06e98fd8a973f0affd726baa32615e0e7076e91e0c3c47d8138",
-          "specHash": "sha256:436a7252c1cf4fe6962eed10d2ce579e234fd8d1b6a985b09639b9cfaa586866"
+          "sourceHash": "sha256:41a3a5b445a6ea8d8674162ff2a63de1128c8dd67251d321eb7daa46c831cdc2",
+          "specHash": "sha256:691ae3bb2fe10896f674342bea7d89d564e470703626fe2fefd65e646c432c09"
         },
         {
-          "artifactHash": "sha256:1fad6b0e474020c68d5eafb5a8bc38a8e5fb7b80781197a1f26efb642aac1e6a",
+          "artifactHash": "sha256:aa79a90bc5d7fea08ff0c4d86f9ec02259718f133efb37f28f498033f2339a44",
           "key": "localization",
           "moduleId": "modules/l10n",
           "name": "ujg-tr-1-0-rc1-l10n-modeling",
           "source": "sources/tr/1.0-rc1/skills/localization/skill.md",
-          "sourceHash": "sha256:0e0d00f7f42fc838c234d3f216d75a814aa4e6c385ac4cf08d6daeed7704622b",
-          "specHash": "sha256:fb1a6404e1e6faf6c9b5c04d7b74b2a2ef14f8c52b535991c0aab24a4dbeb9b4"
+          "sourceHash": "sha256:3fd9b8ca5beb3aee42e375c62427a49ed3d8063bc2a15806265873d2555dfffe",
+          "specHash": "sha256:aa4f91a764c731d8c314efcec266a218c3127b3dd449476ad27701372151776e"
         },
         {
-          "artifactHash": "sha256:d868f0b959220aa11ca2a184cd07891bf7bd96a6dd6ea465ebf8adc4bcf975dd",
+          "artifactHash": "sha256:bc2ee6e771aeaca8de225fbefabb4f249b19ca6d3fce7d45a3a2c8ddf62f634b",
           "key": "observability",
           "moduleId": "modules/observability",
           "name": "ujg-tr-1-0-rc1-observability-modeling",
           "source": "sources/tr/1.0-rc1/skills/observability/skill.md",
-          "sourceHash": "sha256:4297deb53c6a07ea1b5f35d289e28f0b47f005be2989ea9c737d5c096d677766",
-          "specHash": "sha256:57addd895296f3336db8d7651899f3acce509853703dda53d1316e6338619beb"
+          "sourceHash": "sha256:539a91164c1cd3a3b47eaab25e6c33a104c6bdecda6ad8d0d344f167b2e22700",
+          "specHash": "sha256:8c60d9ae47f4f06a686b6b9e16c7085b621ad48df554ecb83a6baa59961fc746"
         }
       ],
       "specRoot": "specs/tr/1.0-rc1"

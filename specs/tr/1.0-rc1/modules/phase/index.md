@@ -13,7 +13,7 @@ or imply Runtime execution order. Runtime occurrence and phase-start derivation 
 [[UJG Mapping]], not by this module.
 
 Documents using this module compose the Graph context with
-`https://ujg.specs.openuji.org/tr/1.0/ns/phase.context.jsonld`.
+`https://ujg.specs.openuji.org/tr/1.0-rc1/ns/phase.context.jsonld`.
 
 ## Terminology
 
@@ -112,19 +112,19 @@ Example JSON node:
 
 ### Ontology {data-cop-concept="ontology"}
 
-The Phase ontology is published at `https://ujg.specs.openuji.org/tr/1.0/ns/phase`.
+The Phase ontology is published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/phase`.
 
 :::include ./phase.ttl :::
 
 ### JSON-LD Context {data-cop-concept="jsonld-context"}
 
-The Phase context is published at `https://ujg.specs.openuji.org/tr/1.0/ns/phase.context.jsonld`.
+The Phase context is published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/phase.context.jsonld`.
 
 :::include ./phase.context.jsonld :::
 
 ### Validation {data-cop-concept="validation"}
 
-The Phase SHACL shape is published at `https://ujg.specs.openuji.org/tr/1.0/ns/phase.shape`.
+The Phase SHACL shape is published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/phase.shape`.
 
 :::include ./phase.shape.ttl :::
 
@@ -135,8 +135,8 @@ The Phase SHACL shape is published at `https://ujg.specs.openuji.org/tr/1.0/ns/p
 ```json
 {
   "@context": [
-    "https://ujg.specs.openuji.org/tr/1.0/ns/context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/phase.context.jsonld"
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/phase.context.jsonld"
   ],
   "@id": "https://example.com/ujg/phase/checkout.jsonld",
   "@type": "UJGDocument",
