@@ -1,7 +1,5 @@
 ---
-import type { MarkdownHeading } from 'astro';
-import type { TocEntry } from '@openuji/speculator';
-
+import BlockRenderer from '@/components/astro/speculator/BlockRenderer.astro';
 import CaseStudyLayout from '@/layouts/CaseStudyLayout.astro';
 import { getCaseStudies, type CaseStudy } from '@/lib/case-studies';
 
@@ -14,45 +12,8 @@ export async function getStaticPaths() {
 }
 
 const { study } = Astro.props as { study: CaseStudy };
-const { Content } = study.post;
-const headings =
-  typeof study.post.getHeadings === 'function'
-    ? (study.post.getHeadings() as MarkdownHeading[])
-    : [];
-
-function buildToc(headings: MarkdownHeading[]): TocEntry[] {
-  const entries: TocEntry[] = [];
-  let currentSection: TocEntry | undefined;
-
-  for (const heading of headings) {
-    if (heading.depth === 2) {
-      currentSection = {
-        id: heading.slug,
-        text: heading.text,
-        depth: 1,
-        children: [],
-      };
-      entries.push(currentSection);
-    } else if (heading.depth === 3) {
-      const child: TocEntry = {
-        id: heading.slug,
-        text: heading.text,
-        depth: 2,
-        children: [],
-      };
-
-      if (currentSection) {
-        currentSection.children?.push(child);
-      } else {
-        entries.push(child);
-      }
-    }
-  }
-
-  return entries;
-}
-
-const toc = buildToc(headings);
+const document = study.document;
+const toc = document.computed?.toc || [];
 ---
 
 <CaseStudyLayout
@@ -65,5 +26,14 @@ const toc = buildToc(headings);
   updatedAt={study.updatedAt}
   toc={toc}
 >
-  <Content />
+  {
+    document.children.map((child) => (
+      <BlockRenderer
+        node={child}
+        documentPath={document.sourcePos?.file}
+        headingNumbers={document.computed?.headingNumbers}
+        basePath="/case-studies"
+      />
+    ))
+  }
 </CaseStudyLayout>

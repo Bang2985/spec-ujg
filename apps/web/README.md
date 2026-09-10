@@ -1,5 +1,22 @@
 # UJG Web
 
+## Dev Content Watching
+
+The dev server watches selected repository-level `specs` folders and invalidates Vite's
+module cache when content files change. By default it watches:
+
+- `specs/case-studies`
+- `specs/ed`
+
+To watch another folder under `specs`, set `UJG_DEV_SPEC_WATCH` to a comma-separated list:
+
+```sh
+UJG_DEV_SPEC_WATCH=case-studies,ed,tr/1.0-rc1 pnpm --filter @openuji/web run dev
+```
+
+Technical Report source routes are still disabled by default; use `UJG_RENDER_TR_ROUTES=1`
+when intentionally previewing TR source content instead of the committed frozen files.
+
 ## Frozen TR Snapshots
 
 Technical Report snapshots under `/tr/...` are committed static output in `public/tr`.

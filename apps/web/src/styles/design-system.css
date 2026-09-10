@@ -1134,6 +1134,22 @@ a.pill {
   padding-bottom: var(--spacing-xl);
 }
 
+.case-study-body #reference-screenshots > p:has(> a > img:only-child) {
+  display: inline-block;
+  width: calc(25% - 0.75rem);
+  max-width: 10rem;
+  margin: 0 var(--spacing-xs) var(--spacing-s) 0;
+  vertical-align: top;
+}
+
+.case-study-body #reference-screenshots > p:has(> a > img:only-child) img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-spec-pre);
+}
+
 @media (max-width: 720px) {
   .case-studies-intro {
     grid-template-columns: 1fr;
@@ -1152,6 +1168,11 @@ a.pill {
   .case-study-hero h1 {
     max-width: none;
     font-size: clamp(2.4rem, 10vw, 4.2rem);
+  }
+
+  .case-study-body #reference-screenshots > p:has(> a > img:only-child) {
+    width: calc(50% - 0.5rem);
+    max-width: none;
   }
 }
 
@@ -1692,21 +1713,11 @@ a.pill {
     margin-top: 2.5rem;
   }
 
-  .static-page .spec pre.astro-code {
-    background-color: #f6f8fa !important;
-    color: var(--foreground) !important;
-  }
-
   .static-page .spec pre code {
     color: inherit !important;
   }
 
   .static-page .spec pre code span {
     color: inherit !important;
-  }
-
-  :root[data-theme='dark'] .static-page .spec pre.astro-code {
-    background-color: #24292e !important;
-    color: #e1e4e8 !important;
   }
 }
