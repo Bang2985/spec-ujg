@@ -37,6 +37,7 @@ function walk(directory: string): string[] {
 function artifactNameFromFile(path: string): string | undefined {
   const name = basename(path);
 
+  if (name.endsWith('.schema.json')) return name;
   if (name.endsWith('.context.jsonld')) return name;
   if (name.endsWith('.shape.ttl')) return name.replace(/\.ttl$/, '');
   if (name.endsWith('.ttl')) return name.replace(/\.ttl$/, '');
@@ -66,17 +67,22 @@ function findArtifactSource(reportSlug: string, artifact: string): string | unde
   } else if (artifact.endsWith('.shape')) {
     namespaceName = artifact.replace(/\.shape$/, '');
     fileName = `${namespaceName}.shape.ttl`;
+  } else if (artifact.endsWith('.schema.json')) {
+    namespaceName = artifact.replace(/\.schema\.json$/, '');
+    fileName = `${namespaceName}.schema.json`;
   }
 
   const candidates = [
     join(root, namespaceName, fileName),
     join(root, 'modules', namespaceName, fileName),
+    join(root, 'extensions', namespaceName, fileName),
   ];
 
   return candidates.find((candidate) => fs.existsSync(candidate));
 }
 
 function getArtifactContentType(artifact: string): string {
+  if (artifact.endsWith('.schema.json')) return 'application/schema+json; charset=utf-8';
   return artifact.endsWith('.jsonld')
     ? 'application/ld+json; charset=utf-8'
     : 'text/turtle; charset=utf-8';
