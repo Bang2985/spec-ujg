@@ -20,7 +20,7 @@ tags:
 | Case | Workshop registration |
 | Guidance protocols | Implicit-gated and explicit-gated |
 | Generation phases | Structure, tokens, styling, application |
-| Implementation models | GPT-5.5 Codex, Claude Sonnet 5, Qwen 3.5 baseline |
+| Implementation models | GPT-5.5 Codex, Claude Sonnet 5 |
 | Experiment repository | [openuji/ujg-generative-se-case-study](https://github.com/openuji/ujg-generative-se-case-study) |
 
 ## Research question {#1-research-question}
@@ -219,7 +219,6 @@ The repository currently retains the following implementation runs.
 | --- | :---: | :---: |
 | GPT-5.5 Codex | ✓ | ✓ |
 | Claude Sonnet 5 | ✓ | ✓ |
-| Qwen 3.5 | ✓ | — |
 
 Qwen 3.5 is retained as an additional implicit-guidance baseline. A missing explicit run is treated as **not run**, never as a zero score.
 
@@ -265,23 +264,61 @@ Where a supporting metric can be computed deterministically, future iterations s
 
 The case study does not use one global leaderboard as its primary result. Different charts answer different questions.
 
-### Where quality changes through the pipeline {#71-where-quality-changes-through-the-pipeline}
+### Effect of explicit guidance {#71-effect-of-explicit-guidance}
 
-A four-stage profile compares **Structure → Tokens → Styling → Application** for every run. This shows where a realization gains or loses quality instead of hiding phase-specific failures inside one final score.
+For Claude Sonnet 5 and GPT-5.5 Codex, implicit and explicit runs are compared directly. This is the main test of the guidance hypothesis because the implementation model remains the same while the protocol changes. Values below are the change in two-evaluator mean, explicit minus implicit, in percentage points.
 
-### Guidance effect {#72-guidance-effect}
+```stat-grid
+title: Effect of explicit guidance
+subtitle: Change in two-evaluator mean, explicit minus implicit (points)
 
-For Claude Sonnet 5 and GPT-5.5 Codex, implicit and explicit runs are compared directly. This is the main test of the guidance hypothesis because the implementation model remains the same while the protocol changes.
+Claude Sonnet 5
+Structure = +2.67
+Tokens = +6.50
+Styling = +7.67
+Application = +7.84
+Average uplift = +6.17
 
-### Model effect {#73-model-effect}
+GPT-5.5 Codex
+Structure = +3.17
+Tokens = +22.16
+Styling = +21.00
+Application = +30.84
+Average uplift = +19.29
+```
 
-Models are also compared within the same guidance protocol. This is a separate question from guidance effectiveness and is presented separately.
+### Quality through the realization pipeline {#72-quality-through-the-realization-pipeline}
 
-### Evaluator sensitivity {#74-evaluator-sensitivity}
+A four-stage profile compares **Structure → Tokens → Styling → Application** for every run. This shows where a realization gains or loses quality instead of hiding phase-specific failures inside one final score. Scores are the two-evaluator mean, 0–100.
 
-For runs evaluated by both Claude and GPT-5.5 Codex, evaluator-specific scores and diagnostic counts are compared before averaging. Large disagreement is surfaced rather than hidden by the mean.
+| Run | Structure | Tokens | Styling | Application | Mean |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Claude Sonnet 5 · explicit | 98.50 | 94.17 | 89.84 | 93.17 | **93.92** |
+| Claude Sonnet 5 · implicit | 95.83 | 87.67 | 82.17 | 85.34 | **87.75** |
+| GPT-5.5 Codex · explicit | 98.34 | 90.83 | 85.00 | 77.50 | **87.92** |
+| GPT-5.5 Codex · implicit | 95.17 | 68.67 | 64.00 | 46.67 | **68.63** |
+| Qwen 3.5 · implicit | 3.34 | 0.00 | 0.00 | 11.67 | **3.75** |
 
-> **Results status:** the full two-evaluator matrix is currently being completed. Final averaged charts will be published only after both evaluators have scored the paired Claude and GPT-5.5 Codex implementations.
+Qwen 3.5's explicit-gated run was not executed and is excluded rather than scored as zero. Because both implementation models appear per protocol in this same table, it also supports a direct model-vs-model read at a fixed guidance protocol, without a separate chart.
+
+### Where the evaluators disagree {#73-where-the-evaluators-disagree}
+
+For runs evaluated by both Claude and GPT-5.5 Codex, evaluator-specific scores and diagnostic counts are compared before averaging. Large disagreement is surfaced rather than hidden by the mean. Below are the largest absolute differences between the two evaluators' scores, in points.
+
+```bar-chart
+title: Where the evaluators disagree
+subtitle: Largest absolute differences between Claude Sonnet 5 and GPT-5.5 Codex evaluator scores (points)
+max: 35
+
+GPT-5.5 Codex · implicit-gated · Application = 33.33
+Claude Sonnet 5 · implicit-gated · Application = 22.67
+GPT-5.5 Codex · explicit-gated · Application = 21.66
+GPT-5.5 Codex · implicit-gated · Styling = 14.66
+```
+
+Application scoring shows the highest evaluator sensitivity across runs, consistent with it being the phase where behavioral fidelity — not just visible structure — is being judged.
+
+All Claude Sonnet 5 and GPT-5.5 Codex implementations have been scored by both evaluator models; Qwen 3.5's explicit-gated run was not executed and is excluded from the comparisons above.
 
 ## Visual and implementation evidence {#8-visual-and-implementation-evidence}
 

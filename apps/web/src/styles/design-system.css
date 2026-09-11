@@ -648,13 +648,75 @@ a.pill {
 
   .stat {
     @apply min-w-[120px] bg-card p-[14px_var(--spacing-md)] rounded-md border border-border;
+  }
+  .stat__value {
+    @apply block text-2xl font-bold;
+  }
+  .stat__label {
+    @apply text-muted-foreground text-[0.85rem];
+  }
 
-    &__value {
-      @apply block text-2xl font-bold;
-    }
-    &__label {
-      @apply text-muted text-[0.85rem];
-    }
+  .stat-grid {
+    @apply mt-0 mb-spec-l flex flex-col gap-lg;
+  }
+  .stat-grid__header {
+    @apply flex flex-col gap-1;
+  }
+  .stat-grid__title {
+    @apply m-0 font-semibold text-foreground;
+  }
+  .stat-grid__subtitle {
+    @apply m-0 text-sm text-muted-foreground;
+  }
+  .stat-grid__group {
+    @apply flex flex-col gap-sm;
+  }
+  .stat-grid__group-name {
+    @apply m-0 text-sm font-semibold text-foreground;
+  }
+  .stat-grid__cards {
+    @apply grid gap-sm;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  }
+  .stat-grid__average {
+    @apply m-0 text-sm text-muted-foreground;
+  }
+  .stat-grid__average strong {
+    @apply text-foreground;
+  }
+
+  .bar-list {
+    @apply mt-0 mb-spec-l flex flex-col gap-lg;
+  }
+  .bar-list__header {
+    @apply flex flex-col gap-1;
+  }
+  .bar-list__title {
+    @apply m-0 font-semibold text-foreground;
+  }
+  .bar-list__subtitle {
+    @apply m-0 text-sm text-muted-foreground;
+  }
+  .bar-list__rows {
+    @apply flex flex-col gap-base;
+  }
+  .bar-list__row {
+    @apply flex flex-col gap-xs;
+  }
+  .bar-list__row-header {
+    @apply flex items-baseline justify-between gap-sm;
+  }
+  .bar-list__label {
+    @apply text-sm font-semibold text-foreground;
+  }
+  .bar-list__value {
+    @apply text-sm font-bold text-foreground;
+  }
+  .bar-list__track {
+    @apply h-2 rounded-pill bg-muted overflow-hidden;
+  }
+  .bar-list__fill {
+    @apply block h-full rounded-pill opacity-50;
   }
 
   .panel {

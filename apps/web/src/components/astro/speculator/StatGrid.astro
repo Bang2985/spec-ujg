@@ -1,0 +1,118 @@
+---
+/**
+ * Renders a fenced ```stat-grid block as grouped stat-card rows.
+ *
+ * Syntax:
+ *   title: <optional title>
+ *   subtitle: <optional subtitle>
+ *
+ *   <group name>
+ *   <label> = <value>
+ *   ...
+ *   Average uplift = <value>   (optional, any label starting with "average")
+ *
+ *   <next group name>
+ *   ...
+ */
+interface StatItem {
+  label: string;
+  value: string;
+}
+
+interface StatGroup {
+  name: string;
+  stats: StatItem[];
+  average?: StatItem;
+}
+
+interface ParsedStatGrid {
+  title?: string;
+  subtitle?: string;
+  groups: StatGroup[];
+}
+
+function parseStatGrid(code: string): ParsedStatGrid {
+  const lines = code.split(/\r\n|\r|\n/);
+  let title: string | undefined;
+  let subtitle: string | undefined;
+  const groups: StatGroup[] = [];
+  let current: StatGroup | null = null;
+
+  for (const rawLine of lines) {
+    const line = rawLine.trim();
+    if (!line) continue;
+
+    if (!title) {
+      const titleMatch = line.match(/^title:\s*(.+)$/i);
+      if (titleMatch) {
+        title = titleMatch[1].trim();
+        continue;
+      }
+    }
+
+    if (!subtitle) {
+      const subtitleMatch = line.match(/^subtitle:\s*(.+)$/i);
+      if (subtitleMatch) {
+        subtitle = subtitleMatch[1].trim();
+        continue;
+      }
+    }
+
+    const kv = line.match(/^(.+?)\s*=\s*(.+)$/);
+    if (kv) {
+      if (!current) continue;
+      const [, label, value] = kv;
+      if (/^average/i.test(label.trim())) {
+        current.average = { label: label.trim(), value: value.trim() };
+      } else {
+        current.stats.push({ label: label.trim(), value: value.trim() });
+      }
+      continue;
+    }
+
+    current = { name: line, stats: [] };
+    groups.push(current);
+  }
+
+  return { title, subtitle, groups };
+}
+
+interface Props {
+  code: string;
+  id?: string;
+}
+
+const { code, id } = Astro.props;
+const { title, subtitle, groups } = parseStatGrid(code);
+---
+
+<div class="stat-grid" id={id}>
+  {
+    (title || subtitle) && (
+      <div class="stat-grid__header">
+        {title && <p class="stat-grid__title">{title}</p>}
+        {subtitle && <p class="stat-grid__subtitle">{subtitle}</p>}
+      </div>
+    )
+  }
+  {
+    groups.map((group) => (
+      <div class="stat-grid__group">
+        <p class="stat-grid__group-name">{group.name}</p>
+        <div class="stat-grid__cards">
+          {group.stats.map((s) => (
+            <div class="stat">
+              <span class="stat__label">{s.label}</span>
+              <span class="stat__value">{s.value}</span>
+            </div>
+          ))}
+        </div>
+        {group.average && (
+          <p class="stat-grid__average">
+            {group.average.label} <strong>{group.average.value}</strong>
+          </p>
+        )}
+      </div>
+    ))
+  }
+</div>

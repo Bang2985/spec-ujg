@@ -3,6 +3,8 @@ import type { Block, Section, BlockHeading, Inline } from '@openuji/speculator';
 import InlineRenderer from './InlineRenderer.astro';
 import RecursiveBlockRenderer from './BlockRenderer.astro';
 import Mermaid from './Mermaid.astro';
+import StatGrid from './StatGrid.astro';
+import BarChart from './BarChart.astro';
 import CodeCustom from './CodeCustom.astro';
 import type { CodeLanguage } from 'astro';
 
@@ -86,6 +88,16 @@ const getSectionNumber = (sectionId?: string): string | undefined => {
         // Handle Mermaid diagrams
         if (node.lang === 'mermaid') {
           return <Mermaid code={node.value} id={node.id} />;
+        }
+
+        // Handle grouped stat-card blocks
+        if (node.lang === 'stat-grid') {
+          return <StatGrid code={node.value} id={node.id} />;
+        }
+
+        // Handle horizontal bar-chart blocks
+        if (node.lang === 'bar-chart') {
+          return <BarChart code={node.value} id={node.id} />;
         }
 
         const lineCount = node.value.split(/\r\n|\r|\n/).length;
