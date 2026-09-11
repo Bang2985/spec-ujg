@@ -12,6 +12,14 @@ export interface TechnicalReport {
 
 export const TECHNICAL_REPORTS = [
   {
+    slug: '1.0-rc2',
+    title: 'UJG 1.0 Release Candidate 2',
+    status: 'Release Candidate',
+    published: '2026-09-11',
+    workspace: 'tr-1-0-rc2',
+    basePath: '/tr/1.0-rc2',
+  },
+  {
     slug: '1.0-rc1',
     title: 'UJG 1.0 Release Candidate 1',
     status: 'Release Candidate',
@@ -46,6 +54,7 @@ export function getTechnicalReport(slug: string): TechnicalReport | undefined {
 
 export function getTechnicalReportByNamespaceSlug(slug: string): TechnicalReport | undefined {
   return TECHNICAL_REPORTS.find(
-    (report) => report.slug === slug || (report.namespaceSlug ?? report.slug) === slug
+    (report: TechnicalReport) =>
+      report.slug === slug || (report.namespaceSlug ?? report.slug) === slug
   );
 }
