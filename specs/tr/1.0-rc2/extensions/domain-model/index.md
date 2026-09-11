@@ -387,11 +387,7 @@ controllers, authentication mechanisms, messaging infrastructure, or deployment 
 
 ## Normative Artifacts
 
-The normative Domain Model JSON Schema is defined below and is published at
-`https://ujg.specs.openuji.org/tr/1.0-rc2/extensions/domain-model/domain-model.schema.json`.
-
-For namespace-style artifact discovery, the same schema is also published at
-`https://ujg.specs.openuji.org/tr/1.0-rc2/ns/domain-model.schema.json`.
+The normative Domain Model JSON Schema is defined below and is published at `https://ujg.specs.openuji.org/tr/1.0-rc2/ns/domain-model.schema.json`.
 
 :::include ./domain-model.schema.json :::
 

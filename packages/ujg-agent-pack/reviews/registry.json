@@ -116,14 +116,14 @@
       "reportPath": "reviews/tr/1.0-rc2/domain-model-evaluation/latest.md",
       "skill": "domain-model-evaluation",
       "sourceHash": "sha256:684df2696db50364e6f1f5812c52d04c9e6b10677e4352b2b7e62e33995d580b",
-      "specHash": "sha256:3b50413c52650acf7e4a10a23331d3931cb2f8532c9fe1673e274645a2d2250f",
+      "specHash": "sha256:3b164186cf9200aebb7d21a6eb90ac11d3488d7adc7203f72b33155e416e241d",
       "target": "tr/1.0-rc2"
     },
     "tr/1.0-rc2/domain-model-implementation": {
       "reportPath": "reviews/tr/1.0-rc2/domain-model-implementation/latest.md",
       "skill": "domain-model-implementation",
       "sourceHash": "sha256:9c5252f3ae2d7ed408ed6b3defa8ca636ec398362280da8c6c5cf6c70a949a14",
-      "specHash": "sha256:3b50413c52650acf7e4a10a23331d3931cb2f8532c9fe1673e274645a2d2250f",
+      "specHash": "sha256:3b164186cf9200aebb7d21a6eb90ac11d3488d7adc7203f72b33155e416e241d",
       "target": "tr/1.0-rc2"
     },
     "tr/1.0-rc2/graph": {
@@ -151,7 +151,7 @@
       "reportPath": "reviews/tr/1.0-rc2/root/latest.md",
       "skill": "root",
       "sourceHash": "sha256:52e3c38669aaef754f76cd9d3fa4fcf9663f57c35d111d4e98e4a69427477ad1",
-      "specHash": "sha256:af82e00017ab33cf69659ba4bac0cf109a73678803ecd1b9235194e52cb3c7d0",
+      "specHash": "sha256:2949b3eba48e6757cffac5a362105283ede6d007cd044eaeeb23b52ac03fb267",
       "target": "tr/1.0-rc2"
     },
     "tr/2026.06/design-system": {

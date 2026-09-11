@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://ujg.specs.openuji.org/tr/1.0-rc2/extensions/domain-model/domain-model.schema.json",
+  "$id": "https://ujg.specs.openuji.org/tr/1.0-rc2/ns/domain-model.schema.json",
   "title": "UJG Domain Model Extension",
   "type": "object",
   "additionalProperties": false,
