@@ -34,7 +34,6 @@
     ],
     "specs/**/*.md": [
       "pnpm --filter @openuji/web exec speculator-lint ujg.workspace.json",
-      "pnpm content-manifests:update",
       "pnpm content-manifests:check",
       "pnpm agent-pack:check"
     ]
