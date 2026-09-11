@@ -1,6 +1,6 @@
 {
   "config": {
-    "hash": "sha256:096f3d2f0586cd286a7b2b82a1df40d0536a2eabfe4d9482447c8b892da390b7",
+    "hash": "sha256:2e34e7251b6c268ae950fa7eae2840cf9b513389f62e9044944c50fb6204b755",
     "path": "agent-pack.config.json"
   },
   "generatedFiles": [
@@ -18,6 +18,14 @@
     "agents/tr/1.0-rc1/localization/AGENTS.md",
     "agents/tr/1.0-rc1/observability/AGENTS.md",
     "agents/tr/1.0-rc1/root/AGENTS.md",
+    "agents/tr/1.0-rc2/core/AGENTS.md",
+    "agents/tr/1.0-rc2/design-system/AGENTS.md",
+    "agents/tr/1.0-rc2/domain-model-evaluation/AGENTS.md",
+    "agents/tr/1.0-rc2/domain-model-implementation/AGENTS.md",
+    "agents/tr/1.0-rc2/graph/AGENTS.md",
+    "agents/tr/1.0-rc2/localization/AGENTS.md",
+    "agents/tr/1.0-rc2/observability/AGENTS.md",
+    "agents/tr/1.0-rc2/root/AGENTS.md",
     "agents/tr/2026.06/design-system/AGENTS.md",
     "agents/tr/2026.06/root/AGENTS.md",
     "codex/ujg-ed-core-modeling/SKILL.md",
@@ -90,6 +98,46 @@
     "codex/ujg-tr-1-0-rc1-observability-modeling/references/package-state.json",
     "codex/ujg-tr-1-0-rc1-observability-modeling/references/related-skills.md",
     "codex/ujg-tr-1-0-rc1-observability-modeling/references/skill-tree.json",
+    "codex/ujg-tr-1-0-rc2-core-modeling/SKILL.md",
+    "codex/ujg-tr-1-0-rc2-core-modeling/agents/openai.yaml",
+    "codex/ujg-tr-1-0-rc2-core-modeling/references/package-state.json",
+    "codex/ujg-tr-1-0-rc2-core-modeling/references/related-skills.md",
+    "codex/ujg-tr-1-0-rc2-core-modeling/references/skill-tree.json",
+    "codex/ujg-tr-1-0-rc2-design-system-modeling/SKILL.md",
+    "codex/ujg-tr-1-0-rc2-design-system-modeling/agents/openai.yaml",
+    "codex/ujg-tr-1-0-rc2-design-system-modeling/references/package-state.json",
+    "codex/ujg-tr-1-0-rc2-design-system-modeling/references/related-skills.md",
+    "codex/ujg-tr-1-0-rc2-design-system-modeling/references/skill-tree.json",
+    "codex/ujg-tr-1-0-rc2-domain-model-evaluation/SKILL.md",
+    "codex/ujg-tr-1-0-rc2-domain-model-evaluation/agents/openai.yaml",
+    "codex/ujg-tr-1-0-rc2-domain-model-evaluation/references/package-state.json",
+    "codex/ujg-tr-1-0-rc2-domain-model-evaluation/references/related-skills.md",
+    "codex/ujg-tr-1-0-rc2-domain-model-evaluation/references/skill-tree.json",
+    "codex/ujg-tr-1-0-rc2-domain-model-implementation/SKILL.md",
+    "codex/ujg-tr-1-0-rc2-domain-model-implementation/agents/openai.yaml",
+    "codex/ujg-tr-1-0-rc2-domain-model-implementation/references/package-state.json",
+    "codex/ujg-tr-1-0-rc2-domain-model-implementation/references/related-skills.md",
+    "codex/ujg-tr-1-0-rc2-domain-model-implementation/references/skill-tree.json",
+    "codex/ujg-tr-1-0-rc2-graph-modeling/SKILL.md",
+    "codex/ujg-tr-1-0-rc2-graph-modeling/agents/openai.yaml",
+    "codex/ujg-tr-1-0-rc2-graph-modeling/references/package-state.json",
+    "codex/ujg-tr-1-0-rc2-graph-modeling/references/related-skills.md",
+    "codex/ujg-tr-1-0-rc2-graph-modeling/references/skill-tree.json",
+    "codex/ujg-tr-1-0-rc2-l10n-modeling/SKILL.md",
+    "codex/ujg-tr-1-0-rc2-l10n-modeling/agents/openai.yaml",
+    "codex/ujg-tr-1-0-rc2-l10n-modeling/references/package-state.json",
+    "codex/ujg-tr-1-0-rc2-l10n-modeling/references/related-skills.md",
+    "codex/ujg-tr-1-0-rc2-l10n-modeling/references/skill-tree.json",
+    "codex/ujg-tr-1-0-rc2-modeling/SKILL.md",
+    "codex/ujg-tr-1-0-rc2-modeling/agents/openai.yaml",
+    "codex/ujg-tr-1-0-rc2-modeling/references/package-state.json",
+    "codex/ujg-tr-1-0-rc2-modeling/references/related-skills.md",
+    "codex/ujg-tr-1-0-rc2-modeling/references/skill-tree.json",
+    "codex/ujg-tr-1-0-rc2-observability-modeling/SKILL.md",
+    "codex/ujg-tr-1-0-rc2-observability-modeling/agents/openai.yaml",
+    "codex/ujg-tr-1-0-rc2-observability-modeling/references/package-state.json",
+    "codex/ujg-tr-1-0-rc2-observability-modeling/references/related-skills.md",
+    "codex/ujg-tr-1-0-rc2-observability-modeling/references/skill-tree.json",
     "codex/ujg-tr-2026-06-design-system-modeling/SKILL.md",
     "codex/ujg-tr-2026-06-design-system-modeling/agents/openai.yaml",
     "codex/ujg-tr-2026-06-design-system-modeling/references/package-state.json",
@@ -271,6 +319,86 @@
         }
       ],
       "specRoot": "specs/tr/1.0-rc1"
+    },
+    {
+      "id": "tr/1.0-rc2",
+      "label": "Technical Report 1.0 RC2",
+      "publicUrl": "https://ujg.specs.openuji.org/tr/1.0-rc2",
+      "skills": [
+        {
+          "artifactHash": "sha256:7593f636d5927aa7ba9ba77a3d773ca9dbcb2615f49d1e2c084f90b4c16f74fd",
+          "key": "root",
+          "moduleId": null,
+          "name": "ujg-tr-1-0-rc2-modeling",
+          "source": "sources/tr/1.0-rc2/skills/root/skill.md",
+          "sourceHash": "sha256:52e3c38669aaef754f76cd9d3fa4fcf9663f57c35d111d4e98e4a69427477ad1",
+          "specHash": "sha256:2949b3eba48e6757cffac5a362105283ede6d007cd044eaeeb23b52ac03fb267"
+        },
+        {
+          "artifactHash": "sha256:f15fffe2c3b7d89a8b348aa65ab6a3dc29b448692f8f3dfa5842596fd7cb3280",
+          "key": "core",
+          "moduleId": "core",
+          "name": "ujg-tr-1-0-rc2-core-modeling",
+          "source": "sources/tr/1.0-rc2/skills/core/skill.md",
+          "sourceHash": "sha256:8da38f54714c751a5833bcfce558bbd364536eedb2522cfee48e6899f50bfbec",
+          "specHash": "sha256:4cb0d879200961293dfc07269037bc3f975210d13f7b3ac06645d7149709c6b5"
+        },
+        {
+          "artifactHash": "sha256:a99599930e6bb1071327dca76773213bb94e1865ffabc35856e00732b69d2526",
+          "key": "graph",
+          "moduleId": "graph",
+          "name": "ujg-tr-1-0-rc2-graph-modeling",
+          "source": "sources/tr/1.0-rc2/skills/graph/skill.md",
+          "sourceHash": "sha256:7859a6a7c8ad40c86795efe012e84a5568491d14e45067e1eb3bdad49b3de538",
+          "specHash": "sha256:d74921c0388f228dd2f34212ce056337c841af8f4c82728501abe4af41f9445e"
+        },
+        {
+          "artifactHash": "sha256:369b20e83e6298beec0e1d932dbf993e8c79b4ab4e70bfe77a7ea46b465c6e7f",
+          "key": "design-system",
+          "moduleId": "modules/design-system",
+          "name": "ujg-tr-1-0-rc2-design-system-modeling",
+          "source": "sources/tr/1.0-rc2/skills/design-system/skill.md",
+          "sourceHash": "sha256:6eddb79dfff92bb0a93a428004e274a31dba20124f68a98ce98f8477852bae29",
+          "specHash": "sha256:7e6c8d8a087dd6e2603c47f5694ce1e58ea04eeea5ecc83403a1c96a54fc2c1b"
+        },
+        {
+          "artifactHash": "sha256:2d5fe0787bb488d1ea9943507d6e7a65b3a764de9983b81cf3494a0950a60257",
+          "key": "localization",
+          "moduleId": "modules/l10n",
+          "name": "ujg-tr-1-0-rc2-l10n-modeling",
+          "source": "sources/tr/1.0-rc2/skills/localization/skill.md",
+          "sourceHash": "sha256:1e6f59176a4c884e5b9530f6a1efa25f3cbb4cbb488f99a0aaf8c7ff41fa5470",
+          "specHash": "sha256:ab6f64db5b7e4f5f646b9269bcab2c62d9e0482119ca2d29c923b4a7c744a505"
+        },
+        {
+          "artifactHash": "sha256:ec81e47091ae658eed0d8263052337cf2119f330e9ce362457ed5d30778dd41c",
+          "key": "observability",
+          "moduleId": "modules/observability",
+          "name": "ujg-tr-1-0-rc2-observability-modeling",
+          "source": "sources/tr/1.0-rc2/skills/observability/skill.md",
+          "sourceHash": "sha256:1280a686323485b7134d58233d56add510436d6da01532926332f735d7a58be4",
+          "specHash": "sha256:9afa6de6c7689a926fb7eb7118acef1526e0ae8f062998b7cd89d89caea97f00"
+        },
+        {
+          "artifactHash": "sha256:2f552e6f3515b9ab88ed0f10c27d8cdd6e8a63804df33b66cff19c3a9401b70a",
+          "key": "domain-model-evaluation",
+          "moduleId": "extensions/domain-model",
+          "name": "ujg-tr-1-0-rc2-domain-model-evaluation",
+          "source": "sources/tr/1.0-rc2/skills/domain-model-evaluation/skill.md",
+          "sourceHash": "sha256:684df2696db50364e6f1f5812c52d04c9e6b10677e4352b2b7e62e33995d580b",
+          "specHash": "sha256:3b164186cf9200aebb7d21a6eb90ac11d3488d7adc7203f72b33155e416e241d"
+        },
+        {
+          "artifactHash": "sha256:f410b9c7ed7ca925a487c103ef54440281071c315e3235b2cd366bd308bc87a2",
+          "key": "domain-model-implementation",
+          "moduleId": "extensions/domain-model",
+          "name": "ujg-tr-1-0-rc2-domain-model-implementation",
+          "source": "sources/tr/1.0-rc2/skills/domain-model-implementation/skill.md",
+          "sourceHash": "sha256:9c5252f3ae2d7ed408ed6b3defa8ca636ec398362280da8c6c5cf6c70a949a14",
+          "specHash": "sha256:3b164186cf9200aebb7d21a6eb90ac11d3488d7adc7203f72b33155e416e241d"
+        }
+      ],
+      "specRoot": "specs/tr/1.0-rc2"
     }
   ],
   "version": "0.0.1"
