@@ -95,33 +95,33 @@ that it produces or consumes the artifact.
 
 This module is published through the following artifacts:
 
-- `effect.ttl`: ontology, published at `https://ujg.specs.openuji.org/tr/1.0/ns/effect`
-- `effect.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/tr/1.0/ns/effect.context.jsonld`
-- `effect.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/tr/1.0/ns/effect.shape`
+- `effect.ttl`: ontology, published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/effect`
+- `effect.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/effect.context.jsonld`
+- `effect.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/effect.shape`
 
 Examples in this page compose the shared baseline context
-`https://ujg.specs.openuji.org/tr/1.0/ns/context.jsonld` with the Effect context. Examples that use
+`https://ujg.specs.openuji.org/tr/1.0-rc1/ns/context.jsonld` with the Effect context. Examples that use
 artifacts also compose the Artifact context; examples that reference touchpoints also compose the
 Surface context.
 
 ### Ontology {data-cop-concept="ontology"}
 
 The normative Effect ontology is defined below and is published at
-`https://ujg.specs.openuji.org/tr/1.0/ns/effect`.
+`https://ujg.specs.openuji.org/tr/1.0-rc1/ns/effect`.
 
 :::include ./effect.ttl :::
 
 ### JSON-LD Context {data-cop-concept="jsonld-context"}
 
 The normative Effect JSON-LD context is defined below and is published at
-`https://ujg.specs.openuji.org/tr/1.0/ns/effect.context.jsonld`.
+`https://ujg.specs.openuji.org/tr/1.0-rc1/ns/effect.context.jsonld`.
 
 :::include ./effect.context.jsonld :::
 
 ### Validation {data-cop-concept="validation"}
 
 The normative Effect SHACL shape is defined below and is published at
-`https://ujg.specs.openuji.org/tr/1.0/ns/effect.shape`.
+`https://ujg.specs.openuji.org/tr/1.0-rc1/ns/effect.shape`.
 
 :::include ./effect.shape.ttl :::
 
@@ -156,8 +156,8 @@ the SHACL shape.
 ```json
 {
   "@context": [
-    "https://ujg.specs.openuji.org/tr/1.0/ns/context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/effect.context.jsonld"
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/effect.context.jsonld"
   ],
   "@id": "https://example.com/ujg/effect/checkout.jsonld",
   "@type": "UJGDocument",
@@ -186,10 +186,10 @@ touchpoints.
 ```json
 {
   "@context": [
-    "https://ujg.specs.openuji.org/tr/1.0/ns/context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/surface.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/effect.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/artifact.context.jsonld"
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/surface.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/effect.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/artifact.context.jsonld"
   ],
   "@id": "https://example.com/ujg/effect/federated-share.jsonld",
   "@type": "UJGDocument",

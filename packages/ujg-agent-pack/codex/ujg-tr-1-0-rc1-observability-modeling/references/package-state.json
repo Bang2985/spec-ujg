@@ -1,5 +1,5 @@
 {
-  "artifactHash": "sha256:d868f0b959220aa11ca2a184cd07891bf7bd96a6dd6ea465ebf8adc4bcf975dd",
+  "artifactHash": "sha256:bc2ee6e771aeaca8de225fbefabb4f249b19ca6d3fce7d45a3a2c8ddf62f634b",
   "configHash": "sha256:096f3d2f0586cd286a7b2b82a1df40d0536a2eabfe4d9482447c8b892da390b7",
   "package": {
     "id": "ujg-agent-pack",
@@ -11,8 +11,8 @@
     "moduleId": "modules/observability",
     "name": "ujg-tr-1-0-rc1-observability-modeling"
   },
-  "sourceHash": "sha256:4297deb53c6a07ea1b5f35d289e28f0b47f005be2989ea9c737d5c096d677766",
-  "specHash": "sha256:57addd895296f3336db8d7651899f3acce509853703dda53d1316e6338619beb",
+  "sourceHash": "sha256:539a91164c1cd3a3b47eaab25e6c33a104c6bdecda6ad8d0d344f167b2e22700",
+  "specHash": "sha256:8c60d9ae47f4f06a686b6b9e16c7085b621ad48df554ecb83a6baa59961fc746",
   "target": {
     "id": "tr/1.0-rc1",
     "label": "Technical Report 1.0 RC1"

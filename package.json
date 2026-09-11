@@ -14,6 +14,7 @@
     "agent-pack:install:codex": "pnpm --filter @openuji/ujg-agent-pack run install:codex",
     "agent-pack:test": "pnpm --filter @openuji/ujg-agent-pack run test:install",
     "agent-pack:pack": "pnpm --filter @openuji/ujg-agent-pack run pack:artifact",
+    "tr-snapshots:freeze": "node scripts/freeze-tr-snapshots.js",
     "content-manifests:check": "node scripts/content-manifests.js check",
     "content-manifests:update": "node scripts/content-manifests.js update",
     "prepare": "husky"
@@ -29,9 +30,13 @@
     "apps/web/src/**/*.{js,jsx,ts,tsx,astro,css,md}": [
       "pnpm --filter @openuji/web exec eslint --fix",
       "prettier --write"
+
     ],
     "specs/**/*.md": [
-      "pnpm --filter @openuji/web exec speculator-lint ujg.workspace.json"
+      "pnpm --filter @openuji/web exec speculator-lint ujg.workspace.json",
+      "pnpm content-manifests:update",
+      "pnpm content-manifests:check",
+      "pnpm agent-pack:check"
     ]
   }
 }

@@ -13,6 +13,7 @@ import {
   BASELINE_CONTEXT_ARTIFACTS,
   TECHNICAL_REPORTS,
   getTechnicalReportByNamespaceSlug,
+  shouldRenderTechnicalReportRoutes,
 } from '@/lib/technical-reports';
 
 const SPEC_BASE_URL = getSpecBaseUrl(import.meta.env.SPEC_BASE_URL);
@@ -82,6 +83,8 @@ function getArtifactContentType(artifact: string): string {
 }
 
 export function getStaticPaths() {
+  if (!shouldRenderTechnicalReportRoutes()) return [];
+
   return TECHNICAL_REPORTS.flatMap((report) =>
     [report.slug, report.namespaceSlug].filter(Boolean).flatMap((reportSlug) =>
       discoverArtifacts(report.slug).map((artifact) => ({

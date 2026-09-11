@@ -286,9 +286,9 @@ surface with `targetSurfaceRef`.
 
 This module is published through the following artifacts:
 
-- `design-system.ttl`: ontology, published at `https://ujg.specs.openuji.org/tr/1.0/ns/design-system`
-- `design-system.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/tr/1.0/ns/design-system.context.jsonld`
-- `design-system.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/tr/1.0/ns/design-system.shape`
+- `design-system.ttl`: ontology, published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/design-system`
+- `design-system.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/design-system.context.jsonld`
+- `design-system.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/design-system.shape`
 
 Examples in this page compose the Core, Graph, Surface, and Design System contexts explicitly.
 
@@ -307,7 +307,7 @@ Non-goals:
 ### Ontology {data-cop-concept="ontology"}
 
 The normative DesignSystem ontology is defined below and is published at
-`https://ujg.specs.openuji.org/tr/1.0/ns/design-system`. It is the authoritative structural definition
+`https://ujg.specs.openuji.org/tr/1.0-rc1/ns/design-system`. It is the authoritative structural definition
 for the classes and properties declared by this module.
 
 :::include ./design-system.ttl :::
@@ -315,7 +315,7 @@ for the classes and properties declared by this module.
 ### JSON-LD Context {data-cop-concept="jsonld-context"}
 
 The normative DesignSystem JSON-LD context is defined below and is published at
-`https://ujg.specs.openuji.org/tr/1.0/ns/design-system.context.jsonld`. It provides compact JSON-LD term
+`https://ujg.specs.openuji.org/tr/1.0-rc1/ns/design-system.context.jsonld`. It provides compact JSON-LD term
 mappings and coercions for DesignSystem-specific properties and classes.
 
 Surface uses `graphNodeRef` for graph-node attachment. This module keeps a separate, type-scoped
@@ -329,7 +329,7 @@ realization and slot-binding references continue to target stable `Surface` node
 ### Validation {data-cop-concept="validation"}
 
 The normative DesignSystem SHACL shape is defined below and is published at
-`https://ujg.specs.openuji.org/tr/1.0/ns/design-system.shape`. It is the authoritative validation
+`https://ujg.specs.openuji.org/tr/1.0-rc1/ns/design-system.shape`. It is the authoritative validation
 artifact for DesignSystem structural constraints.
 
 :::include ./design-system.shape.ttl :::
@@ -380,9 +380,9 @@ interoperability SHOULD use this module instead of opaque extension payloads.
 ```json
 {
   "@context": [
-    "https://ujg.specs.openuji.org/tr/1.0/ns/core.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/graph.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/surface.context.jsonld"
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/core.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/graph.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/surface.context.jsonld"
   ],
   "@id": "https://example.com/ujg/surface-only.jsonld",
   "@type": "UJGDocument",
@@ -408,10 +408,10 @@ This example assigns a state to a surface. It does not declare any design-system
 ```json
 {
   "@context": [
-    "https://ujg.specs.openuji.org/tr/1.0/ns/core.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/graph.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/surface.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/design-system.context.jsonld"
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/core.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/graph.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/surface.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/design-system.context.jsonld"
   ],
   "@id": "https://example.com/ujg/cart-component.jsonld",
   "@type": "UJGDocument",
@@ -458,10 +458,10 @@ surface.
 ```json
 {
   "@context": [
-    "https://ujg.specs.openuji.org/tr/1.0/ns/core.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/graph.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/surface.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/design-system.context.jsonld"
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/core.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/graph.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/surface.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/design-system.context.jsonld"
   ],
   "@id": "https://example.com/ujg/refund-template.jsonld",
   "@type": "UJGDocument",
@@ -553,10 +553,10 @@ The template declares slots. The realization binds those slots for this surface.
 ```json
 {
   "@context": [
-    "https://ujg.specs.openuji.org/tr/1.0/ns/core.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/graph.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/surface.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/design-system.context.jsonld"
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/core.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/graph.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/surface.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/design-system.context.jsonld"
   ],
   "@id": "https://example.com/ujg/product-discovery.jsonld",
   "@type": "UJGDocument",
@@ -742,10 +742,10 @@ remains the source of containment and traversal semantics.
 ```json
 {
   "@context": [
-    "https://ujg.specs.openuji.org/tr/1.0/ns/core.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/graph.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/surface.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/design-system.context.jsonld"
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/core.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/graph.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/surface.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/design-system.context.jsonld"
   ],
   "@id": "https://example.com/ujg/multiple-design-systems.jsonld",
   "@type": "UJGDocument",

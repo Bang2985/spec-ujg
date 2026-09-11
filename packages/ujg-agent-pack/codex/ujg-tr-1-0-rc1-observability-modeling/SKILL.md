@@ -56,10 +56,10 @@ When using Observability terms, include Core, Surface, Localization, and Observa
 
 ```json
 [
-  "https://ujg.specs.openuji.org/tr/1.0/ns/context.jsonld",
-  "https://ujg.specs.openuji.org/tr/1.0/ns/surface.context.jsonld",
-  "https://ujg.specs.openuji.org/tr/1.0/ns/l10n.context.jsonld",
-  "https://ujg.specs.openuji.org/tr/1.0/ns/observability.context.jsonld"
+  "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/context.jsonld",
+  "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/surface.context.jsonld",
+  "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/l10n.context.jsonld",
+  "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/observability.context.jsonld"
 ]
 ```
 

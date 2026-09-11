@@ -113,21 +113,21 @@ Example JSON node:
 
 This module is published through the following artifacts:
 
-- `runtime.ttl`: ontology, published at `https://ujg.specs.openuji.org/tr/1.0/ns/runtime`
-- `runtime.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/tr/1.0/ns/runtime.context.jsonld`
-- `runtime.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/tr/1.0/ns/runtime.shape`
+- `runtime.ttl`: ontology, published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/runtime`
+- `runtime.context.jsonld`: JSON-LD term mappings, published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/runtime.context.jsonld`
+- `runtime.shape.ttl`: SHACL validation rules, published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/runtime.shape`
 
-Examples in this page use an explicit context array composed from the published module contexts. The same composition is also published as the convenience context `https://ujg.specs.openuji.org/tr/1.0/ns/context.jsonld`.
+Examples in this page use an explicit context array composed from the published module contexts. The same composition is also published as the convenience context `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/context.jsonld`.
 
 ### Ontology {data-cop-concept="ontology"}
 
-The normative Runtime ontology is defined below and is published at `https://ujg.specs.openuji.org/tr/1.0/ns/runtime`. It is the authoritative structural definition for `JourneyExecution`, `RuntimeEvent`, and the properties that connect them.
+The normative Runtime ontology is defined below and is published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/runtime`. It is the authoritative structural definition for `JourneyExecution`, `RuntimeEvent`, and the properties that connect them.
 
 :::include ./runtime.ttl :::
 
 ### JSON-LD Context {data-cop-concept="jsonld-context"}
 
-The normative Runtime JSON-LD context is defined below and is published at `https://ujg.specs.openuji.org/tr/1.0/ns/runtime.context.jsonld`. It provides the compact JSON-LD term mappings for Runtime examples, including IRI-valued references and opaque JSON `payload` values.
+The normative Runtime JSON-LD context is defined below and is published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/runtime.context.jsonld`. It provides the compact JSON-LD term mappings for Runtime examples, including IRI-valued references and opaque JSON `payload` values.
 
 :::include ./runtime.context.jsonld :::
 
@@ -135,7 +135,7 @@ The normative Runtime JSON-LD context is defined below and is published at `http
 
 ### Validation {data-cop-concept="validation"}
 
-The normative Runtime SHACL shape is defined below and is published at `https://ujg.specs.openuji.org/tr/1.0/ns/runtime.shape`. It is the authoritative validation artifact for Runtime structural constraints.
+The normative Runtime SHACL shape is defined below and is published at `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/runtime.shape`. It is the authoritative validation artifact for Runtime structural constraints.
 
 :::include ./runtime.shape.ttl :::
 
@@ -174,7 +174,7 @@ A Consumer interpreting a runtime event's Graph meaning MUST resolve the event's
 
 ```json
 {
-  "@context": "https://ujg.specs.openuji.org/tr/1.0/ns/context.jsonld",
+  "@context": "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/context.jsonld",
   "@id": "https://example.com/ujg/runtime/execution-12345.jsonld",
   "@type": "UJGDocument",
   "nodes": [

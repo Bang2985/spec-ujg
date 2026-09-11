@@ -5,7 +5,7 @@ first standardized annotation is a [=PainPoint=]. Experience Annotation does not
 Runtime ordering, or Mapping behavior.
 
 Documents using this module compose the Phase context with
-`https://ujg.specs.openuji.org/tr/1.0/ns/experience-annotation.context.jsonld`.
+`https://ujg.specs.openuji.org/tr/1.0-rc1/ns/experience-annotation.context.jsonld`.
 
 ## Terminology
 
@@ -70,9 +70,9 @@ Example JSON node:
 ```json
 {
   "@context": [
-    "https://ujg.specs.openuji.org/tr/1.0/ns/context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/phase.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0/ns/experience-annotation.context.jsonld"
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/phase.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/experience-annotation.context.jsonld"
   ],
   "@id": "https://example.com/ujg/experience-annotation/checkout.jsonld",
   "@type": "UJGDocument",

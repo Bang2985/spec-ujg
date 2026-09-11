@@ -3,10 +3,16 @@ import Panel from '@/components/astro/Panel.astro';
 import MaturityPill from '@/components/astro/speculator/w3c-cg/MaturityPill.astro';
 import EditorDraftLayout from '@/layouts/EditorDraftLayout.astro';
 import { getDocumentFamily, getDocumentModuleLevel, getDocuments } from '@/lib/load';
-import { TECHNICAL_REPORTS, type TechnicalReport } from '@/lib/technical-reports';
+import {
+  TECHNICAL_REPORTS,
+  shouldRenderTechnicalReportRoutes,
+  type TechnicalReport,
+} from '@/lib/technical-reports';
 import { type Document } from '@openuji/speculator';
 
 export function getStaticPaths() {
+  if (!shouldRenderTechnicalReportRoutes()) return [];
+
   return TECHNICAL_REPORTS.map((report) => ({
     params: { report: report.slug },
     props: { report },

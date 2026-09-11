@@ -6,7 +6,7 @@ This specification defines conformance using the following normative artifacts:
 - **SHACL Shapes** (`*.shapes.ttl`) for validation constraints.
 - **JSON-LD Context** (`*.context.jsonld`) for JSON-LD term mappings and coercions.
 
-Release-candidate documents are frozen under `/tr/1.0-rc1/`. Normative vocabulary, context, and shape IRIs for this release-candidate line are published under `https://ujg.specs.openuji.org/tr/1.0/ns/` so implementers can target the UJG 1.0 namespace while final review is in progress.
+Release-candidate documents are frozen under `/tr/1.0-rc1/`. Normative vocabulary, context, and shape IRIs for this release-candidate line are published under `https://ujg.specs.openuji.org/tr/1.0-rc1/ns/` so implementers can target the UJG 1.0 namespace while final review is in progress.
 
 Implementations MAY operate on compacted JSON-LD directly, but conformance is defined in terms of the RDF semantics obtained by applying the normative JSON-LD context, composing the resulting data graph with the applicable ontology/vocabulary graph(s), and validating that graph against the normative SHACL shapes. JSON-LD defines term mappings, type coercion, containers, and expansion behavior through `@context`; SHACL defines validation over RDF graphs and shape constraints.
 

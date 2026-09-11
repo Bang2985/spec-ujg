@@ -1,5 +1,5 @@
 {
-  "artifactHash": "sha256:5eabe3122708804b0d972b85753720b8b3fe0ad0798e387f9bd26062566df403",
+  "artifactHash": "sha256:65d3fc0a939c2c2d936035288c7968f89e8b68c5a856684bab33cb4ef7f4b0e3",
   "configHash": "sha256:096f3d2f0586cd286a7b2b82a1df40d0536a2eabfe4d9482447c8b892da390b7",
   "package": {
     "id": "ujg-agent-pack",
@@ -11,8 +11,8 @@
     "moduleId": "core",
     "name": "ujg-tr-1-0-rc1-core-modeling"
   },
-  "sourceHash": "sha256:eccd352123934673ae763976a7f8d9239b5eda70ee30365b7ba3ce10034500a0",
-  "specHash": "sha256:44a67c1c8a7ea87a2748a13036a4560a7e313a107617e5fdd06e796db3f7182e",
+  "sourceHash": "sha256:2ec34bba425957125b61f19f846da0383f04d950e7a89d6d28678829c8098ea0",
+  "specHash": "sha256:2faa81029947eb25eececea52f713826145217225cf3ef56185288a5116d6a14",
   "target": {
     "id": "tr/1.0-rc1",
     "label": "Technical Report 1.0 RC1"

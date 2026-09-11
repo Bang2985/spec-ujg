@@ -44,15 +44,15 @@ Core does not define journeys, states, transitions, runtime traces, experience a
 Every compact UJG JSON-LD document must include Core context:
 
 ```json
-"https://ujg.specs.openuji.org/tr/1.0/ns/core.context.jsonld"
+"https://ujg.specs.openuji.org/tr/1.0-rc1/ns/core.context.jsonld"
 ```
 
 Compose it with module contexts only when their terms are used:
 
 ```json
 [
-  "https://ujg.specs.openuji.org/tr/1.0/ns/core.context.jsonld",
-  "https://ujg.specs.openuji.org/tr/1.0/ns/graph.context.jsonld"
+  "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/core.context.jsonld",
+  "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/graph.context.jsonld"
 ]
 ```
 

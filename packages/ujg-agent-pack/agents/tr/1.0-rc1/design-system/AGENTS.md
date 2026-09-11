@@ -49,9 +49,9 @@ When using Design System terms, include the Surface and Design System contexts:
 
 ```json
 [
-  "https://ujg.specs.openuji.org/tr/1.0/ns/context.jsonld",
-  "https://ujg.specs.openuji.org/tr/1.0/ns/surface.context.jsonld",
-  "https://ujg.specs.openuji.org/tr/1.0/ns/design-system.context.jsonld"
+  "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/context.jsonld",
+  "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/surface.context.jsonld",
+  "https://ujg.specs.openuji.org/tr/1.0-rc1/ns/design-system.context.jsonld"
 ]
 ```
 

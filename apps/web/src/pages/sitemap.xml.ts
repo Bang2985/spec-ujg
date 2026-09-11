@@ -1,11 +1,15 @@
 import type { APIRoute } from 'astro';
+import fs from 'node:fs';
+import { join, relative, sep } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
+import { getCaseStudies } from '@/lib/case-studies';
 import { getDocuments } from '@/lib/load';
 import { CANONICAL_SPEC_BASE_URL } from '@/lib/spec-artifacts';
 import { TOP_LEVEL_CONTENT_PAGES } from '@/lib/static-pages';
-import { TECHNICAL_REPORTS } from '@/lib/technical-reports';
 
 const staticAstroPageModules = import.meta.glob('./**/*.astro', { eager: true });
+const DEFAULT_PUBLIC_DIR = fileURLToPath(new URL('../../public/', import.meta.url));
 
 function escapeXml(value: string): string {
   return value
@@ -44,19 +48,37 @@ function sortPaths(paths: string[]): string[] {
   });
 }
 
+function walkFiles(directory: string): string[] {
+  if (!fs.existsSync(directory)) return [];
+
+  const files: string[] = [];
+  for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+    if (entry.name === '_astro') continue;
+
+    const path = join(directory, entry.name);
+    if (entry.isDirectory()) files.push(...walkFiles(path));
+    else if (entry.isFile()) files.push(path);
+  }
+
+  return files;
+}
+
+function getCommittedTechnicalReportPaths(): string[] {
+  const publicDir = process.env.UJG_ASTRO_PUBLIC_DIR || DEFAULT_PUBLIC_DIR;
+  const trDir = join(publicDir, 'tr');
+
+  return walkFiles(trDir)
+    .filter((file) => file.endsWith('.html'))
+    .map((file) => {
+      const relativePath = relative(publicDir, file).split(sep).join('/');
+      return `/${relativePath.replace(/\.html$/, '')}`;
+    });
+}
+
 export const GET: APIRoute = async () => {
+  const caseStudies = await getCaseStudies();
   const documents = await getDocuments('ed');
-  const reportPaths = (
-    await Promise.all(
-      TECHNICAL_REPORTS.map(async (report) => {
-        const reportDocuments = await getDocuments(report.workspace);
-        return [
-          report.basePath,
-          ...reportDocuments.map((document) => `${report.basePath}/${document.id}`),
-        ];
-      })
-    )
-  ).flat();
+  const reportPaths = getCommittedTechnicalReportPaths();
   const staticAstroPaths = Object.keys(staticAstroPageModules)
     .map(routePathFromStaticAstroPage)
     .filter((pathname): pathname is string => pathname !== undefined);
@@ -65,6 +87,7 @@ export const GET: APIRoute = async () => {
     uniquePaths([
       ...staticAstroPaths,
       ...topLevelContentPaths,
+      ...caseStudies.map((study) => `/case-studies/${study.slug}`),
       ...documents.map((document) => `/ed/${document.id}`),
       ...reportPaths,
     ])

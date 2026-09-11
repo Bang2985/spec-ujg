@@ -1,5 +1,5 @@
 {
-  "artifactHash": "sha256:6fe8e751689e2201c6d7753fc6c6cefcd9130f40e5a08f73853be29fae92d38d",
+  "artifactHash": "sha256:aba7e1eaf1473594d88f317b9e1594588d2adb1a09251f8edd72d5857fc7c8d4",
   "configHash": "sha256:096f3d2f0586cd286a7b2b82a1df40d0536a2eabfe4d9482447c8b892da390b7",
   "package": {
     "id": "ujg-agent-pack",
@@ -11,8 +11,8 @@
     "moduleId": "modules/design-system",
     "name": "ujg-tr-1-0-rc1-design-system-modeling"
   },
-  "sourceHash": "sha256:7490ab54278af06e98fd8a973f0affd726baa32615e0e7076e91e0c3c47d8138",
-  "specHash": "sha256:436a7252c1cf4fe6962eed10d2ce579e234fd8d1b6a985b09639b9cfaa586866",
+  "sourceHash": "sha256:41a3a5b445a6ea8d8674162ff2a63de1128c8dd67251d321eb7daa46c831cdc2",
+  "specHash": "sha256:691ae3bb2fe10896f674342bea7d89d564e470703626fe2fefd65e646c432c09",
   "target": {
     "id": "tr/1.0-rc1",
     "label": "Technical Report 1.0 RC1"

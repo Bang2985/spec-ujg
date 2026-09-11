@@ -1,0 +1,119 @@
+---
+/**
+ * Renders a fenced ```bar-chart block as a horizontal bar list.
+ *
+ * Syntax:
+ *   title: <optional title>
+ *   subtitle: <optional subtitle>
+ *   max: <optional explicit max, else derived from the largest value>
+ *
+ *   <label> = <numeric value>
+ *   ...
+ */
+interface Bar {
+  label: string;
+  value: number;
+  raw: string;
+}
+
+interface ParsedBarChart {
+  title?: string;
+  subtitle?: string;
+  max: number;
+  bars: Bar[];
+}
+
+const CHART_COLORS = [
+  'var(--chart-1)',
+  'var(--chart-2)',
+  'var(--chart-3)',
+  'var(--chart-4)',
+  'var(--chart-5)',
+];
+
+function parseBarChart(code: string): ParsedBarChart {
+  const lines = code.split(/\r\n|\r|\n/);
+  let title: string | undefined;
+  let subtitle: string | undefined;
+  let explicitMax: number | undefined;
+  const bars: Bar[] = [];
+
+  for (const rawLine of lines) {
+    const line = rawLine.trim();
+    if (!line) continue;
+
+    if (!title) {
+      const titleMatch = line.match(/^title:\s*(.+)$/i);
+      if (titleMatch) {
+        title = titleMatch[1].trim();
+        continue;
+      }
+    }
+
+    if (!subtitle) {
+      const subtitleMatch = line.match(/^subtitle:\s*(.+)$/i);
+      if (subtitleMatch) {
+        subtitle = subtitleMatch[1].trim();
+        continue;
+      }
+    }
+
+    if (explicitMax === undefined) {
+      const maxMatch = line.match(/^max:\s*([\d.]+)\s*$/i);
+      if (maxMatch) {
+        explicitMax = parseFloat(maxMatch[1]);
+        continue;
+      }
+    }
+
+    const kv = line.match(/^(.+?)\s*=\s*([\d.]+)\s*$/);
+    if (kv) {
+      const [, label, rawValue] = kv;
+      bars.push({ label: label.trim(), value: parseFloat(rawValue), raw: rawValue.trim() });
+    }
+  }
+
+  const largest = bars.reduce((acc, bar) => Math.max(acc, bar.value), 0);
+  const max = explicitMax ?? (largest > 0 ? largest : 1);
+
+  return { title, subtitle, max, bars };
+}
+
+interface Props {
+  code: string;
+  id?: string;
+}
+
+const { code, id } = Astro.props;
+const { title, subtitle, max, bars } = parseBarChart(code);
+---
+
+<div class="bar-list" id={id}>
+  {
+    (title || subtitle) && (
+      <div class="bar-list__header">
+        {title && <p class="bar-list__title">{title}</p>}
+        {subtitle && <p class="bar-list__subtitle">{subtitle}</p>}
+      </div>
+    )
+  }
+  <div class="bar-list__rows">
+    {
+      bars.map((bar, i) => {
+        const pct = Math.max(0, Math.min(100, (bar.value / max) * 100));
+        const color = CHART_COLORS[i % CHART_COLORS.length];
+        return (
+          <div class="bar-list__row">
+            <div class="bar-list__row-header">
+              <span class="bar-list__label">{bar.label}</span>
+              <span class="bar-list__value">{bar.raw}</span>
+            </div>
+            <div class="bar-list__track">
+              <div class="bar-list__fill" style={`width:${pct}%; background:${color};`} />
+            </div>
+          </div>
+        );
+      })
+    }
+  </div>
+</div>

@@ -1,0 +1,39 @@
+---
+import BlockRenderer from '@/components/astro/speculator/BlockRenderer.astro';
+import CaseStudyLayout from '@/layouts/CaseStudyLayout.astro';
+import { getCaseStudies, type CaseStudy } from '@/lib/case-studies';
+
+export async function getStaticPaths() {
+  const studies = await getCaseStudies();
+  return studies.map((study) => ({
+    params: { slug: study.slug },
+    props: { study },
+  }));
+}
+
+const { study } = Astro.props as { study: CaseStudy };
+const document = study.document;
+const toc = document.computed?.toc || [];
+---
+
+<CaseStudyLayout
+  title={study.title}
+  summary={study.summary}
+  teaser={study.teaser}
+  tags={study.tags}
+  heroImage={study.heroImage}
+  publishedAt={study.publishedAt}
+  updatedAt={study.updatedAt}
+  toc={toc}
+>
+  {
+    document.children.map((child) => (
+      <BlockRenderer
+        node={child}
+        documentPath={document.sourcePos?.file}
+        headingNumbers={document.computed?.headingNumbers}
+        basePath="/case-studies"
+      />
+    ))
+  }
+</CaseStudyLayout>

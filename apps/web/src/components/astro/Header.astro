@@ -14,12 +14,14 @@ interface Props {
   toc?: TocEntry[];
   breadcrumb?: { title: string; href: string }[];
   workspace?: SpecWorkspaceKey;
+  documentSelect?: boolean;
 }
 
-const { title, breadcrumb = [], toc, workspace = 'ed' } = Astro.props;
+const { title, breadcrumb = [], toc, workspace = 'ed', documentSelect } = Astro.props;
+const showDocumentSelect = documentSelect ?? breadcrumb.length > 0;
 const workspaceConfig = getWorkspaceConfig(workspace);
 
-const docs = await getDocuments(workspace);
+const docs = showDocumentSelect ? await getDocuments(workspace) : [];
 
 const options = docs
   .filter((doc: Document) => doc.metadata?.title !== undefined)
@@ -41,27 +43,29 @@ const currentHref = Astro.url.pathname.replace(/\.html$/, '');
         </div>
       )
     }
-    <div class="flex items-center justify-between gap-2">
-      <a href="/" class="flex text-primary font-bold hover:text-accent">
+    <div class="flex min-w-0 flex-1 items-center gap-2 overflow-hidden whitespace-nowrap">
+      <a href="/" class="flex shrink-0 text-primary font-bold hover:text-accent">
         <span>UJG</span>
       </a>
       {
         breadcrumb.map((item) => (
           <>
-            <span class="text-secondary-foreground">/</span>
+            <span class="shrink-0 text-secondary-foreground">/</span>
             <a
               href={item.href}
-              class="text-primary font-bold  hover:text-accent transition-colors duration-200"
+              class="shrink-0 text-primary font-bold hover:text-accent transition-colors duration-200"
             >
               {item.title}
             </a>
           </>
         ))
       }
-      <span class="text-secondary-foreground">/</span>
+      <span class="shrink-0 text-secondary-foreground">/</span>
       {
-        breadcrumb.length === 0 ? (
-          <span class="text-secondary-foreground">{title}</span>
+        breadcrumb.length === 0 || !showDocumentSelect ? (
+          <span class="min-w-0 truncate text-secondary-foreground" title={title}>
+            {title}
+          </span>
         ) : (
           <BreadcrumbSelect valueHref={currentHref} options={options} client:load />
         )
