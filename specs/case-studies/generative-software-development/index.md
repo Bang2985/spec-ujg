@@ -251,16 +251,16 @@ A User Journey Graph describes what a user should be able to do, separately from
 
 This case study asks two related questions:
 
-**RQ-1:** **Can one explicit UJG constrain multiple generative models toward the same intended journey without prescribing one implementation?**
+**RQ-1:** **Can one UJG hold several AI models to the same journey without dictating how each one builds it?**
 
-**RQ-2:** **Does stronger generation guidance improve the quality and faithfulness of the realization?**
+**RQ-2:** **Does stricter guidance produce a better build, and one that stays closer to the UJG?**
 
 So the study compares two things at once: the **models**, and the **guidance protocols** used to steer them. The same inputs are built twice — once through a loosely guided process, once through an explicitly staged one.
 
 The aim is not identical code or identical screens. It is to see whether independently generated builds keep the same meaning, and whether their quality changes when generation is broken into stages that can be inspected and verified one at a time.
 
 ## What is held constant {#2-what-is-held-constant}
-Every generation run received the same three inputs: a **UJG document**, an **implementation manifest**, and **reference screenshots** for the visual style.
+Every run started from the same four things: a **UJG document** with its schemas, an **implementation manifest**, **reference screenshots** for the visual style, and a fixed **technology profile**. No run was given a reference application to copy from.
 
 ### UJG
 [Workshop registration UJG](https://github.com/openuji/ujg-generative-se-case-study/blob/main/ujg/workshop-registration.ujg.jsonld) · [schemas](https://github.com/openuji/ujg-generative-se-case-study/tree/main/ujg/schemas)
@@ -315,6 +315,11 @@ The manifest fixes what gets built and where, identically in every run: a domain
 
 [View all 10 screenshots →](https://github.com/openuji/ujg-generative-se-case-study/tree/main/references/workshop-registration/screens)
 
+### What varies
+The only thing that changes is the **guidance protocol** that walks it through the work.
+
+The guidance itself splits in half. The work each skill performs — build the structure, derive the tokens, apply the styling, build the application — is the same in every run. What changes is how those skills are coordinated, and what has to pass before the next phase opens. That difference is the subject of [Two guidance protocols](#4-two-guidance-protocols).
+
 ## The 3 + 1 realization process {#3-the-3-1-realization-process}
 Building is split on purpose into three design-system phases, followed by the application itself.
 
@@ -345,63 +350,23 @@ Structure builds the skeleton of the design system before any visual decision ex
 
 The question here is whether that skeleton keeps the UJG composition — or collapses modeled pieces into ad-hoc screens and hides application behavior inside components.
 
-<!-- Publication evidence planned here:
-
-- representative Storybook structure screenshots
-
-- annotations for Template / Slot / Command-backed Surface composition
-
--->
-
 ### Tokens {#32-tokens}
 Tokens turn the screenshots into a reusable visual foundation. Raw values such as color, spacing, and type stay separate from the semantic tokens that name roles like *action foreground*; Themes differ by data only; and every token records whether its value was visible in a screenshot or inferred.
 
 This phase also writes the generated Theme and TokenSource back into the run's own copy of the UJG, without touching the journey it was given.
-
-<!-- Publication evidence planned here:
-
-- light/dark token specimens
-
-- typography, spacing, palette and semantic-role extracts
-
-- provenance examples
-
--->
 
 ### Styling {#33-styling}
 Styling applies the token system to the components and templates that already exist. It is judged on two things: how close the result comes to the references, and whether it leaves the earlier structure alone.
 
 So the telling comparison is not a final screenshot but the **same modeled artifact before and after styling**, seen on mobile and desktop wherever responsive behavior exists.
 
-<!-- Publication evidence planned here:
-
-- before/after Storybook artifact pairs
-
-- responsive variants
-
-- reference-to-realization annotations
-
--->
-
 ### Application {#34-application}
 The last phase builds what the manifest selected: the browser application, domain runtime, HTTP/OpenAPI boundary, SQLite persistence, identity adapter, and email delivery adapter.
 
 The question now shifts from how it looks to **how it behaves**: do entries, commands, guarded branches, effects, invariants, continuations, data contracts, and touchpoint boundaries survive implementation?
 
-<!-- Publication evidence planned here:
-
-- representative application states
-
-- journey outcome screenshots
-
-- generated SQLite ER diagram
-
-- selected verification evidence
-
--->
-
 ## Two guidance protocols {#4-two-guidance-protocols}
-The one thing that changes between runs is how the model is guided through the same job.
+Each model runs the job twice. Between its two runs the inputs and the work stay fixed, and only the coordination and the gates change.
 
 | | [Implicit-gated]^i guidance | [Explicit-gated]^i guidance |
 | --- | --- | --- |
@@ -543,7 +508,7 @@ Where the two evaluators disagree is itself evidence. It comes in two kinds:
 Large disagreements are shown rather than hidden behind the mean.
 
 ## RQ1 — Cross-model convergence
-> **Can one explicit UJG constrain multiple generative models toward the same intended journey without prescribing one implementation?**
+> **Can one UJG hold several AI models to the same journey without dictating how each one builds it?**
 
 All four runs share the same UJG and the same technology profile. That makes it possible to ask whether independently generated builds meet at the modeled boundaries while still choosing their own code architecture and helpers.
 
@@ -856,7 +821,7 @@ This is the **SQLite schema generated by the explicit GPT-5.5 Codex run** — no
 **RQ1 result:** convergence is strongest exactly where the UJG models something. Independent models reproduce the same artifact inventory and the same journey scope while writing substantially different code, token inventories, helpers, and runtime architectures. They diverge more in the application phase, where duplicated journey semantics and unverified branches begin to affect behavior.
 
 ## RQ2 — Effect of explicit guidance
-> **Does stronger generation guidance improve the quality and faithfulness of the realization?**
+> **Does stricter guidance produce a better build, and one that stays closer to the UJG?**
 
 Here each model is compared against itself: same model, same inputs, only the guidance protocol changes.
 
@@ -977,8 +942,6 @@ Read the guidance effect alongside the underlying counts, not from the headline 
 ## Reproducibility and limitations
 The experiment is deliberately narrow: one workshop-registration case, one fixed technology profile, two models, two guidance protocols. It is not a general ranking of AI coding systems.
 
-Every run starts clean. The models receive the UJG, its schemas, the manifest, and the screenshots — and no reference application to copy from.
-
 The retained run directories, historical guidance skills, verification tooling, evaluation rubrics, evaluator JSON files, generated UJG documents, DTCG token sources, and application implementations are available in the [experiment repository](https://github.com/openuji/ujg-generative-se-case-study).
 
 Every repository count in the results — Components, Templates, Slots, SurfaceRealizations, helpers, tokens, Themes — comes straight from the retained generated code. Every evaluator diagnostic and score traces back to its evaluator result file.
@@ -989,7 +952,7 @@ Several limitations remain:
 
 * only two implementation models have complete paired implicit/explicit runs;
 
-* the technology environment is fixed on purpose, so nothing here measures how well a model picks a stack;
+* the technology profile is fixed on purpose, so nothing here measures how well a model picks a stack;
 
 * visual fidelity partly rests on reading code, where no rendered screenshot was available at evaluation time;
 
