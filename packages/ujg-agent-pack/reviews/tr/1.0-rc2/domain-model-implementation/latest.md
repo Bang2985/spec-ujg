@@ -13,7 +13,7 @@ Spec URL: https://ujg.specs.openuji.org/tr/1.0-rc2/extensions/domain-model
 ## Review Inputs
 
 - Source hash: sha256:9c5252f3ae2d7ed408ed6b3defa8ca636ec398362280da8c6c5cf6c70a949a14
-- Spec hash: sha256:3b164186cf9200aebb7d21a6eb90ac11d3488d7adc7203f72b33155e416e241d
+- Spec hash: sha256:a15827ab8f9b34c215cd239c51a6bb1b5ce142416704f445b3876e7510d4e4aa
 
 ## Source Headings Likely Affected
 

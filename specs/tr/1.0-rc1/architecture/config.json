@@ -11,7 +11,7 @@
   "noConformance": true,
   "respec": {
     "group": {
-      "name": "User Journal Graph Community Group",
+      "name": "User Journey Graph Community Group",
       "url": "https://www.w3.org/community/ujg/"
     },
     "repository": "https://github.com/openuji/spec-ujg/blob/main/specs/tr/1.0-rc1/architecture/index.md",
