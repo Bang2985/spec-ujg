@@ -523,97 +523,208 @@ Large disagreements are therefore shown rather than hidden by the published mean
 The four retained Claude Sonnet 5 and GPT-5.5 Codex runs use the same UJG and realization policy. This makes it possible to compare whether independently generated implementations converge at the modeled semantic and structural boundaries while remaining free to choose different source architectures and implementation helpers.
 
 ### Structural convergence
+
 The UJG Design System model defines a shared reusable vocabulary of:
 
 ```stat-grid
-
 title: Modeled design-system structure
-
 subtitle: Shared UJG input for all four runs
 
 Artifacts
 
 Components = 12
-
 Templates = 9
-
 Slots = 18
-
 SurfaceRealizations = 54
-
 ```
 
-All four runs realize the complete Component and Template inventory.
+All four runs realize the complete Component and Template inventory. Repository-derived structure metrics are reported separately from evaluator diagnostics so that mechanically countable implementation properties are not conflated with evaluator-dependent measurements.
 
-| Run                        | [Components]^i | [Templates]^i | [Implementation primitives]^i | [Missing stories]^i | [Composition violations]^i | [Data-contract violations]^i | [Interaction-story coverage]^i |
-| -------------------------- | ---------- | --------- | -------------------------- | ---------------- | ----------------------- | ------------------------- | --------------------------- |
-| Claude Sonnet 5 · explicit |    12 / 12 |     9 / 9 |                         3 |               0 |                      0 |                        0 |                       100% |
-| Claude Sonnet 5 · implicit |    12 / 12 |     9 / 9 |                         4 |               0 |                      0 |                        0 |                        50% |
-| GPT-5.5 Codex · explicit   |    12 / 12 |     9 / 9 |                         0 |               0 |                      0 |                        0 |                       100% |
-| GPT-5.5 Codex · implicit   |    12 / 12 |     9 / 9 |                         2 |               0 |                      0 |                        1 |                       100% |
+#### Repository-derived structure metrics
 
-`Component`, `Template`, `Slot`, and `SurfaceRealization` are modeled UJG Design System artifacts. **Implementation primitives** are additional generated code-level helpers and are reported separately.
+| Run                        | [Components]^i | [Templates]^i | [Implementation primitives]^i |
+| -------------------------- | -------------: | ------------: | ----------------------------: |
+| Claude Sonnet 5 · explicit |        12 / 12 |         9 / 9 |                             3 |
+| Claude Sonnet 5 · implicit |        12 / 12 |         9 / 9 |                             4 |
+| GPT-5.5 Codex · explicit   |        12 / 12 |         9 / 9 |                             0 |
+| GPT-5.5 Codex · implicit   |        12 / 12 |         9 / 9 |                             2 |
 
-The result is strong structural convergence: 54 modeled SurfaceRealizations are served by the same 12 Components and 9 Templates in every implementation rather than by state-specific UI artifacts. At the same time, the models independently introduce between zero and four additional implementation primitives.
+`Component`, `Template`, `Slot`, and `SurfaceRealization` are modeled UJG Design System artifacts. **Implementation primitives** are additional generated code-level helpers and are reported separately because they are implementation choices rather than modeled UJG artifacts.
 
-The common modeled vocabulary is therefore preserved while the concrete implementation architecture remains unconstrained.
+The repository evidence shows complete realization of the modeled Component and Template inventory in all four runs. The implementations nevertheless differ in their internal decomposition, introducing between zero and four additional implementation primitives.
+
+#### Structure diagnostics — GPT-5.5 Codex evaluator
+
+| Run                        | [Missing stories]^i | [Composition violations]^i | [Data-contract violations]^i | [Interaction-story coverage]^i |
+| -------------------------- | ------------------: | -------------------------: | ---------------------------: | -----------------------------: |
+| Claude Sonnet 5 · explicit |                   0 |                          0 |                            0 |                           100% |
+| Claude Sonnet 5 · implicit |                   0 |                          0 |                            0 |                            50% |
+| GPT-5.5 Codex · explicit   |                   0 |                          0 |                            0 |                           100% |
+| GPT-5.5 Codex · implicit   |                   0 |                          0 |                            1 |                           100% |
+
+#### Structure diagnostics — Claude Sonnet 5 evaluator
+
+| Run                        | [Missing stories]^i | [Composition violations]^i | [Data-contract violations]^i | [Interaction-story coverage]^i |
+| -------------------------- | ------------------: | -------------------------: | ---------------------------: | -----------------------------: |
+| Claude Sonnet 5 · explicit |                   0 |                          0 |                            0 |                           100% |
+| Claude Sonnet 5 · implicit |                   0 |                          0 |                            0 |                           100% |
+| GPT-5.5 Codex · explicit   |                   0 |                          0 |                            0 |                           100% |
+| GPT-5.5 Codex · implicit   |                   0 |                          1 |                            0 |                           100% |
+
+The evaluators agree completely on the two explicit-gated runs: both report complete Storybook coverage for the evaluated interactions and no missing stories, composition violations, or data-contract violations.
+
+The implicit-gated runs expose measurement disagreement. For the Claude Sonnet 5 implicit implementation, the GPT-5.5 Codex evaluator reports **50% interaction-story coverage**, while the Claude Sonnet 5 evaluator reports **100%**. For the GPT-5.5 Codex implicit implementation, the Claude evaluator identifies **one composition violation**, whereas the Codex evaluator instead identifies **one data-contract violation**. These differences are retained rather than averaged because they reflect different interpretations of the implementation evidence.
+
+At the repository level, the result is strong **contractual structural convergence**: all four implementations realize the same 12 modeled Components and 9 modeled Templates, serving the shared set of 54 modeled SurfaceRealizations. The evidence therefore supports convergence at the UJG boundaries that are explicitly modeled, while the differing implementation-primitives counts show that the UJG does not prescribe one concrete source architecture.
 
 ### DTCG token realization
-The token phase materializes the visual system as DTCG token artifacts. Foundation and semantic tokens are counted from the generated DTCG files; Theme and TokenSource realization remains connected to the run-local UJG.
 
-| Run                        | [DTCG tokens]^i | [Foundation / semantic tokens]^i | [Themes]^i | [Unresolved aliases]^i | [Raw-value leaks]^i | [Parallel token / theme registry]^i | [Token provenance coverage]^i | [Source-of-truth integrity]^i |
-| -------------------------- | ----------- | ---------------------- | ------ | ------------------- | ---------------- | ---------------------------------- | ---------------------- | -------------------------- |
-| Claude Sonnet 5 · explicit |         168 |              100 / 68 |      2 |                  0 |               0 |                             0 / 0 |                  100% |                   4.9 / 5 |
-| Claude Sonnet 5 · implicit |         110 |               66 / 44 |      2 |                  0 |             116 |                             0 / 1 |                 40.0% |                   4.0 / 5 |
-| GPT-5.5 Codex · explicit   |         106 |               50 / 56 |      2 |                  0 |               0 |                             0 / 0 |                 52.8% |                   5.0 / 5 |
-| GPT-5.5 Codex · implicit   |          63 |               31 / 32 |      2 |                  0 |              73 |                             1 / 1 |                 50.8% |                   2.3 / 5 |
+The token phase materializes the visual foundation as DTCG token artifacts and Theme definitions. To avoid conflating implementation facts with evaluator interpretation, repository-derived token metrics are reported separately from evaluator diagnostics.
 
-The two models do **not** converge on an identical token inventory: Claude and Codex independently choose different numbers of foundation and semantic tokens. They do converge on the required two-Theme realization and produce resolvable DTCG token graphs.
+#### Repository-derived token metrics
 
-This is an example of the intended boundary: UJG constrains the Theme and TokenSource semantics without prescribing one exact token taxonomy.
+| Run                        | [DTCG tokens]^i | [Foundation / semantic tokens]^i | [Themes]^i | Direct provenance | Inferred provenance | Unclassified | [Provenance classification coverage]^i |
+| -------------------------- | --------------: | -------------------------------: | ---------: | ----------------: | ------------------: | -----------: | -------------------------------------: |
+| Claude Sonnet 5 · explicit |             168 |                         100 / 68 |          2 |                61 |                 107 |            0 |                             **100.0%** |
+| Claude Sonnet 5 · implicit |             110 |                          66 / 44 |          2 |                22 |                  22 |           66 |                              **40.0%** |
+| GPT-5.5 Codex · explicit   |             106 |                          50 / 56 |          2 |                28 |                  28 |           50 |                              **52.8%** |
+| GPT-5.5 Codex · implicit   |              63 |                          31 / 32 |          2 |                16 |                  16 |           31 |                              **50.8%** |
 
-The more important variation is source-of-truth discipline. Both explicit runs keep generated styling values inside the DTCG realization, while the implicit runs retain substantial raw-value leakage or parallel theme/token registries.
+Token inventory size is descriptive rather than a quality measure: a larger token catalogue is not necessarily better. The four implementations differ substantially in token count and foundation/semantic decomposition while all realize two Themes, indicating that the modeled Theme boundary does not prescribe a single token taxonomy.
 
-### Styling realization
-Styling is evaluated after the structural inventory has already been established.
+Provenance classification coverage is calculated deterministically as:
 
-| Run                        | [Raw-value leaks]^i | [Component inventory changed]^i | [Template inventory changed]^i | [Duplicated style patterns]^i | [Misplaced style rules]^i | [Responsive artifacts]^i | [Responsive documentation]^i | [Token/theme adherence]^i |
-| -------------------------- | ----------------------- | ---------------------------- | ----------------------------- | ---------------------------- | ------------------------ | --------------------- | --------------------------- | ---------------------- |
-| Claude Sonnet 5 · explicit |                      0 |              No             |             No             |                         0 |                     0 |                    9 |                      38% |               4.8 / 5 |
-| Claude Sonnet 5 · implicit |                    116 |              No             |             No             |                         6 |                     2 |                   10 |                      22% |               3.0 / 5 |
-| GPT-5.5 Codex · explicit   |                      0 |              No             |             No             |                         1 |                     0 |                    2 |                       0% |               4.5 / 5 |
-| GPT-5.5 Codex · implicit   |                     73 |              No             |             No             |                         2 |                     2 |                    7 |                      33% |               2.1 / 5 |
+`(direct tokens + inferred tokens) / total DTCG tokens`
 
-All four runs preserve the modeled Component and Template inventory through styling. The generated implementations therefore remain structurally comparable even though the concrete CSS architecture, responsive strategy, and implementation-level reuse differ.
+with:
 
-The clearest divergence is again source-of-truth ownership: the explicit runs contain no reported raw visual-value leakage, while both implicit runs maintain substantial styling values outside the DTCG-controlled path.
+`unclassified tokens = total DTCG tokens − direct tokens − inferred tokens`
+
+The resulting coverage values are therefore derived from repository counts rather than evaluator-provided aggregate ratios. Coverage measures the proportion of the token catalogue classified as having either direct or inferred provenance; it does not establish that every individual provenance classification is correct.
+
+#### Token diagnostics — GPT-5.5 Codex evaluator
+
+| Run                        | [Unresolved aliases]^i | [Raw-value leaks]^i | [Parallel token / Theme registry]^i | [Source-of-truth integrity]^i |
+| -------------------------- | ---------------------: | ------------------: | ----------------------------------: | ----------------------------: |
+| Claude Sonnet 5 · explicit |                      0 |                   0 |                               0 / 0 |                   **4.9 / 5** |
+| Claude Sonnet 5 · implicit |                      0 |                 116 |                               0 / 1 |                   **4.0 / 5** |
+| GPT-5.5 Codex · explicit   |                      0 |                   0 |                               0 / 0 |                   **5.0 / 5** |
+| GPT-5.5 Codex · implicit   |                      0 |                  73 |                               1 / 1 |                   **2.3 / 5** |
+
+Under the GPT-5.5 Codex evaluator, both explicit-gated implementations have zero unresolved aliases, zero reported raw-value leaks, and no parallel token or Theme registries. The implicit-gated implementations show weaker source-of-truth discipline, although through different failure modes. The Claude implementation is assessed as retaining a parallel Theme registry and 116 raw-value leaks, while the GPT implementation is assessed as retaining both a parallel token catalogue and a parallel Theme registry together with 73 raw-value leaks.
+
+#### Token diagnostics — Claude Sonnet 5 evaluator
+
+| Run                        | [Unresolved aliases]^i | [Raw-value leaks]^i | [Parallel token / Theme registry]^i | [Source-of-truth integrity]^i |
+| -------------------------- | ---------------------: | ------------------: | ----------------------------------: | ----------------------------: |
+| Claude Sonnet 5 · explicit |                      0 |                   0 |                               0 / 0 |                   **5.0 / 5** |
+| Claude Sonnet 5 · implicit |                      0 |                   0 |                               0 / 0 |                   **5.0 / 5** |
+| GPT-5.5 Codex · explicit   |                      0 |                   0 |                               0 / 0 |                   **5.0 / 5** |
+| GPT-5.5 Codex · implicit   |                      0 |                  56 |                               1 / 0 |                   **1.0 / 5** |
+
+The Claude Sonnet 5 evaluator likewise reports no unresolved aliases, raw-value leaks, or parallel token/Theme registries for either explicit-gated implementation. It also identifies a substantial source-of-truth problem in the GPT-5.5 Codex implicit implementation, reporting 56 raw-value leaks and one parallel token catalogue.
+
+The evaluators disagree materially on the Claude Sonnet 5 implicit implementation. GPT-5.5 Codex reports 116 raw-value leaks and one parallel Theme registry, whereas Claude Sonnet 5 reports neither and assigns full source-of-truth integrity. These values are therefore retained separately rather than averaged or presented as a single measurement.
+
+For the GPT-5.5 Codex implicit implementation, the evaluators agree on the direction of the source-of-truth problem but differ in its extent. Both identify a parallel token catalogue and substantially weaker source-of-truth integrity; they report 56 versus 73 raw-value leaks and disagree on whether a separate parallel Theme registry is also present.
+
+Across the explicit-gated runs, evaluator agreement is substantially stronger: both evaluators independently report zero unresolved aliases, zero raw-value leakage, and no parallel token or Theme registries. The token results therefore distinguish two separate properties: **token realization**, which all four runs achieve, and **token authority**, for which the explicit-gated runs receive the clearest and most consistent evaluator support.
+
+### Design-system styling
+
+The styling phase applies the generated token and Theme system to the modeled Components and Templates. Repository-derived structural preservation is reported separately from evaluator diagnostics because measures such as raw-value leakage, duplicated style patterns, responsive artifacts, and responsive documentation depend on how the evaluator interprets the styling implementation.
+
+#### Repository-derived styling scope
+
+| Run                        | Components after styling | Templates after styling | Component inventory changed | Template inventory changed |
+| -------------------------- | -----------------------: | ----------------------: | --------------------------- | -------------------------- |
+| Claude Sonnet 5 · explicit |                  12 / 12 |                   9 / 9 | No                          | No                         |
+| Claude Sonnet 5 · implicit |                  12 / 12 |                   9 / 9 | No                          | No                         |
+| GPT-5.5 Codex · explicit   |                  12 / 12 |                   9 / 9 | No                          | No                         |
+| GPT-5.5 Codex · implicit   |                  12 / 12 |                   9 / 9 | No                          | No                         |
+
+All four implementations preserve the modeled Component and Template inventories through the styling phase. Styling therefore changes presentation without adding or removing modeled artifact types at this boundary.
+
+#### Styling diagnostics — GPT-5.5 Codex evaluator
+
+| Run                        | [Raw-value leaks]^i | [Duplicated style patterns]^i | [Misplaced style rules]^i | [Responsive artifacts]^i | [Responsive documentation]^i | [Token/theme adherence]^i |
+| -------------------------- | ------------------: | ----------------------------: | ------------------------: | -----------------------: | ---------------------------: | ------------------------: |
+| Claude Sonnet 5 · explicit |                   0 |                             0 |                         0 |                        9 |                          38% |               **4.8 / 5** |
+| Claude Sonnet 5 · implicit |                 116 |                             6 |                         2 |                       10 |                          22% |               **3.0 / 5** |
+| GPT-5.5 Codex · explicit   |                   0 |                             1 |                         0 |                        2 |                           0% |               **4.5 / 5** |
+| GPT-5.5 Codex · implicit   |                  73 |                             2 |                         2 |                        7 |                          33% |               **2.1 / 5** |
+
+Under the GPT-5.5 Codex evaluator, both explicit-gated implementations show strong token/Theme adherence and no reported raw-value leakage. The Claude Sonnet 5 explicit implementation also has no duplicated or misplaced styling patterns, while the GPT-5.5 Codex explicit implementation receives one minor duplication finding.
+
+The implicit-gated implementations are assessed less favorably. The Claude Sonnet 5 implementation is reported as containing 116 raw-value leaks, six duplicated style patterns, and two misplaced style rules. The GPT-5.5 Codex implementation is reported as containing 73 raw-value leaks, two duplicated patterns, and two misplaced rules. In both cases, the evaluator associates these diagnostics with weaker adherence to the generated token and Theme system.
+
+#### Styling diagnostics — Claude Sonnet 5 evaluator
+
+| Run                        | [Raw-value leaks]^i | [Duplicated style patterns]^i | [Misplaced style rules]^i | [Responsive artifacts]^i | [Responsive documentation]^i | [Token/theme adherence]^i |
+| -------------------------- | ------------------: | ----------------------------: | ------------------------: | -----------------------: | ---------------------------: | ------------------------: |
+| Claude Sonnet 5 · explicit |                   0 |                             0 |                         0 |                        8 |                          88% |               **5.0 / 5** |
+| Claude Sonnet 5 · implicit |                   0 |                             0 |                         0 |                        2 |                          10% |               **5.0 / 5** |
+| GPT-5.5 Codex · explicit   |                   8 |                             0 |                         1 |                        2 |                           0% |               **4.0 / 5** |
+| GPT-5.5 Codex · implicit   |                  56 |                             3 |                         0 |                        6 |                           0% |               **2.0 / 5** |
+
+The Claude Sonnet 5 evaluator also assesses the Claude explicit implementation as fully token-aligned, with no raw-value leaks, duplication, or misplaced style rules. It differs from GPT-5.5 Codex, however, in its assessment of several other runs.
+
+For Claude Sonnet 5 implicit, Claude reports zero raw-value leaks and full token/Theme adherence, whereas GPT-5.5 Codex reports 116 leaks and rates adherence at 3.0 / 5. The disagreement arises from how the evaluators treat Tailwind utility-based styling and whether default utility scales constitute values outside the generated DTCG ownership path.
+
+For GPT-5.5 Codex explicit, Claude reports eight raw-value leaks and one misplaced style rule, primarily at the application-shell boundary, while GPT-5.5 Codex reports zero leaks and no misplaced rules. Both nevertheless assess the implementation as having relatively strong token/Theme adherence.
+
+For GPT-5.5 Codex implicit, both evaluators identify materially weaker token/Theme adherence and substantial raw-value duplication, although their counts differ: 56 under Claude Sonnet 5 and 73 under GPT-5.5 Codex.
+
+Responsive metrics also show substantial evaluator variation. For example, Claude Sonnet 5 counts eight responsive artifacts in the Claude explicit run with 87.5% documentation coverage, whereas GPT-5.5 Codex counts nine responsive artifacts but only 38% documentation coverage. These values therefore represent evaluator diagnostics rather than deterministic repository measurements and are preserved separately rather than averaged.
+
+Across the four implementations, the strongest evaluator agreement concerns structural preservation: none of the runs changes the modeled Component or Template inventory during styling. The evaluators also broadly agree that the explicit-gated implementations exhibit stronger token/Theme adherence than the GPT-5.5 Codex implicit implementation. More detailed claims about raw-value leakage, styling duplication, and responsive documentation should remain evaluator-specific because the retained evaluations apply materially different interpretations to those properties.
+
 
 #### Same modeled template, different implementation models
 | Claude Sonnet 5 · explicit-gated | GPT-5.5 Codex · explicit-gated |
 | --- | --- |
 | [![ReviewWithActions realized by Claude Sonnet 5 under explicit guidance](/case-studies/generative-software-development/evidence/review-with-actions-claude-explicit.png)](/case-studies/generative-software-development/evidence/review-with-actions-claude-explicit.png) | [![ReviewWithActions realized by GPT-5.5 Codex under explicit guidance](/case-studies/generative-software-development/evidence/review-with-actions-codex-explicit.png)](/case-studies/generative-software-development/evidence/review-with-actions-codex-explicit.png) |
 
-Both implementations realize the same UJG-modeled `ReviewWithActions`
-
-Template under the same explicit-gated protocol. The implementations
-
-remain free to choose their own styling realization while preserving the
-
-established Template and Component inventory.
+Both implementations realize the same UJG-modeled `ReviewWithActions` Template under the same explicit-gated protocol. The implementations remain free to choose their own styling realization while preserving the established Template and Component inventory.
 
 ### Application realization
-The application phase tests whether the common journey semantics survive realization into the manifest-selected interfaces, domain runtime, persistence, and integration boundaries.
+
+All four runs therefore begin the application phase with the same realization contract. The manifest fixes the selected architectural boundaries but does not determine how those boundaries are implemented internally.
+
+#### Application diagnostics — GPT-5.5 Codex evaluator
 
 | Run                        | [Interfaces realized]^i | [Verified branches]^i | [Verification coverage]^i | [Design-system integration violations]^i | [Parallel semantic projections]^i | [Effect / invariant violations]^i | [UJG behavioral fidelity]^i |
-| -------------------------- | -------------------- | ------------------ | ---------------------- | -------------------------- | ------------------------- | ------------------------------ | ------------------------ |
-| Claude Sonnet 5 · explicit |               2 / 2 |           30 / 35 |                 86.0% |                         0 |                      1 |                             0 |                 4.6 / 5 |
-| Claude Sonnet 5 · implicit |               2 / 2 |           12 / 21 |                 57.1% |                         0 |                      2 |                             1 |                 3.7 / 5 |
-| GPT-5.5 Codex · explicit   |               2 / 2 |           11 / 13 |                 84.6% |                         0 |                      0 |                             0 |                4.25 / 5 |
-| GPT-5.5 Codex · implicit   |               2 / 2 |           13 / 22 |                 59.1% |                         2 |                      2 |                             0 |                 3.4 / 5 |
+| -------------------------- | ----------------------: | --------------------: | ------------------------: | ---------------------------------------: | --------------------------------: | --------------------------------: | --------------------------: |
+| Claude Sonnet 5 · explicit |                   2 / 2 |               30 / 35 |                 **85.7%** |                                        0 |                                 1 |                                 0 |                 **4.6 / 5** |
+| Claude Sonnet 5 · implicit |                   2 / 2 |               12 / 21 |                 **57.1%** |                                        0 |                                 2 |                                 1 |                 **3.7 / 5** |
+| GPT-5.5 Codex · explicit   |                   2 / 2 |               11 / 13 |                 **84.6%** |                                        0 |                                 0 |                                 0 |                **4.25 / 5** |
+| GPT-5.5 Codex · implicit   |                   2 / 2 |               13 / 22 |                 **59.1%** |                                        2 |                                 2 |                                 0 |                 **3.4 / 5** |
 
-All four implementations realize the two selected interfaces, but behavioral convergence is weaker than structural convergence.
+Under the GPT-5.5 Codex evaluator, all four runs realize both manifest-selected interfaces. The two explicit-gated implementations achieve substantially higher behavioral-fidelity scores than their corresponding implicit runs.
 
-The implementations differ materially in runtime architecture, verification depth, semantic projections, and persistence realization. The UJG therefore constrains the principal journey and interface scope without forcing the models toward one source architecture.
+The Claude Sonnet 5 explicit implementation has the broadest verification universe under this evaluator, with 30 of 35 identified branches verified. Its principal source-of-truth diagnostic is one parallel semantic projection in the browser service layer. The GPT-5.5 Codex explicit implementation has a smaller evaluator-defined branch universe but verifies 11 of 13 identified branches and receives no reported design-system integration, semantic-projection, or effect/invariant violations.
+
+Both implicit implementations exhibit weaker application-level convergence. Claude implicit receives two parallel semantic projections and one effect/invariant violation, while GPT implicit receives two design-system integration violations and two parallel semantic projections.
+
+#### Application diagnostics — Claude Sonnet 5 evaluator
+
+| Run                        | [Interfaces realized]^i | [Verified branches]^i | [Verification coverage]^i | [Design-system integration violations]^i | [Parallel semantic projections]^i | [Effect / invariant violations]^i | [UJG behavioral fidelity]^i |
+| -------------------------- | ----------------------: | --------------------: | ------------------------: | ---------------------------------------: | --------------------------------: | --------------------------------: | --------------------------: |
+| Claude Sonnet 5 · explicit |                   2 / 2 |               22 / 22 |                **100.0%** |                                        0 |                                 0 |                                 0 |                 **5.0 / 5** |
+| Claude Sonnet 5 · implicit |                   2 / 2 |               12 / 21 |                 **57.1%** |                                        0 |                                 0 |                                 0 |                 **5.0 / 5** |
+| GPT-5.5 Codex · explicit   |                   2 / 2 |               14 / 21 |                 **66.7%** |                                        0 |                                 1 |                                 1 |                 **4.0 / 5** |
+| GPT-5.5 Codex · implicit   |               **1 / 2** |               11 / 22 |                 **50.0%** |                                        1 |                                 1 |                                 2 |                 **1.0 / 5** |
+
+The Claude Sonnet 5 evaluator reaches materially different conclusions for several runs. It assesses both Claude implementations as having full UJG behavioral fidelity despite the implicit run having substantially lower verification coverage. This distinction is important: behavioral fidelity and maintained verification coverage are separate rubric dimensions.
+
+For GPT-5.5 Codex explicit, Claude identifies one parallel semantic projection and one effect/invariant violation. In particular, it reports that the modeled intended-participant invariant for offered places is not enforced at the state-changing boundary, reducing behavioral fidelity despite both interfaces being present.
+
+The largest evaluator disagreement occurs for GPT-5.5 Codex implicit. GPT-5.5 Codex considers both interfaces realized and assigns behavioral fidelity of 3.4 / 5, whereas Claude Sonnet 5 considers only one of the two interfaces fully realized and assigns 1.0 / 5. Claude's assessment is driven primarily by the browser application bypassing the manifest-selected HTTP domain boundary, duplicating journey behavior in an independent in-memory client, and not consuming the selected email design-system realization.
+
+Verification coverage is also evaluator-specific. The evaluators do not always identify the same modeled branch universe—for example, the Claude explicit run is assessed against 35 branches by GPT-5.5 Codex and 22 by Claude Sonnet 5. Coverage percentages are therefore calculated within each evaluator's identified branch set and should not be treated as one canonical repository measurement.
+
+Taken together, the application results show weaker convergence than the structural results. All four runs are given the same manifest-selected application scope, but the evaluators differ on how completely some implementations realize that scope and preserve UJG behavior across runtime boundaries. The implementations also differ materially in verification depth, semantic projections, persistence and domain realization, and interface integration. The evidence therefore supports the narrower conclusion that the UJG and manifest constrain the intended journey and application boundaries without prescribing a single source architecture; successful realization of those boundaries remains an implementation-level concern.
+
 
 #### Example persistence realization
 The generated persistence architecture also remains an implementation choice.
