@@ -13,7 +13,7 @@ Spec URL: https://ujg.specs.openuji.org/tr/2026.06
 ## Review Inputs
 
 - Source hash: sha256:0cd336962fa7f06cf797d460277d5103cf76aa3609393fbf70407c53bbe4dedb
-- Spec hash: sha256:364177b1c7a1469e8579512324c111496195040398e2f6746503a622bd539e2a
+- Spec hash: sha256:8d0526d7f35b3106946d6c52a601686d7f09d78cf75250f310d638f7e84097b9
 
 ## Source Headings Likely Affected
 

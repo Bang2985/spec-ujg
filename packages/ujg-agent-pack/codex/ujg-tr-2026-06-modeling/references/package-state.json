@@ -12,7 +12,7 @@
     "name": "ujg-tr-2026-06-modeling"
   },
   "sourceHash": "sha256:0cd336962fa7f06cf797d460277d5103cf76aa3609393fbf70407c53bbe4dedb",
-  "specHash": "sha256:364177b1c7a1469e8579512324c111496195040398e2f6746503a622bd539e2a",
+  "specHash": "sha256:8d0526d7f35b3106946d6c52a601686d7f09d78cf75250f310d638f7e84097b9",
   "target": {
     "id": "tr/2026.06",
     "label": "Technical Report 2026.06"
