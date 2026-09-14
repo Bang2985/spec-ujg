@@ -541,14 +541,6 @@ Slots = 18
 
 SurfaceRealizations = 54
 
-Reuse
-
-Reusable Components + Templates = 21
-
-SurfaceRealizations = 54
-
-Realizations per reusable identity = 2.57
-
 ```
 
 All four runs realize the complete Component and Template inventory.
