@@ -38,6 +38,12 @@ vocabulary:
     
     Useful as a compact summary, but the phase scores are more informative than this single number.
 
+  "Implicit-gated": |
+    **Guidance protocol.** A single orchestration skill walks the model through structure → tokens → styling in sequence. The phase boundaries live inside that guidance rather than being enforced from outside.
+
+  "Explicit-gated": |
+    **Guidance protocol.** Every phase is a separate, fresh model invocation that is explicitly opened and closed, and static validation plus executable verification must pass before the next phase may start.
+
   "Artifact coverage": |
     **Quality score · 0–5.** How completely the implementation contains the UJG Components and Templates it is expected to realize. **Higher is better.**
 
@@ -56,7 +62,7 @@ vocabulary:
   "Storybook inspectability": |
     **Quality score · 0–5.** How easily generated Components, Templates, states, and interactions can be inspected in Storybook. **Higher is better.**
 
-  "Token-model quality": |
+  "DTCG token-model quality": |
     **Quality score · 0–5.** How clear, reusable, and well-structured the generated foundation and semantic DTCG token system is. **Higher is better.**
 
   "Source-of-truth integrity": |
@@ -77,7 +83,7 @@ vocabulary:
   "Visual fidelity": |
     **Quality score · 0–5.** How closely the generated styling reflects the supplied reference screenshots. **Higher is better.**
 
-  "Token/theme adherence": |
+  "DTCG token/Theme adherence": |
     **Quality score · 0–5.** How consistently styling uses the generated DTCG tokens and Themes instead of hardcoded or parallel visual values. **Higher is better.**
 
   "Structural-scope preservation": |
@@ -138,7 +144,7 @@ vocabulary:
     
     The count describes the implementation; a larger token inventory is not automatically better.
 
-  "Foundation / semantic tokens": |
+  "Foundation / semantic DTCG tokens": |
     **Repository metric.** Split between basic visual tokens—such as color, spacing, typography, radius, and shadow—and semantic tokens that name roles such as action foreground or error border.
     
     Different implementations may choose different splits.
@@ -152,15 +158,38 @@ vocabulary:
   "Raw-value leaks": |
     **Evaluator diagnostic.** Number of visual values written outside the intended DTCG token path—for example a hardcoded color, spacing value, radius, or font size where a token should be used. **Lower is better.**
 
-  "Parallel token / theme registry": |
+  "Parallel DTCG token / Theme registry": |
     **Evaluator diagnostic.** Two counts shown as `token catalog / theme registry`.
     
     They indicate separately maintained token-like or theme-like value sources that duplicate the intended DTCG / UJG Theme source of truth. **Lower is better; `0 / 0` means none were identified.**
 
-  "Token provenance coverage": |
+  "DTCG token provenance coverage": |
     **Derived repository metric.** Percentage of generated DTCG tokens whose origin is classified as either directly supported by the screenshots or inferred during generation.
     
     `classified tokens / all DTCG tokens`. **Higher means more token decisions are traceable.**
+
+  "Direct provenance": |
+    **Repository metric.** Number of DTCG tokens whose value can be traced to something actually visible in the supplied screenshots — a color taken from a button, a spacing step read off a layout.
+
+  "Inferred provenance": |
+    **Repository metric.** Number of DTCG tokens the model worked out rather than observed — completing a scale, deriving a dark-Theme counterpart, or covering a state the screenshots never showed.
+    
+    Inferred is not a defect. It records a decision the evidence did not force.
+
+  "Unclassified": |
+    **Repository metric.** Number of DTCG tokens carrying no provenance record at all, so there is no way to tell whether the value came from the screenshots or was invented.
+    
+    **Lower is better; `0` means every token is accounted for.**
+
+  "Components after styling": |
+    **Repository metric.** Number of UJG `Component` identities still implemented once Styling has finished, out of the number expected.
+    
+    It should match the count established during Structure — Styling is not meant to add or drop Components.
+
+  "Templates after styling": |
+    **Repository metric.** Number of UJG `Template` identities still implemented once Styling has finished, out of the number expected.
+    
+    As with Components, this should be unchanged from Structure.
 
   "Component inventory changed": |
     **Evaluator diagnostic.** Whether Styling added, removed, or changed the established modeled Component inventory. The expected result is **No** because Styling should not redefine Structure.
@@ -201,7 +230,7 @@ vocabulary:
   "Effect / invariant violations": |
     **Evaluator diagnostic.** Number of implementation behaviors that violate a modeled effect or a relevant domain invariant—for example producing the wrong journey outcome. **Lower is better.**
 
-  "Parallel token/theme sources": |
+  "Parallel DTCG token/Theme sources": |
     **Derived diagnostic used in the guidance comparison.** Combined count of separately maintained token or theme sources outside the intended DTCG / UJG Theme path. **Lower is better.**
 
 ---
@@ -374,7 +403,7 @@ The question now shifts from how it looks to **how it behaves**: do entries, com
 ## Two guidance protocols {#4-two-guidance-protocols}
 The one thing that changes between runs is how the model is guided through the same job.
 
-| | Implicit-gated guidance | Explicit-gated guidance |
+| | [Implicit-gated]^i guidance | [Explicit-gated]^i guidance |
 | --- | --- | --- |
 | Design-system generation | One orchestration skill guides structure → tokens → styling in sequence. | Structure, tokens, and styling are separate model invocations. |
 | Application generation | Separate application realization. | Separate application realization. |
@@ -463,7 +492,7 @@ Both protocols use the same technology profile. The difference is not “Claude 
 ## Experiment matrix {#5-experiment-matrix}
 Four runs are retained in the repository.
 
-| Implementation model | Implicit-gated | Explicit-gated |
+| Implementation model | [Implicit-gated]^i | [Explicit-gated]^i |
 | --- | :---: | :---: |
 | GPT-5.5 Codex | ✓ | ✓ |
 | Claude Sonnet 5 | ✓ | ✓ |
@@ -478,8 +507,8 @@ Complexity indicators — file count, infrastructure LOC, dependency count, abst
 | Phase           | Quality dimensions                                                                                                                                         |
 | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **[Structure]^i**   | [Artifact coverage]^i · [Composition fidelity]^i · [Data-contract fidelity]^i · [Identity containment]^i · [Implementation modularity]^i · [Storybook inspectability]^i |
-| **[Tokens]^i**      | [Token-model quality]^i · [Source-of-truth integrity]^i · [Theme portability]^i · [Traceability]^i · [Visual-foundation fidelity]^i · [Inspectability]^i |
-| **[Styling]^i**     | [Visual fidelity]^i · [Token/theme adherence]^i · [Structural-scope preservation]^i · [Responsive quality]^i · [Styling modularity]^i · [Inspectability]^i |
+| **[Tokens]^i**      | [DTCG token-model quality]^i · [Source-of-truth integrity]^i · [Theme portability]^i · [Traceability]^i · [Visual-foundation fidelity]^i · [Inspectability]^i |
+| **[Styling]^i**     | [Visual fidelity]^i · [DTCG token/Theme adherence]^i · [Structural-scope preservation]^i · [Responsive quality]^i · [Styling modularity]^i · [Inspectability]^i |
 | **[Application]^i** | [Manifest realization coverage]^i · [UJG behavioral fidelity]^i · [Domain integrity]^i · [Design-system integration]^i · [Source-of-truth integrity]^i · [Verification coverage]^i |
 
 ### Two evaluators, one published phase score
@@ -579,7 +608,7 @@ The token phase turns the visual foundation into DTCG token files and Theme defi
 
 #### Repository-derived token metrics
 
-| Run                        | [DTCG tokens]^i | [Foundation / semantic tokens]^i | [Themes]^i | Direct provenance | Inferred provenance | Unclassified | [Token provenance coverage]^i |
+| Run | [DTCG tokens]^i | [Foundation / semantic DTCG tokens]^i | [Themes]^i | [Direct provenance]^i | [Inferred provenance]^i | [Unclassified]^i | [DTCG token provenance coverage]^i |
 | -------------------------- | --------------: | -------------------------------: | ---------: | ----------------: | ------------------: | -----------: | -------------------------------------: |
 | Claude Sonnet 5 · explicit |             168 |                         100 / 68 |          2 |                61 |                 107 |            0 |                             **100.0%** |
 | Claude Sonnet 5 · implicit |             110 |                          66 / 44 |          2 |                22 |                  22 |           66 |                              **40.0%** |
@@ -598,7 +627,7 @@ Coverage says how much of the catalogue is classified — not that every individ
 
 #### Token diagnostics — GPT-5.5 Codex evaluator
 
-| Run                        | [Unresolved aliases]^i | [Raw-value leaks]^i | [Parallel token / theme registry]^i | [Source-of-truth integrity]^i |
+| Run                        | [Unresolved aliases]^i | [Raw-value leaks]^i | [Parallel DTCG token / Theme registry]^i | [Source-of-truth integrity]^i |
 | -------------------------- | ---------------------: | ------------------: | ----------------------------------: | ----------------------------: |
 | Claude Sonnet 5 · explicit |                      0 |                   0 |                               0 / 0 |                   **4.9 / 5** |
 | Claude Sonnet 5 · implicit |                      0 |                 116 |                               0 / 1 |                   **4.0 / 5** |
@@ -609,7 +638,7 @@ For the Codex evaluator, both explicit-gated builds are clean: no unresolved ali
 
 #### Token diagnostics — Claude Sonnet 5 evaluator
 
-| Run                        | [Unresolved aliases]^i | [Raw-value leaks]^i | [Parallel token / theme registry]^i | [Source-of-truth integrity]^i |
+| Run                        | [Unresolved aliases]^i | [Raw-value leaks]^i | [Parallel DTCG token / Theme registry]^i | [Source-of-truth integrity]^i |
 | -------------------------- | ---------------------: | ------------------: | ----------------------------------: | ----------------------------: |
 | Claude Sonnet 5 · explicit |                      0 |                   0 |                               0 / 0 |                   **5.0 / 5** |
 | Claude Sonnet 5 · implicit |                      0 |                   0 |                               0 / 0 |                   **5.0 / 5** |
@@ -630,7 +659,7 @@ The styling phase applies the generated token and Theme system to the modeled Co
 
 #### Repository-derived styling scope
 
-| Run                        | Components after styling | Templates after styling | [Component inventory changed]^i | [Template inventory changed]^i |
+| Run | [Components after styling]^i | [Templates after styling]^i | [Component inventory changed]^i | [Template inventory changed]^i |
 | -------------------------- | -----------------------: | ----------------------: | --------------------------- | -------------------------- |
 | Claude Sonnet 5 · explicit |                  12 / 12 |                   9 / 9 | No                          | No                         |
 | Claude Sonnet 5 · implicit |                  12 / 12 |                   9 / 9 | No                          | No                         |
@@ -641,7 +670,7 @@ All four builds carry the Component and Template inventories through styling unc
 
 #### Styling diagnostics — GPT-5.5 Codex evaluator
 
-| Run                        | [Raw-value leaks]^i | [Duplicated style patterns]^i | [Misplaced style rules]^i | [Responsive artifacts]^i | [Responsive documentation]^i | [Token/theme adherence]^i |
+| Run                        | [Raw-value leaks]^i | [Duplicated style patterns]^i | [Misplaced style rules]^i | [Responsive artifacts]^i | [Responsive documentation]^i | [DTCG token/Theme adherence]^i |
 | -------------------------- | ------------------: | ----------------------------: | ------------------------: | -----------------------: | ---------------------------: | ------------------------: |
 | Claude Sonnet 5 · explicit |                   0 |                             0 |                         0 |                        9 |                          38% |               **4.8 / 5** |
 | Claude Sonnet 5 · implicit |                 116 |                             6 |                         2 |                       10 |                          22% |               **3.0 / 5** |
@@ -654,7 +683,7 @@ The implicit builds fare worse: 116 raw-value leaks, six duplicated style patter
 
 #### Styling diagnostics — Claude Sonnet 5 evaluator
 
-| Run                        | [Raw-value leaks]^i | [Duplicated style patterns]^i | [Misplaced style rules]^i | [Responsive artifacts]^i | [Responsive documentation]^i | [Token/theme adherence]^i |
+| Run                        | [Raw-value leaks]^i | [Duplicated style patterns]^i | [Misplaced style rules]^i | [Responsive artifacts]^i | [Responsive documentation]^i | [DTCG token/Theme adherence]^i |
 | -------------------------- | ------------------: | ----------------------------: | ------------------------: | -----------------------: | ---------------------------: | ------------------------: |
 | Claude Sonnet 5 · explicit |                   0 |                             0 |                         0 |                        8 |                          88% |               **5.0 / 5** |
 | Claude Sonnet 5 · implicit |                   0 |                             0 |                         0 |                        2 |                          10% |               **5.0 / 5** |
@@ -888,7 +917,7 @@ Those scores line up with concrete, countable properties of the code.
 | Metric                               | Claude implicit → explicit | GPT-5.5 Codex implicit → explicit |
 | ------------------------------------ | -------------------------: | --------------------------------: |
 | [Raw-value leaks]^i                  |                116 → **0** |                        73 → **0** |
-| [Parallel token/theme sources]^i     |                  1 → **0** |                         2 → **0** |
+| [Parallel DTCG token/Theme sources]^i     |                  1 → **0** |                         2 → **0** |
 | [Duplicated style patterns]^i        |                  6 → **0** |                         2 → **1** |
 | [Verification coverage]^i            |          57.1% → **86.0%** |                 59.1% → **84.6%** |
 | [Parallel semantic projections]^i    |                  2 → **1** |                         2 → **0** |
@@ -969,3 +998,22 @@ Several limitations remain:
 * the generated implementations were compared for semantic and quality convergence, not source-code identity.
 
 Reproducibility here does not mean identical generated code. It means a traceable experiment: the input, the policy, the protocol, the generated artifacts, the rubric, the measurements, and the published results can all be inspected independently.
+
+## References
+External material this case study depends on or refers to.
+
+* **GPT-5.5 Codex** — [OpenAI Codex](https://developers.openai.com/codex/). Used both as an implementation model and as an evaluator.
+
+* **Claude Sonnet 5** — [Anthropic Claude](https://www.anthropic.com/claude). Used both as an implementation model and as an evaluator.
+
+* **DTCG** — [Design Tokens Community Group](https://www.designtokens.org/) and its [Design Tokens Format Module](https://tr.designtokens.org/format/). The community format the generated token files follow, and the reason token output from four independent runs can be compared at all.
+
+* **JSON-LD** — [json-ld.org](https://json-ld.org/). The serialization the UJG document uses.
+
+* **OpenAPI** — [openapis.org](https://www.openapis.org/). Describes the HTTP boundary between the browser application and the domain runtime in the Application phase.
+
+* **Storybook** — [storybook.js.org](https://storybook.js.org/). Where Components and Templates are inspected. Several diagnostics — missing stories, interaction-story coverage, responsive documentation — are measured against it.
+
+* **Tailwind CSS** — [tailwindcss.com](https://tailwindcss.com/). Relevant because the largest styling disagreement between the two evaluators turns on whether Tailwind's default utility scales count as visual values outside the DTCG token path.
+
+* **SQLite** — [sqlite.org](https://www.sqlite.org/). The persistence choice in the runs shown above, and an implementation decision rather than anything the UJG prescribes.
