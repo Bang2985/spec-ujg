@@ -207,9 +207,7 @@ vocabulary:
 ---
 
 > **Exploratory case study — non-normative**
-
 >
-
 > This page is not part of the normative UJG specification. It documents a controlled generative-software experiment and is updated as evaluation evidence is completed.
 
 |  |  |
@@ -220,7 +218,7 @@ vocabulary:
 | Author | [Seva Dolgopolov](https://www.linkedin.com/in/seva-dolgopolov/) |
 
 ## Research question {#1-research-question}
-User Journey Graph is intended to describe user-facing journey semantics independently from one specific software implementation. Generative software development provides a useful stress test for that separation: different AI models can make different implementation choices while still being constrained by the same intended experience.
+A User Journey Graph describes what a user should be able to do, separately from how any one piece of software builds it. AI code generation is a good way to test that separation: different models write very different code, yet all of them can be held to the same intended experience.
 
 This case study asks two related questions:
 
@@ -228,12 +226,12 @@ This case study asks two related questions:
 
 **RQ-2:** **Does stronger generation guidance improve the quality and faithfulness of the realization?**
 
-The study therefore compares not only models, but also **guidance protocols**. The same clean-room inputs are realized using an implicit guided process and an explicit phase-gated process.
+So the study compares two things at once: the **models**, and the **guidance protocols** used to steer them. The same inputs are built twice — once through a loosely guided process, once through an explicitly staged one.
 
-The aim is not to make different models produce identical source code or identical interfaces. The aim is to examine whether independently generated implementations preserve the same semantic scope and whether their quality changes when generation is broken into inspectable, verified stages.
+The aim is not identical code or identical screens. It is to see whether independently generated builds keep the same meaning, and whether their quality changes when generation is broken into stages that can be inspected and verified one at a time.
 
 ## What is held constant {#2-what-is-held-constant}
-Through all generative jobs we used this same 3 inputs: **UJG document**, **Implementation manifest** and **Screenshots** to obtain the style.
+Every generation run received the same three inputs: a **UJG document**, an **implementation manifest**, and **reference screenshots** for the visual style.
 
 ### UJG
 [Workshop registration UJG](https://github.com/openuji/ujg-generative-se-case-study/blob/main/ujg/workshop-registration.ujg.jsonld) · [schemas](https://github.com/openuji/ujg-generative-se-case-study/tree/main/ujg/schemas)
@@ -248,7 +246,7 @@ States = 30
 Transitions = 35
 ```
 
-The UJG is the semantic and structural source for the experiment.
+The UJG is the single source of meaning and structure for the experiment.
 
 ### Implementation manifest
 [ujg-implementation.yaml](https://github.com/openuji/ujg-generative-se-case-study/blob/main/ujg-implementation.yaml)
@@ -266,10 +264,10 @@ interfaces:
     kind: email
 ```
 
-The manifest fixes the controlled realization target and implementation choices used across runs.
+The manifest fixes what gets built and where, identically in every run: a domain engine, a browser app, and email.
 
 ### Reference screenshots
-**10 screenshots** used as appearance evidence for token and styling realization.
+**10 screenshots** — the only evidence the models were given for how the product should look.
 
 <a href="https://github.com/openuji/ujg-generative-se-case-study/tree/main/references/workshop-registration/screens">
   <img src="https://raw.githubusercontent.com/openuji/ujg-generative-se-case-study/main/references/workshop-registration/screens/screen.png" alt="Workshop registration reference screenshot" style="width:23%; height:auto;" loading="lazy" />
@@ -289,7 +287,7 @@ The manifest fixes the controlled realization target and implementation choices 
 [View all 10 screenshots →](https://github.com/openuji/ujg-generative-se-case-study/tree/main/references/workshop-registration/screens)
 
 ## The 3 + 1 realization process {#3-the-3-1-realization-process}
-The realization is deliberately decomposed into three design-system phases followed by application realization.
+Building is split on purpose into three design-system phases, followed by the application itself.
 
 ```mermaid
 
@@ -314,9 +312,9 @@ flowchart TD
 ```
 
 ### Structure {#31-structure}
-The structure phase realizes the UJG Design System model without prematurely inventing the visual system. Components, Templates, Slots, SlotBindings, SurfaceRealizations, data-bound props, and Storybook inspection surfaces are established here.
+Structure builds the skeleton of the design system before any visual decision exists: Components, Templates, Slots, SlotBindings, SurfaceRealizations, data-bound props, and the Storybook stories that make them inspectable.
 
-The important question is whether the generated design-system structure preserves the UJG composition rather than turning semantic identities into ad-hoc screens or duplicating application behavior inside components.
+The question here is whether that skeleton keeps the UJG composition — or collapses modeled pieces into ad-hoc screens and hides application behavior inside components.
 
 <!-- Publication evidence planned here:
 
@@ -327,9 +325,9 @@ The important question is whether the generated design-system structure preserve
 -->
 
 ### Tokens {#32-tokens}
-The token phase derives a reusable visual foundation from the supplied appearance evidence. Foundation and semantic DTCG tokens remain distinct, Theme differences stay data-driven, and provenance records whether evidence was directly visible or inferred.
+Tokens turn the screenshots into a reusable visual foundation. Raw values such as color, spacing, and type stay separate from the semantic tokens that name roles like *action foreground*; Themes differ by data only; and every token records whether its value was visible in a screenshot or inferred.
 
-The token phase also adds the generated Theme and TokenSource realization to the run-local UJG without changing the seeded journey semantics.
+This phase also writes the generated Theme and TokenSource back into the run's own copy of the UJG, without touching the journey it was given.
 
 <!-- Publication evidence planned here:
 
@@ -342,9 +340,9 @@ The token phase also adds the generated Theme and TokenSource realization to the
 -->
 
 ### Styling {#33-styling}
-The styling phase applies the token system to the already-established component and template structure. It is evaluated both for visual fidelity and for whether styling preserves the structural scope established earlier.
+Styling applies the token system to the components and templates that already exist. It is judged on two things: how close the result comes to the references, and whether it leaves the earlier structure alone.
 
-The strongest visual comparison is therefore not a random final screenshot: it is the **same modeled artifact before and after styling**, together with mobile and desktop inspection where responsive behavior exists.
+So the telling comparison is not a final screenshot but the **same modeled artifact before and after styling**, seen on mobile and desktop wherever responsive behavior exists.
 
 <!-- Publication evidence planned here:
 
@@ -357,9 +355,9 @@ The strongest visual comparison is therefore not a random final screenshot: it i
 -->
 
 ### Application {#34-application}
-The final phase realizes the manifest-selected interfaces and runtime boundaries. In this case that includes the browser application, domain runtime, HTTP/OpenAPI boundary, SQLite persistence, identity adapter, and email delivery adapter.
+The last phase builds what the manifest selected: the browser application, domain runtime, HTTP/OpenAPI boundary, SQLite persistence, identity adapter, and email delivery adapter.
 
-At this point the primary question changes from presentation fidelity to **behavioral fidelity**: do entries, commands, guarded branches, effects, invariants, continuations, data contracts, and touchpoint boundaries survive implementation?
+The question now shifts from how it looks to **how it behaves**: do entries, commands, guarded branches, effects, invariants, continuations, data contracts, and touchpoint boundaries survive implementation?
 
 <!-- Publication evidence planned here:
 
@@ -374,7 +372,7 @@ At this point the primary question changes from presentation fidelity to **behav
 -->
 
 ## Two guidance protocols {#4-two-guidance-protocols}
-The experimental variable is how the model is guided through the same realization problem.
+The one thing that changes between runs is how the model is guided through the same job.
 
 | | Implicit-gated guidance | Explicit-gated guidance |
 | --- | --- | --- |
@@ -460,10 +458,10 @@ flowchart TB
 
 ```
 
-Both protocols use the same realization profile. The difference is therefore not “Claude used one stack and Codex another”; it is the degree to which generation phases and their gates are made explicit to the model.
+Both protocols use the same technology profile. The difference is not “Claude used one stack and Codex another” — it is how explicitly the phases and their gates are handed to the model.
 
 ## Experiment matrix {#5-experiment-matrix}
-The repository currently retains the following implementation runs.
+Four runs are retained in the repository.
 
 | Implementation model | Implicit-gated | Explicit-gated |
 | --- | :---: | :---: |
@@ -473,9 +471,9 @@ The repository currently retains the following implementation runs.
 
 
 ## Evaluation design
-Each run is evaluated independently for the four realization phases. Every phase has six quality dimensions scored from **0 to 5**. Their arithmetic mean produces the phase quality score; the published 0–100 score is the same mean scaled by 20.
+Each run is scored separately for each of the four phases. Every phase has six quality dimensions scored from **0 to 5**; their average is the phase score, published on a 0–100 scale (that average × 20).
 
-Complexity indicators such as file count, infrastructure LOC, dependency count, and abstraction burden are reported separately. They do **not** raise or lower the quality score.
+Complexity indicators — file count, infrastructure LOC, dependency count, abstraction burden — are reported separately. They do **not** raise or lower the quality score.
 
 | Phase           | Quality dimensions                                                                                                                                         |
 | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -485,18 +483,18 @@ Complexity indicators such as file count, infrastructure LOC, dependency count, 
 | **[Application]^i** | [Manifest realization coverage]^i · [UJG behavioral fidelity]^i · [Domain integrity]^i · [Design-system integration]^i · [Source-of-truth integrity]^i · [Verification coverage]^i |
 
 ### Two evaluators, one published phase score
-Every retained Claude Sonnet 5 and GPT-5.5 Codex implementation is evaluated by both evaluator models.
+Every retained implementation is evaluated by both models — each one scores its own work and the other's.
 
-For each implementation run and phase:
+For each run and phase:
 
 **published phase score = mean(Claude evaluator score, GPT-5.5 Codex evaluator score)**
 
-The evaluator-specific values are retained so disagreement remains visible. The two-evaluator mean is used only for the comparable phase-quality scores.
+Each evaluator's own numbers are kept so disagreement stays visible; the mean is used only for the comparable phase scores.
 
-Diagnostic counts are not averaged between evaluators because apparently factual measurements can depend on interpretation — for example which files count as infrastructure, which branches are considered modeled, or what constitutes a prohibited projection.
+Diagnostic *counts* are never averaged. Even seemingly factual measurements depend on interpretation — which files count as infrastructure, which branches count as modeled, what counts as a prohibited projection.
 
 ### Deterministic and diagnostic evidence
-The results combine three kinds of evidence.
+Results combine three kinds of evidence.
 
 | Evidence                             | Source                                    | Examples                                                                                                |
 | ------------------------------------ | ----------------------------------------- | ------------------------------------------------------------------------------------------------------- |
@@ -504,27 +502,25 @@ The results combine three kinds of evidence.
 | **Evaluator diagnostics**            | Phase evaluation JSON                     | composition violations, raw-value leaks, responsive coverage, verified branches, parallel semantic projections |
 | **Evaluator quality judgments**      | Six scored dimensions per phase           | source-of-truth integrity, token/theme adherence, UJG behavioral fidelity                               |
 
-Where a property can be counted mechanically, the repository artifact is preferred as the measurement source. Evaluator diagnostics are used where the metric requires interpretation, while evaluator scores capture qualitative judgment.
-
-This distinction is particularly important for the evidence below: the design-system inventory, implementation primitive count, and DTCG token inventory are counted from generated artifacts rather than inferred from the published quality score.
+Anything countable is counted from the generated code; evaluator diagnostics cover what needs interpretation, and evaluator scores cover judgment. This is why every results table below keeps repository counts and evaluator findings apart — the design-system inventory, the helper count, and the token inventory are counted, never inferred from a score.
 
 ### Evaluator disagreement
-Evaluator comparison is also treated as evidence. It can expose two different kinds of disagreement:
+Where the two evaluators disagree is itself evidence. It comes in two kinds:
 
-* **measurement disagreement** — evaluators identify or count evidence differently;
+* **measurement disagreement** — they find or count different evidence;
 
-* **judgment disagreement** — evaluators inspect similar evidence but assign different quality scores.
+* **judgment disagreement** — they look at the same evidence and score it differently.
 
-Large disagreements are therefore shown rather than hidden by the published mean.
+Large disagreements are shown rather than hidden behind the mean.
 
 ## RQ1 — Cross-model convergence
 > **Can one explicit UJG constrain multiple generative models toward the same intended journey without prescribing one implementation?**
 
-The four retained Claude Sonnet 5 and GPT-5.5 Codex runs use the same UJG and realization policy. This makes it possible to compare whether independently generated implementations converge at the modeled semantic and structural boundaries while remaining free to choose different source architectures and implementation helpers.
+All four runs share the same UJG and the same technology profile. That makes it possible to ask whether independently generated builds meet at the modeled boundaries while still choosing their own code architecture and helpers.
 
 ### Structural convergence
 
-The UJG Design System model defines a shared reusable vocabulary of:
+The UJG design system defines one shared vocabulary for every run:
 
 ```stat-grid
 title: Modeled design-system structure
@@ -538,7 +534,7 @@ Slots = 18
 SurfaceRealizations = 54
 ```
 
-All four runs realize the complete Component and Template inventory. Repository-derived structure metrics are reported separately from evaluator diagnostics so that mechanically countable implementation properties are not conflated with evaluator-dependent measurements.
+All four runs build the complete Component and Template inventory.
 
 #### Repository-derived structure metrics
 
@@ -549,9 +545,9 @@ All four runs realize the complete Component and Template inventory. Repository-
 | GPT-5.5 Codex · explicit   |        12 / 12 |         9 / 9 |                             0 |
 | GPT-5.5 Codex · implicit   |        12 / 12 |         9 / 9 |                             2 |
 
-`Component`, `Template`, `Slot`, and `SurfaceRealization` are modeled UJG Design System artifacts. **Implementation primitives** are additional generated code-level helpers and are reported separately because they are implementation choices rather than modeled UJG artifacts.
+`Component`, `Template`, `Slot`, and `SurfaceRealization` come from the UJG. **Implementation primitives** are extra helpers a model invented for itself — its own choice, not something the UJG asked for.
 
-The repository evidence shows complete realization of the modeled Component and Template inventory in all four runs. The implementations nevertheless differ in their internal decomposition, introducing between zero and four additional implementation primitives.
+Every run implements all 12 Components and all 9 Templates. They differ only in how they cut things up internally, adding between zero and four helpers of their own.
 
 #### Structure diagnostics — GPT-5.5 Codex evaluator
 
@@ -571,79 +567,77 @@ The repository evidence shows complete realization of the modeled Component and 
 | GPT-5.5 Codex · explicit   |                   0 |                          0 |                            0 |                           100% |
 | GPT-5.5 Codex · implicit   |                   0 |                          1 |                            0 |                           100% |
 
-The evaluators agree completely on the two explicit-gated runs: both report complete Storybook coverage for the evaluated interactions and no missing stories, composition violations, or data-contract violations.
+On the two explicit-gated runs the evaluators agree completely: full Storybook coverage of the evaluated interactions, and no missing stories, composition violations, or data-contract violations.
 
-The implicit-gated runs expose measurement disagreement. For the Claude Sonnet 5 implicit implementation, the GPT-5.5 Codex evaluator reports **50% interaction-story coverage**, while the Claude Sonnet 5 evaluator reports **100%**. For the GPT-5.5 Codex implicit implementation, the Claude evaluator identifies **one composition violation**, whereas the Codex evaluator instead identifies **one data-contract violation**. These differences are retained rather than averaged because they reflect different interpretations of the implementation evidence.
+The implicit runs are where they part ways. On Claude implicit, the Codex evaluator sees **50% interaction-story coverage** and the Claude evaluator **100%**. On Codex implicit, the Claude evaluator finds **one composition violation**; the Codex evaluator finds **one data-contract violation** instead. Both readings are kept.
 
-At the repository level, the result is strong **contractual structural convergence**: all four implementations realize the same 12 modeled Components and 9 modeled Templates, serving the shared set of 54 modeled SurfaceRealizations. The evidence therefore supports convergence at the UJG boundaries that are explicitly modeled, while the differing implementation-primitives counts show that the UJG does not prescribe one concrete source architecture.
+The structural picture is nevertheless one of strong convergence: all four builds realize the same 12 Components and 9 Templates, serving the same 54 SurfaceRealizations. They converge wherever the UJG models something — and the differing helper counts show it does not prescribe one source architecture.
 
 ### DTCG token realization
 
-The token phase materializes the visual foundation as DTCG token artifacts and Theme definitions. To avoid conflating implementation facts with evaluator interpretation, repository-derived token metrics are reported separately from evaluator diagnostics.
+The token phase turns the visual foundation into DTCG token files and Theme definitions.
 
 #### Repository-derived token metrics
 
-| Run                        | [DTCG tokens]^i | [Foundation / semantic tokens]^i | [Themes]^i | Direct provenance | Inferred provenance | Unclassified | [Provenance classification coverage]^i |
+| Run                        | [DTCG tokens]^i | [Foundation / semantic tokens]^i | [Themes]^i | Direct provenance | Inferred provenance | Unclassified | [Token provenance coverage]^i |
 | -------------------------- | --------------: | -------------------------------: | ---------: | ----------------: | ------------------: | -----------: | -------------------------------------: |
 | Claude Sonnet 5 · explicit |             168 |                         100 / 68 |          2 |                61 |                 107 |            0 |                             **100.0%** |
 | Claude Sonnet 5 · implicit |             110 |                          66 / 44 |          2 |                22 |                  22 |           66 |                              **40.0%** |
 | GPT-5.5 Codex · explicit   |             106 |                          50 / 56 |          2 |                28 |                  28 |           50 |                              **52.8%** |
 | GPT-5.5 Codex · implicit   |              63 |                          31 / 32 |          2 |                16 |                  16 |           31 |                              **50.8%** |
 
-Token inventory size is descriptive rather than a quality measure: a larger token catalogue is not necessarily better. The four implementations differ substantially in token count and foundation/semantic decomposition while all realize two Themes, indicating that the modeled Theme boundary does not prescribe a single token taxonomy.
+Token count describes a build; it does not grade it — a bigger catalogue is not a better one. The four runs differ widely in how many tokens they create and how they split foundation from semantic, yet all four produce two Themes. The modeled Theme boundary holds without dictating one token taxonomy.
 
-Provenance classification coverage is calculated deterministically as:
+Provenance coverage answers a simple question: for how many tokens can you tell where the value came from? It is computed from the repository counts, not supplied by an evaluator:
 
 `(direct tokens + inferred tokens) / total DTCG tokens`
 
-with:
-
 `unclassified tokens = total DTCG tokens − direct tokens − inferred tokens`
 
-The resulting coverage values are therefore derived from repository counts rather than evaluator-provided aggregate ratios. Coverage measures the proportion of the token catalogue classified as having either direct or inferred provenance; it does not establish that every individual provenance classification is correct.
+Coverage says how much of the catalogue is classified — not that every individual classification is right.
 
 #### Token diagnostics — GPT-5.5 Codex evaluator
 
-| Run                        | [Unresolved aliases]^i | [Raw-value leaks]^i | [Parallel token / Theme registry]^i | [Source-of-truth integrity]^i |
+| Run                        | [Unresolved aliases]^i | [Raw-value leaks]^i | [Parallel token / theme registry]^i | [Source-of-truth integrity]^i |
 | -------------------------- | ---------------------: | ------------------: | ----------------------------------: | ----------------------------: |
 | Claude Sonnet 5 · explicit |                      0 |                   0 |                               0 / 0 |                   **4.9 / 5** |
 | Claude Sonnet 5 · implicit |                      0 |                 116 |                               0 / 1 |                   **4.0 / 5** |
 | GPT-5.5 Codex · explicit   |                      0 |                   0 |                               0 / 0 |                   **5.0 / 5** |
 | GPT-5.5 Codex · implicit   |                      0 |                  73 |                               1 / 1 |                   **2.3 / 5** |
 
-Under the GPT-5.5 Codex evaluator, both explicit-gated implementations have zero unresolved aliases, zero reported raw-value leaks, and no parallel token or Theme registries. The implicit-gated implementations show weaker source-of-truth discipline, although through different failure modes. The Claude implementation is assessed as retaining a parallel Theme registry and 116 raw-value leaks, while the GPT implementation is assessed as retaining both a parallel token catalogue and a parallel Theme registry together with 73 raw-value leaks.
+For the Codex evaluator, both explicit-gated builds are clean: no unresolved aliases, no raw-value leaks, no parallel token or Theme registries. Both implicit builds keep a weaker grip on the source of truth, and they fail differently — Claude keeps a parallel Theme registry and 116 raw-value leaks, Codex keeps both a parallel token catalogue and a parallel Theme registry plus 73 leaks.
 
 #### Token diagnostics — Claude Sonnet 5 evaluator
 
-| Run                        | [Unresolved aliases]^i | [Raw-value leaks]^i | [Parallel token / Theme registry]^i | [Source-of-truth integrity]^i |
+| Run                        | [Unresolved aliases]^i | [Raw-value leaks]^i | [Parallel token / theme registry]^i | [Source-of-truth integrity]^i |
 | -------------------------- | ---------------------: | ------------------: | ----------------------------------: | ----------------------------: |
 | Claude Sonnet 5 · explicit |                      0 |                   0 |                               0 / 0 |                   **5.0 / 5** |
 | Claude Sonnet 5 · implicit |                      0 |                   0 |                               0 / 0 |                   **5.0 / 5** |
 | GPT-5.5 Codex · explicit   |                      0 |                   0 |                               0 / 0 |                   **5.0 / 5** |
 | GPT-5.5 Codex · implicit   |                      0 |                  56 |                               1 / 0 |                   **1.0 / 5** |
 
-The Claude Sonnet 5 evaluator likewise reports no unresolved aliases, raw-value leaks, or parallel token/Theme registries for either explicit-gated implementation. It also identifies a substantial source-of-truth problem in the GPT-5.5 Codex implicit implementation, reporting 56 raw-value leaks and one parallel token catalogue.
+The Claude evaluator also finds both explicit-gated builds clean, and also finds a serious source-of-truth problem in Codex implicit: 56 raw-value leaks and one parallel token catalogue.
 
-The evaluators disagree materially on the Claude Sonnet 5 implicit implementation. GPT-5.5 Codex reports 116 raw-value leaks and one parallel Theme registry, whereas Claude Sonnet 5 reports neither and assigns full source-of-truth integrity. These values are therefore retained separately rather than averaged or presented as a single measurement.
+The two disagree sharply on **Claude implicit**. Codex reports 116 leaks and a parallel Theme registry; Claude reports neither and gives full marks. Both readings stand as they are.
 
-For the GPT-5.5 Codex implicit implementation, the evaluators agree on the direction of the source-of-truth problem but differ in its extent. Both identify a parallel token catalogue and substantially weaker source-of-truth integrity; they report 56 versus 73 raw-value leaks and disagree on whether a separate parallel Theme registry is also present.
+On **Codex implicit** they agree on the direction and differ on the size: both see a parallel token catalogue and much weaker discipline, but count 56 versus 73 leaks and disagree on whether a second, Theme-level registry exists too.
 
-Across the explicit-gated runs, evaluator agreement is substantially stronger: both evaluators independently report zero unresolved aliases, zero raw-value leakage, and no parallel token or Theme registries. The token results therefore distinguish two separate properties: **token realization**, which all four runs achieve, and **token authority**, for which the explicit-gated runs receive the clearest and most consistent evaluator support.
+Agreement is far stronger on the explicit-gated runs, where both evaluators independently report nothing wrong at all. So the token results separate two things: **building a token system**, which all four runs manage, and **keeping it authoritative**, which only the explicit-gated runs clearly achieve.
 
 ### Design-system styling
 
-The styling phase applies the generated token and Theme system to the modeled Components and Templates. Repository-derived structural preservation is reported separately from evaluator diagnostics because measures such as raw-value leakage, duplicated style patterns, responsive artifacts, and responsive documentation depend on how the evaluator interprets the styling implementation.
+The styling phase applies the generated token and Theme system to the modeled Components and Templates.
 
 #### Repository-derived styling scope
 
-| Run                        | Components after styling | Templates after styling | Component inventory changed | Template inventory changed |
+| Run                        | Components after styling | Templates after styling | [Component inventory changed]^i | [Template inventory changed]^i |
 | -------------------------- | -----------------------: | ----------------------: | --------------------------- | -------------------------- |
 | Claude Sonnet 5 · explicit |                  12 / 12 |                   9 / 9 | No                          | No                         |
 | Claude Sonnet 5 · implicit |                  12 / 12 |                   9 / 9 | No                          | No                         |
 | GPT-5.5 Codex · explicit   |                  12 / 12 |                   9 / 9 | No                          | No                         |
 | GPT-5.5 Codex · implicit   |                  12 / 12 |                   9 / 9 | No                          | No                         |
 
-All four implementations preserve the modeled Component and Template inventories through the styling phase. Styling therefore changes presentation without adding or removing modeled artifact types at this boundary.
+All four builds carry the Component and Template inventories through styling unchanged. Styling changes appearance without adding or removing modeled artifacts.
 
 #### Styling diagnostics — GPT-5.5 Codex evaluator
 
@@ -654,9 +648,9 @@ All four implementations preserve the modeled Component and Template inventories
 | GPT-5.5 Codex · explicit   |                   0 |                             1 |                         0 |                        2 |                           0% |               **4.5 / 5** |
 | GPT-5.5 Codex · implicit   |                  73 |                             2 |                         2 |                        7 |                          33% |               **2.1 / 5** |
 
-Under the GPT-5.5 Codex evaluator, both explicit-gated implementations show strong token/Theme adherence and no reported raw-value leakage. The Claude Sonnet 5 explicit implementation also has no duplicated or misplaced styling patterns, while the GPT-5.5 Codex explicit implementation receives one minor duplication finding.
+For the Codex evaluator, both explicit-gated builds stick closely to the tokens and leak no raw values. Claude explicit has no duplicated or misplaced styling either; Codex explicit picks up one minor duplication.
 
-The implicit-gated implementations are assessed less favorably. The Claude Sonnet 5 implementation is reported as containing 116 raw-value leaks, six duplicated style patterns, and two misplaced style rules. The GPT-5.5 Codex implementation is reported as containing 73 raw-value leaks, two duplicated patterns, and two misplaced rules. In both cases, the evaluator associates these diagnostics with weaker adherence to the generated token and Theme system.
+The implicit builds fare worse: 116 raw-value leaks, six duplicated style patterns, and two misplaced rules for Claude; 73 leaks, two duplications, and two misplaced rules for Codex. In both cases the evaluator ties these findings to weaker use of the generated tokens and Themes.
 
 #### Styling diagnostics — Claude Sonnet 5 evaluator
 
@@ -667,17 +661,17 @@ The implicit-gated implementations are assessed less favorably. The Claude Sonne
 | GPT-5.5 Codex · explicit   |                   8 |                             0 |                         1 |                        2 |                           0% |               **4.0 / 5** |
 | GPT-5.5 Codex · implicit   |                  56 |                             3 |                         0 |                        6 |                           0% |               **2.0 / 5** |
 
-The Claude Sonnet 5 evaluator also assesses the Claude explicit implementation as fully token-aligned, with no raw-value leaks, duplication, or misplaced style rules. It differs from GPT-5.5 Codex, however, in its assessment of several other runs.
+The Claude evaluator also finds Claude explicit fully token-aligned — no leaks, no duplication, no misplaced rules — but reads several other runs differently.
 
-For Claude Sonnet 5 implicit, Claude reports zero raw-value leaks and full token/Theme adherence, whereas GPT-5.5 Codex reports 116 leaks and rates adherence at 3.0 / 5. The disagreement arises from how the evaluators treat Tailwind utility-based styling and whether default utility scales constitute values outside the generated DTCG ownership path.
+On **Claude implicit** it reports zero leaks and full adherence where Codex reports 116 leaks and 3.0 / 5. The split comes down to Tailwind: whether a default utility scale counts as a visual value living outside the generated token system.
 
-For GPT-5.5 Codex explicit, Claude reports eight raw-value leaks and one misplaced style rule, primarily at the application-shell boundary, while GPT-5.5 Codex reports zero leaks and no misplaced rules. Both nevertheless assess the implementation as having relatively strong token/Theme adherence.
+On **Codex explicit** it reports eight leaks and one misplaced rule, mostly at the application-shell boundary, where Codex reports none. Both still call adherence relatively strong.
 
-For GPT-5.5 Codex implicit, both evaluators identify materially weaker token/Theme adherence and substantial raw-value duplication, although their counts differ: 56 under Claude Sonnet 5 and 73 under GPT-5.5 Codex.
+On **Codex implicit** both see clearly weaker adherence and heavy raw-value duplication, counting 56 and 73 leaks respectively.
 
-Responsive metrics also show substantial evaluator variation. For example, Claude Sonnet 5 counts eight responsive artifacts in the Claude explicit run with 87.5% documentation coverage, whereas GPT-5.5 Codex counts nine responsive artifacts but only 38% documentation coverage. These values therefore represent evaluator diagnostics rather than deterministic repository measurements and are preserved separately rather than averaged.
+Responsive numbers vary just as much. On Claude explicit, the Claude evaluator counts eight responsive artifacts with 88% documented; the Codex evaluator counts nine with 38%. These are evaluator readings, not repository counts, and are kept apart.
 
-Across the four implementations, the strongest evaluator agreement concerns structural preservation: none of the runs changes the modeled Component or Template inventory during styling. The evaluators also broadly agree that the explicit-gated implementations exhibit stronger token/Theme adherence than the GPT-5.5 Codex implicit implementation. More detailed claims about raw-value leakage, styling duplication, and responsive documentation should remain evaluator-specific because the retained evaluations apply materially different interpretations to those properties.
+What the evaluators agree on most is structural preservation: no run changes the Component or Template inventory during styling. They also broadly agree that the explicit-gated builds hold to the token system better than Codex implicit does. Finer claims — how many raw values leaked, how much styling was duplicated, how well responsive behavior is documented — should be read per evaluator, because the two interpret those properties quite differently.
 
 
 #### Same modeled template, different implementation models
@@ -685,11 +679,11 @@ Across the four implementations, the strongest evaluator agreement concerns stru
 | --- | --- |
 | [![ReviewWithActions realized by Claude Sonnet 5 under explicit guidance](/case-studies/generative-software-development/evidence/review-with-actions-claude-explicit.png)](/case-studies/generative-software-development/evidence/review-with-actions-claude-explicit.png) | [![ReviewWithActions realized by GPT-5.5 Codex under explicit guidance](/case-studies/generative-software-development/evidence/review-with-actions-codex-explicit.png)](/case-studies/generative-software-development/evidence/review-with-actions-codex-explicit.png) |
 
-Both implementations realize the same UJG-modeled `ReviewWithActions` Template under the same explicit-gated protocol. The implementations remain free to choose their own styling realization while preserving the established Template and Component inventory.
+The same UJG `ReviewWithActions` Template, built by two models under the same explicit-gated protocol. Each is free to style it its own way while keeping the established Template and Component inventory.
 
 ### Application realization
 
-All four runs therefore begin the application phase with the same realization contract. The manifest fixes the selected architectural boundaries but does not determine how those boundaries are implemented internally.
+All four runs enter the application phase with the same contract. The manifest fixes the architectural boundaries; it says nothing about how to build behind them.
 
 #### Application diagnostics — GPT-5.5 Codex evaluator
 
@@ -700,11 +694,11 @@ All four runs therefore begin the application phase with the same realization co
 | GPT-5.5 Codex · explicit   |                   2 / 2 |               11 / 13 |                 **84.6%** |                                        0 |                                 0 |                                 0 |                **4.25 / 5** |
 | GPT-5.5 Codex · implicit   |                   2 / 2 |               13 / 22 |                 **59.1%** |                                        2 |                                 2 |                                 0 |                 **3.4 / 5** |
 
-Under the GPT-5.5 Codex evaluator, all four runs realize both manifest-selected interfaces. The two explicit-gated implementations achieve substantially higher behavioral-fidelity scores than their corresponding implicit runs.
+For the Codex evaluator, all four runs deliver both interfaces the manifest asked for, and both explicit-gated builds score substantially higher on behavioral fidelity than their implicit counterparts.
 
-The Claude Sonnet 5 explicit implementation has the broadest verification universe under this evaluator, with 30 of 35 identified branches verified. Its principal source-of-truth diagnostic is one parallel semantic projection in the browser service layer. The GPT-5.5 Codex explicit implementation has a smaller evaluator-defined branch universe but verifies 11 of 13 identified branches and receives no reported design-system integration, semantic-projection, or effect/invariant violations.
+Claude explicit is held to the widest set of branches — 30 of 35 verified — and its only real source-of-truth finding is one parallel semantic projection in the browser service layer. Codex explicit is judged against a smaller branch set, verifies 11 of 13, and draws no integration, projection, or invariant findings at all.
 
-Both implicit implementations exhibit weaker application-level convergence. Claude implicit receives two parallel semantic projections and one effect/invariant violation, while GPT implicit receives two design-system integration violations and two parallel semantic projections.
+Both implicit builds converge less well: Claude implicit picks up two parallel semantic projections and one effect/invariant violation; Codex implicit picks up two design-system integration violations and two parallel projections.
 
 #### Application diagnostics — Claude Sonnet 5 evaluator
 
@@ -715,19 +709,19 @@ Both implicit implementations exhibit weaker application-level convergence. Clau
 | GPT-5.5 Codex · explicit   |                   2 / 2 |               14 / 21 |                 **66.7%** |                                        0 |                                 1 |                                 1 |                 **4.0 / 5** |
 | GPT-5.5 Codex · implicit   |               **1 / 2** |               11 / 22 |                 **50.0%** |                                        1 |                                 1 |                                 2 |                 **1.0 / 5** |
 
-The Claude Sonnet 5 evaluator reaches materially different conclusions for several runs. It assesses both Claude implementations as having full UJG behavioral fidelity despite the implicit run having substantially lower verification coverage. This distinction is important: behavioral fidelity and maintained verification coverage are separate rubric dimensions.
+The Claude evaluator reads several runs quite differently. It gives both Claude builds full behavioral fidelity even though the implicit one has far lower verification coverage — the two are separate dimensions: one asks whether the software behaves as modeled, the other whether tests prove it.
 
-For GPT-5.5 Codex explicit, Claude identifies one parallel semantic projection and one effect/invariant violation. In particular, it reports that the modeled intended-participant invariant for offered places is not enforced at the state-changing boundary, reducing behavioral fidelity despite both interfaces being present.
+On **Codex explicit** it finds one parallel semantic projection and one effect/invariant violation: the modeled rule that an offered place belongs to its intended participant is not enforced where the state actually changes. Both interfaces exist, but fidelity drops.
 
-The largest evaluator disagreement occurs for GPT-5.5 Codex implicit. GPT-5.5 Codex considers both interfaces realized and assigns behavioral fidelity of 3.4 / 5, whereas Claude Sonnet 5 considers only one of the two interfaces fully realized and assigns 1.0 / 5. Claude's assessment is driven primarily by the browser application bypassing the manifest-selected HTTP domain boundary, duplicating journey behavior in an independent in-memory client, and not consuming the selected email design-system realization.
+The biggest disagreement in the study is on **Codex implicit**. Codex counts both interfaces realized and scores 3.4 / 5; Claude counts only one and scores 1.0 / 5. Claude's reasoning: the browser application goes around the HTTP domain boundary the manifest selected, duplicates journey behavior in its own in-memory client, and never uses the selected email realization.
 
-Verification coverage is also evaluator-specific. The evaluators do not always identify the same modeled branch universe—for example, the Claude explicit run is assessed against 35 branches by GPT-5.5 Codex and 22 by Claude Sonnet 5. Coverage percentages are therefore calculated within each evaluator's identified branch set and should not be treated as one canonical repository measurement.
+Verification coverage is evaluator-specific for the same reason. The two do not always identify the same set of branches — Claude explicit is measured against 35 branches by Codex and 22 by Claude — so each percentage is relative to that evaluator's own set, not one canonical number.
 
-Taken together, the application results show weaker convergence than the structural results. All four runs are given the same manifest-selected application scope, but the evaluators differ on how completely some implementations realize that scope and preserve UJG behavior across runtime boundaries. The implementations also differ materially in verification depth, semantic projections, persistence and domain realization, and interface integration. The evidence therefore supports the narrower conclusion that the UJG and manifest constrain the intended journey and application boundaries without prescribing a single source architecture; successful realization of those boundaries remains an implementation-level concern.
+Taken together, the application phase converges less than the structural phase. Every run is handed the same scope, but the evaluators differ on how completely some builds deliver it and keep UJG behavior intact across runtime boundaries. The builds themselves differ in verification depth, semantic projections, persistence and domain design, and interface integration. The narrower conclusion holds: the UJG and manifest constrain the journey and the boundaries, not the architecture — and meeting those boundaries stays an implementation problem.
 
 
 #### Example persistence realization
-The generated persistence architecture also remains an implementation choice.
+How data gets stored is also left to the implementation.
 
 ```mermaid
 
@@ -827,18 +821,18 @@ erDiagram
 
 ```
 
-This diagram shows the **generated SQLite persistence realization for the explicit GPT-5.5 Codex run**. It is not the UJG domain model: SQLite and this relational schema are implementation choices made within the controlled realization policy.
+This is the **SQLite schema generated by the explicit GPT-5.5 Codex run** — not the UJG domain model. SQLite and this table layout are choices the model made inside the fixed technology profile.
 
-### Fazit
-**RQ1 result:** convergence is strongest at the UJG semantic and design-system boundaries. Independent models reproduce the same modeled artifact inventory and principal journey scope while generating substantially different code structures, token inventories, implementation primitives, and runtime architectures. Divergence increases in the application phase, where semantic projections and incomplete branch verification can affect behavioral fidelity.
+### Verdict
+**RQ1 result:** convergence is strongest exactly where the UJG models something. Independent models reproduce the same artifact inventory and the same journey scope while writing substantially different code, token inventories, helpers, and runtime architectures. They diverge more in the application phase, where duplicated journey semantics and unverified branches begin to affect behavior.
 
 ## RQ2 — Effect of explicit guidance
 > **Does stronger generation guidance improve the quality and faithfulness of the realization?**
 
-For each implementation model, the implicit and explicit runs are compared directly. The implementation model is held constant while the guidance protocol changes.
+Here each model is compared against itself: same model, same inputs, only the guidance protocol changes.
 
 ### Effect of explicit guidance
-Values below are the change in the two-evaluator phase mean, explicit minus implicit, in percentage points.
+The numbers below are explicit minus implicit, in points of the two-evaluator phase mean.
 
 ```stat-grid
 
@@ -872,9 +866,9 @@ Average uplift = +19.29
 
 ```
 
-Explicit guidance improves every paired phase comparison.
+Explicit guidance wins every single paired comparison.
 
-The structural uplift is relatively small for both models because all four runs already reproduce the complete modeled Component and Template inventory. The difference widens in Tokens and Styling and is largest in Application, particularly for GPT-5.5 Codex.
+The gain in Structure is small for both models simply because all four runs already build the full Component and Template inventory — there is little room left. The gap widens through Tokens and Styling, and is largest in Application, especially for GPT-5.5 Codex.
 
 ### Quality through the realization pipeline
 Scores are the two-evaluator mean, 0–100.
@@ -886,10 +880,10 @@ Scores are the two-evaluator mean, 0–100.
 | GPT-5.5 Codex · explicit   |     98.34 |  90.83 |   85.00 |       77.50 | **87.92** |
 | GPT-5.5 Codex · implicit   |     95.17 |  68.67 |   64.00 |       46.67 | **68.63** |
 
-The phase profile shows that guidance has relatively little effect on initial structural coverage but increasingly affects the preservation of source-of-truth boundaries and runtime behavior later in the realization pipeline.
+Guidance barely changes what gets built at the start. Its effect grows the further along the pipeline you look — in whether source-of-truth boundaries hold, and whether runtime behavior stays faithful.
 
 ### What explicit guidance changed
-The evaluator scores can be connected to concrete implementation properties.
+Those scores line up with concrete, countable properties of the code.
 
 | Metric                               | Claude implicit → explicit | GPT-5.5 Codex implicit → explicit |
 | ------------------------------------ | -------------------------: | --------------------------------: |
@@ -905,34 +899,24 @@ The evaluator scores can be connected to concrete implementation properties.
 | --- | --- |
 | [![GPT-5.5 Codex · implicit-gated](/case-studies/generative-software-development/evidence/codex-implicit.png)](/case-studies/generative-software-development/evidence/codex-implicit.png) | [![GPT-5.5 Codex · explicit-gated](/case-studies/generative-software-development/evidence/codex-explicit.png)](/case-studies/generative-software-development/evidence/codex-explicit.png) |
 
-Both screenshots show the workshop-overview application generated by the
-
-same implementation model under different guidance protocols. The
-
-explicit-gated realization is more tightly aligned with the staged
-
-Structure → Tokens → Styling → Application process, while the
-
-implicit-gated realization introduces a broader and less constrained
-
-application shell.
+Both screenshots show the same workshop-overview application from the same model, built under different guidance. The explicit-gated version follows the staged Structure → Tokens → Styling → Application process closely; the implicit-gated one wanders into a broader, less constrained application shell.
 
 
 
-The strongest effect is therefore not additional structural coverage. Explicit guidance improves **continuity between phases**:
+So the main benefit is not that more gets built. It is **continuity between phases**:
 
-* generated DTCG artifacts remain the styling source of truth;
+* the generated tokens stay the single source of styling values;
 
-* styling preserves the structure established in the previous phase;
+* styling leaves the structure from the previous phase intact;
 
-* later application realization introduces fewer parallel semantic authorities;
+* the application adds fewer competing copies of journey meaning;
 
-* a larger proportion of evaluated behavioral branches is backed by verification evidence.
+* more of the evaluated behavior is actually backed by tests.
 
-The effect is present for both models but substantially larger for GPT-5.5 Codex.
+This holds for both models, and is much larger for GPT-5.5 Codex.
 
 ### Result sensitivity to evaluator
-The published phase values are evaluator means, but evaluator disagreement is not uniform.
+Published phase values are evaluator means — but the two evaluators do not disagree evenly.
 
 ```bar-chart
 
@@ -952,23 +936,23 @@ GPT-5.5 Codex implementation · implicit-gated · Styling = 14.66
 
 ```
 
-Application has the highest evaluator sensitivity. This is also the phase where evaluation depends most strongly on interpreting runtime behavior, invariants, projections, integration boundaries, and verification evidence rather than inspecting a finite design-system inventory.
+Application is by far the most sensitive — and it is also the phase where judging quality means interpreting runtime behavior, invariants, projections, integration boundaries, and test evidence, rather than counting a finite list of design-system artifacts.
 
-The guidance effect should therefore be read together with the underlying implementation metrics rather than from the aggregate score alone.
+Read the guidance effect alongside the underlying counts, not from the headline score alone.
 
 
 
-### Fazit
-**RQ2 result:** explicit phase gating improves the evaluated quality of both implementation models. The effect is modest at the already-strong Structure phase and considerably larger in Tokens, Styling, and Application. The implementation evidence suggests that the main benefit is stronger preservation of source-of-truth and phase boundaries rather than simply generating more artifacts.
+### Verdict
+**RQ2 result:** explicit phase gating improves evaluated quality for both models. The effect is modest in the already-strong Structure phase and considerably larger in Tokens, Styling, and Application. The evidence points to why: gating preserves source-of-truth and phase boundaries, rather than producing more artifacts.
 
 ## Reproducibility and limitations
-The experiment is intentionally narrow. It tests one workshop-registration case, one controlled realization profile, two implementation models, and two guidance protocols. It should not be read as a general ranking of AI coding systems.
+The experiment is deliberately narrow: one workshop-registration case, one fixed technology profile, two models, two guidance protocols. It is not a general ranking of AI coding systems.
 
-The clean-room boundary is designed to reduce contamination between runs: the canonical UJG, referenced schemas, implementation manifest, and shared appearance references are supplied, while a reference application is excluded from the generation input.
+Every run starts clean. The models receive the UJG, its schemas, the manifest, and the screenshots — and no reference application to copy from.
 
 The retained run directories, historical guidance skills, verification tooling, evaluation rubrics, evaluator JSON files, generated UJG documents, DTCG token sources, and application implementations are available in the [experiment repository](https://github.com/openuji/ujg-generative-se-case-study).
 
-Repository-level counts used in the results — such as Component, Template, Slot, SurfaceRealization, implementation-primitive, DTCG-token, and Theme counts — are derived directly from the retained generated artifacts. Evaluator diagnostics and qualitative scores remain traceable to their corresponding evaluator result files.
+Every repository count in the results — Components, Templates, Slots, SurfaceRealizations, helpers, tokens, Themes — comes straight from the retained generated code. Every evaluator diagnostic and score traces back to its evaluator result file.
 
 Several limitations remain:
 
@@ -976,12 +960,12 @@ Several limitations remain:
 
 * only two implementation models have complete paired implicit/explicit runs;
 
-* the realization profile intentionally fixes the technology environment, so the experiment does not measure technology-selection quality;
+* the technology environment is fixed on purpose, so nothing here measures how well a model picks a stack;
 
-* visual fidelity is partly dependent on static inspection where evaluator-time rendered evidence was unavailable;
+* visual fidelity partly rests on reading code, where no rendered screenshot was available at evaluation time;
 
 * some diagnostic concepts require interpretation and can therefore differ between evaluators;
 
 * the generated implementations were compared for semantic and quality convergence, not source-code identity.
 
-The reproducibility target is therefore not identical generated source code. It is a traceable experiment in which the semantic input, realization policy, generation protocol, generated artifacts, evaluation rubric, supporting measurements, and published results can all be inspected independently.
+Reproducibility here does not mean identical generated code. It means a traceable experiment: the input, the policy, the protocol, the generated artifacts, the rubric, the measurements, and the published results can all be inspected independently.
