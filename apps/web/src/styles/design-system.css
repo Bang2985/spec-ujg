@@ -855,6 +855,14 @@ a.pill {
     @apply text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent;
   }
 
+  .site-footer .footer-icon-link {
+    @apply text-secondary-foreground no-underline;
+
+    &:hover {
+      @apply text-accent;
+    }
+  }
+
   .footer-meta p {
     margin: 0;
   }
